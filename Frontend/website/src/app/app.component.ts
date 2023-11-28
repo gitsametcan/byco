@@ -12,3 +12,5 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
 	title = 'website';
 }
+
+// npx prettier --write "./**/*.{js,ts,json,html}" --use-tabs --single-quote
