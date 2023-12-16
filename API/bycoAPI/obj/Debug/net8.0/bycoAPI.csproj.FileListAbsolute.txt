@@ -31,3 +31,11 @@ C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\obj\Debug\net8.0\refint\bycoAPI
 C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\obj\Debug\net8.0\bycoAPI.pdb
 C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\obj\Debug\net8.0\bycoAPI.genruntimeconfig.cache
 C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\obj\Debug\net8.0\ref\bycoAPI.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\can_s\Desktop\Projects\byco\API\bycoAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
