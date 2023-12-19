@@ -4,30 +4,30 @@ export const menu_data:IMenuItem[] = [
   {
     id:1,
     link:'/home/electronic',
-    title:'Home',
+    title:'Anasayfa',
     mega_menu:true,
     home_pages:[
       {
         id:1,
-        title:'Electronics',
+        title:'Elektronik',
         img:'/assets/img/menu/menu-home-1.jpg',
         link:'/home/electronic'
       },
       {
         id:2,
-        title:'Fashion',
+        title:'Giyim',
         img:'/assets/img/menu/menu-home-2.jpg',
         link:'/home/fashion'
       },
       {
         id:3,
-        title:'Beauty',
+        title:'Güzellik',
         img:'/assets/img/menu/menu-home-3.jpg',
         link:'/home/beauty'
       },
       {
         id:4,
-        title:'Jewelry',
+        title:'Takılar',
         img:'/assets/img/menu/menu-home-4.jpg',
         link:'/home/jewelry'
       },
@@ -36,12 +36,12 @@ export const menu_data:IMenuItem[] = [
   {
     id:2,
     link:'/shop',
-    title:'Shop',
+    title:'Ticaret',
     mega_menu:true,
     shop_mega_menus:[
       {
         link:'/shop',
-        title:'Shop Pages',
+        title:'Ticaret Sayfaları',
         list_menus:[
           {title:'Grid Layout',link:'/shop'},
           {title:'Shop Categories',link:'/shop/shop-category'},
@@ -55,7 +55,7 @@ export const menu_data:IMenuItem[] = [
       },
       {
         link:'/shop',
-        title:'Features',
+        title:'Özellikler',
         list_menus:[
           {title:'Filter Dropdown',link:'/shop/shop-filter-dropdown'},
           {title:'Filters Offcanvas',link:'/shop/shop-filter-offcanvas'},
@@ -82,12 +82,12 @@ export const menu_data:IMenuItem[] = [
   {
     id:3,
     link:'/shop',
-    title:'Products',
+    title:'Ürünler',
     mega_menu:true,
     product_menus:[
       {
         id:1,
-        title:'Shop Page',
+        title:'Ticaret Sayfaları',
         link:'/shop',
         dropdown_menus:[
           {title:'Only Categories',link:'/shop/shop-category'},
@@ -100,7 +100,7 @@ export const menu_data:IMenuItem[] = [
       },
       {
         id:2,
-        title:'Products',
+        title:'Ürünler',
         link:'/shop',
         dropdown_menus:[
           {title:'Product Simple',link:'/shop/shop-details'},
@@ -113,7 +113,7 @@ export const menu_data:IMenuItem[] = [
       },
       {
         id:3,
-        title:'eCommerce',
+        title:'E-Ticaret',
         link:'/shop',
         dropdown_menus:[
           {title:'Shopping Cart',link:'/shop/cart'},
@@ -126,7 +126,7 @@ export const menu_data:IMenuItem[] = [
       },
       {
         id:4,
-        title:'More Pages',
+        title:'Daha Fazla Sayfa',
         link:'/shop',
         dropdown_menus:[
           {title:'About',link:'/pages/about'},
@@ -146,8 +146,8 @@ export const menu_data:IMenuItem[] = [
   {
     id:5,
     link:'/pages/blog',
-    title:'Blog',
-    drop_down:true,
+    title:'Hakkımızda',
+    drop_down:false,
     dropdown_menus:[
       {title:'Blog Standard',link:'/pages/blog'},
       {title:'Blog Grid',link:'/pages/blog-grid'},
@@ -158,7 +158,7 @@ export const menu_data:IMenuItem[] = [
   {
     id:5,
     link:'/pages/contact',
-    title:'Contact',
+    title:'İletişim',
   },
 ]
 

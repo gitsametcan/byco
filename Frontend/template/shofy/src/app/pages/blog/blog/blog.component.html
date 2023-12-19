@@ -4,7 +4,7 @@
 
 <main>
   <!-- breadcrumb start -->
-  <app-breadcrumb-two title="Our Blog" subtitle="Blog"></app-breadcrumb-two>
+  <app-breadcrumb-two title="Hakkımızda" subtitle="Hakkımızda"></app-breadcrumb-two>
   <!-- breadcrumb end -->
 
   <!-- postbox area start -->
@@ -13,12 +13,66 @@
       <div class="row">
         <div class="col-xl-9 col-lg-8">
           <div class="tp-postbox-wrapper pr-50">
-            <ng-container
+            <div>
+              <h3>
+                Misyonumuz
+              </h3>
+              <p>
+                BYCO Mühendislik sürdürülebilir ve yönetilebilir 
+                ticari anlayışıyla çözüm ortağı olduğu 
+                müşterilerine verdiği değer ile; farklılaşma 
+                yolunda teknolojik altyapıyı en üst düzeyde kullanmaktadır.
+
+                İnsana yatırım yapan ve ekip ruhunu 
+                takımına benimseten şirket politikasının 
+                değerleri uygun fiyat, kaliteli hizmet, 
+                güvenilirlik, zamanlama ve müşteri memnuniyeti 
+                odaklı olmasıdır. <br><br>
+
+                BYCO Mühendislik şeffaf müşteri 
+                ilişkisini karşılıklı güven ilişkisi 
+                ile yöneten, verdiği taahhütleri zamanında 
+                gerçekleştirmeyi şirket politikası olarak 
+                benimseyen yapısıyla; verdiği güvence en 
+                büyük sermayesidir.
+              </p>
+            </div>
+            <br>
+            <div>
+              <h3>
+                Hedeflerimiz
+              </h3>
+              <p>
+                BYCO Mühendislik’in hedefi gelecekte sektörde
+                 lider firmalar arasında yer almaktır. 
+                 BYCO Mühendislik, yoluna emin adımlar 
+                 ile ilerlerken kalite ve müşteri 
+                 memnuniyetinden ödün vermeyen 
+                 şirket politikasını benimsemiştir. <br><br>
+
+                Değişmeyen tek şeyin değişim olduğunu 
+                benimseyen kurum kültürümüzün en 
+                vazgeçilmez unsuru sürekli gelişim 
+                ve yaşam boyu öğrenme olduğudur. BYCO 
+                Mühendislik farklılaşma amacı ile değişik 
+                tüm önerileri dikkate alan; kontrol 
+                mekanizmasını uzman mühendis alt yapısına 
+                entegre etmiş bir sistem üzerine inşa etmiş 
+                yenilikçi bir firmadır.
+              </p>
+            </div>
+            <div class="halfpart">
+              Deneme1
+            </div>
+            <div class="halfpart">
+              Deneme2
+            </div>
+            <!-- <ng-container
               *ngFor="let item of blogs.slice(startIndex, endIndex);let i = index"
             >
               <app-blog-postbox-item [blog]="item"></app-blog-postbox-item>
-            </ng-container>
-            <div class="tp-blog-pagination mt-50">
+            </ng-container> -->
+            <!-- <div class="tp-blog-pagination mt-50">
               <div class="tp-pagination">
                 <app-pagination-two
                   [itemsPerPage]="4"
@@ -26,14 +80,14 @@
                   (handlePaginate)="handlePagination($event)"
                 ></app-pagination-two>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-        <div class="col-xl-3 col-lg-4">
+        <!-- <div class="col-xl-3 col-lg-4"> -->
           <!-- blog sidebar start -->
-          <app-blog-sidebar></app-blog-sidebar>
+          <!-- <app-blog-sidebar></app-blog-sidebar> -->
           <!-- blog sidebar end -->
-        </div>
+        <!-- </div> -->
       </div>
     </div>
   </section>
