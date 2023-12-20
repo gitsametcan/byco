@@ -1,5 +1,86 @@
 import { Iproje } from "@/types/projelerimiz-type";
 
-const projeler_data: Iproje[] = [];
+const projeler_data: Iproje[] = [
+    {
+        id: 1,
+        ad: "Tavuk Dünyası Akasya AVM",
+        lokasyon: "Akasya AVM / İstanbul",
+        tamamlanma: "2017",
+        alan: "170m2",
+        isveren: "Atmosfer Turizm",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje1.jpg",
+    },
+    {
+        id: 2,
+        ad: "Birlik Apartmanı",
+        lokasyon: "Göztepe-KAdıköy / İstanbul",
+        tamamlanma: "2017",
+        alan: "4353m2",
+        isveren: "Tempus Yapı",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje2.jpg",
+    },
+    {
+        id: 3,
+        ad: "Kapta Gıda Café Nişantası",
+        lokasyon: "Nişantaşı / İstanbul",
+        tamamlanma: "2016",
+        alan: "60m2",
+        isveren: "Cisimdesign",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje3.jpg",
+    },
+    {
+        id: 4,
+        ad: "Sütiş Akasya AVM",
+        lokasyon: "Acıbadem Akasya AVM / İstanbul",
+        tamamlanma: "2016",
+        alan: "197m2",
+        isveren: "Atmosfer Turizm",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje4.jpg",
+    },
+    {
+        id: 5,
+        ad: "Swarovski Mağazası Buyaka AVM",
+        lokasyon: "Ümraniye / İstanbul",
+        tamamlanma: "2016",
+        alan: "51m2",
+        isveren: "Dentek",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje5.jpg",
+    },
+    {
+        id: 6,
+        ad: "Cofee Acedemy Buyaka AVM",
+        lokasyon: "Ümraniye / İstanbul",
+        tamamlanma: "2015",
+        alan: "75m2 + 115m2",
+        isveren: "Cofee Acedemy",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje6.jpg",
+    },
+    {
+        id: 7,
+        ad: "Mini Eatery Cafe",
+        lokasyon: "Moda - Kadıköy / İstanbul",
+        tamamlanma: "2015",
+        alan: "35m2",
+        isveren: "Emre Çeri",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje7.jpg",
+    },
+    {
+        id: 8,
+        ad: "Kasap Döner Buyaka AVM",
+        lokasyon: "Ümraniye Buyaka AVM / İstanbul",
+        tamamlanma: "2016",
+        alan: "95m2",
+        isveren: "Atmosfer Turizm",
+        aciklama: "",
+        img: "/assets/img/eskiProje/eskiproje8.jpg",
+    }
+];
 
 export default projeler_data;

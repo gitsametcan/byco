@@ -61,7 +61,6 @@ import { CartComponent } from './pages/cart/cart.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { CompareComponent } from './pages/compare/compare.component';
 import { OrderComponent } from './pages/order/order.component';
-import { ProjeListComponent } from './product/fashion/proje-list/proje-list.component';
 
 @NgModule({
   declarations: [
@@ -111,8 +110,7 @@ import { ProjeListComponent } from './product/fashion/proje-list/proje-list.comp
     CartComponent,
     WishlistComponent,
     CompareComponent,
-    OrderComponent,
-    ProjeListComponent,
+    OrderComponent
   ],
   imports: [
     CommonModule,

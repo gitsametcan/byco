@@ -4,6 +4,9 @@ import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { CartService } from '@/shared/services/cart.service';
 import { IProduct } from '@/types/product-type';
 import { ProductService } from '@/shared/services/product.service';
+import { Iproje } from '@/types/projelerimiz-type';
+import { ProjeService } from '@/shared/services/proje.service';
+import projeler_data from '@/data/projeler-data';
 
 @Component({
   selector: 'app-fashion-popular-products',
@@ -27,6 +30,7 @@ export class FashionPopularProductsComponent {
 
 
   public popular_prd: IProduct[] = [];
+  public projeler= projeler_data;
 
   constructor(public cartService: CartService, public productService: ProductService) {
     this.productService.products.subscribe((products) => {

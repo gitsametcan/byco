@@ -5,9 +5,9 @@ import projeler_data from '@/data/projeler-data';
 import {map} from 'rxjs/operators'
 
 export class ProjeService {
-    public get products(): Observable<Iproje[]> {
-        return of(projeler_data);
-      }
+    public getprojeler(): Iproje[] {
+        return projeler_data;
+    }
     
     constructor() { }
 

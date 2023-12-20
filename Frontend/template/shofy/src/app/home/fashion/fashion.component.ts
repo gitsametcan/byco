@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ProjeListComponent } from 'src/app/shop/product/fashion/proje-list/proje-list.component';
 
 @Component({
   selector: 'app-fashion',
