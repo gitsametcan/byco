@@ -6,26 +6,26 @@ import { ElectronicsComponent } from './electronics/electronics.component';
 import { JewelryComponent } from './jewelry/jewelry.component';
 
 const routes: Routes = [
+  // {
+  //   path:'electronic',
+  //   component:ElectronicsComponent,
+  //   title:'Shofy - Multipurpose eCommerce Angular Template'
+  // },
+  // {
+  //   path:'fashion',
+  //   component:FashionComponent,
+  //   title:'Home Fashion'
+  // },
   {
-    path:'electronic',
-    component:ElectronicsComponent,
-    title:'Shofy - Multipurpose eCommerce Angular Template'
-  },
-  {
-    path:'fashion',
-    component:FashionComponent,
-    title:'Home Fashion'
-  },
-  {
-    path:'beauty',
+    path:'',
     component:BeautyComponent,
-    title:'Home Beauty'
+    title:'Anasayfa'
   },
-  {
-    path:'jewelry',
-    component:JewelryComponent,
-    title:'Home Jewelry'
-  },
+  // {
+  //   path:'jewelry',
+  //   component:JewelryComponent,
+  //   title:'Home Jewelry'
+  // },
 ];
 
 @NgModule({

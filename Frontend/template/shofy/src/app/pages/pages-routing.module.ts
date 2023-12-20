@@ -22,9 +22,9 @@ const routes: Routes = [
     title:'Contact Page'
   },
   {
-    path:'blog',
+    path:'hakkimizda',
     component:BlogComponent,
-    title:'Blog Page'
+    title:'Hakkımızda'
   },
   {
     path:'blog-grid',
