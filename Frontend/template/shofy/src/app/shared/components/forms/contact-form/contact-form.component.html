@@ -6,18 +6,18 @@
           name="name"
           id="name"
           type="text"
-          placeholder="Shahnewaz Sakil"
+          placeholder="Adınız Soyadınız"
           formControlName="name"
         />
       </div>
       <div class="tp-contact-input-title">
-        <label for="name">Your Name</label>
+        <label for="name">Adınız</label>
       </div>
       <span
         *ngIf="name?.hasError('required') && (name?.touched || formSubmitted)"
         class="text-danger"
       >
-        Name is required
+        Doldurulması zorunlu alan
       </span>
     </div>
     <div class="tp-contact-input-box">
@@ -26,12 +26,12 @@
           name="email"
           id="email"
           type="email"
-          placeholder="shofy@mail.com"
+          placeholder="info@mail.com"
           formControlName="email"
         />
       </div>
       <div class="tp-contact-input-title">
-        <label for="email">Your Email</label>
+        <label for="email">Mail Adresiniz</label>
       </div>
       <span
         *ngIf="
@@ -41,7 +41,7 @@
         "
         class="text-danger"
       >
-        Email is required and must be a valid email address
+      Doldurulması zorunlu alan ve geçerli olmalıdır
       </span>
     </div>
     <div class="tp-contact-input-box">
@@ -50,18 +50,18 @@
           name="subject"
           id="subject"
           type="text"
-          placeholder="Write your subject"
+          placeholder="Lütfen kısaca konuyu yazınız"
           formControlName="subject"
         />
       </div>
       <div class="tp-contact-input-title">
-        <label for="subject">Subject</label>
+        <label for="subject">Konu</label>
       </div>
       <span
         *ngIf="subject?.hasError('required') && (subject?.touched || formSubmitted)"
         class="text-danger"
       >
-        subject is required
+      Doldurulması zorunlu alan
       </span>
     </div>
     <div class="tp-contact-input-box">
@@ -69,18 +69,18 @@
         <textarea
           id="message"
           name="message"
-          placeholder="Write your message here..."
+          placeholder="Mesajınızı buraya yazınız..."
           formControlName="message"
         ></textarea>
       </div>
       <div class="tp-contact-input-title">
-        <label for="message">Your Message</label>
+        <label for="message">Mesajınız</label>
       </div>
       <span
         *ngIf="message?.hasError('required') && (message?.touched || formSubmitted)"
         class="text-danger"
       >
-        Message is required
+      Doldurulması zorunlu alan
       </span>
     </div>
   </div>
@@ -88,11 +88,11 @@
     <div class="tp-contact-remeber">
       <input id="remeber" type="checkbox" />
       <label for="remeber">
-        Save my name, email, and website in this browser for the next time I comment.
+        Bir sonraki iletişim için bilgilerimi hatırla
       </label>
     </div>
   </div>
   <div class="tp-contact-btn">
-    <button type="submit">Send Message</button>
+    <button type="submit">Gönder</button>
   </div>
 </form>

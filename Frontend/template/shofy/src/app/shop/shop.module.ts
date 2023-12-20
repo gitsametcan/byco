@@ -110,7 +110,7 @@ import { OrderComponent } from './pages/order/order.component';
     CartComponent,
     WishlistComponent,
     CompareComponent,
-    OrderComponent,
+    OrderComponent
   ],
   imports: [
     CommonModule,

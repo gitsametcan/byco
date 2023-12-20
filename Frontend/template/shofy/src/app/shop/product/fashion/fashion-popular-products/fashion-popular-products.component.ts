@@ -4,6 +4,9 @@ import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { CartService } from '@/shared/services/cart.service';
 import { IProduct } from '@/types/product-type';
 import { ProductService } from '@/shared/services/product.service';
+import { Iproje } from '@/types/projelerimiz-type';
+import { ProjeService } from '@/shared/services/proje.service';
+import projeler_data from '@/data/projeler-data';
 
 @Component({
   selector: 'app-fashion-popular-products',
@@ -27,6 +30,8 @@ export class FashionPopularProductsComponent {
 
 
   public popular_prd: IProduct[] = [];
+  public projeler= projeler_data;
+  public projeDevam: Iproje[] = [];
 
   constructor(public cartService: CartService, public productService: ProductService) {
     this.productService.products.subscribe((products) => {
@@ -34,7 +39,13 @@ export class FashionPopularProductsComponent {
     });
   }
 
+
   ngOnInit(): void {
+    for (let i = 0; i < projeler_data.length; i++) {
+        if (projeler_data[i].tamamlanma === "devam") {
+            this.projeDevam.push(projeler_data[i]);
+        }
+      }
     new Swiper('.tp-category-slider-active-2', {
       slidesPerView: 5,
       spaceBetween: 20,

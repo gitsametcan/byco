@@ -4,12 +4,12 @@
         <div class="col-xl-12">
            <div class="tp-section-title-wrapper-2 text-center mb-50">
               <span class="tp-section-title-pre-2">
-                 Shop by Category
+                 Projelerimiz
                  <svg width="82" height="22" viewBox="0 0 82 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M81 14.5798C0.890564 -8.05914 -5.81154 0.0503902 5.00322 21" stroke="currentColor" stroke-opacity="0.3" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"/>
                  </svg>
               </span>
-              <h3 class="tp-section-title-2">Popular on the Shofy store.</h3>
+              <h3 class="tp-section-title-2">Devam Eden Projeler</h3>
            </div>
         </div>
      </div>
@@ -18,26 +18,78 @@
            <div class="tp-category-slider-2 p-relative">
               <div class="tp-category-slider-active-2 swiper-container mb-50">
                  <div class="swiper-wrapper">
-                    <div *ngFor="let item of popular_prd" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: #f2f3f5;">
-                       <div class="tp-category-thumb-2">
+                    <div *ngFor="let item of projeDevam" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: #f2f3f5;">
+                       <div class="tp-category-thumb-2" *ngIf="item.tamamlanma==='devam'">
                           <a [routerLink]="['/shop/shop-details', item.id]">
                              <img [src]="item.img" alt="product-img" style="width: 100%;height: 100%">
                           </a>
                        </div>
                        <div class="tp-category-content-2">
-                          <span>From ${{item.price.toFixed(2)}}</span>
+                          <span>{{item.ad}}</span>
                           <h3 class="tp-category-title-2">
-                             <a [routerLink]="['/shop/shop-details', item.id]">{{item.title}}</a>
-                          </h3>
-                          <div class="tp-category-btn-2">
-                             <button *ngIf="!isItemInCart(item)" (click)="addToCart(item)" class="tp-btn tp-btn-border"> Add to Cart</button>
-                             <a *ngIf="isItemInCart(item)" routerLink="/shop/cart" class="tp-btn tp-btn-border" [class.active]="isItemInCart(item)"> View Cart</a>
-                          </div>
+                            <a [routerLink]="['/shop/shop-details', item.id]">{{item.lokasyon}}</a>
+                         </h3>
+                        <h3 class="tp-category-title-2">
+                           <a [routerLink]="['/shop/shop-details', item.id]">{{item.alan}}</a>
+                        </h3>
+                         <h3 class="tp-category-title-2">
+                           <a [routerLink]="['/shop/shop-details', item.id]">{{item.isveren}}</a>
+                        </h3>
+                          
                        </div>
                     </div>
                  </div>
               </div>
               <div class="swiper-scrollbar tp-swiper-scrollbar tp-swiper-scrollbar-drag"></div>
+           </div>
+        </div>
+     </div>
+
+     <div class="row">
+        <div class="col-xl-12">
+           <div class="tp-section-title-wrapper-2 text-center mb-50">
+              <span class="tp-section-title-pre-2">
+                 Projelerimiz
+                 <svg width="82" height="22" viewBox="0 0 82 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M81 14.5798C0.890564 -8.05914 -5.81154 0.0503902 5.00322 21" stroke="currentColor" stroke-opacity="0.3" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"/>
+                 </svg>
+              </span>
+              <h3 class="tp-section-title-2">Tamamladığımız Projeler</h3>
+           </div>
+        </div>
+     </div>
+
+     <div class="row">
+        <div class="col-xl-12">
+          <div class="row">
+                    <div *ngFor="let item of projeler" class="tp-category-item-2 p-relative z-index-1 text-center col-xl-3 col-lg-4 col-md-6 col-sm-6" style="background-color: #f2f3f5;">
+                       <div class="tp-category-thumb-2" *ngIf="item.tamamlanma!='devam'">
+                          <a [routerLink]="['/shop/shop-details', item.id]">
+                             <img [src]="item.img" alt="product-img" style="width: 350px;height: 250px">
+                          </a>
+                       </div>
+                       <div class="tp-category-content-2">
+                          <span>{{item.ad}}</span>
+                          <h3 class="tp-category-title-2">
+                             <a [routerLink]="['/shop/shop-details', item.id]">{{item.lokasyon}}</a>
+                          </h3>
+                          <h3 class="tp-category-title-2">
+                            <a [routerLink]="['/shop/shop-details', item.id]">{{item.tamamlanma}}</a>
+                         </h3>
+                         <h3 class="tp-category-title-2">
+                            <a [routerLink]="['/shop/shop-details', item.id]">{{item.alan}}</a>
+                         </h3>
+                          <h3 class="tp-category-title-2">
+                            <a [routerLink]="['/shop/shop-details', item.id]">{{item.isveren}}</a>
+                         </h3>
+                          <!-- <div class="tp-category-btn-2">
+                             <button *ngIf="true" class="tp-btn tp-btn-border"> Add to Cart</button>
+                             <a *ngIf="false" routerLink="/shop/cart" class="tp-btn tp-btn-border" [class.active]="false"> View Cart</a>
+                          </div> -->
+                       </div>
+                    </div>
+                 
+              
            </div>
         </div>
      </div>
