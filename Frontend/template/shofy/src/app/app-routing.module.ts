@@ -5,11 +5,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/anasayfa',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'anasayfa',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {

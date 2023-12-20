@@ -16,22 +16,24 @@ export class HeroBannerThreeComponent {
   public slider_data = [
     {
       id: 1,
-      bg: "/assets/img/slider/3/slider-1.jpg",
-      subtitle: "Winter Collection 2023",
-      title: "Be your kind of beauty",
+      bg: "/assets/img/slider/3/byco_slider.jpg",
+      subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
+       bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
+       markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
+      title: "BYCO Projelendirme",
     },
     {
       id: 2,
-      bg: "/assets/img/slider/3/slider-2.jpg",
+      bg: "/assets/img/slider/3/byco_slider2.jpg",
       subtitle: "Top Brand Collection",
       title: "Use the best for you.",
     },
-    {
-      id: 3,
-      bg: "/assets/img/slider/3/slider-3.jpg",
-      subtitle: "Awesome Beauty Products",
-      title: "Don't Worry for Skincare",
-    },
+    // {
+    //   id: 3,
+    //   bg: "/assets/img/slider/3/slider-3.jpg",
+    //   subtitle: "Awesome Beauty Products",
+    //   title: "Don't Worry for Skincare",
+    // },
   ]
 
   ngAfterViewInit() {

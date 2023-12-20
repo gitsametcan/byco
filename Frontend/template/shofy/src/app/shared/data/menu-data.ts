@@ -3,35 +3,35 @@ import { IMenuItem, IMobileType } from "@/types/menu-d-type";
 export const menu_data:IMenuItem[] = [
   {
     id:1,
-    link:'/home/electronic',
+    link:'/home',
     title:'Anasayfa',
     mega_menu:true,
-    home_pages:[
-      {
-        id:1,
-        title:'Elektronik',
-        img:'/assets/img/menu/menu-home-1.jpg',
-        link:'/home/electronic'
-      },
-      {
-        id:2,
-        title:'Giyim',
-        img:'/assets/img/menu/menu-home-2.jpg',
-        link:'/home/fashion'
-      },
-      {
-        id:3,
-        title:'Güzellik',
-        img:'/assets/img/menu/menu-home-3.jpg',
-        link:'/home/beauty'
-      },
-      {
-        id:4,
-        title:'Takılar',
-        img:'/assets/img/menu/menu-home-4.jpg',
-        link:'/home/jewelry'
-      },
-    ]
+    // home_pages:[
+    //   {
+    //     id:1,
+    //     title:'Elektronik',
+    //     img:'/assets/img/menu/menu-home-1.jpg',
+    //     link:'/home/electronic'
+    //   },
+    //   {
+    //     id:2,
+    //     title:'Giyim',
+    //     img:'/assets/img/menu/menu-home-2.jpg',
+    //     link:'/home/fashion'
+    //   },
+    //   {
+    //     id:3,
+    //     title:'Güzellik',
+    //     img:'/assets/img/menu/menu-home-3.jpg',
+    //     link:'/home/beauty'
+    //   },
+    //   {
+    //     id:4,
+    //     title:'Takılar',
+    //     img:'/assets/img/menu/menu-home-4.jpg',
+    //     link:'/home/jewelry'
+    //   },
+    // ]
   },
   {
     id:2,
@@ -141,19 +141,19 @@ export const menu_data:IMenuItem[] = [
   {
     id:4,
     link:'/pages/coupons',
-    title:'Coupons',
+    title:'Kuponlar',
   },
   {
     id:5,
-    link:'/pages/blog',
+    link:'/pages/hakkimizda',
     title:'Hakkımızda',
     drop_down:false,
-    dropdown_menus:[
-      {title:'Blog Standard',link:'/pages/blog'},
-      {title:'Blog Grid',link:'/pages/blog-grid'},
-      {title:'Blog List',link:'/pages/blog-list'},
-      {title:'Blog Details',link:'/pages/blog-details'},
-    ]
+    // dropdown_menus:[
+    //   {title:'Blog Standard',link:'/pages/blog'},
+    //   {title:'Blog Grid',link:'/pages/blog-grid'},
+    //   {title:'Blog List',link:'/pages/blog-list'},
+    //   {title:'Blog Details',link:'/pages/blog-details'},
+    // ]
   },
   {
     id:5,
