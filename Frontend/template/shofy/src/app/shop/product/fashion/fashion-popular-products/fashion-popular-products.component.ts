@@ -31,6 +31,7 @@ export class FashionPopularProductsComponent {
 
   public popular_prd: IProduct[] = [];
   public projeler= projeler_data;
+  public projeDevam: Iproje[] = [];
 
   constructor(public cartService: CartService, public productService: ProductService) {
     this.productService.products.subscribe((products) => {
@@ -38,7 +39,13 @@ export class FashionPopularProductsComponent {
     });
   }
 
+
   ngOnInit(): void {
+    for (let i = 0; i < projeler_data.length; i++) {
+        if (projeler_data[i].tamamlanma === "devam") {
+            this.projeDevam.push(projeler_data[i]);
+        }
+      }
     new Swiper('.tp-category-slider-active-2', {
       slidesPerView: 5,
       spaceBetween: 20,
