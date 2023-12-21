@@ -81,8 +81,8 @@ export const menu_data:IMenuItem[] = [
   },
   {
     id:3,
-    link:'/shop',
-    title:'Ürünler',
+    link:'/pages/hizmetler',
+    title:'Hizmetlerimiz',
     mega_menu:false,
     // product_menus:[
     //   {
@@ -140,8 +140,8 @@ export const menu_data:IMenuItem[] = [
   },
   {
     id:4,
-    link:'/pages/coupons',
-    title:'Kuponlar',
+    link:'/anasayfa/projeler',
+    title:'Projeler',
   },
   {
     id:5,

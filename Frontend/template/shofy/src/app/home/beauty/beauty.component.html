@@ -57,20 +57,7 @@
 <!-- Açıklama Sonu -->
 
 <!-- instagram area start -->
-<section class="tp-instagram-area tp-instagram-style-3">
-   <div class="container-fluid pl-20 pr-20">
-      <div class="row row-cols-lg-6 row-cols-sm-2 row-cols-1 gx-2 gy-2 gy-lg-0">
-         <div *ngFor="let item of instagram_data" class="col">
-            <div class="tp-instagram-item-2 w-img">
-               <img [src]="item.img" alt="instagram-img">
-               <div class="tp-instagram-icon-2">
-                  <a [href]="item.link" target="_blank" class="popup-image"><i class="fa-brands fa-instagram"></i></a>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</section>
+<app-beauty-special-products></app-beauty-special-products>
 <!-- instagram area end -->
 
 <!-- Açıklama Başlangıcı -->
@@ -318,5 +305,5 @@
 <!-- feature area end -->
 
  <!-- footer start -->
- <app-footer-one [style_3]="true"></app-footer-one>
+ <app-footer-two></app-footer-two>
  <!-- footer end -->

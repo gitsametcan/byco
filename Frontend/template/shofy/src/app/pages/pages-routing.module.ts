@@ -32,9 +32,9 @@ const routes: Routes = [
     title:'Blog Grid Page'
   },
   {
-    path:'blog-list',
+    path:'hizmetler',
     component:BlogListComponent,
-    title:'Blog List Page'
+    title:'Hizmetlerimiz'
   },
   {
     path:'blog-details',

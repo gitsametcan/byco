@@ -11,11 +11,11 @@ const routes: Routes = [
   //   component:ElectronicsComponent,
   //   title:'Shofy - Multipurpose eCommerce Angular Template'
   // },
-  // {
-  //   path:'fashion',
-  //   component:FashionComponent,
-  //   title:'Home Fashion'
-  // },
+ {
+     path:'projeler',
+     component:FashionComponent,
+     title:'Home Fashion'
+  },
   {
     path:'',
     component:BeautyComponent,
