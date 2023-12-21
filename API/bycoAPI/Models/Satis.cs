@@ -1,4 +1,6 @@
-﻿namespace bycoAPI.Models
+﻿using System.Numerics;
+
+namespace bycoAPI.Models
 {
     public class Satis
     {
@@ -7,6 +9,6 @@
         public int urun_id { get; set; }
         public DateTime tarih { get; set; }
         public int adet { get; set; }
-        public double fiyat { get; set; }
+        public BigInteger fiyat { get; set; }
     }
 }

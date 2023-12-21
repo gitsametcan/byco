@@ -7,6 +7,6 @@
         public int stok { get; set; }
         public string aciklama { get; set; }
         public string kategori { get; set; }
-        public int img { get; set; }
+        public string img { get; set; }
     }
 }

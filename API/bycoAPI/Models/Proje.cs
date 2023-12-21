@@ -9,6 +9,6 @@
         public string alan { get; set; }
         public string isveren { get; set; }
         public string aciklama { get; set; }
-        public int img { get; set; }
+        public string img { get; set; }
     }
 }

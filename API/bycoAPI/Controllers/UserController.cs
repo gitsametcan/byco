@@ -18,7 +18,7 @@ namespace bycoAPI.Controllers
             this.userService = userService;
         }
 
-        [HttpPost("GetUserById/{id}")]
+        [HttpGet("GetUserById/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var result = await userService.GetUserAsync(id);
