@@ -2,7 +2,7 @@
 {
     public class Proje
     {
-        public int id { get; set; }
+        public int proje_id { get; set; }
         public string ad { get; set; }
         public string lokasyon { get; set; }
         public string tamamlanma { get; set; }
