@@ -17,7 +17,7 @@ namespace bycoAPI.Services
 
             //Database'den geleni yazacaz
             return new User { 
-                id = 23, 
+                user_id = 23, 
                 ad = "Sam", 
                 email = "mail@mail.com", 
                 password = "jhghj" 
