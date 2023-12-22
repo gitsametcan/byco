@@ -29,8 +29,6 @@ namespace bycoAPI.Controllers
         [HttpPost("PostUser")]
         public async Task<ActionResult<Proje>> PostFirstItem(User user)
         {
-            //first.Id = Empty;
-
             return CreatedAtAction("Kayit", userService.UserKaydet(user).Data);
         }
     }

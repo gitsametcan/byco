@@ -1,10 +1,12 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bycoAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AdresController : ControllerBase {
         readonly IAdresService userService;
 
@@ -13,10 +15,18 @@ namespace bycoAPI.Controllers {
         }
 
         [HttpGet("GetAdresById/{id}")]
-        public async Task<ActionResult<Adresler>> GetFiyatById(int id) {
-            var result = await userService.GetAdreslerByIdAsync(id);
-
+        public ActionResult<IEnumerable<Adresler>> GetFiyatById(int id) {
+            List<Adresler> result = userService.GetUserAdresses(id);
             return result;
         }
+
+        [HttpPost("PostAdress/{id}")]
+        public async Task<ActionResult<Proje>> PostAdress(Adresler adres)
+        {
+            //first.Id = Empty;
+
+            return CreatedAtAction("Kayit", userService.ProjeKaydet(proje).Data);
+        }
+
     }
 }
