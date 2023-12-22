@@ -27,6 +27,12 @@ namespace bycoAPI
             builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddTransient<IUserServices, UserService>();
+            builder.Services.AddTransient<IProjectService, ProjectService>();
+            builder.Services.AddTransient<IAdresService, AdresService>();
+            builder.Services.AddTransient<IFiyatService, FiyatService>();
+            builder.Services.AddTransient<IOzellikService, OzellikService>();
+            builder.Services.AddTransient<ISatisService, SatisService>();
+            builder.Services.AddTransient<IUrunService, UrunService>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -47,6 +53,11 @@ namespace bycoAPI
                 };
             });
             builder.Services.AddAuthorization();
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
+            });
 
             var app = builder.Build();
 

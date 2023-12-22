@@ -1,32 +1,41 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using bycoAPI.Utils;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace bycoAPI.Services
 {
     public class ProjectService : IProjectService
     {
-
-        public Task<Proje> GetProjectByIdAsync(int id)
+        private readonly DbContexts _dbContexts;
+        public ProjectService(DbContexts dbContexts)
         {
-            return Task.FromResult(GetProjectFromDb(id));
+            _dbContexts = dbContexts;
         }
 
-        private static Proje GetProjectFromDb(int id)
+        public async Task<ActionResult<Proje>> GetProjectByIdAsync(int id)
         {
-
-            //Database'den geleni yazacaz
-            return new Proje { 
-                id = 23, 
-                ad = "bir",
-                lokasyon = "istanbul",
-                tamamlanma = "bugün",
-                alan = "biryer",
-                isveren = "biri",
-                aciklama = "bir tür proje",
-                img = "dosyayolu.png"
-            };
+            return await _dbContexts.Proje.FindAsync(id);
         }
 
-        
+        public async Task<ActionResult<IEnumerable<Proje>>> GetAllProjects()
+        {
+            if (_dbContexts.Proje == null)
+            {
+                return null;
+            }
+            return await _dbContexts.Proje.ToListAsync();
+        }
+
+        public DataResult<Proje> ProjeKaydet(Proje proje)
+        {
+            _dbContexts.Proje.Add(proje);
+            _dbContexts.SaveChangesAsync();
+
+            return new DataResult<Proje>(true, "", proje);
+        }
     }
 }

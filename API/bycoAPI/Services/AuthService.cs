@@ -6,23 +6,25 @@ namespace bycoAPI.Services
     public class AuthService : IAuthService
     {
         readonly ITokenService tokenService;
+        readonly IUserServices userServices;
 
-        public AuthService(ITokenService tokenService)
+        public AuthService(ITokenService tokenService, IUserServices userServices)
         {
             this.tokenService = tokenService;
+            this.userServices = userServices;
         }
         public async Task<LoginResp> LoginUserAsync(LoginReq request)
         {
             LoginResp response = new();
 
-            if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+            if (string.IsNullOrEmpty(request.email) || string.IsNullOrEmpty(request.password))
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            if (request.Username == "deneme" && request.Password == "123456")
+            if (userServices.CheckUserExist(request))
             {
-                var generatedTokenInformation = await tokenService.GenerateToken(new GenerateTokenReq { Username = request.Username });
+                var generatedTokenInformation = await tokenService.GenerateToken(new GenerateTokenReq { Username = request.email });
 
 
                 response.AuthenticateResult = true;

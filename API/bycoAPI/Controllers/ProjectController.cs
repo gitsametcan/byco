@@ -3,6 +3,8 @@ using bycoAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace bycoAPI.Controllers
 {
@@ -10,7 +12,8 @@ namespace bycoAPI.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        readonly IProjectService userService;
+        private readonly IProjectService userService;
+        private readonly DbContexts _dbContexts;
 
         public ProjectController(IProjectService userService)
         {
@@ -23,6 +26,21 @@ namespace bycoAPI.Controllers
             var result = await userService.GetProjectByIdAsync(id);
 
             return result;
+        }
+
+        [HttpGet("GetAllProjects")]
+        public async Task<ActionResult<IEnumerable<Proje>>> GetAllProject()
+        {
+            var result = await userService.GetAllProjects();
+            return result;
+        }
+
+        [HttpPost("PostProje")]
+        public async Task<ActionResult<Proje>> PostProje(Proje proje)
+        {
+            //first.Id = Empty;
+
+            return CreatedAtAction("Kayit",userService.ProjeKaydet(proje).Data);
         }
     }
 }

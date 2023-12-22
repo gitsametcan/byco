@@ -16,7 +16,7 @@ namespace bycoAPI.Services
 
             //Database'den geleni yazacaz
             return new Satis { 
-                id = 23,
+                satis_id = 23,
                 user_id = 23,
                 urun_id = 23,
                 tarih = DateTime.Now,

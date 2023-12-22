@@ -1,10 +1,19 @@
 ﻿using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using bycoAPI.Utils;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace bycoAPI.Services
 {
     public class UserService : IUserServices
     {
+
+        private readonly DbContexts _dbContexts;
+        public UserService(DbContexts dbContexts)
+        {
+            _dbContexts = dbContexts;
+        }
         public Task<User> GetUserAsync(int id)
         {
             User user = null;
@@ -12,16 +21,31 @@ namespace bycoAPI.Services
             return Task.FromResult(GetUserFromDb(id));
         }
 
-        private static User GetUserFromDb(int id)
+        private User GetUserFromDb(int id)
         {
 
-            //Database'den geleni yazacaz
-            return new User { 
-                user_id = 23, 
-                ad = "Sam", 
-                email = "mail@mail.com", 
-                password = "jhghj" 
-            };
+            User user = _dbContexts.Users
+            .FirstOrDefault(u => u.user_id == id);
+
+            return user;
+        }
+
+        public DataResult<User> UserKaydet(User user)
+        {
+            _dbContexts.Users.Add(user);
+            _dbContexts.SaveChangesAsync();
+
+            return new DataResult<User>(true, "", user);
+        }
+
+        public bool CheckUserExist(LoginReq loginReq)
+        {
+            if(_dbContexts.Users == null) return false;
+            User user = _dbContexts.Users
+            .FirstOrDefault(u => u.email == loginReq.email
+            && u.password == loginReq.password);
+
+            return true;
         }
     }
 }
