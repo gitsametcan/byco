@@ -21,7 +21,7 @@ namespace bycoAPI.Controllers {
         }
 
         [HttpPost("PostAdress/{id}")]
-        public async Task<ActionResult<Proje>> PostAdress(Adresler adres)
+        public async Task<ActionResult<Adresler>> PostAdress(Adresler adres)
         {
             //first.Id = Empty;
 

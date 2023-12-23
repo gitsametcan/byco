@@ -1,5 +1,5 @@
 using bycoAPI.Models;
-using bycoAPI.Utils;
+using Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bycoAPI.Interfaces
@@ -7,6 +7,6 @@ namespace bycoAPI.Interfaces
     public interface IAdresService
     {
         public Task<ActionResult<IEnumerable<Adresler>>> GetUserAdresses(int user_id);
-        public DataResult<Proje> AdresKaydet(Proje proje);
+        public DataResult<Adresler> AdresKaydet(Adresler adres);
     }
 }

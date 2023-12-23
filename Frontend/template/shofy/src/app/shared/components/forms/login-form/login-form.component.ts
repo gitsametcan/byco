@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { Services } from 'src/app/httpservices/services';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-form',
@@ -10,6 +12,7 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 export class LoginFormComponent {
 
   isShowPass = false;
+  benimUrl = "https://localhost:44313/api";
 
   handleShowPass () {
     this.isShowPass = !this.isShowPass;
@@ -17,6 +20,7 @@ export class LoginFormComponent {
 
   public loginForm!: FormGroup;
   public formSubmitted = false;
+  //public httpServices: Services;
 
   constructor(private toastrService: ToastrService) { }
 
@@ -37,6 +41,43 @@ export class LoginFormComponent {
       this.loginForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
     }
+  }
+
+  giris(email:string,password:string){
+    httpServices: Services;
+    console.log(email +"    "+password);
+    this.sendRequest('Auth/TryConnection','GET')
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+
+
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
   }
 
   get email() { return this.loginForm.get('email') }

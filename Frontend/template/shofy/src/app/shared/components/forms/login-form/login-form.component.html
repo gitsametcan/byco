@@ -2,16 +2,16 @@
   <div class="tp-login-input-wrapper">
     <div class="tp-login-input-box">
         <div class="tp-login-input">
-          <input id="email" type="email" placeholder="shofy@mail.com" formControlName="email">
+          <input id="email" type="email" placeholder="info@byco.com.tr" formControlName="email">
         </div>
         <div class="tp-login-input-title">
-          <label for="email">Your Email</label>
+          <label for="email">Mail Adresiniz</label>
         </div>
       <span
         *ngIf="(email?.hasError('required') && email?.touched) || (email?.hasError('email') && email?.dirty) || (formSubmitted && !email?.value)"
         class="text-danger"
       >
-        Email is required and must be a valid email address
+        Email adresinizi girmeniz gerekmektedir.
       </span>
     </div>
     <div class="tp-login-input-box">
@@ -38,7 +38,7 @@
           </span>
        </div>
         <div class="tp-login-input-title">
-          <label for="tp_password">Password</label>
+          <label for="tp_password">Şifreniz</label>
         </div>
       </div>
       <span
@@ -49,20 +49,20 @@
         "
         class="text-danger"
       >
-        Password is required and must be a 6 character
+        En az 6 karakter
       </span>
     </div>
   </div>
   <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
     <div class="tp-login-remeber">
         <input id="remeber" type="checkbox">
-        <label for="remeber">Remember me</label>
+        <label for="remeber">Beni Hatırla</label>
     </div>
     <div class="tp-login-forgot">
-        <a routerLink="/pages/forgot">Forgot Password?</a>
+        <a routerLink="/pages/forgot">Şifremi Unuttum</a>
     </div>
   </div>
   <div class="tp-login-bottom">
-    <button type="submit" class="tp-login-btn w-100">Login</button>
+    <button type="submit" class="tp-login-btn w-100" (click)="giris(email?.value,password?.value)">Giriş</button>
   </div>
 </form>

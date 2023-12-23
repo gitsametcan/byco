@@ -1,7 +1,7 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using bycoAPI.Utils;
+using Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace bycoAPI.Services {

@@ -26,5 +26,19 @@ namespace bycoAPI.Controllers
 
             return result;
         }
+
+        [HttpGet("TryConnection")]
+        [AllowAnonymous]
+        public async Task<ActionResult<LoginResp>> TryConnection()
+        {
+            
+                LoginResp loginResp = new LoginResp();
+                loginResp.AuthenticateResult = true;
+                loginResp.AuthToken = "deneme";
+                loginResp.AccessTokenExpireDate = DateTime.Now;
+                return loginResp;
+            
+            
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using bycoAPI.Models;
-using bycoAPI.Utils;
+using Utils;
 
 namespace bycoAPI.Interfaces
 {

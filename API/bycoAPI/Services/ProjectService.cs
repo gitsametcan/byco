@@ -1,6 +1,6 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
-using bycoAPI.Utils;
+using Utils;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

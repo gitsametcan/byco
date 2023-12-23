@@ -1,6 +1,6 @@
 ﻿using bycoAPI.Interfaces;
 using bycoAPI.Models;
-using bycoAPI.Utils;
+using Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 
