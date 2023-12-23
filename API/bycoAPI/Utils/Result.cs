@@ -1,21 +1,19 @@
-﻿namespace bycoAPI.Utils
-{
-    public class Result : IResult
-    {
 
-        public bool Success { get; }
+namespace Utils;
 
-        public string Message { get; }
+public class Result : IResult{
 
-        public Result(bool Success)
-        {
-            this.Success = Success;
-            this.Message = " ";
-        }
+    public bool Success {get;}
 
-        public Result(bool Success, string Message) : this(Success)
-        {
-            this.Message = Message;
-        }
-    }
+    public string Message {get;}
+
+    public Result(bool Success) {
+        this.Success = Success;
+        this.Message = " ";
+    } 
+
+    public Result(bool Success, string Message) : this(Success) {
+        this.Message = Message;
+    } 
+    
 }

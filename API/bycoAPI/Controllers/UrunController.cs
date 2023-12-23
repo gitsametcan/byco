@@ -8,19 +8,54 @@ namespace bycoAPI.Controllers
     [ApiController]
     public class UrunController : ControllerBase
     {
-        readonly IUrunService userService;
+        readonly IUrunService _service;
 
-        public UrunController(IUrunService userService)
+        public UrunController(IUrunService service)
         {
-            this.userService = userService;
+            _service = service;
         }
 
-        [HttpGet("GetUrunById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<Urun>> GetUrunById(int id)
         {
-            var result = await userService.GetUrunByIdAsync(id);
+            var result = await _service.GetUrunByIdAsync(id);
 
             return result;
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<List<Urun>>> GetAll()
+        {
+            var result = await _service.GetAllUrun();
+
+            return result;
+        }
+
+        [HttpPost("Add")]
+        public async Task<ActionResult> AddUrun([FromBody] NewUrunReq req) {
+            var result = await _service.AddUrun(req);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPut("Update/{urun_id}")]
+        public async Task<ActionResult> UpdateUrun(int urun_id, [FromBody] Urun body) {
+            var result = await _service.UpdateUrun(urun_id, body);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete("Delete/{urun_id}")]
+        public async Task<ActionResult> DeleteUrun(int urun_id) {
+            var result = await _service.DeleteUrun(urun_id);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
