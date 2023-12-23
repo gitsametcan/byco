@@ -13,7 +13,7 @@ namespace bycoAPI.Services {
             _dbContexts = dbContexts;
         }
 
-        public async Task<IEnumerable<Adresler>> GetUserAdresses(int user_id)
+        public async Task<List<Adresler>> GetUserAdresses(int user_id)
         {
             if (_dbContexts.Adresler == null)
             {
@@ -23,7 +23,7 @@ namespace bycoAPI.Services {
             return adresses;
         }
 
-        public DataResult<Proje> AdresKaydet(Adresler adres)
+        public DataResult<Adresler> AdresKaydet(Adresler adres)
         {
             _dbContexts.Adresler.Add(adres);
             _dbContexts.SaveChangesAsync();

@@ -15,9 +15,9 @@ namespace bycoAPI.Controllers {
         }
 
         [HttpGet("GetAdresById/{id}")]
-        public ActionResult<IEnumerable<Adresler>> GetFiyatById(int id) {
-            List<Adresler> result = userService.GetUserAdresses(id);
-            return result;
+        public async Task<ActionResult<List<Adresler>>> GetFiyatById(int id) {
+            var result = await userService.GetUserAdresses(id);
+            return Ok(result);
         }
 
         [HttpPost("PostAdress/{id}")]
@@ -25,7 +25,7 @@ namespace bycoAPI.Controllers {
         {
             //first.Id = Empty;
 
-            return CreatedAtAction("Kayit", userService.ProjeKaydet(proje).Data);
+            return CreatedAtAction("Kayit", userService.AdresKaydet(adres).Data);
         }
 
     }
