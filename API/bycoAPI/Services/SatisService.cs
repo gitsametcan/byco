@@ -74,6 +74,9 @@ namespace bycoAPI.Services
             return _context.Satis.SingleOrDefault(t => t.satis_id == id);
         }
 
-        
+        public Task<List<Satis>> GetAll()
+        {
+            return Task.FromResult(_context.Satis.ToList());
+        }
     }
 }

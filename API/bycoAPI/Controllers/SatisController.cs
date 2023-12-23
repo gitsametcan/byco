@@ -15,11 +15,17 @@ namespace bycoAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("GetSatisById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<Satis>> GetSatisById(int id)
         {
             var result = await _service.GetSatisByIdAsync(id);
 
+            return result;
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<List<Satis>>> GetAll() {
+            var result = await _service.GetAll();
             return result;
         }
 
