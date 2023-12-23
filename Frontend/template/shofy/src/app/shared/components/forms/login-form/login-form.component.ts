@@ -44,7 +44,6 @@ export class LoginFormComponent {
   }
 
   giris(email:string,password:string){
-    httpServices: Services;
     console.log(email +"    "+password);
     this.sendRequest('Auth/TryConnection','GET')
     .then(response => {

@@ -35,8 +35,8 @@ export const menu_data:IMenuItem[] = [
   },
   {
     id:2,
-    link:'/shop',
-    title:'Ticaret',
+    link:'/pages/hizmetler',
+    title:'Hizmetlerimiz',
     mega_menu:false,
     // shop_mega_menus:[
     //   {
@@ -81,70 +81,11 @@ export const menu_data:IMenuItem[] = [
   },
   {
     id:3,
-    link:'/pages/hizmetler',
-    title:'Hizmetlerimiz',
-    mega_menu:false,
-    // product_menus:[
-    //   {
-    //     id:1,
-    //     title:'Ticaret Sayfaları',
-    //     link:'/shop',
-    //     dropdown_menus:[
-    //       {title:'Only Categories',link:'/shop/shop-category'},
-    //       {title:'Shop Grid with Sidebar',link:'/shop/shop-filter-offcanvas'},
-    //       {title:'Shop Grid',link:'/shop'},
-    //       {title:'Categories',link:'/shop/shop-category'},
-    //       {title:'Shop List',link:'/shop/shop-list'},
-    //       {title:'Product Details',link:'/shop/shop-details'},
-    //     ]
-    //   },
-    //   {
-    //     id:2,
-    //     title:'Ürünler',
-    //     link:'/shop',
-    //     dropdown_menus:[
-    //       {title:'Product Simple',link:'/shop/shop-details'},
-    //       {title:'With Video',link:'/shop/shop-details-with-video'},
-    //       {title:'With Countdown Timer',link:'/shop/shop-details-with-countdown'},
-    //       {title:'Variations Swatches',link:'/shop/shop-details'},
-    //       {title:'List View',link:'/shop/shop-details-list'},
-    //       {title:'Details Gallery',link:'/shop/shop-details-gallery'}
-    //     ]
-    //   },
-    //   {
-    //     id:3,
-    //     title:'E-Ticaret',
-    //     link:'/shop',
-    //     dropdown_menus:[
-    //       {title:'Shopping Cart',link:'/shop/cart'},
-    //       {title:'Track Your Order',link:'/shop/order'},
-    //       {title:'Compare',link:'/shop/compare'},
-    //       {title:'Wishlist',link:'/shop/wishlist'},
-    //       {title:'Checkout',link:'/pages/checkout'},
-    //       {title:'My account',link:'/pages/profile'}
-    //     ]
-    //   },
-    //   {
-    //     id:4,
-    //     title:'Daha Fazla Sayfa',
-    //     link:'/shop',
-    //     dropdown_menus:[
-    //       {title:'About',link:'/pages/about'},
-    //       {title:'Login',link:'/pages/login'},
-    //       {title:'Register',link:'/pages/register'},
-    //       {title:'Forgot Password',link:'/pages/forgot'},
-    //       {title:'404 Error',link:'/pages/404'}
-    //     ]
-    //   },
-    // ]
-  },
-  {
-    id:4,
     link:'/anasayfa/projeler',
     title:'Projeler',
   },
   {
-    id:5,
+    id:4,
     link:'/pages/hakkimizda',
     title:'Hakkımızda',
     drop_down:false,
@@ -160,6 +101,12 @@ export const menu_data:IMenuItem[] = [
     link:'/pages/contact',
     title:'İletişim',
   },
+  {
+    id:6,
+    link:'/shop',
+    title:'Ticaret',
+    mega_menu:false
+  }
 ]
 
 // mobile menu data

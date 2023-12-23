@@ -1,5 +1,8 @@
-﻿namespace bycoAPI.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace bycoAPI.Models
 {
+    [Keyless]
     public class Urun
     {
         public int urun_id { get; set; }

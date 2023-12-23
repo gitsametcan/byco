@@ -1,7 +1,9 @@
-﻿using System.Numerics;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace bycoAPI.Models
 {
+    [Keyless]
     public class Satis
     {
         public int satis_id { get; set; }
@@ -9,6 +11,6 @@ namespace bycoAPI.Models
         public int urun_id { get; set; }
         public DateTime tarih { get; set; }
         public int adet { get; set; }
-        public BigInteger fiyat { get; set; }
+        public long fiyat { get; set; }
     }
 }

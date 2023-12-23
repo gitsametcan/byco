@@ -13,9 +13,10 @@ import { CartService } from '@/shared/services/cart.service';
   styleUrls: ['./beauty-special-products.component.scss']
 })
 export class BeautySpecialProductsComponent {
+    benimUrl = "https://localhost:44313/api";
 
     public popular_prd: IProduct[] = [];
-    public projeler= projeler_data;
+    public projeler:Iproje[] = [];
     public projeDevam: Iproje[] = [];
   
     constructor(public cartService: CartService, public productService: ProductService) {
@@ -26,6 +27,7 @@ export class BeautySpecialProductsComponent {
   
   
     ngOnInit(): void {
+        this.GetAllProjects();
       for (let i = 0; i < projeler_data.length; i++) {
           if (projeler_data[i].tamamlanma === "devam") {
               this.projeDevam.push(projeler_data[i]);
@@ -69,5 +71,41 @@ export class BeautySpecialProductsComponent {
         },
       });
     }
+
+    GetAllProjects(){
+        this.sendRequest('Project/GetAllProjects','GET')
+        .then(response => {
+            this.projeler = response;
+          console.log(response);
+        })
+        .catch(err => {
+          console.error("Error: " + err);
+        })
+    
+    
+      }
+    
+      sendRequest(url: string, method: string, data?:any): Promise<any> {
+        
+        return fetch(`${this.benimUrl}/${url}`, {
+          method: method,
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: JSON.stringify(data), 
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+          return response.json();
+      })
+      }
 
 }

@@ -7,11 +7,13 @@ namespace bycoAPI.Services
     {
         readonly ITokenService tokenService;
         readonly IUserServices userServices;
+        readonly DbContexts dbContexts;
 
-        public AuthService(ITokenService tokenService, IUserServices userServices)
+        public AuthService(ITokenService tokenService, IUserServices userServices, DbContexts dbContexts)
         {
             this.tokenService = tokenService;
             this.userServices = userServices;
+            this.dbContexts = dbContexts;
         }
         public async Task<LoginResp> LoginUserAsync(LoginReq request)
         {
@@ -26,10 +28,19 @@ namespace bycoAPI.Services
             {
                 var generatedTokenInformation = await tokenService.GenerateToken(new GenerateTokenReq { Username = request.email });
 
+                User user = dbContexts.Users.FirstOrDefault(x => x.email == request.email&&x.password == request.password);
 
                 response.AuthenticateResult = true;
                 response.AuthToken = generatedTokenInformation.Token;
                 response.AccessTokenExpireDate = generatedTokenInformation.TokenExpireDate;
+
+                AuthRecord authRecord = new AuthRecord();
+                authRecord.tokenexpiredate = generatedTokenInformation.TokenExpireDate;
+                authRecord.user_id = user.user_id;
+                authRecord.token=response.AuthToken;
+                dbContexts.AuthRecord.Add(authRecord);
+                dbContexts.SaveChangesAsync();
+
             }
 
             return response;

@@ -3,6 +3,7 @@ using bycoAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Utils;
 
 namespace bycoAPI.Controllers
 {
@@ -26,8 +27,9 @@ namespace bycoAPI.Controllers
             return result;
         }
 
+        [AllowAnonymous]
         [HttpPost("PostUser")]
-        public async Task<ActionResult<Proje>> PostFirstItem(User user)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
             return CreatedAtAction("Kayit", userService.UserKaydet(user).Data);
         }

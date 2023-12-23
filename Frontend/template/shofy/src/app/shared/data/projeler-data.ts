@@ -126,7 +126,7 @@ const projeler_data: Iproje[] = [
         ad: "Roya Nova",
         lokasyon: "Ümraniye / İstanbul",
         tamamlanma: "devam",
-        alan: "28.850",
+        alan: "28.850m2",
         isveren: "Roya Yapı",
         aciklama: "",
         img: "/assets/img/devamProje/projedevam5.jpg",

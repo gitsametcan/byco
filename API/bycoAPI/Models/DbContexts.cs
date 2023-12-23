@@ -9,6 +9,7 @@ namespace bycoAPI.Models
         {
 
         }
+        public DbSet<AuthRecord> AuthRecord { get; set; } = null;
         public DbSet<Adresler> Adresler { get; set; } = null!;
         public DbSet<Fiyat> Fiyat { get; set; } = null!;
         public DbSet<Ozellik> Ozellik { get; set; } = null!;
