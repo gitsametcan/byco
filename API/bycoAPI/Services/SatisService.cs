@@ -70,8 +70,10 @@ namespace bycoAPI.Services
             );
         }
 
+
         private Satis GetSatisFromDb(int id) {
             return _context.Satis.SingleOrDefault(t => t.satis_id == id);
+
         }
 
         public Task<List<Satis>> GetAll()

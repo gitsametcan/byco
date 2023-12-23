@@ -1,5 +1,8 @@
-﻿namespace bycoAPI.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace bycoAPI.Models
 {
+    [Keyless]
     public class User
     {
         public int user_id { get; set; }

@@ -1,7 +1,11 @@
-﻿namespace bycoAPI.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace bycoAPI.Models
 {
+    [Keyless]
     public class Proje
     {
+        
         public int proje_id { get; set; }
         public string ad { get; set; }
         public string lokasyon { get; set; }

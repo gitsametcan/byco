@@ -1,3 +1,4 @@
+
 namespace Utils;
 
 public class DataResult<T> : Result {

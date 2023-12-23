@@ -1,3 +1,4 @@
+
 namespace Utils;
 
 public class Result : IResult{

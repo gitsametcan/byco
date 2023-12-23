@@ -21,7 +21,7 @@ namespace bycoAPI.Services
         private Urun GetUrunFromDb(int id)
         {
 
-            //Database'den geleni yazacaz
+
             return _context.Urun.SingleOrDefault(t => t.urun_id == id);
         }
 
@@ -34,6 +34,7 @@ namespace bycoAPI.Services
                 img = req.img,
                 kategori = req.kategori,
                 stok = req.stok
+
             };
             _context.Urun.Add(temp);
             _context.SaveChangesAsync();
