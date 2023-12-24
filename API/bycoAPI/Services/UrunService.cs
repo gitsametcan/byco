@@ -71,5 +71,79 @@ namespace bycoAPI.Services
             _context.SaveChangesAsync();
             return Task.FromResult(new Result(true, "Deleted Satis")); 
         }
+
+        public Task<UrunResponse> GetByIdResponse(int urun_id)
+        {
+            var tempUrun = GetUrunFromDb(urun_id);
+            UrunResponse ur = new();
+            ur.urun_id = tempUrun.urun_id;
+            ur.sku = "SADG34F2GOB"; //random
+            ur.img = tempUrun.img;
+            ur.title = tempUrun.ad;
+            ur.slug = tempUrun.ad.Replace(' ', '-').ToLower();
+            ur.unit = tempUrun.stok.ToString();
+            ur.imageurls = [];
+            ur.parent = "";
+            ur.children = "";
+            ur.price = _context.Fiyat.SingleOrDefault(t=> t.urun_id == urun_id).fiyat;
+            ur.discount = 0.0;
+            ur.quantity = tempUrun.stok;
+            ur.brand = new BrandModel
+            {
+                name = "BYCO"
+            };
+            ur.category = new CategoryModel
+            {
+                name = ""
+            };
+            if (tempUrun.stok > 0) {
+                ur.status = "Stokta";
+            } else {
+                ur.status = "Stokta Yok";
+            }
+            ur.producttype = "";
+            ur.description = tempUrun.aciklama;
+            ur.additionalinformation = [];
+            return Task.FromResult(ur);
+        }
+
+        public Task<List<UrunResponse>> GetAllUrunResponse()
+        {
+            var urunList = _context.Urun.ToList();
+            List<UrunResponse> asresponse = [];
+            foreach (var u in urunList) {
+                UrunResponse ur = new();
+                ur.urun_id = u.urun_id;
+                ur.sku = "SADG34F2GOB"; //random
+                ur.img = u.img;
+                ur.title = u.ad;
+                ur.slug = u.ad.Replace(' ', '-').ToLower();
+                ur.unit = u.stok.ToString();
+                ur.imageurls = [];
+                ur.parent = u.kategori;
+                ur.children = "";
+                ur.price = _context.Fiyat.SingleOrDefault(t=> t.urun_id == u.urun_id).fiyat;
+                ur.discount = 0.0;
+                ur.quantity = u.stok;
+                ur.brand = new BrandModel
+                {
+                    name = "BYCO"
+                };
+                ur.category = new CategoryModel
+                {
+                    name = u.kategori
+                };
+                if (u.stok > 0) {
+                    ur.status = "Stokta";
+                } else {
+                    ur.status = "Stokta Yok";
+                }
+                ur.producttype = "";
+                ur.description = u.aciklama;
+                ur.additionalinformation = [];
+                asresponse.Add(ur);
+            }
+            return Task.FromResult(asresponse);
+        }
     }
 }

@@ -31,6 +31,18 @@ namespace bycoAPI.Controllers
             return result;
         }
 
+        [HttpGet("GetByIdResponse/{urun_id}")]
+        public async Task<UrunResponse> GetByIdResponse(int urun_id) {
+            var result = await _service.GetByIdResponse(urun_id);
+            return result;
+        }
+
+        [HttpGet("GetAllResponse")]
+        public async Task<List<UrunResponse>> GetAllUrunResponse() {
+            var result = await _service.GetAllUrunResponse();
+            return result;
+        }
+
         [HttpPost("Add")]
         public async Task<ActionResult> AddUrun([FromBody] NewUrunReq req) {
             var result = await _service.AddUrun(req);
