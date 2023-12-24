@@ -34,6 +34,7 @@ export class FashionPopularProductsComponent {
   public popular_prd: IProduct[] = [];
   public projeler:Iproje[] = [];
   public projeDevam: Iproje[] = [];
+  public projeBiten: Iproje[] = [];
 
   constructor(public cartService: CartService, public productService: ProductService) {
     this.productService.products.subscribe((products) => {
@@ -47,6 +48,11 @@ export class FashionPopularProductsComponent {
     for (let i = 0; i < projeler_data.length; i++) {
         if (projeler_data[i].tamamlanma === "devam") {
             this.projeDevam.push(projeler_data[i]);
+        }
+      }
+      for (let i = 0; i < projeler_data.length; i++) {
+        if (projeler_data[i].tamamlanma != "devam") {
+            this.projeBiten.push(projeler_data[i]);
         }
       }
     new Swiper('.tp-category-slider-active-2', {

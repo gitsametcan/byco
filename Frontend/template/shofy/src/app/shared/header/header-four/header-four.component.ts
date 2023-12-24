@@ -10,19 +10,19 @@ import { UtilsService } from '@/shared/services/utils.service';
 })
 export class HeaderFourComponent {
 
-  constructor(
-    public cartService: CartService,
-    public wishlistService: WishlistService,
-    public utilsService: UtilsService,
-  ) {}
-
-  sticky : boolean = false;
-  @HostListener('window:scroll',['$event']) onscroll () {
-    if(window.scrollY > 80){
-      this.sticky = true
-    }
-    else{
-      this.sticky = false
-    }
-  }
+    constructor(
+        public cartService: CartService,
+        public wishlistService: WishlistService,
+        public utilsService: UtilsService,
+      ) {}
+    
+      sticky : boolean = false;
+      @HostListener('window:scroll',['$event']) onscroll () {
+        if(window.scrollY > 80){
+          this.sticky = true
+        }
+        else{
+          this.sticky = false
+        }
+      }
 }

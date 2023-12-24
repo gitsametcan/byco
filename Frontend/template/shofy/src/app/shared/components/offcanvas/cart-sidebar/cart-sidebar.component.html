@@ -3,7 +3,7 @@
     <div class="cartmini__top-wrapper">
       <div class="cartmini__top p-relative">
         <div class="cartmini__top-title">
-          <h4>Shopping cart</h4>
+          <h4>Sepetim</h4>
         </div>
         <div class="cartmini__close">
           <button (click)="cartService.handleOpenCartSidebar()" type="button" class="cartmini__close-btn cartmini-close-btn">
@@ -34,7 +34,7 @@
                 }}
               </span>
               <span *ngIf="!item.discount && item.orderQuantity" class="cartmini__price">
-                ${{ (item.price * item.orderQuantity).toFixed(2) }}
+                {{ (item.price * item.orderQuantity).toFixed(2) }} TL
               </span>
               <span class="cartmini__quantity">{{ ' ' }}x{{ item.orderQuantity }}</span>
             </div>
@@ -47,18 +47,18 @@
       <!-- if no item in cart  -->
       <div *ngIf="cartService.getCartProducts().length === 0" class="cartmini__empty text-center">
         <img src="/assets/img/product/cartmini/empty-cart.png" alt="empty-cart-img" />
-        <p>Your Cart is empty</p>
-        <a routerLink="/shop" class="tp-btn">Go to Shop</a>
+        <p>Sepetinizde ürün bulunmuyor</p>
+        <a routerLink="/shop" class="tp-btn">Alışverişe Devam Et</a>
       </div>
     </div>
     <div *ngIf="cartService.getCartProducts().length > 0" class="cartmini__checkout">
       <div class="cartmini__checkout-title mb-30">
-        <h4>Subtotal:</h4>
-        <span>${{ cartService.totalPriceQuantity().total.toFixed(2) }}</span>
+        <h4>Ara Toplam:</h4>
+        <span>{{ cartService.totalPriceQuantity().total.toFixed(2) }} TL</span>
       </div>
       <div class="cartmini__checkout-btn">
-        <a routerLink="/pages/cart" (click)="cartService.handleOpenCartSidebar()" class="tp-btn mb-10 w-100">view cart</a>
-        <a routerLink="/pages/checkout" (click)="cartService.handleOpenCartSidebar()" class="tp-btn tp-btn-border w-100">checkout</a>
+        <a routerLink="/pages/cart" (click)="cartService.handleOpenCartSidebar()" class="tp-btn mb-10 w-100">Sepete Git</a>
+        <a routerLink="/pages/checkout" (click)="cartService.handleOpenCartSidebar()" class="tp-btn tp-btn-border w-100">Alışverişi Tamamla</a>
       </div>
     </div>
   </div>

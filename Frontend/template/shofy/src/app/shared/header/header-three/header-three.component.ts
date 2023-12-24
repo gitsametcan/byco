@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, HostListener } from '@angular/core';
 import { CartService } from '@/shared/services/cart.service';
 import { WishlistService } from '@/shared/services/wishlist.service';
