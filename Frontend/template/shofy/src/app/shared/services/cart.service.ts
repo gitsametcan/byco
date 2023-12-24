@@ -25,8 +25,8 @@ export class CartService {
   // add_cart_product
   addCartProduct(payload: IProduct) {
     const isExist = state.cart_products.some((i: IProduct) => i.id === payload.id);
-    if (payload.status === 'out-of-stock' || payload.quantity === 0) {
-      this.toastrService.error(`Out of stock ${payload.title}`);
+    if (payload.status === 'tükendi' || payload.quantity === 0) {
+      this.toastrService.error(`Tükendi ${payload.title}`);
     }
     else if (!isExist) {
       const newItem = {
@@ -34,7 +34,7 @@ export class CartService {
         orderQuantity: 1,
       };
       state.cart_products.push(newItem);
-      this.toastrService.success(`${payload.title} added to cart`);
+      this.toastrService.success(`${payload.title} sepete eklendi`);
     } else {
       state.cart_products.map((item: IProduct) => {
         if (item.id === payload.id) {
@@ -44,7 +44,7 @@ export class CartService {
                 this.orderQuantity !== 1
                   ? this.orderQuantity + item.orderQuantity
                   : item.orderQuantity + 1;
-              this.toastrService.success(`${this.orderQuantity} ${item.title} added to cart`);
+              this.toastrService.success(`${this.orderQuantity} ${item.title} sepete eklendi`);
             } else {
               this.toastrService.success(`No more quantity available for this product!`);
               this.orderQuantity = 1;
@@ -118,14 +118,14 @@ export class CartService {
     state.cart_products = state.cart_products.filter(
       (p: IProduct) => p.id !== payload.id
     );
-    this.toastrService.error(`${payload.title} remove to cart`);
+    this.toastrService.error(`${payload.title} sepetten çıkarıldı`);
     localStorage.setItem("cart_products", JSON.stringify(state.cart_products));
   };
 
   // clear cart
   clear_cart() {
     const confirmMsg = window.confirm(
-      "Are you sure deleted your all cart items ?"
+      "Tüm ürünleri silmek istediğinizden emin misiniz?"
     );
     if (confirmMsg) {
       state.cart_products = [];

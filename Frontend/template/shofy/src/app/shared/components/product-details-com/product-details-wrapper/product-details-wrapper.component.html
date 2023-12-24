@@ -24,7 +24,7 @@
   </div>
   <p>
     {{ textMore ? product.description : (product.description.substring(0, 100) + '...') }}
-    <span (click)="handleTextToggle()">{{ textMore ? 'See less' : 'See more' }}</span>
+    <span (click)="handleTextToggle()">{{ textMore ? 'Daha az göster' : 'Daha fazla göster' }}</span>
   </p>
 
   <!-- price -->
@@ -32,18 +32,18 @@
     <div *ngIf="product.discount > 0">
       <span class="tp-product-details-price old-price">${{ product.price }}</span>
       <span class="tp-product-details-price new-price">
-        ${{ ((product.price || 0) - ((product.price || 0) * (product.discount || 0)) / 100).toFixed(2) }}
+        {{ ((product.price || 0) - ((product.price || 0) * (product.discount || 0)) / 100).toFixed(2) }} TL
       </span>
     </div>
     <span *ngIf="product.discount <= 0" class="tp-product-details-price old-price">
-      ${{ (product.price || 0).toFixed(2) }}
+      {{ (product.price || 0).toFixed(2) }} TL
     </span>
   </div>
 
   <!-- variations -->
   <div *ngIf="handleIsColorVariant(product)" class="tp-product-details-variation">
     <div class="tp-product-details-variation-item">
-      <h4 class="tp-product-details-variation-title">Color:</h4>
+      <h4 class="tp-product-details-variation-title">Kesitler:</h4>
       <div class="tp-product-details-variation-list">
         <button
           *ngFor="let item of product.imageURLs; let i = index"
@@ -67,7 +67,7 @@
   <div *ngIf="product?.offerDate?.endDate">
     <div class="tp-product-details-countdown d-flex align-items-center justify-content-between flex-wrap mt-25 mb-25">
     <h4 class="tp-product-details-countdown-title">
-      <i class="fa-solid fa-fire-flame-curved"></i> Flash Sale end in:
+      <i class="fa-solid fa-fire-flame-curved"></i> Kalan indirim süresi:
     </h4>
     <div
       class="tp-product-details-countdown-time"
@@ -80,7 +80,7 @@
 
   <!-- actions -->
   <div class="tp-product-details-action-wrapper">
-    <h3 class="tp-product-details-action-title">Quantity</h3>
+    <h3 class="tp-product-details-action-title">Adet</h3>
     <div class="tp-product-details-action-item-wrapper d-flex align-items-center">
        <div class="tp-product-details-quantity">
           <div class="tp-product-quantity mb-15 mr-15">
@@ -99,10 +99,10 @@
           </div>
        </div>
        <div class="tp-product-details-add-to-cart mb-15 w-100">
-          <button (click)="cartService.addCartProduct(product)" class="tp-product-details-add-to-cart-btn w-100">Add To Cart</button>
+          <button (click)="cartService.addCartProduct(product)" class="tp-product-details-add-to-cart-btn w-100">Sepete Ekle</button>
        </div>
     </div>
-    <a [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Buy Now</a>
+    <a [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Alışverişi Tamamla</a>
  </div>
 
  <div *ngIf="isShowBottom">
@@ -113,13 +113,13 @@
            <p>{{product.sku}}</p>
        </div>
        <div class="tp-product-details-query-item d-flex align-items-center">
-           <span>Category:  </span>
+           <span>Kategori:  </span>
            <p>{{product.parent}}</p>
        </div>
-       <div class="tp-product-details-query-item d-flex align-items-center">
+       <!-- <div class="tp-product-details-query-item d-flex align-items-center">
            <span>Tag: </span>
            <p>Android</p>
-       </div>
+       </div> -->
      </div>
    </div>
 
@@ -127,7 +127,7 @@
      <div class="tp-product-details-query">
      </div>
      <div class="tp-product-details-social">
-       <span>Share:</span>
+       <span>Takip edin</span>
        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
        <a href="#"><i class="fa-brands fa-twitter"></i></a>
        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -135,8 +135,8 @@
      </div>
      <div class="tp-product-details-msg mb-15">
        <ul>
-         <li>30 days easy returns</li>
-         <li>Order yours before 2.30pm for same day dispatch</li>
+         <li>15 gün içinde iade</li>
+         <li>Müşteri desteği</li>
        </ul>
      </div>
      <div class="tp-product-details-payment d-flex align-items-center flex-wrap justify-content-between">

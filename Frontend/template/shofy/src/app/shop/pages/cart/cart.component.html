@@ -3,15 +3,15 @@
 <!-- header end -->
 
 <!-- breadcrumb area start -->
-<app-breadcrumb-one title="Shopping Cart" subtitle="Shopping Cart"></app-breadcrumb-one>
+<app-breadcrumb-one title="Sepetim" subtitle="Sepet"></app-breadcrumb-one>
 <!-- breadcrumb area end -->
 
 <!-- cart area start -->
 <section class="tp-cart-area pb-120">
   <div class="container">
     <div *ngIf="cartService.getCartProducts().length === 0" class="text-center pt-50">
-      <h3>No Cart Items Found</h3>
-      <a routerLink="/shop" class="tp-cart-checkout-btn mt-20">Continue Shopping</a>
+      <h3>Sepetiniz Boş</h3>
+      <a routerLink="/shop" class="tp-cart-checkout-btn mt-20">Alışverişe Devam Edin</a>
     </div>
     <div *ngIf="cartService.getCartProducts().length > 0" class="row">
       <div class="col-xl-9 col-lg-8">
@@ -19,9 +19,9 @@
           <table>
             <thead>
               <tr>
-                <th colspan="2" class="tp-cart-header-product">Product</th>
-                <th class="tp-cart-header-price">Price</th>
-                <th class="tp-cart-header-quantity">Quantity</th>
+                <th colspan="2" class="tp-cart-header-product">Ürün</th>
+                <th class="tp-cart-header-price">Fiyat</th>
+                <th class="tp-cart-header-quantity">Adet</th>
                 <th></th>
               </tr>
             </thead>
@@ -38,7 +38,7 @@
                   <a [routerLink]="['/shop/shop-details', item.id]">{{ item.title }}</a>
                 </td>
                 <!-- price -->
-                <td class="tp-cart-price"><span>${{ item.price.toFixed(2) }}</span></td>
+                <td class="tp-cart-price"><span>{{ item.price.toFixed(2) }} TL</span></td>
                 <!-- quantity -->
                 <td class="tp-cart-quantity">
                   <div class="tp-product-quantity mt-10 mb-10">
@@ -62,7 +62,7 @@
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor"></path>
                     </svg>
-                    <span> Remove</span>
+                    <span> Sil</span>
                   </button>
                 </td>
               </tr>
@@ -71,7 +71,7 @@
         </div>
         <div class="tp-cart-bottom mr-30">
           <div class="row align-items-end">
-            <div class="col-xl-6 col-md-8">
+            <!-- <div class="col-xl-6 col-md-8">
               <div class="tp-cart-coupon">
                 <form (ngSubmit)="handleCouponSubmit()">
                   <div class="tp-cart-coupon-input-box">
@@ -83,10 +83,10 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
             <div class="col-xl-6 col-md-4">
               <div class="tp-cart-update text-md-end">
-                <button (click)="cartService.clear_cart()" type="button" class="tp-cart-update-btn">Clear Cart</button>
+                <button (click)="cartService.clear_cart()" type="button" class="tp-cart-update-btn">Sepeti Boşalt</button>
               </div>
             </div>
           </div>
@@ -95,34 +95,34 @@
       <div class="col-xl-3 col-lg-4 col-md-6">
         <div class="tp-cart-checkout-wrapper">
           <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
-            <span class="tp-cart-checkout-top-title">Subtotal</span>
+            <span class="tp-cart-checkout-top-title">Ara Toplam</span>
             <span class="tp-cart-checkout-top-price">
-              ${{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}}
+              {{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}} TL
             </span>
           </div>
           <div class="tp-cart-checkout-shipping">
-            <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
+            <h4 class="tp-cart-checkout-shipping-title">Kargolama</h4>
             <div class="tp-cart-checkout-shipping-option-wrapper">
               <div class="tp-cart-checkout-shipping-option">
                 <input id="flat_rate" type="radio" name="shipping">
-                <label (click)="handleShippingCost(20)" for="flat_rate">Flat rate: <span>$20.00</span></label>
+                <label (click)="handleShippingCost(20)" for="flat_rate">Kargo Ücreti: <span>20.00 TL</span></label>
               </div>
-              <div class="tp-cart-checkout-shipping-option">
+              <!-- <div class="tp-cart-checkout-shipping-option">
                 <input id="local_pickup" type="radio" name="shipping">
-                <label (click)="handleShippingCost(25)" for="local_pickup">Local pickup: <span> $25.00</span></label>
+                <label (click)="handleShippingCost(25)" for="local_pickup">Local pickup: <span> 25.00 TL</span></label>
               </div>
               <div class="tp-cart-checkout-shipping-option">
                 <input id="free_shipping" type="radio" name="shipping">
                 <label (click)="handleShippingCost('free')" for="free_shipping">Free shipping</label>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
-            <span>Total</span>
-            <span>${{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}}</span>
+            <span>Toplam</span>
+            <span>{{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}} TL</span>
           </div>
           <div class="tp-cart-checkout-proceed">
-            <a routerLink="/pages/checkout" class="tp-cart-checkout-btn w-100">Proceed to Checkout</a>
+            <a routerLink="/pages/checkout" class="tp-cart-checkout-btn w-100">Alışverişi Tamamla</a>
           </div>
         </div>
       </div>
@@ -133,5 +133,5 @@
 <!-- cart area start -->
 
 <!-- footer start -->
-<app-footer-one [primary_style]="true"></app-footer-one>
+<app-footer-two></app-footer-two>
 <!-- footer end -->

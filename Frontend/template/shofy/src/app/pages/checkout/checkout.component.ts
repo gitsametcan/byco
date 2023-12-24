@@ -35,10 +35,10 @@ export class CheckoutComponent {
 
   public countrySelectOptions = [
     { value: 'select-country', text: 'Select Country' },
-    { value: 'berlin-germany', text: 'Berlin Germany' },
-    { value: 'paris-france', text: 'Paris France' },
-    { value: 'tokiyo-japan', text: 'Tokiyo Japan' },
-    { value: 'new-york-us', text: 'New York US' },
+    { value: 'avrupa', text: 'Avrupa' },
+    { value: 'asya', text: 'Asya' },
+    { value: 'afrika', text: 'Afrika' },
+    { value: 'amerika', text: 'Amerika' },
   ];
 
   changeHandler(selectedOption: { value: string; text: string }) {
