@@ -15,7 +15,7 @@ namespace bycoAPI.Services
             }
             Satis temp = new()
             {
-                satis_id = req.satis_id,
+                satis_id = 0,
                 user_id = req.user_id,
                 urun_id = fiyat.urun_id,
                 adet = req.adet,
@@ -79,6 +79,18 @@ namespace bycoAPI.Services
         public Task<List<Satis>> GetAll()
         {
             return Task.FromResult(_context.Satis.ToList());
+        }
+
+        public async Task<Result> MakePurchase(Checkout checkout)
+        {
+            foreach (var s in checkout.satilan_urunler) {
+                var result = await AddSatis(s);
+                if (!result.Success) {
+                    return new Result(false, "BadRequest");
+                }
+            }
+
+            return new Result(true, "OK");
         }
     }
 }

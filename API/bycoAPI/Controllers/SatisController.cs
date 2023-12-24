@@ -14,6 +14,14 @@ namespace bycoAPI.Controllers
         {
             _service = service;
         }
+        [HttpPost("MakePurchase")]
+        public async Task<ActionResult> MakePurchase([FromBody]Checkout checkout) {
+            var result = await _service.MakePurchase(checkout);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
 
         [HttpGet("GetById/{id}")]
         public async Task<ActionResult<Satis>> GetSatisById(int id)
