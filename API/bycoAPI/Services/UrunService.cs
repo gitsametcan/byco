@@ -79,6 +79,16 @@ namespace bycoAPI.Services
             var kat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == tempUrun.kategori_id);
             ur.parent = kat.ad;
             ur.imageURLs = [];
+            ImgUrlModel imgurlmodel = new()
+            {
+                color = new()
+                {
+                    name = "",
+                    clrcode = "#111111"
+                },
+                img = ur.img
+            };
+            ur.imageURLs.Add(imgurlmodel);
             ur.children = kat.ad;
             ur.price = tempUrun.fiyat;
             ur.discount = 0.0;
@@ -124,6 +134,16 @@ namespace bycoAPI.Services
                 var kat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == u.kategori_id);
                 ur.parent = kat.ad;
                 ur.imageURLs = [];
+                ImgUrlModel imgurlmodel = new()
+                {
+                    color = new()
+                    {
+                        name = "",
+                        clrcode = "#111111"
+                    },
+                    img = ur.img
+                };
+                ur.imageURLs.Add(imgurlmodel);
                 ur.children = kat.ad;
                 ur.price = u.fiyat;
                 ur.discount = 0.0;
