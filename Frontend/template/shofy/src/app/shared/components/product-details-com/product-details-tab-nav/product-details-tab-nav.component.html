@@ -1,11 +1,11 @@
 <div class="tp-product-details-tab-nav tp-tab">
   <nav>
      <div class="nav nav-tabs justify-content-center p-relative tp-product-tab" id="navPresentationTab" role="tablist">
-       <button (click)="handleActiveMarker($event)" class="nav-link" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">Description</button>
+       <button (click)="handleActiveMarker($event)" class="nav-link" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">Açıklama</button>
 
-       <button (click)="handleActiveMarker($event)" class="nav-link active" id="nav-addInfo-tab" #navActive data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">Additional information</button>
+       <button (click)="handleActiveMarker($event)" class="nav-link active" id="nav-addInfo-tab" #navActive data-bs-toggle="tab" data-bs-target="#nav-addInfo" type="button" role="tab" aria-controls="nav-addInfo" aria-selected="false">Detaylı Özellikler</button>
 
-       <button (click)="handleActiveMarker($event)" class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews ({{product.reviews?.length}})</button>
+       <!-- <button (click)="handleActiveMarker($event)" class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews ({{product.reviews?.length}})</button> -->
 
        <span #productTabMarker id="productTabMarker" class="tp-product-details-tab-line"></span>
      </div>
@@ -52,7 +52,6 @@
            <div class="row">
               <div class="col-lg-6">
                  <div class="tp-product-details-review-statics">
-                    <!-- number -->
                     <div class="tp-product-details-review-number d-inline-block mb-50">
                        <h3 class="tp-product-details-review-number-title">Customer reviews</h3>
                        <div class="tp-product-details-review-summery d-flex align-items-center">
@@ -69,7 +68,6 @@
                           </div>
                        </div>
                        <div class="tp-product-details-review-rating-list">
-                          <!-- single item -->
                           <app-product-details-rating-item [star]="5" width="82" />
                           <app-product-details-rating-item [star]="4" width="30" />
                           <app-product-details-rating-item [star]="3" width="15" />
@@ -78,7 +76,6 @@
                        </div>
                     </div>
 
-                    <!-- reviews -->
                     <div class="tp-product-details-review-list pr-110">
                       <h3 class="tp-product-details-review-title">Rating & Review</h3>
                       <ng-container *ngIf="product.reviews && product.reviews.length > 0; else noReviews">
@@ -109,14 +106,11 @@
                       </ng-template>
                     </div>
                  </div>
-              </div> <!-- end col -->
               <div class="col-lg-6">
                  <div class="tp-product-details-review-form">
                     <h3 class="tp-product-details-review-form-title">Review this product</h3>
                     <p>Your email address will not be published. Required fields are marked *</p>
-                    <!-- form start -->
                     <app-shop-details-form></app-shop-details-form>
-                    <!-- form end -->
                  </div>
               </div>
            </div>

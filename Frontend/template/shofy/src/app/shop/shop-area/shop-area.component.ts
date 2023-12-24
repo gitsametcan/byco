@@ -84,13 +84,13 @@ export class ShopAreaComponent {
         }
         // status Filter
         if (this.status) {
-          if (this.status === 'on-sale') {
+          if (this.status === 'i̇ndirimde') {
             this.products = this.products.filter((p) => p.discount > 0);
-          } else if (this.status === 'in-stock') {
-            this.products = this.products.filter((p) => p.status === 'in-stock');
+          } else if (this.status === 'stokta') {
+            this.products = this.products.filter((p) => p.status === 'stokta');
           }
-          else if (this.status === 'out-of-stock') {
-            this.products = this.products.filter((p) => p.status === 'out-of-stock' || p.quantity === 0);
+          else if (this.status === 'tükendi') {
+            this.products = this.products.filter((p) => p.status === 'tükendi' || p.quantity === 0);
           }
         }
         // brand filtering

@@ -6,9 +6,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/sVxYFDY/product-cat-1.png",
     parent: "Headphones",
     children: [
-      "Kids Headphones",
-      "Bluetooth Headphones",
-      "On-Ear Headphones"
     ],
     productType: "electronics",
     products: [
@@ -23,8 +20,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/xHFpQTV/product-cat-2.png",
     parent: "Mobile Tablets",
     children: [
-      "Samsung",
-      "Apple"
     ],
     productType: "electronics",
     products: [
@@ -39,8 +34,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/S0GjZdp/product-cat-3.png",
     parent: "CPU Heat Pipes",
     children: [
-      "CPU Cooler",
-      "Air CPU Cooler"
     ],
     productType: "electronics",
     products: [
@@ -54,9 +47,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/g3YK8H2/product-cat-4.png",
     parent: "Smart Watch",
     children: [
-      "Sports Smart Watch",
-      "Apple Watch",
-      "Fitness Smart Watch"
     ],
     productType: "electronics",
     products: [
@@ -71,8 +61,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/D9qfYWX/product-cat-5.png",
     parent: "Bluetooth",
     children: [
-      "Wireless Bluetooth",
-      "Sports Bluetooth"
     ],
     productType: "electronics",
     products: [
@@ -86,9 +74,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/ZWfqMXs/fashion-cat-1.jpg",
     parent: "Clothing",
     children: [
-      "Men's",
-      "Women's",
-      "Baby"
     ],
     productType: "fashion",
     products: [
@@ -104,8 +89,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/GsDLfnh/fashion-cat-2.jpg",
     parent: "Bags",
     children: [
-      "HandBag",
-      "Traveling Bag"
     ],
     productType: "fashion",
     products: [
@@ -119,8 +102,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/H2NsVHm/fashion-cat-3.jpg",
     parent: "Shoes",
     children: [
-      "Men's",
-      "Women's"
     ],
     productType: "fashion",
     products: [
@@ -134,8 +115,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/7yg7yg9/beauty-category-1.jpg",
     parent: "Discover Skincare",
     children: [
-      "Makeup Brush",
-      "Face Powder"
     ],
     productType: "beauty",
     products: [
@@ -149,8 +128,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/8YdfXmn/beauty-category-2.jpg",
     parent: "Beauty of Skin",
     children: [
-      "Skin",
-      "Lip Liner"
     ],
     productType: "beauty",
     products: [
@@ -164,8 +141,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/1dZNNGh/beauty-category-3.jpg",
     parent: "Awesome Lip Care",
     children: [
-      "Cosmetics",
-      "Cream"
     ],
     productType: "beauty",
     products: [
@@ -179,8 +154,6 @@ const category_data:ICategory[] = [
     img: "https://i.ibb.co/nkQK0Xr/beauty-category-4.jpg",
     parent: "Facial Care",
     children: [
-      "Powder",
-      "Makeup Brush"
     ],
     productType: "beauty",
     products: [
@@ -193,8 +166,6 @@ const category_data:ICategory[] = [
     id: "64312cd3e2c1bd22cebb2129",
     parent: "Bracelets",
     children: [
-      "Gold",
-      "Silver"
     ],
     productType: "jewelry",
     products: [
@@ -208,8 +179,6 @@ const category_data:ICategory[] = [
     id: "64312cf0e2c1bd22cebb212b",
     parent: "Earrings",
     children: [
-      "Gold",
-      "Silver"
     ],
     productType: "jewelry",
     products: [
@@ -223,8 +192,6 @@ const category_data:ICategory[] = [
     id: "64312d00e2c1bd22cebb212d",
     parent: "Necklaces",
     children: [
-      "Gold",
-      "Silver"
     ],
     productType: "jewelry",
     products: [

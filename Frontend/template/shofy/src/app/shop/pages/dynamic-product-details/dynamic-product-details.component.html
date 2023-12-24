@@ -13,12 +13,14 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-7 col-lg-6">
+            11111
             <!-- product details thumb start -->
             <app-product-details-thumb [product]="product"></app-product-details-thumb>
             <!-- product details thumb end -->
           </div>
           <!-- col end -->
           <div class="col-xl-5 col-lg-6">
+            2222
             <!-- product details wrapper -->
             <app-product-details-wrapper [product]="product" />
             <!-- product details wrapper -->
@@ -40,11 +42,11 @@
   </section>
   <!-- shop details area end -->
 
-  <!-- related products start -->
+  
   <app-related-products [productId]="product.id" [category]="product.category.name" />
-  <!-- related products end -->
+  
 </main>
 
 <!-- footer start -->
-<app-footer-one [primary_style]="true"></app-footer-one>
+<app-footer-two></app-footer-two>
 <!-- footer end -->

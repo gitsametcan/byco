@@ -49,35 +49,8 @@ const product_data: IProduct[] = [
     category: {
       name: "Headphones",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
-      {
-        user: "/assets/img/users/user-3.jpg",
-        review:
-          "Designed very similarly to the nearly double priced Galaxy tab S6, with the only removal being.",
-        date: "06 March, 2023",
-        name: "John doe",
-        email: "john@gmail.com",
-        rating: 5,
-      },
-      {
-        user: "/assets/img/users/user-2.jpg",
-        review:
-          "Designed very similarly to the nearly double priced Galaxy tab S6, with the only removal being.",
-        date: "07 March, 2023",
-        name: "Smith Doe",
-        email: "smith@gmail.com",
-        rating: 5,
-      },
-      {
-        user: "/assets/img/users/user-3.jpg",
-        review:
-          "Designed very similarly to the nearly double priced Galaxy tab S6, with the only removal being.",
-        date: "09 March, 2023",
-        name: "Mark Smith",
-        email: "mark@gmail.com",
-        rating: 1,
-      },
     ],
     productType: "electronics",
     description:
@@ -157,26 +130,8 @@ const product_data: IProduct[] = [
     category: {
       name: "Headphones",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
-      {
-        user: "/assets/img/users/user-3.jpg",
-        review:
-          "Designed very similarly to the nearly double priced Galaxy tab S6, with the only removal being.",
-        date: "06 March, 2023",
-        name: "John doe",
-        email: "john@gmail.com",
-        rating: 5,
-      },
-      {
-        user: "/assets/img/users/user-2.jpg",
-        review:
-          "Designed very similarly to the nearly double priced Galaxy tab S6, with the only removal being.",
-        date: "07 March, 2023",
-        name: "Smith Doe",
-        email: "smith@gmail.com",
-        rating: 5,
-      },
     ],
     productType: "electronics",
     description:
@@ -260,7 +215,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Headphones",
     },
-    status: "out-of-stock",
+    status: "tükendi",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -376,7 +331,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Mobile Tablets",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -482,7 +437,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Mobile Tablets",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -581,7 +536,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Mobile Tablets",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -687,7 +642,7 @@ const product_data: IProduct[] = [
     category: {
       name: "CPU Heat Pipes",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -793,7 +748,7 @@ const product_data: IProduct[] = [
     category: {
       name: "CPU Heat Pipes",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -903,7 +858,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Smart Watch",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -1010,7 +965,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Smart Watch",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -1116,7 +1071,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Smart Watch",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -1210,7 +1165,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bluetooth",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "electronics",
     description:
@@ -1290,7 +1245,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bluetooth",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [
       {
         user: "/assets/img/users/user-3.jpg",
@@ -1400,7 +1355,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Clothing",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -1488,7 +1443,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Clothing",
     },
-    status: "out-of-stock",
+    status: "tükendi",
     reviews: [],
     productType: "fashion",
     description:
@@ -1575,7 +1530,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Clothing",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -1663,7 +1618,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bags",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -1750,7 +1705,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bags",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -1838,7 +1793,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Shoes",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -1925,7 +1880,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Shoes",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -2013,7 +1968,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Clothing",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "fashion",
     description:
@@ -2100,7 +2055,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Discover Skincare",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2181,7 +2136,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Beauty of Skin",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2261,7 +2216,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Awesome Lip Care",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2349,7 +2304,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Facial Care",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2429,7 +2384,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Discover Skincare",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2509,7 +2464,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Beauty of Skin",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2589,7 +2544,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Awesome Lip Care",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2669,7 +2624,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Facial Care",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "beauty",
     description:
@@ -2737,7 +2692,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bracelets",
     },
-    status: "in-stock",
+    status: "Stokta Var",
     reviews: [],
     productType: "jewelry",
     description:
@@ -2790,7 +2745,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Earrings",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -2842,7 +2797,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Necklaces",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -2898,7 +2853,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bracelets",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -2953,7 +2908,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Earrings",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -3005,7 +2960,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Necklaces",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -3057,7 +3012,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Bracelets",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:
@@ -3109,7 +3064,7 @@ const product_data: IProduct[] = [
     category: {
       name: "Earrings",
     },
-    status: "in-stock",
+    status: "stokta",
     reviews: [],
     productType: "jewelry",
     description:

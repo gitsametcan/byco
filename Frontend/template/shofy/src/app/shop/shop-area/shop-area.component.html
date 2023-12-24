@@ -1,4 +1,5 @@
 <!-- shop area start -->
+
 <section [ngClass]="'tp-shop-area pb-120 ' + (full_width ? 'tp-shop-full-width-padding' : '')">
   <div [ngClass]="(full_width ? 'container-fluid' : (shop_1600 ? 'container-shop' : 'container'))">
     <div class="row">
@@ -7,29 +8,29 @@
         <div class="tp-shop-sidebar mr-10">
           <!--price filter -->
           <div class="tp-shop-widget mb-35">
-            <h3 class="tp-shop-widget-title no-border">Price Filter</h3>
+            <h3 class="tp-shop-widget-title no-border">Fiyat Aralığı</h3>
             <app-price-filter [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)"></app-price-filter>
           </div>
           <!-- status -->
           <div class="tp-shop-widget mb-50">
-            <h3 class="tp-shop-widget-title">Product Status</h3>
+            <h3 class="tp-shop-widget-title">Ürün Durumu</h3>
             <app-status-filter></app-status-filter>
           </div>
           <!-- categories -->
           <div class="tp-shop-widget mb-50">
-            <h3 class="tp-shop-widget-title">Categories</h3>
+            <h3 class="tp-shop-widget-title">Kategoriler</h3>
             <app-category-filter></app-category-filter>
           </div>
           <!-- product rating -->
-          <div class="tp-shop-widget mb-50">
-            <h3 class="tp-shop-widget-title">Top Rated Products</h3>
+          <!-- <div class="tp-shop-widget mb-50">
+            <h3 class="tp-shop-widget-title">Popüler Ürünler</h3>
             <app-top-rated-products></app-top-rated-products>
-          </div>
+          </div> -->
           <!-- brand -->
-          <div class="tp-shop-widget mb-50">
-            <h3 class="tp-shop-widget-title">Popular Brands</h3>
+          <!-- <div class="tp-shop-widget mb-50">
+            <h3 class="tp-shop-widget-title">Popüler Markalar</h3>
             <app-brand-filter></app-brand-filter>
-          </div>
+          </div> -->
           <!-- reset -->
           <app-reset-filter-route (handleResetFilter)="handleResetFilter()"></app-reset-filter-route>
         </div>
@@ -81,7 +82,7 @@
                     </ul>
                   </div>
                   <div class="tp-shop-top-result">
-                    <p>Showing 1–{{ products.length }} of {{ paginate.totalItems }} results</p>
+                    <p>Gösterilen 1–{{ products.length }} taneden {{ paginate.totalItems }} tanesi</p>
                   </div>
                 </div>
               </div>
@@ -100,9 +101,9 @@
             <!-- if no item in product  -->
             <div *ngIf="products.length === 0" class="cartmini__empty text-center">
               <img src="/assets/img/product/cartmini/empty-cart.png" alt="empty-cart-img" />
-              <h4>Sorry! Couldn't find the product you were looking For!!!</h4>
-              <p>Please check if you have misspelt something or try searching with other words.</p>
-              <a routerLink="/shop" class="tp-btn">Continue Shopping</a>
+              <h4>Baktığınız kriterlerde ürün bulamadık!!!</h4>
+              <p>Lütden filtreleri yenileyin</p>
+              <a routerLink="/shop" class="tp-btn">Alışverişe Devam Et</a>
             </div>
 
             <div *ngIf="activeTab === 'grid'">
