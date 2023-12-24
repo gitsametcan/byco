@@ -70,20 +70,15 @@ namespace bycoAPI.Services
         {
             var tempUrun = GetUrunFromDb(urun_id);
             UrunResponse ur = new();
-            ur.urun_id = tempUrun.urun_id;
+            ur.id = tempUrun.urun_id.ToString();
             ur.sku = "SADG34F2GOB"; //random
             ur.img = tempUrun.img;
             ur.title = tempUrun.ad;
             ur.slug = tempUrun.ad.Replace(' ', '-').ToLower();
             ur.unit = tempUrun.stok.ToString();
             var kat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == tempUrun.kategori_id);
-            if (kat.parent_id == 0) {
-                ur.parent = "";
-            } else {
-                var parkat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == kat.parent_id);
-                ur.parent = parkat.ad;
-            }
-            ur.imageurls = [];
+            ur.parent = kat.ad;
+            ur.imageURLs = [];
             ur.children = kat.ad;
             ur.price = tempUrun.fiyat;
             ur.discount = 0.0;
@@ -95,20 +90,21 @@ namespace bycoAPI.Services
                 name = kat.ad
             };
             if (tempUrun.stok > 0) {
-                ur.status = "Stokta";
+                ur.status = "stakto";
             } else {
-                ur.status = "Stokta Yok";
+                ur.status = "tükendi";
             }
-            ur.producttype = "";
+            ur.productType = "electronics";
             ur.description = tempUrun.aciklama;
-            ur.additionalinformation = [];
+            ur.additionalInformation = [];
+            ur.sellCount = 10;
             var ozelliklistesi = _context.Ozellik.Where(t=> t.urun_id == tempUrun.urun_id).ToList();
             foreach (var ol in ozelliklistesi) {
                 AdditionalInformationModel aim = new() {
                     key = ol.ozellik,
                     value = ol.aciklama
                 };
-                ur.additionalinformation.Add(aim);
+                ur.additionalInformation.Add(aim);
             }
             return Task.FromResult(ur);
         }
@@ -119,20 +115,15 @@ namespace bycoAPI.Services
             List<UrunResponse> asresponse = [];
             foreach (var u in urunList) {
                 UrunResponse ur = new();
-                ur.urun_id = u.urun_id;
+                ur.id = u.urun_id.ToString();
                 ur.sku = "SADG34F2GOB"; //random
                 ur.img = u.img;
                 ur.title = u.ad;
                 ur.slug = u.ad.Replace(' ', '-').ToLower();
                 ur.unit = u.stok.ToString();
                 var kat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == u.kategori_id);
-                if (kat.parent_id == 0) {
-                    ur.parent = "";
-                } else {
-                    var parkat = _context.Kategori.SingleOrDefault(t=> t.kategori_id == kat.parent_id);
-                    ur.parent = parkat.ad;
-                }
-                ur.imageurls = [];
+                ur.parent = kat.ad;
+                ur.imageURLs = [];
                 ur.children = kat.ad;
                 ur.price = u.fiyat;
                 ur.discount = 0.0;
@@ -144,20 +135,21 @@ namespace bycoAPI.Services
                     name = kat.ad
                 };
                 if (u.stok > 0) {
-                    ur.status = "Stokta";
+                    ur.status = "stokta";
                 } else {
-                    ur.status = "Stokta Yok";
+                    ur.status = "tükendi";
                 }
-                ur.producttype = "";
+                ur.productType = "electronics";
                 ur.description = u.aciklama;
-                ur.additionalinformation = [];
+                ur.sellCount = 10;
+                ur.additionalInformation = [];
                 var ozelliklistesi = _context.Ozellik.Where(t=> t.urun_id == u.urun_id).ToList();
                 foreach (var ol in ozelliklistesi) {
                     AdditionalInformationModel aim = new() {
                         key = ol.ozellik,
                         value = ol.aciklama
                     };
-                    ur.additionalinformation.Add(aim);
+                    ur.additionalInformation.Add(aim);
                 }
                 asresponse.Add(ur);
             }
