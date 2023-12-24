@@ -3087,6 +3087,36 @@ const product_data: IProduct[] = [
     featured: true,
     sellCount: 2,
   },
+  {
+    id: "1",
+    sku: "SADG34F2GOB",
+    img: "https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85/58078/uploads/urunresimleri/buyuk/2m-rg-6u-6-cucu-hffr-beyaz-31e2d4..jpg",
+    title: "2M RG 6/U-6 Cu/Cu HFFR BEYAZ - (TL/Mt)",
+    slug: "2m-rg-6/u-6-cu/cu-hffr-beyaz---(tl/mt)",
+    unit: "10",
+    imageURLs: [],
+    parent: "Koaksiyel Kablolar",
+    children: "Koaksiyel Kablolar",
+    price: 5334,
+    discount: 0,
+    quantity: 10,
+    brand: {
+      name: "BYCO"
+    },
+    category: {
+      name: "Koaksiyel Kablolar"
+    },
+    status: "stokta",
+    productType: "electronics",
+    description: "CATV, CCTV, kablolu TV ve UYDU sistemlerinde düsük zayiflama gerektiren yerlerde dagitim kablosu olarak kullanilirlar.",
+    additionalInformation: [
+      {
+        key: "ozellik",
+        value: "aciklama"
+      }
+    ],
+    sellCount: 2
+  }
 ];
 
 export default product_data;

@@ -10,11 +10,13 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
+    benimUrl = "https://localhost:44313/api";
+    public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 
   // Get Products
   public get products(): Observable<IProduct[]> {
-    return of(product_data);
+    return of(this.GetAllProjects());
   }
 
   constructor() { }
@@ -163,5 +165,45 @@ export class ProductService {
       endIndex: endIndex,
       pages: pages
     };
+  }
+
+  GetAllProjects():IProduct[]{
+    this.sendRequest('Urun/GetAllResponse','GET')
+    .then(response => {
+        this.urunler = response;
+      console.log(response);
+      console.log("responsun" + this.urunler);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+    console.log("ürünler"+this.urunler);
+
+    return this.urunler;
+
+
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
   }
 }

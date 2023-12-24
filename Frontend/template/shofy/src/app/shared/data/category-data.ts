@@ -199,6 +199,49 @@ const category_data:ICategory[] = [
       "6432433c9814bb139594c44c"
     ],
     status: "Show"
+  },
+  {
+    id: "1",
+    parent: "Diğer Kablolar",
+    productType: "electronics",
+    products: [],
+    status: "Show"
+  },
+  {
+    id: "2",
+    parent: "Koaksiyel Kablolar",
+    productType: "electronics",
+    products: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    status: "Show"
+  },
+  {
+    id: "3",
+    parent: "Yangina Dayanikli Kablolar",
+    productType: "electronics",
+    products: [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "status": "Show"
+  },
+  {
+    id: "4",
+    parent: "Dahili Telefon Kablolari",
+    productType: "electronics",
+    products: [
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    status: "Show"
   }
 ]
 
