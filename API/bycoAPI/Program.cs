@@ -27,10 +27,10 @@ namespace bycoAPI
             builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddTransient<IUserServices, UserService>();
+            builder.Services.AddTransient<IOzellikService, OzellikService>();
+            builder.Services.AddTransient<IKategoriService, KategoriService>();
             builder.Services.AddTransient<IProjectService, ProjectService>();
             builder.Services.AddTransient<IAdresService, AdresService>();
-            builder.Services.AddTransient<IFiyatService, FiyatService>();
-            builder.Services.AddTransient<IOzellikService, OzellikService>();
             builder.Services.AddTransient<ISatisService, SatisService>();
             builder.Services.AddTransient<IUrunService, UrunService>();
 

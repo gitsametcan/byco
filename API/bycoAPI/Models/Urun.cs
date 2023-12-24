@@ -9,7 +9,8 @@ namespace bycoAPI.Models
         public int stok { get; set; }
         public string ad { get; set; }
         public string aciklama { get; set; }
-        public string kategori { get; set; }
+        public int kategori_id { get; set; }
         public string img { get; set; }
+        public int fiyat { get; set;}
     }
 }

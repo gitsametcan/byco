@@ -9,9 +9,9 @@ namespace bycoAPI.Services
         private readonly DbContexts _context = context;
 
         public Task<Result> AddSatis(NewSatisReq req) {
-            var fiyat = _context.Fiyat.SingleOrDefault(t => t.fiyat_id == req.fiyat_id);
+            var fiyat = _context.Urun.SingleOrDefault(t => t.urun_id == req.urun_id);
             if (fiyat is null) {
-                return Task.FromResult(new Result(false, "Fiyat not found: " + req.fiyat_id));
+                return Task.FromResult(new Result(false, "Fiyat not found: " + req.urun_id));
             }
             Satis temp = new()
             {
