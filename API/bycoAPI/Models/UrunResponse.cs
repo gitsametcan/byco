@@ -62,7 +62,6 @@ namespace bycoAPI.Models {
         public string? children {get; set;}
         public long price { get; set; }
         public double discount { get; set; }
-        public long sellCount { get; set; }
         public long quantity { get; set; }
         public BrandModel? brand {get; set;}
         public CategoryModel? category {get;set;}
@@ -70,5 +69,6 @@ namespace bycoAPI.Models {
         public string? productType {get;set;}
         public string? description { get; set; }
         public List<AdditionalInformationModel>? additionalInformation {get; set;}
+        public long sellCount { get; set; }
     }
 }
