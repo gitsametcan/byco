@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '@/shared/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -93,13 +94,19 @@ export class CheckoutComponent {
     if (this.checkoutForm.valid) {
       console.log('checkout-form-value', this.checkoutForm.value);
       this.toastrService.success(`Order successfully`);
+      
+    //console.log('checkout-form', this.checkoutForm.value);
 
       // Reset the form
       this.checkoutForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
     }
-    console.log('checkout-form', this.checkoutForm.value);
+    console.log(this.cartService.getCartProducts());
+    //console.log('checkout-form', this.checkoutForm.value);
   }
+  al(){
+    //console.log(this.checkoutForm);
+  };
 
   get firstName() { return this.checkoutForm.get('firstName') }
   get lastName() { return this.checkoutForm.get('lastName') }
