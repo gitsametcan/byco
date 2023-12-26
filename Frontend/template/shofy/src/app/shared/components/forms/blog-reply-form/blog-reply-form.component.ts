@@ -9,6 +9,7 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 })
 export class BlogReplyFormComponent {
 
+    benimUrl = "https://localhost:44313/api";
   public blogReplyForm!: FormGroup;
   public formSubmitted = false;
 
@@ -16,9 +17,14 @@ export class BlogReplyFormComponent {
 
   ngOnInit () {
     this.blogReplyForm = new FormGroup({
-      name:new FormControl(null,Validators.required),
-      email:new FormControl(null,[Validators.required,Validators.email]),
-      message:new FormControl(null,Validators.required),
+      ad:new FormControl(null,Validators.required),
+      lokasyon:new FormControl(null,Validators.required),
+      tamamlanma:new FormControl(null,Validators.required),
+      alan:new FormControl(null,Validators.required),
+      isveren:new FormControl(null,Validators.required),
+      aciklama:new FormControl(null,Validators.required),
+      img:new FormControl(null,Validators.required)
+      
     })
   }
 
@@ -27,7 +33,7 @@ export class BlogReplyFormComponent {
     if (this.blogReplyForm.valid) {
       console.log('blog-reply-form-value', this.blogReplyForm.value);
       this.toastrService.success(`Message sent successfully`);
-
+      this.ProjeYukle();
       // Reset the form
       this.blogReplyForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
@@ -35,7 +41,55 @@ export class BlogReplyFormComponent {
     console.log('contact-form', this.blogReplyForm);
   }
 
-  get name() { return this.blogReplyForm.get('name') }
-  get email() { return this.blogReplyForm.get('email') }
-  get message() { return this.blogReplyForm.get('message') }
+  ProjeYukle(){
+    this.sendRequest('Satis/MakePurchase','POST',{
+        "ad": this.blogReplyForm.get("ad")?.value,
+        "lokasyon": this.blogReplyForm.get("lokasyon")?.value,
+        "tamamlanma": this.blogReplyForm.get("tamamlanma")?.value,
+        "alan": this.blogReplyForm.get("alan")?.value,
+        "isveren": this.blogReplyForm.get("isveren")?.value,
+        "aciklama": this.blogReplyForm.get("aciklama")?.value,
+        "img": this.blogReplyForm.get("img")?.value
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+
+
+
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    console.log("requesin içi"+JSON.stringify(data));
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
+
+  get ad() { return this.blogReplyForm.get('ad') }
+  get lokasyon() { return this.blogReplyForm.get('lokasyon') }
+  get tamamlanma() { return this.blogReplyForm.get('tamamlanma') }
+  get alan() { return this.blogReplyForm.get('alan') }
+  get isveren() { return this.blogReplyForm.get('isveren') }
+  get aciklama() { return this.blogReplyForm.get('aciklama') }
+  get img() { return this.blogReplyForm.get('img') }
 }

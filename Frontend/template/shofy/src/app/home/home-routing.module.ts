@@ -21,11 +21,11 @@ const routes: Routes = [
     component:BeautyComponent,
     title:'Anasayfa'
   },
-  // {
-  //   path:'jewelry',
-  //   component:JewelryComponent,
-  //   title:'Home Jewelry'
-  // },
+  {
+    path:'admin',
+    component:JewelryComponent,
+    title:'Proje Yükle'
+  },
 ];
 
 @NgModule({
