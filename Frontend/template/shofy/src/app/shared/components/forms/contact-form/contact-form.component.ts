@@ -11,6 +11,7 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
+  benimUrl = "https://localhost:44313/api";
   constructor(private toastrService: ToastrService) { }
 
   ngOnInit () {
@@ -27,12 +28,54 @@ export class ContactFormComponent {
     if (this.contactForm.valid) {
       console.log('contact-form-value', this.contactForm.value);
       this.toastrService.success(`Message sent successfully`);
+      this.SendMessage();
 
       // Reset the form
       this.contactForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
     }
     console.log('contact-form', this.contactForm);
+  }
+
+  SendMessage(){
+    this.sendRequest('Satis/MakePurchase','POST',{
+        "isim": this.contactForm.get("name")?.value,
+        "email": this.contactForm.get("email")?.value,
+        "konu": this.contactForm.get("subject")?.value,
+        "mesaj": this.contactForm.get("message")?.value,
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+
+
+
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    console.log("requesin içi"+JSON.stringify(data));
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
   }
 
   get name() { return this.contactForm.get('name') }
