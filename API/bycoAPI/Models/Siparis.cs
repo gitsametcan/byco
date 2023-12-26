@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace bycoAPI.Models
 {
-    [Keyless]
+    
     public class Siparis
     {
+        [Key]
         public int siparis_id {get; set;}
         public string? isim { get; set; }
         public string? soyisim { get; set; }

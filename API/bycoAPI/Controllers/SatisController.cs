@@ -14,7 +14,7 @@ namespace bycoAPI.Controllers
         {
             _service = service;
         }
-        [HttpGet("MakePurchase")]
+        [HttpPost("MakePurchase")]
         public async Task<ActionResult> MakePurchase([FromBody]Checkout checkout) {
             Console.WriteLine("Satın Alım Yapılıyor...");
             var result = await _service.MakePurchase(checkout);

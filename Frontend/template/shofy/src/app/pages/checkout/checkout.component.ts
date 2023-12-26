@@ -140,7 +140,7 @@ export class CheckoutComponent {
   }
   
   GetPostChechout(checkout:checkk){
-    this.sendRequest('Urun/GetAllResponse','POST',checkout)
+    this.sendRequest('Satis/MakePurchase','POST',checkout)
     .then(response => {
       console.log(response);
     })
@@ -153,7 +153,7 @@ export class CheckoutComponent {
   }
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
-    
+    console.log("requesin içi"+JSON.stringify(data));
     return fetch(`${this.benimUrl}/${url}`, {
       method: method,
       mode: 'cors',

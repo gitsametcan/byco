@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace bycoAPI.Models
 {
-    [Keyless]
+    
     public class Urun
     {
+        [Key]
         public int urun_id { get; set; }
         public int stok { get; set; }
         public string ad { get; set; }
