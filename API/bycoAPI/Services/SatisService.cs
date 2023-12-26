@@ -20,12 +20,12 @@ namespace bycoAPI.Services
                 user_id = req.user_id,
                 urun_id = fiyat.urun_id,
                 adet = req.adet,
-                tarih = datetime_t,
+                tarih = datetime_t.ToString(),
                 fiyat = fiyat.fiyat * req.adet
             };
             _context.Satis.Add(temp);
             _context.SaveChangesAsync();
-            var satis = _context.Satis.SingleOrDefault(t=> t.user_id == req.user_id && t.urun_id == fiyat.urun_id && req.adet == t.adet && t.tarih == datetime_t);
+            var satis = _context.Satis.SingleOrDefault(t=> t.user_id == req.user_id && t.urun_id == fiyat.urun_id && req.adet == t.adet && t.tarih == datetime_t.ToString());
             if (satis is null) {
                 return Task.FromResult(new Result(false, "BadRequest"));
             }
@@ -107,17 +107,17 @@ namespace bycoAPI.Services
             await _context.SaveChangesAsync();
 
             var tempsiparis = _context.Siparis.SingleOrDefault(t=> 
-                t.isim == siparis.isim
-                && t.soyisim == siparis.soyisim
-                && t.sirket_adi == siparis.sirket_adi
-                && t.ulke == siparis.ulke
-                && t.adres == siparis.adres
-                && t.il_ilce == siparis.il_ilce
-                && t.kita == siparis.kita
-                && t.posta_kodu == siparis.posta_kodu
-                && t.telefon == siparis.telefon
-                && t.email == siparis.email
-                && t.siparis_notu == siparis.siparis_notu
+                (t.isim == checkout.isim
+                && t.soyisim == checkout.soyisim
+                && t.sirket_adi == checkout.sirket_adi
+                && t.ulke == checkout.ulke
+                && t.adres == checkout.adres_satiri
+                && t.il_ilce == checkout.il_ilce
+                && t.kita == checkout.kita
+                && t.posta_kodu == checkout.posta_kodu
+                && t.telefon == checkout.telefon
+                && t.email == checkout.email
+                && t.siparis_notu == checkout.siparis_notu)
             );
 
             if (tempsiparis is null) {
@@ -136,14 +136,37 @@ namespace bycoAPI.Services
                     urun_id = urunid,
                     adet = 1,
                 };
-                var result = await AddSatis(temp);
-                if (!result.Success) {
+
+                var urunfiyat = _context.Urun.SingleOrDefault(t => t.urun_id == temp.urun_id);
+                if (urunfiyat is null) {
+                    return new Result(false, "Fiyat not found: " + temp.urun_id);
+                }
+                var datetime_t = DateTime.Now;
+                Satis tempsatis = new()
+                {
+                    satis_id = 0,
+                    user_id = temp.user_id,
+                    urun_id = urunfiyat.urun_id,
+                    adet = temp.adet,
+                    tarih = datetime_t.ToString(),
+                    fiyat = urunfiyat.fiyat * temp.adet
+                };
+                _context.Satis.Add(tempsatis);
+                await _context.SaveChangesAsync();
+                var satis = _context.Satis.SingleOrDefault(t=> 
+                    (t.user_id == temp.user_id 
+                    && t.urun_id == urunfiyat.urun_id 
+                    && temp.adet == t.adet 
+                    && t.tarih.Equals(datetime_t.ToString())
+                    )
+                );
+                if (satis is null) {
                     return new Result(false, "BadRequest");
                 }
                 SiparisSatis tempss = new() {
                     siparissatis_id = 0,
                     siparis_id =  tempsiparis.siparis_id,
-                    satis_id = int.Parse(result.Message)
+                    satis_id = satis.satis_id
                 };
                 _context.SiparisSatis.Add(tempss);
                 await _context.SaveChangesAsync();
