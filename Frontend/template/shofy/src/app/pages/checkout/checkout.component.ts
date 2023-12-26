@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '@/shared/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { IProduct } from '@/types/product-type';
+import { checkk } from '@/types/checkt-type';
+
+
 
 
 @Component({
@@ -10,6 +14,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent {
+    
+    
+    benimUrl = "https://localhost:44313/api";
+
+    public checkouts: checkk ={};
+    
+    public urunler: IProduct[] = [];
 
   isOpenLogin = false;
   isOpenCoupon = false;
@@ -70,6 +81,7 @@ export class CheckoutComponent {
 
   public checkoutForm!: FormGroup;
   public formSubmitted = false;
+  
 
 
 
@@ -87,26 +99,81 @@ export class CheckoutComponent {
       orderNote:new FormControl(null),
       email:new FormControl(null,[Validators.required,Validators.email]),
     })
+    this.urunler = this.cartService.getCartProducts();
   }
 
   onSubmit() {
     this.formSubmitted = true;
     if (this.checkoutForm.valid) {
-      console.log('checkout-form-value', this.checkoutForm.value);
+      console.log('checkout-form-value', this.checkoutForm);
       this.toastrService.success(`Order successfully`);
+      this.checkoutDoldur();
+      this.GetPostChechout(this.checkouts);
       
-    //console.log('checkout-form', this.checkoutForm.value);
-
-      // Reset the form
+    
       this.checkoutForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
     }
     console.log(this.cartService.getCartProducts());
     //console.log('checkout-form', this.checkoutForm.value);
   }
-  al(){
-    //console.log(this.checkoutForm);
-  };
+
+  checkoutDoldur(){
+    this.checkouts.isim = this.checkoutForm.get("firstName")?.value;
+    this.checkouts.soyisim = this.checkoutForm.get("lastName")?.value;
+    this.checkouts.sirket_adi = this.checkoutForm.get("company")?.value;
+    this.checkouts.ulke = this.checkoutForm.get("country")?.value;
+    this.checkouts.adres_satiri = this.checkoutForm.get("address")?.value;
+    this.checkouts.il_ilce = this.checkoutForm.get("city")?.value;
+    this.checkouts.kita = this.checkoutForm.get("state")?.value;
+    this.checkouts.posta_kodu = this.checkoutForm.get("zipCode")?.value;
+    this.checkouts.telefon = this.checkoutForm.get("phone")?.value;
+    this.checkouts.email = this.checkoutForm.get("email")?.value;
+    this.checkouts.siparis_notu = this.checkoutForm.get("orderNote")?.value;
+
+    this.checkouts.satilan_urunler=[];
+
+    for(let product of this.urunler){
+        this.checkouts.satilan_urunler?.push(product.id.toString());
+    }
+
+  }
+  
+  GetPostChechout(checkout:checkk){
+    this.sendRequest('Urun/GetAllResponse','POST',checkout)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+
+
+
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
 
   get firstName() { return this.checkoutForm.get('firstName') }
   get lastName() { return this.checkoutForm.get('lastName') }
