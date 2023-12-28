@@ -13,7 +13,7 @@ import { CartService } from '@/shared/services/cart.service';
   styleUrls: ['./beauty-special-products.component.scss']
 })
 export class BeautySpecialProductsComponent {
-    benimUrl = "https://localhost:44313/api";
+    benimUrl = "http://20.229.100.238:5141/api";
 
     public popular_prd: IProduct[] = [];
     public projeler:Iproje[] = [];
