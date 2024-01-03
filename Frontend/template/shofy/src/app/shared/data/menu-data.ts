@@ -97,7 +97,7 @@ export const menu_data:IMenuItem[] = [
   {
     id:6,
     link:'/shop',
-    title:'Ticaret'
+    title:'Mağaza'
   }
 ]
 
@@ -131,6 +131,6 @@ export const mobile_menu:IMobileType[] = [
   {
     id:6,
     link:'/shop',
-    title:'Ticaret'
+    title:'Mağaza'
   }
 ]
