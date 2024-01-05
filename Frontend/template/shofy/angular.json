@@ -73,6 +73,10 @@
               "browserTarget": "ng-shofy:build:development"
             }
           },
+          "options": {
+            "port": 80,
+            "host": "0.0.0.0"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

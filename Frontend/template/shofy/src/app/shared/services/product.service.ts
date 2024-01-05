@@ -10,7 +10,7 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
-    benimUrl = "http://20.229.100.238:5141/api";
+    benimUrl = "http://localhost:5141/api";
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 

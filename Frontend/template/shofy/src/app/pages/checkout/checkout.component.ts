@@ -16,7 +16,7 @@ import { checkk } from '@/types/checkt-type';
 export class CheckoutComponent {
     
     
-    benimUrl = "http://20.229.100.238:5141/api";
+    benimUrl = "http://localhost:5141/api";
 
     public checkouts: checkk ={};
     
