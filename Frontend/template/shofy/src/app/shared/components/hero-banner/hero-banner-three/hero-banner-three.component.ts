@@ -24,8 +24,10 @@ export class HeroBannerThreeComponent {
     },
     {
       id: 2,
-      bg: "/assets/img/slider/3/byco_slider2.jpg",
-      subtitle: "Top Brand Collection",
+      bg: "/assets/img/slider/3/byco_slider.jpg",
+      subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
+       bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
+       markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
       title: "Use the best for you.",
     },
     // {
