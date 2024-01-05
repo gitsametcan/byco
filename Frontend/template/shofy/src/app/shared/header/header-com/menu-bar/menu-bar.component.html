@@ -1,7 +1,21 @@
 
 <ul>
   <li *ngFor="let item of menu_data; let i = index" [ngClass]="{'has-dropdown': item.drop_down, 'has-dropdown has-mega-menu': item.mega_menu}">
-    <a [routerLink]="item.link" style="color: black;">{{ item.title }}</a>
+    <a [routerLink]="item.link" style="color: black;">
+        <p><span style=
+            "display: inline-block;
+            width: 100%; 
+            margin-right: 5%; 
+            margin-top: 1em;
+            text-align: justify;
+            font-family: 'Helvetica', sans-serif !important;
+            font-weight: light !important;
+            font-size: 18px;
+            ">
+            {{ item.title }}
+            </span></p>
+        
+    </a>
     <div *ngIf="item.home_pages" class="home-menu tp-submenu tp-mega-menu">
       <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-4">
         <div *ngFor="let home of item.home_pages; let i = index" class="col">
@@ -11,6 +25,7 @@
                 <img [src]="home.img" alt="image" />
               </div>
               <div class="home-menu-content">
+                
                 
                 <h5 class="home-menu-title">{{ home.title }}</h5>
               </div>

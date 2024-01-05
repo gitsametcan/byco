@@ -4,7 +4,7 @@ export const menu_data:IMenuItem[] = [
   {
     id:1,
     link:'/anasayfa',
-    title:'Anasayfa',
+    title:'ANASAYFA',
     mega_menu:false,
     // home_pages:[
     //   {
@@ -36,7 +36,7 @@ export const menu_data:IMenuItem[] = [
   {
     id:2,
     link:'/pages/hizmetler',
-    title:'Hizmetlerimiz',
+    title:'HİZMETLERİMİZ',
     mega_menu:false,
     // shop_mega_menus:[
     //   {
@@ -82,22 +82,22 @@ export const menu_data:IMenuItem[] = [
   {
     id:3,
     link:'/anasayfa/projeler',
-    title:'Projeler',
+    title:'PROJELER',
   },
   {
     id:4,
     link:'/pages/hakkimizda',
-    title:'Hakkımızda'
+    title:'HAKKIMIZDA'
   },
   {
     id:5,
     link:'/pages/contact',
-    title:'İletişim',
+    title:'İLETİŞİM',
   },
   {
     id:6,
     link:'/shop',
-    title:'Mağaza'
+    title:'MAĞAZA'
   }
 ]
 
@@ -106,31 +106,31 @@ export const mobile_menu:IMobileType[] = [
   {
     id:1,
     link:'/anasayfa',
-    title:'Anasayfa'
+    title:'ANASAYFA'
   },
   {
     id:2,
     link:'/pages/hizmetler',
-    title:'Hizmetlerimiz'
+    title:'HİZMETLERİMİZ'
   },
   {
     id:3,
     link:'/anasayfa/projeler',
-    title:'Projeler',
+    title:'PROJELER',
   },
   {
     id:4,
     link:'/pages/hakkimizda',
-    title:'Hakkımızda'
+    title:'HAKKIMIZDA'
   },
   {
     id:5,
     link:'/pages/contact',
-    title:'İletişim',
+    title:'İLETİŞİM',
   },
   {
     id:6,
     link:'/shop',
-    title:'Mağaza'
+    title:'MAĞAZA'
   }
 ]
