@@ -27,12 +27,12 @@ const routes: Routes = [
   {
     path:'shop',
     component:ShopComponent,
-    title:'Shop Page'
+    title:'Mağaza'
   },
   {
     path:'shop-list',
     component:ShopListComponent,
-    title:'Shop List Page'
+    title:'Mağaza Listesi'
   },
   {
     path:'shop-full-width',
@@ -107,7 +107,7 @@ const routes: Routes = [
   {
     path:'cart',
     component:CartComponent,
-    title:'Shop cart Page'
+    title:'Sepetim'
   },
   {
     path:'wishlist',
@@ -122,7 +122,7 @@ const routes: Routes = [
   {
     path:'order',
     component:OrderComponent,
-    title:'Shop Order Page'
+    title:'Sipariş Ver'
   },
 ];
 

@@ -14,12 +14,12 @@ const routes: Routes = [
  {
      path:'projeler',
      component:FashionComponent,
-     title:'Home Fashion'
+     title:'Projeler'
   },
   {
     path:'',
     component:BeautyComponent,
-    title:'Anasayfa'
+    title:'BYCO'
   },
   {
     path:'admin',
