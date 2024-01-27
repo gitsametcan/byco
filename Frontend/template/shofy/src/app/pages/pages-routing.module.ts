@@ -37,7 +37,7 @@ const routes: Routes = [
     title:'Hizmetlerimiz'
   },
   {
-    path:'blog-details',
+    path:'biten-projeler/:category',
     component:BlogDetailsComponent,
     title:'Blog Details Page'
   },
