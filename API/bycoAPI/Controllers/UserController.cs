@@ -27,19 +27,37 @@ namespace bycoAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("LogIn")]
-        public async Task<ActionResult<User>> LogIn(User user)
+        [HttpPost("RegisterUser")]
+        public async Task<ActionResult> RegisterUser(RegistrationDTO register)
         {
-            return CreatedAtAction("Kayit", userService.UserKaydet(user).Data);
+            var result = await userService.Register(register);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [AllowAnonymous]
-        [HttpPost("RegisterUser")]
-        public async Task<ActionResult<User>> RegisterUser(User user)
+        [HttpPost("LogIn")]
+        public async Task<ActionResult<Sessions>> LogIn(LogInDTO login)
         {
-            return CreatedAtAction("Kayit", userService.UserKaydet(user).Data);
+            var result = await userService.LogIn(login);
+            if (result.Success) {
+                return Ok(result.Data);
+            } 
+            return BadRequest();
         }
 
+        [AllowAnonymous]
+        [HttpPost("LogOut/{session_key}")]
+        public async Task<ActionResult> LogOut(string session_key)
+        {
+            var result = await userService.LogOut(session_key);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
         [AllowAnonymous]
         [HttpPost("PostUser")]
         public async Task<ActionResult<User>> PostUser(User user)

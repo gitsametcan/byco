@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace bycoAPI.Models
-{   
+{
     [Keyless]
-    public class LoginReq
+    public class LogInDTO
     {
         public string email { get; set; }
         public string password { get; set; }
