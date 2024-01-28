@@ -19,5 +19,8 @@ namespace bycoAPI.Models
         public DbSet<Urun> Urun { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Kategori> Kategori { get; set; } = null!;
+        public DbSet<KimlikNo> KimlikNo { get; set; } = null!;
+        public DbSet<VergiNums> VergiNums { get; set; } = null!;
+        public DbSet<Sessions> Sessions { get; set; } = null!;
     }
 }
