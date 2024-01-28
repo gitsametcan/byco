@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild,QueryList } from '@angular/core';
 import Swiper from 'swiper';
 import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 
@@ -16,20 +16,28 @@ export class HeroBannerThreeComponent {
   public slider_data = [
     {
       id: 1,
-      bg: "/assets/img/slider/3/byco_slider.jpg",
+      bg: "/assets/img/banner/banner1.png",
       subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
        bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
        markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
-      title: "BYCO Projelendirme",
+      title: "img",
     },
     {
       id: 2,
-      bg: "/assets/img/slider/3/byco_slider.jpg",
+      bg: "/assets/img/banner/banner2.png",
       subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
        bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
        markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
-      title: "Use the best for you.",
+      title: "img",
     },
+    {
+        id: 3,
+        bg: "/assets/img/banner/Sequence_01.mp4",
+        subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
+         bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
+         markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
+        title: "video",
+      }
     // {
     //   id: 3,
     //   bg: "/assets/img/slider/3/slider-3.jpg",
@@ -37,6 +45,7 @@ export class HeroBannerThreeComponent {
     //   title: "Don't Worry for Skincare",
     // },
   ]
+  
 
   ngAfterViewInit() {
     if (this.swiperContainer) {
