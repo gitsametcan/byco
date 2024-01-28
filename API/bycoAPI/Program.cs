@@ -33,6 +33,9 @@ namespace bycoAPI
             builder.Services.AddTransient<IAdresService, AdresService>();
             builder.Services.AddTransient<ISatisService, SatisService>();
             builder.Services.AddTransient<IUrunService, UrunService>();
+            builder.Services.AddTransient<IKimlikNoService, KimlikNoService>();
+            builder.Services.AddTransient<IVergiNumsService, VergiNumsService>();
+            builder.Services.AddTransient<ISessionsService, SessionsService>();
 
             builder.Services.AddAuthentication(options =>
             {

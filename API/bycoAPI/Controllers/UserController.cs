@@ -28,7 +28,7 @@ namespace bycoAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("RegisterUser")]
-        public async Task<ActionResult> RegisterUser(RegistrationDTO register)
+        public async Task<ActionResult> RegisterUser([FromBody]RegistrationDTO register)
         {
             var result = await userService.Register(register);
             if (result.Success) {
@@ -39,7 +39,7 @@ namespace bycoAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("LogIn")]
-        public async Task<ActionResult<Sessions>> LogIn(LogInDTO login)
+        public async Task<ActionResult<Sessions>> LogIn([FromBody]LogInDTO login)
         {
             var result = await userService.LogIn(login);
             if (result.Success) {

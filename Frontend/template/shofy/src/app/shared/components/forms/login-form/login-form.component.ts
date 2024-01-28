@@ -35,6 +35,7 @@ export class LoginFormComponent {
     this.formSubmitted = true;
     if (this.loginForm.valid) {
       console.log('login-form-value', this.loginForm.value);
+
       this.toastrService.success(`Message sent successfully`);
 
       // Reset the form
@@ -44,8 +45,8 @@ export class LoginFormComponent {
   }
 
   giris(email:string,password:string){
-    console.log(email +"    "+password);
-    this.sendRequest('Auth/TryConnection','GET')
+    //console.log(email +"    "+password);
+    this.sendRequest('User/LogIn','GET', {email: email, password: password})
     .then(response => {
       console.log(response);
     })
