@@ -44,12 +44,12 @@ namespace bycoAPI.Services
             _context.SaveChangesAsync();
             return Task.FromResult(new Result(true, "OK")); 
         }
-        public Task<Result> UpdateSession(int session_id, Sessions body)
-        {
+        public Task<Result> UpdateSession(int session_id, Sessions body) {
             var tempSession = _context.Sessions.SingleOrDefault(t => t.session_id == session_id);
             if (tempSession is null) {
                 return Task.FromResult(new Result(false, "BadRequest"));
             }
+            
             tempSession.session_id = body.session_id != default ? body.session_id : tempSession.session_id;
             tempSession.expiration_date = body.expiration_date != default ? body.expiration_date : tempSession.expiration_date;
             tempSession.session_key = body.session_key != default ? body.session_key : tempSession.session_key;
@@ -68,6 +68,5 @@ namespace bycoAPI.Services
             _context.SaveChangesAsync();
             return Task.FromResult(new Result(true, "OK"));
         }
-
     }
 }

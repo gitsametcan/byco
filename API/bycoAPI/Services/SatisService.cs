@@ -88,6 +88,16 @@ namespace bycoAPI.Services
 
         public async Task<Result> MakePurchase(Checkout checkout)
         {
+            var tempSession = _context.Sessions.SingleOrDefault(t=> t.session_key == checkout.session_key);
+            if (tempSession is null) {
+                return new Result(false, "Bad Request");
+            }
+            if (tempSession.expiration_date.CompareTo(DateTime.Now) <= 0) {
+                _context.Sessions.Remove(tempSession);
+                _context.SaveChanges();
+                return new Result(false, "Session expired.");
+            }
+
             Siparis siparis = new() {
                 siparis_id = 0,
                 isim = checkout.isim,
@@ -132,7 +142,7 @@ namespace bycoAPI.Services
                 }
                 NewSatisReq temp = new()
                 {
-                    user_id = 0,
+                    user_id = tempSession.user_id,
                     urun_id = urunid,
                     adet = 1,
                 };
