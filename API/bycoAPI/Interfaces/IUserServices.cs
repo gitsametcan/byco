@@ -10,5 +10,10 @@ namespace bycoAPI.Interfaces
         public bool CheckUserExist(LoginReq loginReq);
 
         public DataResult<User> UserKaydet(User user);
+
+        public Task<Result> Register(RegistrationDTO register); 
+        public Task<DataResult<Sessions>> LogIn(LogInDTO login);
+        public Task<Result> LogOut(string session_key);
+        
     }
 }

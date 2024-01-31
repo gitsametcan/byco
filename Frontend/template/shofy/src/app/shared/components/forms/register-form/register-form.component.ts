@@ -26,12 +26,43 @@ export class RegisterFormComponent {
       surname:new FormControl(null,[Validators.required]),
       email:new FormControl(null,[Validators.required,Validators.email]),
       password:new FormControl(null,[Validators.required,Validators.minLength(6)]),
+      type: new FormControl(null,Validators.compose([Validators.pattern("bireysel"), Validators.pattern("kurumsal")])),
+      vkno: new FormControl(null,[Validators.required,Validators.minLength(6)]),
     })
   }
 
-  kaydol(name:string,surname:string,email:string,password:string){
+  kaydol(name:string,surname:string,email:string,password:string, type:string, vkno:string){
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6){
         console.log(name +" " + surname + " " +email + " "+password)
+        fetch(`http://localhost:5141/api/User/RegisterUser`, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(
+              {
+                ad: name, 
+                soyad: surname, 
+                email: email, 
+                password: password, 
+                tip: type, 
+                vergi_no_kimlik_no: vkno
+              }
+            ), 
+          }
+        ).then(response => {
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+            // kayıt başarılı
+          }
+        );
     }
   }
 
@@ -51,4 +82,6 @@ export class RegisterFormComponent {
   get surname() { return this.registerForm.get('surname') }
   get email() { return this.registerForm.get('email') }
   get password() { return this.registerForm.get('password') }
+  get type() { return this.registerForm.get('type') }
+  get vkno() { return this.registerForm.get('vkno') }
 }

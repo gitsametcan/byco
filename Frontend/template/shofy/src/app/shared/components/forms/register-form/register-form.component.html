@@ -13,16 +13,16 @@
     </div>
 
     <div class="tp-login-input-box">
-        <div class="tp-login-input">
-          <input id="surname" type="text" placeholder="Soyisminiz" formControlName="surname">
-        </div>
-        <div class="tp-login-input-title">
-          <label for="surname">Soyisminiz</label>
-        </div>
-        <span *ngIf="surname?.hasError('required') && (surname?.touched || formSubmitted)" class="text-danger">
-          Kayıt için soyisminiz gereklidir.
-        </span>
+      <div class="tp-login-input">
+        <input id="surname" type="text" placeholder="Soyisminiz" formControlName="surname">
       </div>
+      <div class="tp-login-input-title">
+        <label for="surname">Soyisminiz</label>
+      </div>
+      <span *ngIf="surname?.hasError('required') && (surname?.touched || formSubmitted)" class="text-danger">
+        Kayıt için soyisminiz gereklidir.
+      </span>
+    </div>
 
     <div class="tp-login-input-box">
       <div class="tp-login-input">
@@ -85,6 +85,28 @@
       </span>
     </div>
   </div>
+  <div class="tp-login-input-box">
+    <div class="tp-login-input">
+      <input id="type" type="text" placeholder="Hesap Tipi" formControlName="type">
+    </div>
+    <div class="tp-login-input-title">
+      <label for="type">Hesap Tipi (bireysel/kurumsal)</label>
+    </div>
+    <span *ngIf="type?.hasError('required') && (type?.touched || formSubmitted)" class="text-danger">
+      Bu alanda <b>bireysel</b> ya da <b>kurumsal</b> yazmalıdır.   
+    </span>
+  </div>
+  <div class="tp-login-input-box">
+    <div class="tp-login-input">
+      <input id="vkno" type="text" placeholder="Kimlik No / Vergi No" formControlName="vkno">
+    </div>
+    <div class="tp-login-input-title">
+      <label for="vkno">Kimlik No / Vergi No</label>
+    </div>
+    <span *ngIf="vkno?.hasError('required') && (vkno?.touched || formSubmitted)" class="text-danger">
+      Bu alana bireysel için kimlik numaranızı, kurumsal için vergi numaranızı yazın.  
+    </span>
+  </div>
   <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
     <div class="tp-login-remeber">
       <input id="remeber" type="checkbox">
@@ -92,6 +114,6 @@
     </div>
   </div>
   <div class="tp-login-bottom">
-    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,password?.value)">Kaydol</button>
+    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,password?.value, type?.value, vkno?.value)">Kaydol</button>
   </div>
 </form>
