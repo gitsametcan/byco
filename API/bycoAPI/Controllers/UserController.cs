@@ -64,5 +64,28 @@ namespace bycoAPI.Controllers
         {
             return CreatedAtAction("Kayit", userService.UserKaydet(user).Data);
         }
+
+        [HttpPut("Update/{user_id}")]
+        public async Task<ActionResult> UpdateOzellik(int user_id,[FromBody] User body) {
+            var result = await userService.UpdateUser(user_id, body);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
+        [HttpDelete("Delete/{user_id}")]
+        public async Task<ActionResult> DeleteKimlikNo(int user_id) {
+            var result = await userService.DeleteUser(user_id);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<List<User>> GetAll() {
+            var result = await userService.GetAll();
+            return result;
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("PostProje")]
-        public async Task<ActionResult<Proje>> PostProje(Proje proje)
+        public async Task<ActionResult<Proje>> PostProje([FromBody] Proje proje)
         {
             
             return CreatedAtAction("Kayit",userService.ProjeKaydet(proje).Data);
