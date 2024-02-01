@@ -14,22 +14,22 @@ export class HeroBannerThreeComponent {
 
   // slider data
   public slider_data = [
-    {
-      id: 1,
-      bg: "/assets/img/banner/banner1.png",
-      subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
-       bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
-       markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
-      title: "img",
-    },
-    {
-      id: 2,
-      bg: "/assets/img/banner/banner2.png",
-      subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
-       bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
-       markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
-      title: "img",
-    },
+    // {
+    //   id: 1,
+    //   bg: "/assets/img/banner/banner1.png",
+    //   subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
+    //    bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
+    //    markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
+    //   title: "img",
+    // },
+    // {
+    //   id: 2,
+    //   bg: "/assets/img/banner/banner2.png",
+    //   subtitle: "Sonuç odaklı ve gerekli tüm bakımların kendi\
+    //    bünyemizde sizlere sunulacağının taahhütünü vermek bizlerin\
+    //    markalaşma sürecindeki en büyük yapı taşının olduğuna inanmaktayız.",
+    //   title: "img",
+    // },
     {
         id: 3,
         bg: "/assets/img/banner/Sequence_01.mp4",
