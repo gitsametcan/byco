@@ -146,5 +146,38 @@ namespace bycoAPI.Services
             }
             return hashString;
         }
+
+        public Task<Result> UpdateUser(int user_id, User body)
+        {
+            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
+            if (temp is null) {
+                return Task.FromResult(new Result(false, "BadRequest"));
+            }
+            temp.tip = body.tip != default ? body.tip : temp.tip;
+            temp.email = body.email != default ? body.email : temp.email;
+            temp.password = body.password != default ? body.password : temp.password;
+            temp.soyad = body.soyad != default ? body.soyad : temp.soyad;
+            temp.ad = body.ad != default ? body.ad : temp.ad;
+            temp.user_id = body.user_id != default ? body.user_id : temp.user_id;
+            
+            _dbContexts.SaveChangesAsync();
+            return Task.FromResult(new Result(true, "OK"));
+        }
+
+        public Task<Result> DeleteUser(int user_id)
+        {
+            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
+            if (temp is null) {
+                return Task.FromResult(new Result(false, "BadRequest"));
+            }
+            _dbContexts.Users.Remove(temp);
+            _dbContexts.SaveChanges();
+            return Task.FromResult(new Result(true, "OK"));
+        }
+
+        public Task<List<User>> GetAll()
+        {
+            return Task.FromResult(_dbContexts.Users.ToList());
+        }
     }
 }
