@@ -28,5 +28,14 @@ namespace bycoAPI.Controllers {
             return CreatedAtAction("Kayit", userService.AdresKaydet(adres).Data);
         }
 
+        [HttpPost("SetAdres/{user_di}")]
+        public async Task<ActionResult> SetAdres(int user_id, [FromBody] string adres) {
+            var result = await userService.SetAdres(user_id, adres);
+            if (result.Success) {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
     }
 }

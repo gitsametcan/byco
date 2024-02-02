@@ -35,5 +35,23 @@ namespace bycoAPI.Services {
         {
             throw new NotImplementedException();
         }
+
+        public Task<Result> SetAdres(int user_id, string adres)
+        {
+            var temp = _dbContexts.Adresler.SingleOrDefault(t=> t.user_id == user_id);
+            if (temp is null) {
+                Adresler t = new() {
+                    adres = adres,
+                    adres_id = 0,
+                    user_id = user_id
+                };
+                _dbContexts.Adresler.Add(t);
+                _dbContexts.SaveChanges();
+                return Task.FromResult(new Result(true, "OK"));
+            }
+            temp.adres = adres;
+            _dbContexts.SaveChanges();
+            return Task.FromResult(new Result(true, "OK"));
+        }
     }
 }

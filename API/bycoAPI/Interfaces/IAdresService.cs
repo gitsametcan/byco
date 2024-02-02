@@ -8,5 +8,7 @@ namespace bycoAPI.Interfaces
     {
         public Task<ActionResult<IEnumerable<Adresler>>> GetUserAdresses(int user_id);
         public DataResult<Adresler> AdresKaydet(Adresler adres);
+
+        public Task<Result> SetAdres(int user_id, string adres);
     }
 }
