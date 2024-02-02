@@ -61,9 +61,9 @@
                   <div class="tp-checkout-bill-form">
                     <div class="tp-checkout-bill-inner">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="tp-checkout-input">
-                            <label>İsim <span>*</span></label>
+                            <label>İsim/Şirket Adı<span>*</span></label>
                             <input type="text" placeholder="İsminiz" name="firstName" formControlName="firstName">
                             <!-- error msg start -->
                             <span *ngIf="firstName?.hasError('required') && (firstName?.touched ||formSubmitted)"
@@ -73,85 +73,83 @@
                             <!-- error msg end -->
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="tp-checkout-input">
-                            <label>Soyisim <span>*</span></label>
-                            <input type="text" placeholder="Soyisim" name="lastName" formControlName="lastName">
-                            <!-- error msg start -->
+                            <label>TCKN/VKN <span>*</span></label>
+                            <input type="text" placeholder="TC No / Vergi No" name="lastName" formControlName="lastName">
+                            
                             <span *ngIf="lastName?.hasError('required') && (lastName?.touched ||formSubmitted)"
                               class="text-danger">
-                              Soyisim zorunludur
+                              TCKN/VKN zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>Şirket Adı (opsiyonel)</label>
                             <input type="text" placeholder="Örnek LTD." name="company" formControlName="company">
                           </div>
-                        </div>
-                        <div class="col-md-12">
+                        </div> -->
+                        <!-- <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>Ülke</label>
                             <input type="text" placeholder="Türkiye (TUR)" name="country" formControlName="country">
-                            <!-- error msg start -->
+                            
                             <span *ngIf="country?.hasError('required') && (country?.touched ||formSubmitted)" class="text-danger">
                               Ülke zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>Adres</label>
                             <input type="text" placeholder="Apartman Sokak Cadde Bulvar No" name="address"
                               formControlName="address">
-                            <!-- error msg start -->
+                            
                             <span *ngIf="address?.hasError('required') && (address?.touched ||formSubmitted)" class="text-danger">
                               Adres zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
-                          <!-- <div class="tp-checkout-input">
-                            <input type="text" placeholder="Adres Devam">
-                          </div> -->
+                          
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>İl / İlçe</label>
                             <input type="text" placeholder="İl / İlçe" name="city" formControlName="city">
-                            <!-- error msg start -->
+                            
                             <span *ngIf="city?.hasError('required') && (city?.touched ||formSubmitted)" class="text-danger">
                                 İl / İlçe zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                           <div class="tp-checkout-input">
                             <label>Kıta</label>
                             <app-nice-select [options]="countrySelectOptions" name="Select Country" [defaultCurrent]="0"
                               (onChange)="changeHandler($event)" placeholder="Select Country">
                             </app-nice-select>
-                            <!-- error msg start -->
+                            
                             <span *ngIf="state?.hasError('required') && (state?.touched ||formSubmitted)" class="text-danger">
                               Kıta zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                           <div class="tp-checkout-input">
                             <label>Posta Kodu</label>
                             <input type="text" placeholder="Posta Kodu" name="zipCode" formControlName="zipCode">
-                            <!-- error msg start -->
+                            
                             <span *ngIf="zipCode?.hasError('required') && (zipCode?.touched ||formSubmitted)" class="text-danger">
                               Posta Kodu zorunludur
                             </span>
-                            <!-- error msg end -->
+                            
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>Telefon <span>*</span></label>
@@ -177,13 +175,13 @@
                             <!-- error msg end -->
                           </div>
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                           <div class="tp-checkout-input">
                             <label>Sipariş Notu (opsiyonel)</label>
                             <textarea name="orderNote" formControlName="orderNote"
                               placeholder="Siparişinizle ilgili notlarınızı iletebilirsiniz"></textarea>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
