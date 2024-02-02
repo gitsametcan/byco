@@ -9,7 +9,8 @@ namespace bycoAPI.Models
         public string? soyad { get; set; }
         public string? email { get; set; }
         public string? password { get; set; }
-        public string tip { get; set; }
-        public string vergi_no_kimlik_no { get; set; }
+        public string? telefon { get; set; }
+        public string? tip { get; set; }
+        public string? vergi_no_kimlik_no { get; set; }
     }
 }

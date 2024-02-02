@@ -63,6 +63,7 @@ namespace bycoAPI.Services
                 email = register.email,
                 password = HashString(register.password),
                 soyad = register.soyad,
+                telefon = register.telefon,
                 tip = 2,
                 user_id = 0
             };
