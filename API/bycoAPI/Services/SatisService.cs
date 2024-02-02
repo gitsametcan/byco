@@ -78,7 +78,6 @@ namespace bycoAPI.Services
 
         private Satis GetSatisFromDb(int id) {
             return _context.Satis.SingleOrDefault(t => t.satis_id == id);
-
         }
 
         public Task<List<Satis>> GetAll()
@@ -136,15 +135,17 @@ namespace bycoAPI.Services
 
             foreach (var s in checkout.satilan_urunler) {
                 int urunid = int.Parse(s[0]);
+                int urunadet = int.Parse(s[1]);
                 var urun = _context.Urun.SingleOrDefault(t=> t.urun_id == urunid);
                 if (urun is null) {
                     return new Result(false, "BadRequest");
                 }
+                
                 NewSatisReq temp = new()
                 {
                     user_id = tempSession.user_id,
                     urun_id = urunid,
-                    adet = 1,
+                    adet = urunadet,
                 };
 
                 var urunfiyat = _context.Urun.SingleOrDefault(t => t.urun_id == temp.urun_id);

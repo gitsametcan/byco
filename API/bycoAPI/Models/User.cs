@@ -12,6 +12,7 @@ namespace bycoAPI.Models
         public string? soyad { get; set; }
         public string? email { get; set; }
         public string? password { get; set; }
+        public string? telefon { get; set; }
         public int tip { get; set; }
     }
 }

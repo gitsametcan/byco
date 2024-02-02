@@ -22,5 +22,6 @@ namespace bycoAPI.Models
         public DbSet<KimlikNo> KimlikNo { get; set; } = null!;
         public DbSet<VergiNums> VergiNums { get; set; } = null!;
         public DbSet<Sessions> Sessions { get; set; } = null!;
+        public DbSet<Discount> Discount { get; set; } = null!;
     }
 }

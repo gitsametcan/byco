@@ -158,6 +158,7 @@ namespace bycoAPI.Services
             temp.password = body.password != default ? body.password : temp.password;
             temp.soyad = body.soyad != default ? body.soyad : temp.soyad;
             temp.ad = body.ad != default ? body.ad : temp.ad;
+            temp.telefon = body.telefon != default ? body.telefon : temp.telefon;
             temp.user_id = body.user_id != default ? body.user_id : temp.user_id;
             
             _dbContexts.SaveChangesAsync();
