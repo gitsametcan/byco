@@ -33,7 +33,7 @@ namespace bycoAPI.Controllers
         public async Task<ActionResult> Validate(string session_key) {
             var result = await _service.ValidateSession(session_key);
             if (result.Success) {
-                return Ok();
+                return Ok(result.Data);
             }
             return BadRequest();
         }
