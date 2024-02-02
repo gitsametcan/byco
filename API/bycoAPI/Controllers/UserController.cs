@@ -48,7 +48,7 @@ namespace bycoAPI.Controllers
             return BadRequest();
         }
 
-        [AllowAnonymous]
+        
         [HttpPost("LogOut/{session_key}")]
         public async Task<ActionResult> LogOut(string session_key)
         {

@@ -45,6 +45,12 @@ namespace bycoAPI.Controllers
             return result;
         }
 
+        [HttpGet("GetSiparisBilgileri")]
+        public async Task<DataResult<List<SiparisBilgi>>> GetSiparisBilgileril() {
+            var result = await _service.SiparisBilgileri();
+            return result;
+        }
+
         [HttpGet("GetByUser/{user_id}")]
         public async Task<ActionResult<List<Satis>>> GetSatisOfUser(int user_id) {
             var result = await _service.GetSatisOfUser(user_id);
