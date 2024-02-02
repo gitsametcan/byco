@@ -93,7 +93,7 @@ namespace bycoAPI.Services
         {
             var tempSession = _context.Sessions.SingleOrDefault(t=> t.session_key == checkout.session_key);
             if (tempSession is null) {
-                return new Result(false, "Bad Request");
+                return new Result(false, "Couln't find session.");
             }
             if (tempSession.expiration_date.CompareTo(DateTime.Now) <= 0) {
                 _context.Sessions.Remove(tempSession);
@@ -131,7 +131,7 @@ namespace bycoAPI.Services
             var tempsiparis = _context.Siparis.SingleOrDefault(t => t.siparis_kimlik == adresk);
 
             if (tempsiparis is null) {
-                return new Result(false, "BadRequest");
+                return new Result(false, "Could not create siparis");
             }
 
             foreach (var s in checkout.satilan_urunler) {
@@ -139,7 +139,7 @@ namespace bycoAPI.Services
                 int urunadet = int.Parse(s[1]);
                 var urun = _context.Urun.SingleOrDefault(t=> t.urun_id == urunid);
                 if (urun is null) {
-                    return new Result(false, "BadRequest");
+                    return new Result(false, "Could not find Urun");
                 }
                 
                 NewSatisReq temp = new()
@@ -169,7 +169,7 @@ namespace bycoAPI.Services
                     
                 );
                 if (satis is null) {
-                    return new Result(false, "BadRequest");
+                    return new Result(false, "could not find satis");
                 }
                 SiparisSatis tempss = new() {
                     siparissatis_id = 0,
