@@ -28,6 +28,16 @@ export class CheckoutComponent {
   couponCode: string = '';
   payment_name: string = '';
 
+  myObject = {
+    adsoyad: 'Süleyman Rıfkı',
+    mail: 'byco@byco.com.tr',
+    dogum: '23.04.1920',
+    vkno: '12345678910',
+    tip: '1',
+    tel: '05555555555',
+    adress: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23'
+  };
+
   constructor(public cartService: CartService,private toastrService: ToastrService) { }
 
   handleOpenLogin() {
@@ -89,14 +99,8 @@ export class CheckoutComponent {
     this.checkoutForm = new FormGroup({
       firstName:new FormControl(null,Validators.required),
       lastName:new FormControl(null,Validators.required),
-      company:new FormControl(null),
-      country:new FormControl(null,Validators.required),
       address:new FormControl(null,Validators.required),
-      city:new FormControl(null,Validators.required),
-      state:new FormControl(null,Validators.required),
-      zipCode:new FormControl(null,Validators.required),
       phone:new FormControl(null,Validators.required),
-      orderNote:new FormControl(null),
       email:new FormControl(null,[Validators.required,Validators.email]),
     })
     this.urunler = this.cartService.getCartProducts();
@@ -119,17 +123,13 @@ export class CheckoutComponent {
   }
 
   checkoutDoldur(){
+    console.log("checkdoldur");
     this.checkouts.isim = this.checkoutForm.get("firstName")?.value;
-    this.checkouts.soyisim = this.checkoutForm.get("lastName")?.value;
-    this.checkouts.sirket_adi = this.checkoutForm.get("company")?.value;
+    this.checkouts.vkn = this.checkoutForm.get("lastName")?.value;
     this.checkouts.ulke = this.checkoutForm.get("country")?.value;
     this.checkouts.adres_satiri = this.checkoutForm.get("address")?.value;
-    this.checkouts.il_ilce = this.checkoutForm.get("city")?.value;
-    this.checkouts.kita = this.checkoutForm.get("state")?.value;
-    this.checkouts.posta_kodu = this.checkoutForm.get("zipCode")?.value;
     this.checkouts.telefon = this.checkoutForm.get("phone")?.value;
     this.checkouts.email = this.checkoutForm.get("email")?.value;
-    this.checkouts.siparis_notu = this.checkoutForm.get("orderNote")?.value;
 
     this.checkouts.satilan_urunler=[];
 
@@ -177,13 +177,7 @@ export class CheckoutComponent {
 
   get firstName() { return this.checkoutForm.get('firstName') }
   get lastName() { return this.checkoutForm.get('lastName') }
-  get company() { return this.checkoutForm.get('company') }
-  get country() { return this.checkoutForm.get('country') }
   get address() { return this.checkoutForm.get('address') }
-  get city() { return this.checkoutForm.get('city') }
-  get state() { return this.checkoutForm.get('state') }
-  get zipCode() { return this.checkoutForm.get('zipCode') }
   get phone() { return this.checkoutForm.get('phone') }
-  get orderNote() { return this.checkoutForm.get('orderNote') }
   get email() { return this.checkoutForm.get('email') }
 }
