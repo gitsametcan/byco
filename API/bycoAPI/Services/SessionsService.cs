@@ -24,18 +24,18 @@ namespace bycoAPI.Services
         {
             return await _context.Sessions.SingleOrDefaultAsync(t=> t.session_id == id);
         }
-        public Task<Result> ValidateSession(string session_key)
+        public Task<DataResult<int>> ValidateSession(string session_key)
         {
             var temp = _context.Sessions.SingleOrDefault(t=> t.session_key == session_key);
             if (temp is null) {
-                return Task.FromResult(new Result(false, "Bad Request"));
+                return Task.FromResult(new DataResult<int>(false, -1));
             }
             if (temp.expiration_date.CompareTo(DateTime.Now) <= 0) {
                 _context.Sessions.Remove(temp);
                 _context.SaveChanges();
-                return Task.FromResult(new Result(false, "Session expired."));
+                return Task.FromResult(new DataResult<int>(false, -1));
             }
-            return Task.FromResult(new Result(true));
+            return Task.FromResult(new DataResult<int>(true, temp.user_id));
         }
 
         public Task<Result> AddSession(Sessions req)
