@@ -87,5 +87,18 @@ namespace bycoAPI.Controllers
             var result = await userService.GetAll();
             return result;
         }
+
+        [HttpGet("GetAllResponse")]
+        public async Task<DataResult<List<UserResponse>>> GetAllResponse() {
+            var result = await userService.GetAllResponse();
+            return result;
+        }
+
+        [HttpGet("GetResponseById/{id}")]
+        public async Task<DataResult<UserResponse>> GetUserResponse(int id)
+        {
+            var result = await userService.GetResponseById(id);
+            return result;
+        }
     }
 }

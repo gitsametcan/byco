@@ -3,6 +3,7 @@ using bycoAPI.Models;
 using Utils;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace bycoAPI.Services
 {
@@ -179,6 +180,102 @@ namespace bycoAPI.Services
         public Task<List<User>> GetAll()
         {
             return Task.FromResult(_dbContexts.Users.ToList());
+        }
+
+        public Task<DataResult<UserResponse>> GetResponseById(int user_id)
+        {
+            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
+            if (temp is null) {
+                return Task.FromResult(new DataResult<UserResponse>(false, null));
+            }
+
+            string strAdres = "";
+            var tempAdres = _dbContexts.Adresler.SingleOrDefault(t=> t.user_id == user_id);
+            if (tempAdres is not null) {
+                strAdres = tempAdres.adres;
+            }
+
+            string strDiscount = "0";
+            var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=>t.user_id == user_id);
+            if (tempDiscount is not null) {
+                strDiscount = tempDiscount.discount_rate.ToString();
+            }
+
+            string strVkno = "";
+            if (temp.tip == 1) {
+                var tempKur = _dbContexts.VergiNums.SingleOrDefault(t=> t.user_id == user_id);
+                if (tempKur is not null) {
+                    strVkno = tempKur.vergi_no;
+                }
+            } else if (temp.tip == 2) {
+                var tempBir = _dbContexts.KimlikNo.SingleOrDefault(t=> t.user_id == user_id);
+                if (tempBir is not null) {
+                    strVkno = tempBir.kimlik_no;
+                }
+            }
+
+            UserResponse tur = new() {
+                adres = strAdres,
+                adsoyad = temp.ad + " " + temp.soyad,
+                discount = strDiscount,
+                email = temp.email,
+                telefon = temp.telefon,
+                tip = temp.tip.ToString(),
+                user_id = temp.user_id.ToString(),
+                vkno = strVkno
+            };
+
+            return Task.FromResult(new DataResult<UserResponse>(true, tur));
+        }
+
+        public Task<DataResult<List<UserResponse>>> GetAllResponse()
+        {
+            var userlist = _dbContexts.Users.ToList();
+            List<UserResponse> result = [];
+
+            foreach (var i in userlist)
+            {
+                var temp = i;
+                string strAdres = "";
+                var tempAdres = _dbContexts.Adresler.SingleOrDefault(t=> t.user_id == i.user_id);
+                if (tempAdres is not null) {
+                    strAdres = tempAdres.adres;
+                }
+
+                string strDiscount = "0";
+                var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=>t.user_id == i.user_id);
+                if (tempDiscount is not null) {
+                    strDiscount = tempDiscount.discount_rate.ToString();
+                }
+
+                string strVkno = "";
+                if (temp.tip == 1) {
+                    var tempKur = _dbContexts.VergiNums.SingleOrDefault(t=> t.user_id == i.user_id);
+                    if (tempKur is not null) {
+                        strVkno = tempKur.vergi_no;
+                    }
+                } else if (temp.tip == 2) {
+                    var tempBir = _dbContexts.KimlikNo.SingleOrDefault(t=> t.user_id == i.user_id);
+                    if (tempBir is not null) {
+                        strVkno = tempBir.kimlik_no;
+                    }
+                }
+
+                UserResponse tur = new() {
+                    adres = strAdres,
+                    adsoyad = temp.ad + " " + temp.soyad,
+                    discount = strDiscount,
+                    email = temp.email,
+                    telefon = temp.telefon,
+                    tip = temp.tip.ToString(),
+                    user_id = temp.user_id.ToString(),
+                    vkno = strVkno
+                };
+                result.Add(tur);
+            }
+
+            
+            return Task.FromResult(new DataResult<List<UserResponse>>(true, result));
         }
     }
 }

@@ -100,7 +100,7 @@ namespace bycoAPI.Services
                 name = kat.ad
             };
             if (tempUrun.stok > 0) {
-                ur.status = "stakto";
+                ur.status = "stokta";
             } else {
                 ur.status = "tükendi";
             }

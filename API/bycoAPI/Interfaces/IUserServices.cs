@@ -6,7 +6,9 @@ namespace bycoAPI.Interfaces
     public interface IUserServices
     {
         public Task<User> GetUserAsync(int id);
-         public Task<List<User>> GetAll();
+        public Task<DataResult<UserResponse>> GetResponseById(int user_id);
+        public Task<DataResult<List<UserResponse>>> GetAllResponse();
+        public Task<List<User>> GetAll();
         public bool CheckUserExist(LoginReq loginReq);
 
         public DataResult<User> UserKaydet(User user);
