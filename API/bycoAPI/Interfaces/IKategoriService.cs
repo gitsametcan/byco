@@ -7,6 +7,7 @@ namespace bycoAPI.Interfaces
     {
         public Task<KategoriResponse> GetKategoriByIdAsync(int id);
         public Task<List<KategoriResponse>> GetAll();
+        public Task<List<KategoriResponseValText>> GetAllValueText();
         public Task<Result> AddKategori(Kategori req);
         public Task<Result> UpdateKategori(int kategori_id, Kategori body);
         public Task<Result> DeleteKategori(int kategori_id);

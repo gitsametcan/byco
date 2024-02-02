@@ -1,6 +1,7 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Utils;
 
 namespace bycoAPI.Controllers
 {
@@ -35,6 +36,12 @@ namespace bycoAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<Satis>>> GetAll() {
             var result = await _service.GetAll();
+            return result;
+        }
+
+        [HttpGet("GetMusteriBilgileri")]
+        public async Task<DataResult<List<MusteriBilgi>>> GetMusteriBilgileril() {
+            var result = await _service.MusteriBilgileri();
             return result;
         }
 

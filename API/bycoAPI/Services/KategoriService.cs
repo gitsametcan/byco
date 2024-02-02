@@ -79,6 +79,19 @@ namespace bycoAPI.Services {
             return Task.FromResult(new Result(true, "OK"));
         }
 
-       
+        public Task<List<KategoriResponseValText>> GetAllValueText()
+        {
+            var katlist = _context.Kategori.ToList();
+            List<KategoriResponseValText> result = [];
+            foreach (var item in katlist) {
+                KategoriResponseValText t = new() {
+                    text = item.ad,
+                    value = item.ad
+                };
+                result.Add(t);
+            }
+
+            return Task.FromResult(result);
+        }
     }
 }

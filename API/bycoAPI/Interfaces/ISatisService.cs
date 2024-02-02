@@ -7,10 +7,13 @@ namespace bycoAPI.Interfaces
     {
         public Task<Satis> GetSatisByIdAsync(int id);
         public Task<List<Satis>> GetAll();
+        public Task<DataResult<List<MusteriBilgi>>> MusteriBilgileri();
+        public Task<DataResult<List<SiparisBilgi>>> SiparisBilgileri();
         public Task<List<Satis>> GetSatisOfUser(int user_id);
         public Task<Result> MakePurchase(Checkout checkout);
         public Task<Result> AddSatis(NewSatisReq req);
         public Task<Result> UpdateSatis(int satis_id, Satis body);
         public Task<Result> DeleteSatis(int satis_id);
+
     }
 }

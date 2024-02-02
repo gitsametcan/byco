@@ -23,6 +23,13 @@ namespace bycoAPI.Controllers {
             var result = await _service.GetAll();
             return result;
         }
+
+        [HttpGet("GetAllValueText")]
+        public async Task<List<KategoriResponseValText>> GetAllValueText() {
+            var result = await _service.GetAllValueText();
+            return result;
+        }
+
         [HttpPost("Add")]
         public async Task<ActionResult> AddKategori([FromBody]Kategori req) {
             var result = await _service.AddKategori(req);

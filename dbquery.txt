@@ -69,12 +69,11 @@ go
 
 create table Siparis (
 	siparis_id int identity(1,1),
-	isim nvarchar(100) not null,
-	soyisim nvarchar(100) not null,
+	user_id int not null,
 	adres nvarchar(300) not null,
-	telefon nvarchar(100) not null,
-	email nvarchar(100) not null,
-	siparis_notu nvarchar(300),
+	siparis_kimlik nvarchar(64) not null,
+	tarih datetime not null,
+	durum nvarchar(30) not null,
 	primary key (siparis_id)
 )
 go

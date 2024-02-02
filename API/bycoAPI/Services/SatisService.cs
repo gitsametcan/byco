@@ -1,6 +1,10 @@
+using System.Text;
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
 using Utils;
+
+using System.Security.Cryptography;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace bycoAPI.Services
 {
@@ -97,37 +101,28 @@ namespace bycoAPI.Services
                 return new Result(false, "Session expired.");
             }
 
+            var tUser = _context.Users.SingleOrDefault(t=> t.user_id == tempSession.user_id);
+            if (tUser is null) {
+                return new Result(false, "User not found.");
+            }
+
+            var tAdres = _context.Adresler.SingleOrDefault(t=> t.user_id == tUser.user_id);
+            if (tAdres is null) {
+                return new Result(false, "Address not found.");
+            }
+
+            var adresk = HashString(DateTime.Now.ToLongDateString());
+
             Siparis siparis = new() {
                 siparis_id = 0,
-                isim = checkout.isim,
-                soyisim = checkout.soyisim,
-                sirket_adi = checkout.sirket_adi,
-                ulke = checkout.ulke,
-                adres = checkout.adres_satiri,
-                il_ilce = checkout.il_ilce,
-                kita = checkout.kita,
-                posta_kodu = checkout.posta_kodu,
-                telefon = checkout.telefon,
-                email = checkout.email,
-                siparis_notu = checkout.siparis_notu
+                adres = tAdres.adres,
+                siparis_kimlik = adresk
             };
 
             _context.Siparis.Add(siparis);
             await _context.SaveChangesAsync();
 
-            var tempsiparis = _context.Siparis.SingleOrDefault(t=> 
-                (t.isim == checkout.isim
-                && t.soyisim == checkout.soyisim
-                && t.sirket_adi == checkout.sirket_adi
-                && t.ulke == checkout.ulke
-                && t.adres == checkout.adres_satiri
-                && t.il_ilce == checkout.il_ilce
-                && t.kita == checkout.kita
-                && t.posta_kodu == checkout.posta_kodu
-                && t.telefon == checkout.telefon
-                && t.email == checkout.email
-                && t.siparis_notu == checkout.siparis_notu)
-            );
+            var tempsiparis = _context.Siparis.SingleOrDefault(t => t.siparis_kimlik == adresk);
 
             if (tempsiparis is null) {
                 return new Result(false, "BadRequest");
@@ -148,28 +143,24 @@ namespace bycoAPI.Services
                     adet = urunadet,
                 };
 
-                var urunfiyat = _context.Urun.SingleOrDefault(t => t.urun_id == temp.urun_id);
-                if (urunfiyat is null) {
-                    return new Result(false, "Fiyat not found: " + temp.urun_id);
-                }
                 var datetime_t = DateTime.Now;
                 Satis tempsatis = new()
                 {
                     satis_id = 0,
                     user_id = temp.user_id,
-                    urun_id = urunfiyat.urun_id,
+                    urun_id = urun.urun_id,
                     adet = temp.adet,
                     tarih = datetime_t.ToString(),
-                    fiyat = urunfiyat.fiyat * temp.adet
+                    fiyat = urun.fiyat * temp.adet
                 };
                 _context.Satis.Add(tempsatis);
                 await _context.SaveChangesAsync();
                 var satis = _context.Satis.SingleOrDefault(t=> 
-                    (t.user_id == temp.user_id 
-                    && t.urun_id == urunfiyat.urun_id 
+                    t.user_id == temp.user_id 
+                    && t.urun_id == urun.urun_id 
                     && temp.adet == t.adet 
                     && t.tarih.Equals(datetime_t.ToString())
-                    )
+                    
                 );
                 if (satis is null) {
                     return new Result(false, "BadRequest");
@@ -184,6 +175,72 @@ namespace bycoAPI.Services
             }
 
             return new Result(true, "OK");
+        }
+        private string HashString(string text) {
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            SHA256Managed hashstring = new SHA256Managed();
+            byte[] hash = hashstring.ComputeHash(bytes);
+            string hashString = string.Empty;
+            foreach (byte x in hash)
+            {
+                hashString += String.Format("{0:x2}", x);
+            }
+            return hashString;
+        }
+        public Task<DataResult<List<MusteriBilgi>>> MusteriBilgileri() {
+            var userlist = _context.Users.ToList();
+            List<MusteriBilgi> result = [];
+            foreach (var i in userlist) {
+                var satislist = _context.Satis.Where(t=> t.user_id == i.user_id).ToList();
+                int sum = 0;
+                foreach (var j in satislist) {
+                    sum += (int)j.fiyat;
+                }
+                
+                string disc = "0";
+
+                var tempDiscount = _context.Discount.SingleOrDefault(t=> t.user_id == i.user_id);
+                if (tempDiscount is not null) {
+                    disc = tempDiscount.discount_rate.ToString();
+                }
+
+                MusteriBilgi t = new() {
+                    ad = i.ad + " " + i.soyad,
+                    id = i.user_id.ToString(),
+                    indirim = disc,
+                    tip = i.tip.ToString(),
+                    tutar = sum.ToString()
+                };
+                result.Add(t);
+            }
+
+            return Task.FromResult(new DataResult<List<MusteriBilgi>>(true, result));
+        }
+
+        public Task<DataResult<List<SiparisBilgi>>> SiparisBilgileri()
+        {
+            var tempSiparisler = _context.Siparis.ToList();
+            tempSiparisler.Sort((x, y) => DateTime.Compare(x.tarih, y.tarih));
+            List<SiparisBilgi> result = [];
+            foreach (var i in tempSiparisler) {
+                var tempUser = _context.Users.SingleOrDefault(t=> t.user_id == i.user_id);
+                if (tempUser is null) {
+                    continue;
+                }
+                int adet = 0;
+                var tempSipSat = _context.SiparisSatis.Where(t=> t.siparis_id == i.siparis_id).Select(t=> t.satis_id);
+                var tempSatisList = _context.Satis.Where(t=> tempSipSat.Contains(t.satis_id));
+                SiparisBilgi t = new() {
+                    durum = i.durum,
+                    musteri = tempUser.ad + " " + tempUser.soyad,
+                    siparis_id = i.siparis_id.ToString(),
+                    tarih = i.tarih.ToShortDateString(),
+                    urunadedi = 0.ToString(),
+                };                
+            }
+
+
+            return Task.FromResult(new DataResult<List<SiparisBilgi>>(true, result));
         }
     }
 }
