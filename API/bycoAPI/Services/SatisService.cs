@@ -229,17 +229,20 @@ namespace bycoAPI.Services
                 }
                 int adet = 0;
                 var tempSipSat = _context.SiparisSatis.Where(t=> t.siparis_id == i.siparis_id).Select(t=> t.satis_id);
-                var tempSatisList = _context.Satis.Where(t=> tempSipSat.Contains(t.satis_id));
+                var tempSatisList = _context.Satis.Where(t=> tempSipSat.Contains(t.satis_id)).ToList();
+                foreach (var j in tempSatisList)
+                {
+                    adet += j.adet;
+                }
                 SiparisBilgi t = new() {
                     durum = i.durum,
                     musteri = tempUser.ad + " " + tempUser.soyad,
                     siparis_id = i.siparis_id.ToString(),
                     tarih = i.tarih.ToShortDateString(),
-                    urunadedi = 0.ToString(),
-                };                
+                    urunadedi = adet.ToString(),
+                };
+                result.Add(t);        
             }
-
-
             return Task.FromResult(new DataResult<List<SiparisBilgi>>(true, result));
         }
     }

@@ -18,6 +18,7 @@ namespace bycoAPI.Interfaces
         public Task<Result> LogOut(string session_key);
         public Task<Result> UpdateUser(int user_id, User body);
         public Task<Result> DeleteUser(int user_id);
+        public Task<Result> SetDiscount(int user_id, int discount_rate);
         
     }
 }

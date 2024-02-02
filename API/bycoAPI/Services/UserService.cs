@@ -277,5 +277,23 @@ namespace bycoAPI.Services
             
             return Task.FromResult(new DataResult<List<UserResponse>>(true, result));
         }
+
+        public Task<Result> SetDiscount(int user_id, int discount_rate)
+        {
+            var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=> t.user_id == user_id);
+            if (tempDiscount is null) {
+                Discount t = new() {
+                    discount_id = 0,
+                    discount_rate = discount_rate,
+                    user_id = user_id
+                };
+                _dbContexts.Discount.Add(t);
+                _dbContexts.SaveChanges();
+                return Task.FromResult (new Result(true, "OK"));
+            }
+            tempDiscount.discount_rate = discount_rate;
+            _dbContexts.SaveChanges();
+            return Task.FromResult (new Result(true, "OK"));
+        }
     }
 }
