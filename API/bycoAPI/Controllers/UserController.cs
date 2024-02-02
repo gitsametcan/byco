@@ -48,8 +48,8 @@ namespace bycoAPI.Controllers
             return BadRequest();
         }
 
-        
-        [HttpPost("LogOut/{session_key}")]
+        [AllowAnonymous]
+        [HttpGet("LogOut/{session_key}")]
         public async Task<ActionResult> LogOut(string session_key)
         {
             var result = await userService.LogOut(session_key);
@@ -94,6 +94,7 @@ namespace bycoAPI.Controllers
             return result;
         }
 
+        [AllowAnonymous]
         [HttpGet("GetResponseById/{id}")]
         public async Task<DataResult<UserResponse>> GetUserResponse(int id)
         {

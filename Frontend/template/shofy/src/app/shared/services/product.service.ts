@@ -10,7 +10,7 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
-    benimUrl = "http://localhost:5141/api";
+    benimUrl = "https://localhost:44313/api";
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 
@@ -169,18 +169,18 @@ export class ProductService {
 
   GetAllProjects():IProduct[]{
 
-    // this.sendRequest('Urun/GetAllResponse','GET')
-    // .then(response => {
-    //     this.urunler = response;
-    //   console.log(response);
-    //   console.log("responsun" + this.urunler);
-    // })
-    // .catch(err => {
-    //   console.error("Error: " + err);
-    // })
-    // console.log("ürünler"+this.urunler);
+    this.sendRequest('Urun/GetAllResponse','GET')
+    .then(response => {
+        this.urunler = response;
+      console.log(response);
+      console.log("responsun" + this.urunler);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+    console.log("ürünler"+this.urunler);
 
-    return product_data;
+    return this.urunler;
 
 
   }

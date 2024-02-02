@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -16,8 +17,12 @@ export class ProfileComponent {
   passwordUpdated: boolean = false;
   infoUpdated: boolean = false;
   passwordMismatch: boolean = false;
+  userid:number = -1;
+
+  benimUrl = "https://localhost:44313/api";
 
 
+  constructor(private router: Router) { }
 
 
   public genderSelectOptions = [
@@ -44,13 +49,14 @@ export class ProfileComponent {
   
 
   myObject = {
+    user_id: "",
     adsoyad: 'Süleyman Rıfkı',
-    mail: 'byco@byco.com.tr',
-    dogum: '23.04.1920',
+    email: 'byco@byco.com.tr',
     vkno: '12345678910',
     tip: '1',
-    tel: '05555555555',
-    adress: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23'
+    telefon: '05555555555',
+    adres: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23',
+    discount : '00'
   };
 
   siparislerimDeneme = [
@@ -59,7 +65,7 @@ export class ProfileComponent {
     { no: '486154', musteri:'Finnaz Ay', urunadedi: '7',tarih: '01.02.2014',tutar: '743', durum: 'teslim', },
     { no: '789524', musteri:'Süleyman Rıfkı', urunadedi: '4',tarih: '01.02.2014',tutar: '22458', durum: 'hata', },
     { no: '215674', musteri:'DUNYA', urunadedi: '6',tarih: '01.02.2014',tutar: '12', durum: 'yolda', },
-    { no: '456846', musteri:'Şevket Er', urunadedi: '1',tarih: '01.02.2014',tutar: '122422', durum: 'yolda', },
+    { no: '456846', musteri:'şevket er', urunadedi: '1',tarih: '01.02.2014',tutar: '122422', durum: 'yolda', },
     { no: '964215', musteri:'Enka', urunadedi: '1',tarih: '01.02.2014',tutar: '987554', durum: 'yolda', }
   ];
 
@@ -74,7 +80,116 @@ export class ProfileComponent {
   ];
 
   ngOnInit():void{
+    this.getIdFromSession();
+    this.getOrder();
+    
+  }
 
+  getOrder(){
+    this.sendRequest('Satis/GetSiparisBilgileri','GET')
+    .then(response => {
+      console.log(response.data);
+      this.siparislerimDeneme=response.data;
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
+  getIdFromSession(){
+    console.log("sessionkey ===" + this.getCookie("session_key"))
+    this.sendRequest('Sessions/Validate/'+ this.getCookie("session_key"),'GET')
+    .then(response => {
+      console.log(response);
+      this.userid=response;
+      this.getUserById();
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      this.router.navigate(['/pages/login']);
+    })
+
+  }
+
+  getUserById(){
+    this.sendRequest('User/GetResponseById/'+ this.userid,'GET')
+    .then(response => {
+      console.log(response.data);
+      this.myObject=response.data;
+      if(this.myObject.tip=="0"){
+        this.getMusteriler();
+      }
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+  
+
+  logout(){
+    console.log("buradayız")
+    this.sendRequest('User/LogOut/'+ this.getCookie("session_key"),'GET')
+    .then(response => {
+      this.router.navigate(['/pages/login']);
+      console.log("buradayız22")
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
+  getMusteriler(){
+    this.sendRequest('Satis/GetMusteriBilgileri','GET')
+    .then(response => {
+      console.log(response.data);
+      this.musterilerDeneme=response.data;
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
+  sendRequest(url: string, method: string, data?:any): Promise<any> {
+    
+    return fetch(`${this.benimUrl}/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
+
+  getCookie(name:string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()!.split(';').shift();
+    else return "";
   }
   
   changeHandler(selectedOption: { value: string; text: string }) {

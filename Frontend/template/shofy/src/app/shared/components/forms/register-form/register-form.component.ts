@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
@@ -18,23 +19,24 @@ export class RegisterFormComponent {
   public registerForm!: FormGroup;
   public formSubmitted = false;
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService, private router: Router) { }
 
   ngOnInit () {
     this.registerForm = new FormGroup({
       name:new FormControl(null,[Validators.required]),
       surname:new FormControl(null,[Validators.required]),
       email:new FormControl(null,[Validators.required,Validators.email]),
+      tel:new FormControl(null,[Validators.required]),
       password:new FormControl(null,[Validators.required,Validators.minLength(6)]),
       type: new FormControl(null,Validators.compose([Validators.pattern("bireysel"), Validators.pattern("kurumsal")])),
       vkno: new FormControl(null,[Validators.required,Validators.minLength(6)]),
     })
   }
 
-  kaydol(name:string,surname:string,email:string,password:string, type:string, vkno:string){
+  kaydol(name:string,surname:string,email:string, tel:string, password:string, type:string, vkno:string){
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6){
         console.log(name +" " + surname + " " +email + " "+password)
-        fetch(`http://localhost:5141/api/User/RegisterUser`, {
+        fetch(`https://localhost:44313/api/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -51,6 +53,7 @@ export class RegisterFormComponent {
                 soyad: surname, 
                 email: email, 
                 password: password, 
+                telefon: tel,
                 tip: type, 
                 vergi_no_kimlik_no: vkno
               }
@@ -60,10 +63,14 @@ export class RegisterFormComponent {
             if (!response.ok) {
               throw new Error(response.statusText);
             }
-            // kayıt başarılı
+            this.gec();
           }
         );
     }
+  }
+
+  gec(){
+    this.router.navigate(['/pages/login']);
   }
 
   onSubmit() {
@@ -81,6 +88,7 @@ export class RegisterFormComponent {
   get name() { return this.registerForm.get('name') }
   get surname() { return this.registerForm.get('surname') }
   get email() { return this.registerForm.get('email') }
+  get tel() {return this.registerForm.get('tel')}
   get password() { return this.registerForm.get('password') }
   get type() { return this.registerForm.get('type') }
   get vkno() { return this.registerForm.get('vkno') }

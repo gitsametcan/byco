@@ -37,6 +37,18 @@
     </div>
 
     <div class="tp-login-input-box">
+        <div class="tp-login-input">
+          <input id="tel" type="text" placeholder="0555 555 55 55" formControlName="tel">
+        </div>
+        <div class="tp-login-input-title">
+          <label for="tel">Telefon Numaranız</label>
+        </div>
+        <span *ngIf="(tel?.hasError('required') && tel?.touched) || (tel?.hasError('email') && tel?.dirty) || (formSubmitted && !tel?.value)" class="text-danger">
+          Kayıt için telefon numaranız gereklidir.
+        </span>
+      </div>
+
+    <div class="tp-login-input-box">
       <div class="p-relative">
         <div class="tp-login-input">
           <input id="tp_password" [type]="isShowPass ? 'text' : 'password'" placeholder="Minimum 6 karakter."
@@ -114,6 +126,8 @@
     </div>
   </div>
   <div class="tp-login-bottom">
-    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,password?.value, type?.value, vkno?.value)">Kaydol</button>
+    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,tel?.value, password?.value, type?.value, vkno?.value)">Kaydol</button>
   </div>
 </form>
+<button type="submit"  (click)="gec()">Kayıtlı Mısın, Giriş Yap</button>
+
