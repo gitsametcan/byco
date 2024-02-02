@@ -16,7 +16,7 @@ import { checkk } from '@/types/checkt-type';
 export class CheckoutComponent {
     
     
-    benimUrl = "http://localhost:5141/api";
+    benimUrl = "https://localhost:44313/api";
 
     public checkouts: checkk ={};
     
@@ -24,18 +24,25 @@ export class CheckoutComponent {
 
   isOpenLogin = false;
   isOpenCoupon = false;
+  isUserLogin = false;
+  
+  infoUpdated: boolean = false;
   shipCost: number = 0;
   couponCode: string = '';
   payment_name: string = '';
+  userid: number = -1;
+  discount:number = 0;
+  
 
   myObject = {
+    user_id: "",
     adsoyad: 'Süleyman Rıfkı',
-    mail: 'byco@byco.com.tr',
-    dogum: '23.04.1920',
+    email: 'byco@byco.com.tr',
     vkno: '12345678910',
     tip: '1',
-    tel: '05555555555',
-    adress: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23'
+    telefon: '05555555555',
+    adres: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23',
+    discount : '00'
   };
 
   constructor(public cartService: CartService,private toastrService: ToastrService) { }
@@ -48,11 +55,13 @@ export class CheckoutComponent {
   }
 
   handleShippingCost(value: number | string) {
-    if (value === 'free') {
-      this.shipCost = 0;
-    } else {
-      this.shipCost = value as number;
-    }
+    let sayi = Number(value)
+    this.discount = (this.cartService.totalPriceQuantity().total * sayi) / 100;
+    // if (value === 'free') {
+    //   this.shipCost = 0;
+    // } else {
+    //   this.shipCost = value as number;
+    // }
   }
 
   public countrySelectOptions = [
@@ -97,44 +106,55 @@ export class CheckoutComponent {
 
   ngOnInit () {
     this.checkoutForm = new FormGroup({
-      firstName:new FormControl(null,Validators.required),
-      lastName:new FormControl(null,Validators.required),
-      address:new FormControl(null,Validators.required),
-      phone:new FormControl(null,Validators.required),
-      email:new FormControl(null,[Validators.required,Validators.email]),
+      firstName:new FormControl(null),
+      lastName:new FormControl(null),
+      address:new FormControl(null),
+      phone:new FormControl(null),
+      email:new FormControl(null),
     })
     this.urunler = this.cartService.getCartProducts();
+    this.getIdFromSession();
   }
 
-  onSubmit() {
-    this.formSubmitted = true;
-    if (this.checkoutForm.valid) {
-      console.log('checkout-form-value', this.checkoutForm);
-      this.toastrService.success(`Order successfully`);
-      this.checkoutDoldur();
-      this.GetPostChechout(this.checkouts);
+  updateInfo() {
+    console.log(this.myObject);
+    
+  this.infoUpdated= true;
+  }
+
+//   onSubmit() {
+//     console.log("sadad");
+//     console.log('checkout-form-value', this.checkoutForm);
+//     this.formSubmitted = true;
+//     if (this.checkoutForm.valid) {
+//       console.log('checkout-form-value', this.checkoutForm);
+//       this.toastrService.success(`Order successfully`);
+//       this.checkoutDoldur();
+//       this.GetPostChechout(this.checkouts);
       
     
-      this.checkoutForm.reset();
-      this.formSubmitted = false; // Reset formSubmitted to false
-    }
-    console.log(this.cartService.getCartProducts());
-    //console.log('checkout-form', this.checkoutForm.value);
-  }
+//       this.checkoutForm.reset();
+//       this.formSubmitted = false; // Reset formSubmitted to false
+//     }
+//     console.log(this.cartService.getCartProducts());
+//     //console.log('checkout-form', this.checkoutForm.value);
+//   }
 
   checkoutDoldur(){
     console.log("checkdoldur");
-    this.checkouts.isim = this.checkoutForm.get("firstName")?.value;
-    this.checkouts.vkn = this.checkoutForm.get("lastName")?.value;
-    this.checkouts.ulke = this.checkoutForm.get("country")?.value;
-    this.checkouts.adres_satiri = this.checkoutForm.get("address")?.value;
-    this.checkouts.telefon = this.checkoutForm.get("phone")?.value;
-    this.checkouts.email = this.checkoutForm.get("email")?.value;
+    this.checkouts.session_key = String(this.getCookie("session_key"));
+
+
+    
 
     this.checkouts.satilan_urunler=[];
 
+
     for(let product of this.urunler){
-        this.checkouts.satilan_urunler?.push(product.id.toString());
+        let ikili:string[]=[]
+        ikili?.push(product.id.toString());
+        ikili?.push(product.orderQuantity!.toString());
+        this.checkouts.satilan_urunler?.push(ikili);
     }
 
   }
@@ -148,8 +168,56 @@ export class CheckoutComponent {
       console.error("Error: " + err);
     })
 
+  }
+
+  getIdFromSession(){
+    console.log("sessionkey ===" + this.getCookie("session_key"))
+    this.sendRequest('Sessions/Validate/'+ this.getCookie("session_key"),'GET')
+    .then(response => {
+      console.log(response);
+      this.userid=response;
+      this.getUserById();
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
+
+  }
+
+  getUserById(){
+    this.sendRequest('User/GetResponseById/'+ this.userid,'GET')
+    .then(response => {
+      console.log(response.data);
+      this.myObject=response.data;
+      this.isUserLogin=true;
+      this.calculateDisc();
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
+  calculateDisc(){
+    
+    let sayi = Number(this.myObject.discount)
+    this.discount = (this.cartService.totalPriceQuantity().total * sayi) / 100;
+  }
+  
 
 
+  getCookie(name:string) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
   }
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
@@ -173,6 +241,19 @@ export class CheckoutComponent {
     }
       return response.json();
   })
+  }
+
+  siparisGonder(){
+    console.log("sorun yok")
+    this.checkoutDoldur();
+    console.log(this.checkouts)
+    this.sendRequest('Satis/MakePurchase','POST',this.checkouts)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error();
+    })
   }
 
   get firstName() { return this.checkoutForm.get('firstName') }

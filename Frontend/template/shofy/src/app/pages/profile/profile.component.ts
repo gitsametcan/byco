@@ -85,6 +85,24 @@ export class ProfileComponent {
     
   }
 
+//   logout(){
+//     this.router.navigate(['/pages/login']);
+//   }
+
+  getMusteriler(){
+    this.sendRequest('Satis/GetMusteriBilgileri','GET')
+    .then(response => {
+      console.log(response.data);
+      this.musterilerDeneme=response.data;
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
   getOrder(){
     this.sendRequest('Satis/GetSiparisBilgileri','GET')
     .then(response => {
@@ -133,35 +151,6 @@ export class ProfileComponent {
   }
   
 
-  logout(){
-    console.log("buradayız")
-    this.sendRequest('User/LogOut/'+ this.getCookie("session_key"),'GET')
-    .then(response => {
-      this.router.navigate(['/pages/login']);
-      console.log("buradayız22")
-
-      
-    })
-    .catch(err => {
-      console.error("Error: " + err);
-      //this.router.navigate(['/pages/login']);
-    })
-  }
-
-  getMusteriler(){
-    this.sendRequest('Satis/GetMusteriBilgileri','GET')
-    .then(response => {
-      console.log(response.data);
-      this.musterilerDeneme=response.data;
-
-      
-    })
-    .catch(err => {
-      console.error("Error: " + err);
-      //this.router.navigate(['/pages/login']);
-    })
-  }
-
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     
     return fetch(`${this.benimUrl}/${url}`, {
@@ -186,10 +175,14 @@ export class ProfileComponent {
   }
 
   getCookie(name:string) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()!.split(';').shift();
-    else return "";
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
   }
   
   changeHandler(selectedOption: { value: string; text: string }) {

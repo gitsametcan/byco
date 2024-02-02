@@ -4,6 +4,7 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { Services } from 'src/app/httpservices/services';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
@@ -50,15 +51,24 @@ export class LoginFormComponent {
     this.sendRequest('User/LogIn','POST', {email: email, password: password})
     .then(response => {
       console.log(response);
-      document.cookie = "session_key=" + response.session_key + ";";
+      this.setCookie("session_key",response.session_key,1)
+      //document.cookie = "session_key=" + response.session_key + ";";
       this.router.navigate(['/pages/profile']);
     })
     .catch(err => {
       console.error("Error: " + err);
     })
-
-
   }
+
+  setCookie(name:string,value:string,days:number) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     
