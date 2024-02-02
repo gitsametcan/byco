@@ -116,7 +116,9 @@ namespace bycoAPI.Services
             Siparis siparis = new() {
                 siparis_id = 0,
                 adres = tAdres.adres,
-                siparis_kimlik = adresk
+                siparis_kimlik = adresk,
+                tarih = DateTime.Now,
+                durum = "hazirlaniyor"
             };
 
             var tDis = _context.Discount.SingleOrDefault(t=> t.user_id == tUser.user_id);
