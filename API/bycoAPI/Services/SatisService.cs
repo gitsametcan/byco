@@ -119,6 +119,12 @@ namespace bycoAPI.Services
                 siparis_kimlik = adresk
             };
 
+            var tDis = _context.Discount.SingleOrDefault(t=> t.user_id == tUser.user_id);
+            var indirim = 0;
+            if (tDis is not null) {
+                indirim = tDis.discount_rate;
+            }
+
             _context.Siparis.Add(siparis);
             await _context.SaveChangesAsync();
 
@@ -151,7 +157,7 @@ namespace bycoAPI.Services
                     urun_id = urun.urun_id,
                     adet = temp.adet,
                     tarih = datetime_t.ToString(),
-                    fiyat = urun.fiyat * temp.adet
+                    fiyat = urun.fiyat * temp.adet * (100-indirim) / 100
                 };
                 _context.Satis.Add(tempsatis);
                 await _context.SaveChangesAsync();
