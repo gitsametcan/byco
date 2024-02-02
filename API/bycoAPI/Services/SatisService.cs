@@ -135,7 +135,7 @@ namespace bycoAPI.Services
             }
 
             foreach (var s in checkout.satilan_urunler) {
-                int urunid = int.Parse(s);
+                int urunid = int.Parse(s[0]);
                 var urun = _context.Urun.SingleOrDefault(t=> t.urun_id == urunid);
                 if (urun is null) {
                     return new Result(false, "BadRequest");

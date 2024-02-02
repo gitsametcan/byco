@@ -15,7 +15,7 @@ namespace bycoAPI.Models {
         public string? email { get; set; }
         public string? siparis_notu { get; set; }
 
-        public List<string>? satilan_urunler {get; set;}
+        public List<List<string>>? satilan_urunler {get; set;}
 
         public string? session_key {get; set;}
     }
