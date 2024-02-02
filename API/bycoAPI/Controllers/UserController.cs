@@ -101,7 +101,7 @@ namespace bycoAPI.Controllers
             return result;
         }
 
-        [HttpGet("SetDiscount/")]
+        [HttpGet("SetDiscount")]
         public async Task<Result> SetDiscount([FromQuery]int user_id, [FromQuery]int discount_rate)
         {
             var result = await userService.SetDiscount(user_id, discount_rate);
