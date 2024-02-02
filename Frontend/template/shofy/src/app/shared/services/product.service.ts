@@ -168,18 +168,19 @@ export class ProductService {
   }
 
   GetAllProjects():IProduct[]{
-    this.sendRequest('Urun/GetAllResponse','GET')
-    .then(response => {
-        this.urunler = response;
-      console.log(response);
-      console.log("responsun" + this.urunler);
-    })
-    .catch(err => {
-      console.error("Error: " + err);
-    })
-    console.log("ürünler"+this.urunler);
 
-    return this.urunler;
+    // this.sendRequest('Urun/GetAllResponse','GET')
+    // .then(response => {
+    //     this.urunler = response;
+    //   console.log(response);
+    //   console.log("responsun" + this.urunler);
+    // })
+    // .catch(err => {
+    //   console.error("Error: " + err);
+    // })
+    // console.log("ürünler"+this.urunler);
+
+    return product_data;
 
 
   }

@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { Services } from 'src/app/httpservices/services';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -22,7 +23,7 @@ export class LoginFormComponent {
   public formSubmitted = false;
   //public httpServices: Services;
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService, private router: Router) { }
 
   ngOnInit () {
     this.loginForm = new FormGroup({
@@ -50,6 +51,7 @@ export class LoginFormComponent {
     .then(response => {
       console.log(response);
       document.cookie = "session_key=" + response.session_key + ";";
+      this.router.navigate(['/pages/profile']);
     })
     .catch(err => {
       console.error("Error: " + err);
