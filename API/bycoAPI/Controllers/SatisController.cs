@@ -22,7 +22,7 @@ namespace bycoAPI.Controllers
             if (result.Success) {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(result.Message);
         }
 
         [HttpGet("GetById/{id}")]
