@@ -20,9 +20,9 @@ namespace bycoAPI.Services {
             foreach(var k in kategoriler) {
                 KategoriResponse temp = new();
                 temp.id = k.kategori_id.ToString();
-                temp.parent = k.parent_id.ToString();
-                temp.status = "";
-                temp.productType = "";
+                temp.parent = k.ad.ToString();
+                temp.status = "Show";
+                temp.productType = "electronic";
                 temp.products = new();
                 var urunler = _context.Urun.Where(t=> t.kategori_id == k.kategori_id);
                 foreach (var u in urunler) {
@@ -38,9 +38,9 @@ namespace bycoAPI.Services {
             var k = _context.Kategori.SingleOrDefault(t=> t.kategori_id == id);
             KategoriResponse temp = new();
             temp.id = k.kategori_id.ToString();
-            temp.parent = k.parent_id.ToString();
-            temp.status = "";
-            temp.productType = "";
+            temp.parent = k.ad.ToString();
+            temp.status = "Show";
+            temp.productType = "electronic";
             temp.products = new();
             var urunler = _context.Urun.Where(t=> t.kategori_id == k.kategori_id);
             foreach (var u in urunler) {
