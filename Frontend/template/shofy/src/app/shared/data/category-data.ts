@@ -2,60 +2,129 @@ import { ICategory } from "@/types/category-type";
 import { HttpClient } from '@angular/common/http';
 
 
+// class CategoryService {
+//     benimUrl = "https://localhost:44313/api";
+
+//     kategori: ICategory[] = [];
+//     okey = false;
+  
+//     constructor() {}
+
+//     result():ICategory[]{
+//         return this.kategori;
+//     }
+
+//     getKategoriler(){
+//         this.sendRequest('Kategori/GetAll','GET')
+//         .then(response => {
+//             this.kategori = response;
+//             this.okey=true;
+//         })
+//         .catch(err => {
+//           console.error("Error: " + err);
+//         })
+//         this.okey=false;
+//       }
+
+//     private sendRequest(url: string, method: string, data?:any): Promise<any> {
+    
+//         return fetch(`${this.benimUrl}/${url}`, {
+//           method: method,
+//           mode: 'cors',
+//           cache: 'no-cache',
+//           credentials: 'same-origin',
+//           headers: {
+//               'Content-Type': 'application/json',
+//               'Accept': 'application/json'
+//           },
+//           redirect: 'follow',
+//           referrerPolicy: 'no-referrer',
+//           body: JSON.stringify(data), 
+//       })
+//       .then(response => {
+//         if (!response.ok) {
+//           throw new Error(response.statusText);
+//         }
+//           return response.json();
+//       })
+//       }
+// }
+
 class CategoryService {
     benimUrl = "https://localhost:44313/api";
 
     kategori: ICategory[] = [];
     okey = false;
-  
+
     constructor() {}
 
-    result():ICategory[]{
-        return this.kategori;
-        
+    result(): ICategory[] {
+        let donecek:ICategory[]=[];
+        this.getKategoriler().then((kategoriler: ICategory[]) => {
+            // Dönen kategorilerle işlem yapabilirsiniz
+            for(let kat of kategoriler){
+                let kati: ICategory = {
+                    id: kat.id,
+                    img: " ",
+                    parent: kat.parent,
+                    productType: kat.productType,
+                    products: kat.products,
+                    status: kat.status,
+                }
 
+                donecek.push(kati);
+            }
+        });
+        return donecek;
     }
 
-    getKategoriler(){
-        this.sendRequest('Kategori/GetAll','GET')
-        .then(response => {
+    async getKategoriler():Promise<ICategory[]> {
+        try {
+            const response = await this.sendRequest('Kategori/GetAll', 'GET');
             this.kategori = response;
-            this.okey=true;
-        })
-        .catch(err => {
-          console.error("Error: " + err);
-        })
-        this.okey=false;
-      }
-
-    private sendRequest(url: string, method: string, data?:any): Promise<any> {
-    
-        return fetch(`${this.benimUrl}/${url}`, {
-          method: method,
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'same-origin',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          redirect: 'follow',
-          referrerPolicy: 'no-referrer',
-          body: JSON.stringify(data), 
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
+            this.okey = true;
+            return this.kategori;
+        } catch (err) {
+            console.error("Error: " + err);
+            return [];
         }
-          return response.json();
-      })
-      }
+        finally{
+            this.okey = false;
+        }
+        
+    }
+
+    private async sendRequest(url: string, method: string, data?: any): Promise<any> {
+        try {
+            const response = await fetch(`${this.benimUrl}/${url}`, {
+                method: method,
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+
+            return response.json();
+        } catch (error) {
+            throw new Error("Error in sendRequest: ");
+        }
+    }
 }
 
    const categoryService = new CategoryService();
-   console.log("kategoriler  " + categoryService.getKategoriler() +"  deneme");
 
-  const category_data:ICategory[] = new CategoryService().result()
+   const category_data:ICategory[] = new CategoryService().result()
+  
 
   
 
@@ -104,6 +173,7 @@ class CategoryService {
 //     status: "Show"
 //   }
 // ]
-console.log("listeden" + category_data);
+
+
 export default category_data;
 
