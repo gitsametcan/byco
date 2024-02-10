@@ -32,18 +32,28 @@ export class ProfileComponent {
   ];
 
   public kategoriSec = [
-    { value: 'elektrik', text: 'elektrik' },
-    { value: 'kablo', text: 'kablo' },
+    { value: 'elektrik', text: 'Elektrik' },
+    { value: 'kablo', text: 'Kablo' },
     { value: 'diger', text: 'diger' },
   ];
 
   urundeneme = {
-    stok: '',
     ad: '',
+    stok: '',
     aciklama: '',
     kategori:'',
     img:'',
     fiyat: ''
+  }
+
+  gonderilecekUrun = {
+    ad: "denem",
+    stok: 6,
+    aciklama: "denemeler",
+    kategori_id: 2,
+    img: "dememelerimg",
+    fiyat: 23
+
   }
 
   
@@ -82,12 +92,28 @@ export class ProfileComponent {
   ngOnInit():void{
     this.getIdFromSession();
     this.getOrder();
+    this.getKategoriSecenek();
     
   }
 
 //   logout(){
 //     this.router.navigate(['/pages/login']);
 //   }
+
+  getKategoriSecenek(){
+    this.sendRequest('Kategori/GetAllValueText','GET')
+    .then(response => {
+      console.log(response);
+      this.kategoriSec=response;
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+
+  }
 
   getMusteriler(){
     this.sendRequest('Satis/GetMusteriBilgileri','GET')
@@ -228,7 +254,23 @@ export class ProfileComponent {
 
   addUrun(){
     console.log(this.urundeneme);
-    console.log('Select Kategori:', );
+    this.gonderilecekUrun={
+        ad: this.urundeneme.ad,
+        stok: Number(this.urundeneme.stok),
+        aciklama: this.urundeneme.aciklama,
+        kategori_id: Number(this.urundeneme.kategori),
+        img: this.urundeneme.img,
+        fiyat: Number(this.urundeneme.fiyat)
+
+    }
+    console.log(this.gonderilecekUrun);
+    this.sendRequest('Urun/Add','POST',this.gonderilecekUrun)
+    .then(response => {
+      console.log(response.status);
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+    })
 
   }
 }

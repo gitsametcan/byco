@@ -86,7 +86,7 @@ namespace bycoAPI.Services {
             foreach (var item in katlist) {
                 KategoriResponseValText t = new() {
                     text = item.ad,
-                    value = item.ad
+                    value = item.kategori_id.ToString()
                 };
                 result.Add(t);
             }
