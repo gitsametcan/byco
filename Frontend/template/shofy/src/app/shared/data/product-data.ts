@@ -3119,4 +3119,5 @@ const product_data: IProduct[] = [
   }
 ];
 
+
 export default product_data;

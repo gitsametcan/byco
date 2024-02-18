@@ -35,7 +35,7 @@
         {{ ((product.price || 0) - ((product.price || 0) * (product.discount || 0)) / 100).toFixed(2) }} TL
       </span>
     </div>
-    <span *ngIf="product.discount <= 0" class="tp-product-details-price old-price">
+    <span *ngIf="product.discount <= 0" class="tp-product-details-price new-price">
       {{ (product.price || 0).toFixed(2) }} TL
     </span>
   </div>
@@ -98,11 +98,14 @@
              </span>
           </div>
        </div>
-       <div class="tp-product-details-add-to-cart mb-15 w-100">
+       <div *ngIf="myObject.tip!=='0'" class="tp-product-details-add-to-cart mb-15 w-100">
           <button (click)="cartService.addCartProduct(product)" class="tp-product-details-add-to-cart-btn w-100">Sepete Ekle</button>
        </div>
+       <div *ngIf="myObject.tip==='0'" class="tp-product-details-add-to-cart mb-15 w-100">
+        <button (click)="urunuSil(product)" class="tp-product-details-add-to-cart-btn w-100">Ürünü Sil</button>
+     </div>
     </div>
-    <a [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Alışverişi Tamamla</a>
+    <a *ngIf="myObject.tip!=='0'" [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Alışverişi Tamamla</a>
  </div>
 
  <div *ngIf="isShowBottom">
