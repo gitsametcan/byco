@@ -136,4 +136,11 @@ export class CartService {
   initialOrderQuantity() {
     return this.orderQuantity = 1;
   };
+
+  clear_cartp() {
+    
+      state.cart_products = [];
+      localStorage.setItem("cart_products", JSON.stringify(state.cart_products));
+    
+  };
 }

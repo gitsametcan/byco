@@ -96,9 +96,24 @@ export class ProfileComponent {
     
   }
 
-//   logout(){
-//     this.router.navigate(['/pages/login']);
-//   }
+  logout(){
+    console.log(this.getCookie("session_key"))
+    this.sendRequest('User/LogOut/'+this.getCookie("session_key"),'GET')
+    .then(response => {
+        this.setCookie("","",0);
+
+        this.router.navigate(['/pages/login']);
+        this.ngOnInit();
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+
+      this.router.navigate(['/pages/login']);
+    })
+    
+  }
 
   getKategoriSecenek(){
     this.sendRequest('Kategori/GetAllValueText','GET')
@@ -210,6 +225,16 @@ export class ProfileComponent {
     }
     return null;
   }
+
+  setCookie(name:string,value:string,days:number) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
   
   changeHandler(selectedOption: { value: string; text: string }) {
     this.urundeneme.kategori = selectedOption.value;
@@ -239,9 +264,16 @@ export class ProfileComponent {
   }
 
   updateInfo() {
-    console.log(this.myObject);
-    
-  this.infoUpdated= true;
+    this.sendRequest('Adres/SetAdres/'+ this.userid,'POST',this.myObject.adres)
+    .then(response => {
+      console.log(response);
+
+      
+    })
+    .catch(err => {
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
   }
 
   addCategory(){

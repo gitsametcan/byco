@@ -38,6 +38,10 @@
     <span *ngIf="product.discount <= 0" class="tp-product-details-price new-price">
       {{ (product.price || 0).toFixed(2) }} TL
     </span>
+    <div *ngIf="myObject.tip==='0'" class="tp-product-details-add-to-cart mb-15 w-100">
+        <input type="text" [(ngModel)]="yeniFiyat" placeholder="Yeni Fiyatı buraya yazdıktan sonra butona basınız"/>
+        <button (click)="fiyatGuncelle()" class="tp-product-details-add-to-cart-btn w-100">Fiyat Güncelle</button>
+     </div>
   </div>
 
   <!-- variations -->

@@ -13,6 +13,6 @@ namespace bycoAPI.Models
         public int urun_id { get; set; }
         public string tarih { get; set; }
         public int adet { get; set; }
-        public long fiyat { get; set; }
+        public decimal fiyat { get; set; }
     }
 }

@@ -13,6 +13,7 @@ export class ProductDetailsWrapperComponent {
   @Input() isShowBottom: boolean = true;
 
   textMore = false;
+  yeniFiyat: string = "";
   userid: number = -1;
 
   benimUrl = "https://localhost:44313/api";
@@ -119,6 +120,11 @@ export class ProductDetailsWrapperComponent {
     .catch(err => {
       console.error("Error: " + err);
     })
+
+  }
+
+  fiyatGuncelle(){
+    console.log(this.yeniFiyat);
 
   }
 

@@ -13,6 +13,6 @@ namespace bycoAPI.Models
         public string aciklama { get; set; }
         public int kategori_id { get; set; }
         public string img { get; set; }
-        public int fiyat { get; set;}
+        public decimal fiyat { get; set;}
     }
 }

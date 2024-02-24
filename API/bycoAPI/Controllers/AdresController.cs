@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace bycoAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AdresController : ControllerBase {
         readonly IAdresService userService;
 
@@ -28,7 +27,7 @@ namespace bycoAPI.Controllers {
             return CreatedAtAction("Kayit", userService.AdresKaydet(adres).Data);
         }
 
-        [HttpPost("SetAdres/{user_di}")]
+        [HttpPost("SetAdres/{user_id}")]
         public async Task<ActionResult> SetAdres(int user_id, [FromBody] string adres) {
             var result = await userService.SetAdres(user_id, adres);
             if (result.Success) {

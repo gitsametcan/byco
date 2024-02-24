@@ -1,52 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
-/*
-export interface IProduct {
-  id: string;
-  sku: string;
-  img: string;
-  title: string;
-  slug: string;
-  unit: string;
-  imageURLs: {
-    color?: {
-      name: string;
-      clrCode: string;
-    };
-    img: string;
-  }[];
-  parent: string;
-  children: string;
-  price: number;
-  discount: number;
-  quantity: number;
-  brand: {
-    name: string;
-  };
-  category: {
-    name: string;
-  };
-  status: string;
-  reviews?: IReview[];
-  productType: string;
-  description: string;
-  orderQuantity?: number;
-  additionalInformation: {
-    key: string;
-    value: string;
-  }[];
-  featured?: boolean;
-  sellCount: number;
-  offerDate?:{
-    startDate:string;
-    endDate:string;
-  }
-  tags?: string[];
-  videoId?:string;
-  sizes?:string[];
-}
-*/
 
 namespace bycoAPI.Models {
     [Keyless]
@@ -60,7 +14,7 @@ namespace bycoAPI.Models {
         public List<ImgUrlModel>? imageURLs {get; set;}
         public string? parent {get; set;}
         public string? children {get; set;}
-        public long price { get; set; }
+        public decimal price { get; set; }
         public double discount { get; set; }
         public long quantity { get; set; }
         public BrandModel? brand {get; set;}

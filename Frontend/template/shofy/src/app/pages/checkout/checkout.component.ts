@@ -244,16 +244,18 @@ export class CheckoutComponent {
   }
 
   siparisGonder(){
-    console.log("sorun yok")
     this.checkoutDoldur();
     console.log(this.checkouts)
     this.sendRequest('Satis/MakePurchase','POST',this.checkouts)
     .then(response => {
+        this.cartService.clear_cartp();
+
       console.log(response);
     })
     .catch(err => {
       console.error();
     })
+    this.cartService.clear_cartp();
   }
 
   get firstName() { return this.checkoutForm.get('firstName') }

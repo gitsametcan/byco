@@ -111,7 +111,9 @@ namespace bycoAPI.Services
                 return new Result(false, "Address not found.");
             }
 
-            var adresk = HashString(DateTime.Now.ToLongDateString());
+            var dt = DateTime.Now;
+
+            var adresk = HashString(dt.Ticks.ToString());
 
             Siparis siparis = new() {
                 siparis_id = 0,

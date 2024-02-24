@@ -1,16 +1,28 @@
+<div *ngIf=cookieSonuc()>
+    <div class="container mt-5">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <p>Web sitemiz, size en iyi deneyimi sunmak için çerezler kullanır. Çerezleri kabul ederek sitemizi kullanmaya devam edebilirsiniz.</p>
+          <button type="button" class="btn btn-sm btn-primary" (click)="gizle()">Kabul Et</button>
+          <a href="https://4usdemoapp.com/privatepolicy.html"><div> 
+            <button type="button" class="btn btn-sm btn-primary" style="margin-top: 20px;">Gizlilik Politikasi ve Çerezler</button>
+        </div> </a>
+        </div>
+      </div>
+</div>
+
 <!-- router outlet start -->
-<router-outlet></router-outlet>
+<router-outlet *ngIf=!cookieSonuc()></router-outlet>
 <!-- router outlet end -->
 
 <!-- back to top start -->
-<app-back-to-top></app-back-to-top>
+<!-- <app-back-to-top></app-back-to-top> -->
 <!-- back to top end -->
 
 <!-- product modal start -->
-<app-product-modal></app-product-modal>
+<!-- <app-product-modal></app-product-modal> -->
 <!-- product modal end -->
 
 <!-- blog video popup start -->
-<app-video-popap></app-video-popap>
+<!-- <app-video-popap></app-video-popap> -->
 <!-- blog video popup end -->
 
