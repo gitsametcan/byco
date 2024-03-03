@@ -30,7 +30,7 @@
                 <div class="tp-category-slider-active-2 swiper-container mb-50">
                    <div class="swiper-wrapper">
                       <div *ngFor="let item of projeDevam" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: #f2f3f5;">
-                         <div class="tp-category-thumb-2" *ngIf="item.tamamlanma==='devam'">
+                         <div class="tp-category-thumb-2" *ngIf="item.aciklama==='devam'">
                             <a [routerLink]="['/shop/shop-details', item.id]">
                                <img [src]="item.img" alt="product-img" style="width: 100%;height: 100%">
                             </a>

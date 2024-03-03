@@ -42,9 +42,9 @@ const routes: Routes = [
     title:'Blog Details Page'
   },
   {
-    path:'blog-details/:id',
+    path:'privacy',
     component:DynamicBlogDetailsComponent,
-    title:'Blog Details Page'
+    title:'Privacy Policy'
   },
   {
     path:'coupons',

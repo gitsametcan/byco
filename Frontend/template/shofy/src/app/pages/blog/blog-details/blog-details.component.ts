@@ -38,7 +38,7 @@ export class BlogDetailsComponent {
         this.paramEqulizer(this.route.snapshot.paramMap.get('category'));
         this.GetAllProjects();
       for (let i = 0; i < projeler_data.length; i++) {
-          if (projeler_data[i].tamamlanma === "devam") {
+          if (projeler_data[i].aciklama === this.getParam) {
               this.projeDevam.push(projeler_data[i]);
           }
         }

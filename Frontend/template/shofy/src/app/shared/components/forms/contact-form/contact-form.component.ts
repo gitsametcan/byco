@@ -11,8 +11,9 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = "https://localhost:44313/api";
+  benimUrl = "http://localhost:5141/api";
   constructor(private toastrService: ToastrService) { }
+
 
   ngOnInit () {
     this.contactForm = new FormGroup({
@@ -38,7 +39,7 @@ export class ContactFormComponent {
   }
 
   SendMessage(){
-    this.sendRequest('Satis/MakePurchase','POST',{
+    this.sendRequest('Mail/ContactMail','POST',{
         "isim": this.contactForm.get("name")?.value,
         "email": this.contactForm.get("email")?.value,
         "konu": this.contactForm.get("subject")?.value,

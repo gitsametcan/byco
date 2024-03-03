@@ -29,7 +29,7 @@ export class BeautySpecialProductsComponent {
     ngOnInit(): void {
         this.GetAllProjects();
       for (let i = 0; i < projeler_data.length; i++) {
-          if (projeler_data[i].tamamlanma === "devam") {
+          if (projeler_data[i].aciklama === "devam") {
               this.projeDevam.push(projeler_data[i]);
           }
         }

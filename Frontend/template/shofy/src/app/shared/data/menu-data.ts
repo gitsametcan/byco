@@ -94,11 +94,11 @@ export const menu_data:IMenuItem[] = [
     link:'/pages/contact',
     title:'İLETİŞİM',
   },
-  {
-    id:6,
-    link:'/shop',
-    title:'MAĞAZA'
-  }
+//   {
+//     id:6,
+//     link:'/shop',
+//     title:'MAĞAZA'
+//   }
 ]
 
 // mobile menu data
@@ -128,9 +128,9 @@ export const mobile_menu:IMobileType[] = [
     link:'/pages/contact',
     title:'İLETİŞİM',
   },
-  {
-    id:6,
-    link:'/shop',
-    title:'MAĞAZA'
-  }
+//   {
+//     id:6,
+//     link:'/shop',
+//     title:'MAĞAZA'
+//   }
 ]

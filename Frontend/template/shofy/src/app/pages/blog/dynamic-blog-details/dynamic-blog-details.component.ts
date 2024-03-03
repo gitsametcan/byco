@@ -10,20 +10,9 @@ import blogData from '@/data/blog-data';
 })
 export class DynamicBlogDetailsComponent {
 
-  public blog: IBlogType | undefined;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router
   ) {}
 
-  ngOnInit() {
-    const blogId = this.route.snapshot.paramMap.get('id');
-    if (blogId) {
-      this.blog = blogData.find(b => b.id === Number(blogId))
-    }
-    else {
-      this.router.navigate(['/404']);
-    }
-  }
+  
 }
