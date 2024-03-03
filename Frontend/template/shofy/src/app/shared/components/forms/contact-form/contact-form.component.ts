@@ -11,7 +11,7 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = "http://localhost:5141/api";
+  benimUrl = "http://37.148.209.150:5141/api";
   constructor(private toastrService: ToastrService) { }
 
 
