@@ -19,7 +19,7 @@ namespace bycoAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> sendMail()
         {
-            await _mailService.SendMessageAsync("cansamet1223@gmail.com", "Deneme Mail", "Bu bir deneme mailidir.");
+            await _mailService.SendMessageAsync("hyavuz@byco.com.tr", "Deneme Mail", "Bu bir deneme mailidir.");
             return Ok();
         }
 
