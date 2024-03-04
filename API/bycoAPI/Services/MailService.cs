@@ -34,7 +34,7 @@ namespace bycoAPI.Services
             smtp.Credentials = new NetworkCredential(_configuration["Mail:Username"], _configuration["Mail:Password"]);
             smtp.Port = 578;
             smtp.EnableSsl = true;
-            smtp.Host = "localhost";
+            smtp.Host = "37.148.209.150";
             await smtp.SendMailAsync(mail);
              
         }
