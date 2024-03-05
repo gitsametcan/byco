@@ -17,6 +17,9 @@ namespace bycoAPI
             // Add services to the container.
             builder.Services.AddDbContext<DbContexts>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailSeervice>();
+            builder.Services.AddSingleton(emailConfig);
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
             builder.Services.AddControllers();

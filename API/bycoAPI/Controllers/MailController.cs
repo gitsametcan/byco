@@ -1,5 +1,6 @@
 ﻿using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using bycoAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace bycoAPI.Controllers
     public class MailController : ControllerBase
     {
         readonly IMailService _mailService;
+        readonly IEmailSender _emailSender;
 
-        public MailController(IMailService mailService)
+        public MailController(IMailService mailService, IEmailSender emailSender)
         {
             this._mailService = mailService;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -23,15 +26,15 @@ namespace bycoAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("ContactMail")]
-        public async Task<ActionResult> ContactMail([FromBody] MailRequest mailRequest)
+        [HttpPost("iletisim")]
+        public async Task<IActionResult>  iletisimMail([FromBody] MailRequest mailRequest)
         {
-            string a = "gelmedi";
-            if (mailRequest != null)
-                a = "geldi";
-            
-            return Ok(a);
-            
+            Message message = new Message(new string[] { "contact@byco.com.tr" });
+            message.Subject = mailRequest.konu;
+            message.Content = "İletişim<br><br>" + mailRequest.mesaj + "<br><br>Gönderen:" + mailRequest.isim + "<br>Mail:" + mailRequest.email;
+            await _emailSender.Send(message);
+            return Ok();
         }
+
     }
 }

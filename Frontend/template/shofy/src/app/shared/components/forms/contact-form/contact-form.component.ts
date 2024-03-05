@@ -11,7 +11,7 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = "http://37.148.209.150:5141/api";
+  benimUrl = "https://localhost:44313/api";
   constructor(private toastrService: ToastrService) { }
 
 
@@ -39,7 +39,7 @@ export class ContactFormComponent {
   }
 
   SendMessage(){
-    this.sendRequest('Mail/ContactMail','POST',{
+    this.sendRequest('Mail/iletisim','POST',{
         "isim": this.contactForm.get("name")?.value,
         "email": this.contactForm.get("email")?.value,
         "konu": this.contactForm.get("subject")?.value,
