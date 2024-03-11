@@ -36,7 +36,6 @@ export class BlogDetailsComponent {
   
     ngOnInit(): void {
         this.paramEqulizer(this.route.snapshot.paramMap.get('category'));
-        this.GetAllProjects();
       for (let i = 0; i < projeler_data.length; i++) {
           if (projeler_data[i].aciklama === this.getParam) {
               this.projeDevam.push(projeler_data[i]);
@@ -66,10 +65,10 @@ export class BlogDetailsComponent {
             slidesPerView: 5,
           },
           '992': {
-            slidesPerView: 4,
+            slidesPerView: 3,
           },
           '768': {
-            slidesPerView: 3,
+            slidesPerView: 2,
           },
           '576': {
             slidesPerView: 2,
@@ -81,41 +80,4 @@ export class BlogDetailsComponent {
       });
     }
 
-    
-
-    GetAllProjects(){
-        this.sendRequest('Project/GetAllProjects','GET')
-        .then(response => {
-            this.projeler = response;
-          console.log(response);
-        })
-        .catch(err => {
-          console.error("Error: " + err);
-        })
-    
-    
-      }
-    
-      sendRequest(url: string, method: string, data?:any): Promise<any> {
-        
-        return fetch(`${this.benimUrl}/${url}`, {
-          method: method,
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'same-origin',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          redirect: 'follow',
-          referrerPolicy: 'no-referrer',
-          body: JSON.stringify(data), 
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-          return response.json();
-      })
-      }
 }

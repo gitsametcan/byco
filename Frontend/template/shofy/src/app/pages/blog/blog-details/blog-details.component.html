@@ -25,7 +25,7 @@
                     font-weight: bold !important;
                     font-size: 30px;
                     ">
-                    Devam Eden {{this.getParam}} Projeleri
+                    {{this.getParam}} projelerimiz
                 </span></p>
              </div>
           </div>
@@ -35,14 +35,27 @@
              <div class="tp-category-slider-2 p-relative">
                 <div class="tp-category-slider-active-2 swiper-container mb-50">
                    <div class="swiper-wrapper">
-                      <div *ngFor="let item of projeDevam" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: #f2f3f5;">
+                      <div *ngFor="let item of projeDevam" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: grey; display:flex; justify-content: center;">
 
                          <div class="tp-category-thumb-2" *ngIf="item.aciklama===this.getParam">
+                            <style>
+                                .gorsel {
+    width: 244px; /* Genişlik */
+    height: 380px; /* Yükseklik */
+    display: flex;
+    justify-content: center; /* Merkezleme */
+    align-items: center; /* Merkezleme */
+    background-color: grey; /* Gri arkaplan */
+    overflow: hidden; /* Taşma durumunda gizle */
+}
+                            </style>
                             <a [routerLink]="['/shop/shop-details', item.id]">
-                               <img [src]="item.img" alt="product-img" style="width: 100%;height: 100%">
+                                <div class="gorsel">
+                               <img [src]="item.img" alt="product-img" style="width: 100%;height: 100%; object-fit:contain">
+                            </div>
                             </a>
                          </div>
-                         <div class="tp-category-content-2" style="opacity: 0.8;">
+                         <div class="tp-category-content-2" style="opacity: 1;">
                             <p><span style=
                                 "display: inline-block;
                                 width: 100%; 
