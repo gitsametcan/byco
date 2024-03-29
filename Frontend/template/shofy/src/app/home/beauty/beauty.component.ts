@@ -53,6 +53,10 @@ export class BeautyComponent {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
+  hizmetYili(){
+      return new Date().getFullYear()-2013;
+  }
+
   // instagram data
   public instagram_data = [
     { id: 1, link: "https://www.instagram.com/", img: '/assets/img/instagram/3/instagram-1.jpg' },
