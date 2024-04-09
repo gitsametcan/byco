@@ -139,7 +139,7 @@ const projeler_data: Iproje[] = [
         "alan": "0",
         "isveren": "CE-KA GAYRIMENKUL ",
         "aciklama": "ofis",
-        "img": "/assets/img/devamProje/ofis1.jpeg "
+        "img": "/assets/img/devamProje/ofis1.jpg "
     },
     {
         "id": 2,
@@ -159,7 +159,7 @@ const projeler_data: Iproje[] = [
         "alan": "0",
         "isveren": "Tempus Yapi",
         "aciklama": "konut",
-        img: "/assets/img/devamProje/konut2.jpeg "
+        img: "/assets/img/devamProje/konut2.jpg "
     },
     {
         "id": 4,
@@ -169,7 +169,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Tempus Yapi",
         "aciklama": "konut",
-        "img": "/assets/img/devamProje/konut3.jpeg "
+        "img": "/assets/img/devamProje/konut3.jpg "
     },
     {
         "id": 5,
@@ -189,7 +189,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "showroom",
-        "img": "/assets/img/devamProje/show1.jpeg "
+        "img": "/assets/img/devamProje/show1.jpg "
     },
     {
         "id": 7,
@@ -199,7 +199,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe1.jpeg "
+        "img": "/assets/img/devamProje/cafe1.jpg "
     },
     {
         "id": 8,
@@ -209,7 +209,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe2.jpeg "
+        "img": "/assets/img/devamProje/cafe2.jpg "
     },
     {
         "id": 9,
@@ -219,7 +219,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe3.jpeg "
+        "img": "/assets/img/devamProje/cafe3.jpg "
     },
     {
         "id": 10,
@@ -229,7 +229,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe4.jpeg "
+        "img": "/assets/img/devamProje/cafe4.jpg "
     },
     {
         "id": 11,
@@ -249,7 +249,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "magaza",
-        "img": "/assets/img/devamProje/magaza1.jpeg "
+        "img": "/assets/img/devamProje/magaza1.jpg "
     },
     {
         "id": 13,
@@ -259,7 +259,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "mağaza",
-        "img": "/assets/img/devamProje/magaza2.jpeg "
+        "img": "/assets/img/devamProje/magaza2.jpg "
     },
     {
         "id": 14,
@@ -269,7 +269,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe5.jpeg "
+        "img": "/assets/img/devamProje/cafe5.jpg "
     },
     {
         "id": 15,
@@ -279,7 +279,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe6.jpeg "
+        "img": "/assets/img/devamProje/cafe6.jpg "
     },
     {
         "id": 16,
@@ -289,7 +289,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe7.jpeg "
+        "img": "/assets/img/devamProje/cafe7.jpg "
     },
     {
         "id": 17,
@@ -299,7 +299,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "magaza",
-        "img": "/assets/img/devamProje/magaza3.jpeg "
+        "img": "/assets/img/devamProje/magaza3.jpg "
     },
     {
         "id": 18,
@@ -309,7 +309,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Orge Elektrik Taaahhut",
         "aciklama": "kurum",
-        "img": "/assets/img/devamProje/kurum1.jpeg "
+        "img": "/assets/img/devamProje/kurum1.jpg "
     },
     {
         "id": 19,
@@ -319,7 +319,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe8.jpeg "
+        "img": "/assets/img/devamProje/cafe8.jpg "
     },
     {
         "id": 20,
@@ -329,7 +329,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "magaza",
-        "img": "/assets/img/devamProje/magaza4.jpeg "
+        "img": "/assets/img/devamProje/magaza4.jpg "
     },
     {
         "id": 21,
@@ -339,7 +339,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe9.jpeg "
+        "img": "/assets/img/devamProje/cafe9.jpg "
     },
     {
         "id": 22,
@@ -349,7 +349,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe10.jpeg "
+        "img": "/assets/img/devamProje/cafe10.jpg "
     },
     {
         "id": 23,
@@ -359,7 +359,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe11.jpeg "
+        "img": "/assets/img/devamProje/cafe11.jpg "
     },
     {
         "id": 24,
@@ -369,7 +369,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe12.jpeg "
+        "img": "/assets/img/devamProje/cafe12.jpg "
     },
     {
         "id": 25,
@@ -379,7 +379,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "magaza",
-        "img": "/assets/img/devamProje/magaza5.jpeg "
+        "img": "/assets/img/devamProje/magaza5.jpg "
     },
     {
         "id": 26,
@@ -389,7 +389,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe13.jpeg "
+        "img": "/assets/img/devamProje/cafe13.jpg "
     },
     {
         "id": 27,
@@ -399,7 +399,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe14.jpeg "
+        "img": "/assets/img/devamProje/cafe14.jpg "
     },
     {
         "id": 28,
@@ -409,7 +409,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe15.jpeg "
+        "img": "/assets/img/devamProje/cafe15.jpg "
     },
     {
         "id": 29,
@@ -429,7 +429,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe16.jpeg "
+        "img": "/assets/img/devamProje/cafe16.jpg "
     },
     {
         "id": 31,
@@ -449,7 +449,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Nida Insaat ",
         "aciklama": "konut",
-        "img": "/assets/img/devamProje/konut6.jpeg "
+        "img": "/assets/img/devamProje/konut6.jpg "
     },
     {
         "id": 33,
@@ -459,7 +459,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Nida Insaat ",
         "aciklama": "konut",
-        "img": "/assets/img/devamProje/konut7.jpeg "
+        "img": "/assets/img/devamProje/konut7.jpg "
     },
     {
         "id": 34,
@@ -469,7 +469,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "restauran",
-        "img": "/assets/img/devamProje/restauran2.jpeg "
+        "img": "/assets/img/devamProje/restauran2.jpg "
     },
     {
         "id": 35,
@@ -479,7 +479,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "cafe",
-        "img": "/assets/img/devamProje/cafe17.jpeg "
+        "img": "/assets/img/devamProje/cafe17.jpg "
     },
     {
         "id": 36,
@@ -489,7 +489,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "konut",
-        "img": "/assets/img/devamProje/konut8.jpeg "
+        "img": "/assets/img/devamProje/konut8.jpg "
     },
     {
         "id": 37,
@@ -499,7 +499,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Mona Art ",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam1.jpeg"
+        "img": "/assets/img/devamProje/devam1.jpg"
     },
     {
         "id": 38,
@@ -509,7 +509,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "İpektül ",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam2.jpeg"
+        "img": "/assets/img/devamProje/devam2.jpg"
     },
     {
         "id": 39,
@@ -519,7 +519,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam3.jpeg"
+        "img": "/assets/img/devamProje/devam3.jpg"
     },
     {
         "id": 40,
@@ -529,7 +529,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam4.jpeg"
+        "img": "/assets/img/devamProje/devam4.jpg"
     },
     {
         "id": 41,
@@ -539,7 +539,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "Octet",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam5.jpeg"
+        "img": "/assets/img/devamProje/devam5.jpg"
     },
     {
         "id": 42,
@@ -549,7 +549,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam6.jpeg"
+        "img": "/assets/img/devamProje/devam6.jpg"
     },
     {
         "id": 43,
@@ -559,7 +559,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam7.jpeg"
+        "img": "/assets/img/devamProje/devam7.jpg"
     },
     {
         "id": 44,
@@ -569,7 +569,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam8.jpeg"
+        "img": "/assets/img/devamProje/devam8.jpg"
     },
     {
         "id": 45,
@@ -579,7 +579,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam9.jpeg"
+        "img": "/assets/img/devamProje/devam9.jpg"
     },
     {
         "id": 46,
@@ -589,7 +589,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        "img": "/assets/img/devamProje/devam10.jpeg"
+        "img": "/assets/img/devamProje/devam10.jpg"
     },
     {
         "id": 47,
@@ -599,7 +599,7 @@ const projeler_data: Iproje[] = [
         "alan": "",
         "isveren": "",
         "aciklama": "devam",
-        img: "/assets/img/devamProje/devam11.jpeg"
+        img: "/assets/img/devamProje/devam11.jpg"
     }
 ];
 
