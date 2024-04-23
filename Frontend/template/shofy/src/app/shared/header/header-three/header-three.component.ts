@@ -26,4 +26,19 @@ export class HeaderThreeComponent {
       this.sticky = false
     }
   }
+
+  isCookieAccept=false;
+
+  gizle(){
+    localStorage.setItem('cookie-consent', 'true');
+  }
+
+  cookieSonuc():boolean{
+    if (!localStorage.getItem('cookie-consent')) {
+        // Çerez bildirim pop-up'ı gösterin.
+        return true;
+      }
+    return false;
+
+  }
 }

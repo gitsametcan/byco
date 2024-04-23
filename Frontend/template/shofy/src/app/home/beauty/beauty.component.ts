@@ -54,7 +54,7 @@ export class BeautyComponent {
   }
 
   hizmetYili(){
-      return new Date().getFullYear()-2013;
+      return new Date().getFullYear()-2004;
   }
 
   // instagram data

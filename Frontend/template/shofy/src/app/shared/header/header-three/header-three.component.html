@@ -48,9 +48,27 @@
                  </div>
               </div>
            </div>
-        </div>
+           <div>
+            <div *ngIf="cookieSonuc()">
+               <div class="container-fluid mt-5">
+                 <div class="alert alert-info alert-dismissible fade show d-flex align-items-center justify-content-between"  style="background-color: rgb(45, 134, 175);">
+                   <p class="mb-0" style="color: aliceblue;">Web sitemiz, size en iyi deneyimi sunmak için çerezler kullanır. Çerezleri kabul ederek sitemizi kullanmaya devam edebilirsiniz.</p>
+                   <div>
+                     <button type="button" class="btn btn-sm btn-success mr-5" (click)="gizle()">Kabul Et</button>
+                     <a routerLink="/pages/privacy" class="btn btn-sm btn-danger">Gizlilik Politikasi ve Çerezler</a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             
+             
+          </div>
+         </div>
      </div>
   </div>
+
+  
+ 
 </header>
 
 <!-- cart sidebar start -->

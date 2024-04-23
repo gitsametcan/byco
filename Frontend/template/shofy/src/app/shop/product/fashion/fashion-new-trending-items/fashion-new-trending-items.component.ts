@@ -13,11 +13,22 @@ export class FashionNewTrendingItemsComponent {
 
   public product_items: IProduct[] = [];
 
+  tamamlananProje=false;
+
   constructor(public productService: ProductService) {
     this.productService.products.subscribe((products) => {
       this.product_items = products.filter((p) => p.productType === 'fashion').slice(-4);
     });
   }
+
+  getTamamlananProje():Boolean{
+    return this.tamamlananProje;
+  }
+
+  setTamamlananProje(){
+    this.tamamlananProje = true;
+  }
+
 
   ngOnInit(): void {
     new Swiper('.tp-trending-slider-active', {
