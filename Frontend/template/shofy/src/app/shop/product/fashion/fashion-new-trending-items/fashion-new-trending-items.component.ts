@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import { IProduct } from '@/types/product-type';
@@ -9,7 +9,8 @@ import { ProductService } from '@/shared/services/product.service';
   templateUrl: './fashion-new-trending-items.component.html',
   styleUrls: ['./fashion-new-trending-items.component.scss'],
 })
-export class FashionNewTrendingItemsComponent {
+export class FashionNewTrendingItemsComponent implements AfterViewInit{
+  @ViewChild('pageBottom') pageBottom!: ElementRef<HTMLDivElement>;
 
   public product_items: IProduct[] = [];
 
@@ -21,12 +22,25 @@ export class FashionNewTrendingItemsComponent {
     });
   }
 
+  smooth = 0;
+
+  scrollToBottom(): void {
+    setTimeout(() => {
+      this.pageBottom.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+
+  ngAfterViewInit() {
+    // ViewChild yüklenmesini garantilemek için ngAfterViewInit içinde kullanılır
+  }
+
   getTamamlananProje():Boolean{
     return this.tamamlananProje;
   }
 
   setTamamlananProje(){
     this.tamamlananProje = true;
+    this.scrollToBottom()
   }
 
 

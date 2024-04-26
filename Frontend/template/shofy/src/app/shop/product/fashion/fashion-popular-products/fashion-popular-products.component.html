@@ -9,6 +9,15 @@
       background-position: center;
       overflow: hidden;
     }
+
+    .hover-image {
+    transition: opacity 0.5s, transform 0.5s; /* Yumuşak geçişler için */
+}
+
+.hover-image:hover {
+    opacity: 0.7; /* Hover durumunda opaklık değişikliği */
+    transform: scale(1.1); /* Hover durumunda %10 büyüt */
+}
 </style>
 <section>
   <div class="containertp">
@@ -31,10 +40,11 @@
            <section class="tp-featured-product-area pt-70 pb-150">
             <div class="container" style="text-align: center;">
                <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
-                <a routerLink="/pages/biten-projeler/konut">   
+                <a routerLink="/pages/biten-projeler/ydp">   
                 <img 
-                     src="/assets/img/byco/konut.png" 
+                     src="/assets/img/byco/earth.png" 
                      alt="" 
+                     class="hover-image"
                      style="
                         display: block; 
                         margin-left: auto; 
@@ -52,13 +62,14 @@
                       text-align: center;
                       font-family: 'Helvetica', sans-serif !important;
                       font-weight: bold !important;
-                      ">Konut Projeleri</span></p></a>
+                      ">Yurt Dışı Projeleri</span></p></a>
                </div>
                <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
-                <a routerLink="/pages/biten-projeler/cafe">   
+                <a routerLink="/pages/biten-projeler/st">   
                 <img 
-                     src="/assets/img/byco/avm.png" 
+                     src="/assets/img/byco/sanayi.png" 
                      alt="" 
+                     class="hover-image"
                      style="
                         display: block; 
                         margin-left: auto; 
@@ -76,13 +87,14 @@
                       text-align: center;
                       font-family: 'Helvetica', sans-serif !important;
                       font-weight: bold !important;
-                      ">Cafe Projeleri</span></p></a>
+                      ">Sanayi Tesisleri</span></p></a>
                </div>
                <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
-                <a routerLink="/pages/biten-projeler/ofis">   
+                <a routerLink="/pages/biten-projeler/whoa">   
                 <img 
-                     src="/assets/img/byco/ofis.png" 
+                     src="/assets/img/byco/kamu.png" 
                      alt="" 
+                     class="hover-image"
                      style="
                         display: block; 
                         margin-left: auto; 
@@ -101,17 +113,19 @@
                   text-align: center;
                   font-family: 'Helvetica', sans-serif !important;
                   font-weight: bold !important;
-                  ">Ofis Projeleri</span></p></a>
+                  ">Okul, Hastane, Otel ve AVM Projeleri</span></p></a>
                </div>
                <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
-                <a routerLink="/pages/biten-projeler/kurum"> 
+                <a routerLink="/pages/biten-projeler/ko"> 
                 <img 
-                     src="/assets/img/byco/kamu.png" 
+                     src="/assets/img/byco/ofis.png" 
                      alt="" 
+                     class="hover-image"
                      style="
                         display: block; 
                         margin-left: auto; 
                         margin-right: auto;
+                        transform: scale(1.3);
                         margin-bottom: 1em;
                         width: 5em;
                         height: auto;"
@@ -125,14 +139,15 @@
                       text-align: center;
                       font-family: 'Helvetica', sans-serif !important;
                       font-weight: bold !important;
-                      ">Kamu Binaları</span></p></a> 
+                      ">Konut ve Ofis Projeleri</span></p></a> 
                       
                </div>
                <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
-                <a routerLink="/pages/biten-projeler/devam"> 
+                <a routerLink="/pages/biten-projeler/cr"> 
                 <img 
-                   src="/assets/img/byco/diger.png" 
+                   src="/assets/img/byco/restauran.png" 
                    alt="" 
+                   class="hover-image"
                    style="
                       display: block; 
                       margin-left: auto; 
@@ -150,13 +165,14 @@
                     text-align: center;
                     font-family: 'Helvetica', sans-serif !important;
                     font-weight: bold !important;
-                    ">Devam Eden Projeler</span></p></a>
+                    ">Cafe ve Restaurant Projeleri</span></p></a>
              </div>
-             <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
+             <!-- <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
                 <a routerLink="/pages/biten-projeler/showroom"> 
                 <img 
                    src="/assets/img/byco/karma.png" 
                    alt="" 
+                   class="hover-image"
                    style="
                       display: block; 
                       margin-left: auto; 
@@ -175,12 +191,13 @@
                     font-family: 'Helvetica', sans-serif !important;
                     font-weight: bold !important;
                     ">Showroom Projeleri</span></p></a>
-             </div>
-             <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
+             </div> -->
+             <!-- <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
                 <a routerLink="/pages/biten-projeler/restauran"> 
                 <img 
                    src="/assets/img/byco/restauran.png" 
                    alt="" 
+                   class="hover-image"
                    style="
                       display: block; 
                       margin-left: auto; 
@@ -199,12 +216,13 @@
                     font-family: 'Helvetica', sans-serif !important;
                     font-weight: bold !important;
                     ">Restauran Projeleri</span></p></a>
-             </div>
-             <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
+             </div> -->
+             <!-- <div style="vertical-align: top; display: inline-block; width: 130px; margin-right: 1%; text-align: justify;">
                 <a routerLink="/pages/biten-projeler/magaza"> 
                 <img 
                    src="/assets/img/byco/magaza.png" 
                    alt="" 
+                   class="hover-image"
                    style="
                       display: block; 
                       margin-left: auto; 
@@ -223,7 +241,7 @@
                     font-family: 'Helvetica', sans-serif !important;
                     font-weight: bold !important;
                     ">Mağaza Projeleri</span></p></a>
-             </div>
+             </div> -->
             </div>
          </section>
         </div>

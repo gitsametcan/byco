@@ -35,7 +35,6 @@ export class HeaderThreeComponent {
 
   cookieSonuc():boolean{
     if (!localStorage.getItem('cookie-consent')) {
-        // Çerez bildirim pop-up'ı gösterin.
         return true;
       }
     return false;
