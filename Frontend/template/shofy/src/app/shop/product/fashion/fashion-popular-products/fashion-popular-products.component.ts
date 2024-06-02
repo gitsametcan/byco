@@ -19,7 +19,7 @@ export class FashionPopularProductsComponent {
 
 
     
-  benimUrl = "http://localhost:5141/api";
+  benimUrl = "http://37.148.209.150:5001/api";
   // add to cart
   addToCart(product: IProduct) {
     this.cartService.addCartProduct(product);

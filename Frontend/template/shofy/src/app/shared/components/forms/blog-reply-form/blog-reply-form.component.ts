@@ -9,7 +9,7 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 })
 export class BlogReplyFormComponent {
 
-    benimUrl = "https://localhost:44313/api";
+    benimUrl = "http://37.148.209.150:5001/api";
   public blogReplyForm!: FormGroup;
   public formSubmitted = false;
 

@@ -63,7 +63,7 @@ export class ShopComponent {
         // console.log('res', response);
         // Sorting Filter
         this.products = this.productService.sortProducts(response, this.sortBy);
-        console.log('this.products', this.products);
+        console.log('this.products', response);
 
         // Category Filter
         if (this.category){

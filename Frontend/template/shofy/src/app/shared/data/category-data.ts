@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 // class CategoryService {
-//     benimUrl = "https://localhost:44313/api";
+//     benimUrl = "http://37.148.209.150:5001/api";
 
 //     kategori: ICategory[] = [];
 //     okey = false;
@@ -51,7 +51,7 @@ import { HttpClient } from '@angular/common/http';
 // }
 
 class CategoryService {
-    benimUrl = "https://localhost:44313/api";
+    benimUrl = "http://37.148.209.150:5001/api";
 
     kategori: ICategory[] = [];
     okey = false;

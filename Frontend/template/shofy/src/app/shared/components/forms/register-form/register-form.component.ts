@@ -36,7 +36,7 @@ export class RegisterFormComponent {
   kaydol(name:string,surname:string,email:string, tel:string, password:string, type:string, vkno:string){
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6){
         console.log(name +" " + surname + " " +email + " "+password)
-        fetch(`https://localhost:44313/api/User/RegisterUser`, {
+        fetch(`http://37.148.209.150:5001/api/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

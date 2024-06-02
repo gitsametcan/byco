@@ -16,7 +16,7 @@ export class ProductDetailsWrapperComponent {
   yeniFiyat: string = "";
   userid: number = -1;
 
-  benimUrl = "https://localhost:44313/api";
+  benimUrl = "http://37.148.209.150:5001/api";
 
   handleTextToggle() {
     this.textMore = !this.textMore;

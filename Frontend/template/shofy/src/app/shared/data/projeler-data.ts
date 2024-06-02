@@ -17,7 +17,7 @@ const projeler_data: Iproje[] = [
         "lokasyon": "Ümraniye",
         "tamamlanma": "",
         "alan": "",
-        "isveren": "Altunbuken Insaat ",
+        "isveren": "Altunbuken İnşaat ",
         "aciklama": "ko",
         "img" : "/assets/img/devamProje/konut1.jpg ",
     },
@@ -28,7 +28,7 @@ const projeler_data: Iproje[] = [
         "tamamlanma": "",
         "alan": "0",
         "isveren": "Tempus İnşaat",
-        "aciklama": "konut",
+        "aciklama": "ko",
         "img" : "/assets/img/devamProje/konut2.jpg "
     },
     {
@@ -38,7 +38,7 @@ const projeler_data: Iproje[] = [
         "tamamlanma": "8/31/2018",
         "alan": "",
         "isveren": "Tempus İnşaat",
-        "aciklama": "konut",
+        "aciklama": "ko",
         "img": "/assets/img/devamProje/konut3.jpg "
     },
     {
@@ -47,13 +47,13 @@ const projeler_data: Iproje[] = [
         "lokasyon": "",
         "tamamlanma": "",
         "alan": "",
-        "isveren": "Nida Insaat",
+        "isveren": "Nida İnşaat",
         "aciklama": "ko",
         "img": "/assets/img/devamProje/noimagen.jpg "
     },
     {
         "id": 6,
-        "ad": "Onur Hali Showroom",
+        "ad": "Onur Halı Showroom",
         "lokasyon": "İstanbul",
         "tamamlanma": "",
         "alan": "",
@@ -103,8 +103,8 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 11,
-        "ad": "OPS Gida",
-        "lokasyon": "Karakoy",
+        "ad": "OPS Gıda",
+        "lokasyon": "Karaköy",
         "tamamlanma": "",
         "alan": "",
         "isveren": "",
@@ -203,7 +203,7 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 21,
-        "ad": "Sutis",
+        "ad": "Sütiş",
         "lokasyon": "Akasya AVM",
         "tamamlanma": "",
         "alan": "",
@@ -213,7 +213,7 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 22,
-        "ad": "Tavuk Dunyasi",
+        "ad": "Tavuk Dunyası",
         "lokasyon": "Akasya AVM",
         "tamamlanma": "",
         "alan": "",
@@ -223,7 +223,7 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 23,
-        "ad": "Arzum Apartmani",
+        "ad": "Arzum Apartmanı",
         "lokasyon": "Erenköy",
         "tamamlanma": "",
         "alan": "",
@@ -233,8 +233,8 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 24,
-        "ad": "Tavuk Dunyasi",
-        "lokasyon": "Besiktas",
+        "ad": "Tavuk Dünyası",
+        "lokasyon": "Beşiktaş",
         "tamamlanma": "",
         "alan": "",
         "isveren": "",
@@ -263,7 +263,7 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 27,
-        "ad": "Sutis",
+        "ad": "Sütiş",
         "lokasyon": "Piazza AVM",
         "tamamlanma": "",
         "alan": "",
@@ -273,8 +273,8 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 28,
-        "ad": "Big Carmelos ",
-        "lokasyon": "Altiyol Sube",
+        "ad": "Big Carmelos",
+        "lokasyon": "Altıyol Şube",
         "tamamlanma": "",
         "alan": "",
         "isveren": "",
@@ -283,8 +283,8 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 29,
-        "ad": "Gunaydin Restaurant",
-        "lokasyon": "Ozdilek AVM",
+        "ad": "Günaydın Restaurant",
+        "lokasyon": "Özdilek AVM",
         "tamamlanma": "11/30/2018",
         "alan": "",
         "isveren": "",
@@ -307,33 +307,33 @@ const projeler_data: Iproje[] = [
         "lokasyon": "Ümraniye",
         "tamamlanma": "",
         "alan": "",
-        "isveren": "Altunbuken Insaat",
+        "isveren": "Altunbuken İnşaat",
         "aciklama": "ko",
         "img": "/assets/img/devamProje/konut5.jpg "
     },
     {
         "id": 32,
-        "ad": "HAS Apartmani",
+        "ad": "HAS Apartmanı",
         "lokasyon": "",
         "tamamlanma": "",
         "alan": "",
-        "isveren": "Nida Insaat",
+        "isveren": "Nida İnşaat",
         "aciklama": "ko",
         "img": "/assets/img/devamProje/konut6.jpg "
     },
     {
         "id": 33,
-        "ad": "ESER Apartmani",
+        "ad": "ESER Apartmanı",
         "lokasyon": "",
         "tamamlanma": "",
         "alan": "",
-        "isveren": "Nida Insaat",
+        "isveren": "Nida İnşaat",
         "aciklama": "ko",
         "img": "/assets/img/devamProje/konut7.jpg "
     },
     {
         "id": 34,
-        "ad": "Gunaydin Restaurant",
+        "ad": "Günaydın Restaurant",
         "lokasyon": "Buyaka AVM",
         "tamamlanma": "3/31/2019",
         "alan": "",
@@ -343,7 +343,7 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 35,
-        "ad": "PAPS Café ",
+        "ad": "PAPS Café",
         "lokasyon": "Karaköy",
         "tamamlanma": "",
         "alan": "",
@@ -353,8 +353,8 @@ const projeler_data: Iproje[] = [
     },
     {
         "id": 36,
-        "ad": "Roya Yapi ",
-        "lokasyon": "Umraniye",
+        "ad": "Roya Yapı",
+        "lokasyon": "Ümraniye",
         "tamamlanma": "",
         "alan": "",
         "isveren": "",

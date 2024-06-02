@@ -58,6 +58,16 @@ export class HeroBannerThreeComponent {
         pagination: {
           el: ".tp-slider-3-dot",
           clickable: true
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          }
         }
       });
     }

@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./blog-details.component.scss']
 })
 export class BlogDetailsComponent {
-    benimUrl = "http://localhost:5141/api";
+    benimUrl = "http://37.148.209.150:5001/api";
 
     public popular_prd: IProduct[] = [];
     public projeler:Iproje[] = [];

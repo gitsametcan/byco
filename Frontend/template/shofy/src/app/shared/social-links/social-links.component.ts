@@ -16,13 +16,13 @@ export class SocialLinksComponent {
     },
     {
       id:2,
-      link:'https://twitter.com/bycomuhendislik',
+      link:'https://x.com/byco_as',
       icon:'fa-brands fa-twitter',
       title:'Twitter'
     },
     {
       id:3,
-      link:'https://www.linkedin.com/bycomuhendislik',
+      link:'https://www.linkedin.com/company/byco',
       icon:'fa-brands fa-linkedin-in',
       title:'Linkedin'
     }

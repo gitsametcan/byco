@@ -26,18 +26,4 @@ export class HeaderThreeComponent {
       this.sticky = false
     }
   }
-
-  isCookieAccept=false;
-
-  gizle(){
-    localStorage.setItem('cookie-consent', 'true');
-  }
-
-  cookieSonuc():boolean{
-    if (!localStorage.getItem('cookie-consent')) {
-        return true;
-      }
-    return false;
-
-  }
 }
