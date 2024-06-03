@@ -16,7 +16,7 @@ export class ProductDetailsWrapperComponent {
   yeniFiyat: string = "";
   userid: number = -1;
 
-  benimUrl = "http://37.148.209.150:5001/api";
+  benimUrl = "https://bycobackend.online:5001/api";
 
   handleTextToggle() {
     this.textMore = !this.textMore;

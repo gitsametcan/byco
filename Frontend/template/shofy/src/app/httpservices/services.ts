@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 
 export class Services{
     constructor(private http:HttpClient){}
-    benimUrl = "http://37.148.209.150:5001/api";
+    benimUrl = "https://bycobackend.online:5001/api";
 
 
     sendRequest(url: string, method: string, data?:any): Promise<any> {

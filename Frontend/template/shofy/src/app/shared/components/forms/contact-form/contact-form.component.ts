@@ -11,7 +11,7 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = "http://37.148.209.150:5001/api";
+  benimUrl = "https://bycobackend.online:5001/api";
   constructor(private toastrService: ToastrService) { }
 
 

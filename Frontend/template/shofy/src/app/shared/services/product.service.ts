@@ -10,7 +10,7 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
-    benimUrl = "http://37.148.209.150:5001/api";
+    benimUrl = "https://bycobackend.online:5001/api";
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 

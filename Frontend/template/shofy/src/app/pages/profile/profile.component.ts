@@ -19,7 +19,7 @@ export class ProfileComponent {
   passwordMismatch: boolean = false;
   userid:number = -1;
 
-  benimUrl = "http://37.148.209.150:5001/api";
+  benimUrl = "https://bycobackend.online:5001/api";
 
 
   constructor(private router: Router) { }
