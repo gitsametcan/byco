@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/pages/shop/shop.component';
 import { ShopModule } from './shop/shop.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ShopModule } from './shop/shop.module';
     SharedModule,
     ShopModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({

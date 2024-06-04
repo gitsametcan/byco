@@ -1,10 +1,10 @@
  <!-- header start -->
- <app-header-two [style_2]="true"></app-header-two>
+ <app-header-four></app-header-four>
  <!-- header end -->
 
  <main>
    <!-- breadcrumb area start -->
-   <app-breadcrumb-one title="Search Products" subtitle="Search Products"></app-breadcrumb-one>
+   <app-breadcrumb-one title="Aramaya uygun ürünler" subtitle="Uygun ürünler"></app-breadcrumb-one>
    <!-- breadcrumb area end -->
 
    <!-- shop area start -->
@@ -19,7 +19,7 @@
                   <div class="tp-shop-top-left d-flex align-items-center">
                     <div class="tp-shop-top-result">
                       <p>
-                        Showing 1–{{ products.length > perView ? perView : products.length }} of {{ products.length }} results
+                        {{ products.length }} taneden–{{ products.length > perView ? perView : products.length }} tanesi gösteriliyor 
                       </p>
                     </div>
                   </div>
@@ -50,9 +50,9 @@
           </div>
           <div class="text-center">
             <button *ngIf="perView < products.length" (click)="handlePerView()" type="button" class="btn-loadmore tp-btn tp-btn-border tp-btn-border-primary">
-              Load More Products
+              Daha Fazla Ürün
             </button>
-            <p *ngIf="perView >= products.length" class="btn-loadmore-text">End Of Products</p>
+            <p *ngIf="perView >= products.length" class="btn-loadmore-text">Son</p>
           </div>
         </div>
       </div>
@@ -62,5 +62,5 @@
  </main>
 
  <!-- footer start -->
-<app-footer-one [primary_style]="true"></app-footer-one>
+<app-footer-two></app-footer-two>
 <!-- footer end -->

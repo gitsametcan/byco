@@ -12,11 +12,11 @@ export class ProjeService {
     constructor() { }
 
 
-    activeImg: string | undefined;
+    // activeImg: string | undefined;
 
-    handleImageActive(img: string) {
-        this.activeImg = img;
-    }
+    // handleImageActive(img: string) {
+    //     this.activeImg = img;
+    // }
 
     
 

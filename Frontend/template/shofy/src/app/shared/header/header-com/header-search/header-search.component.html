@@ -11,13 +11,13 @@
                     <input type="text" placeholder="Bir ürün arayın." [(ngModel)]="searchText" name="searchText">
                     <button type="submit"><i class="flaticon-search-1"></i></button>
                  </div>
-                 <div class="tp-search-category">
+                 <!-- <div class="tp-search-category">
                     <span>Search by : </span>
                     <a (click)="handleProductType(c)" *ngFor="let c of categories;let i = index" class="cursor-pointer" [class.active]="c === productType">
                        {{c}}
                       <span *ngIf="i < categories.length - 1">, </span>
                     </a>
-                 </div>
+                 </div> -->
               </form>
            </div>
         </div>

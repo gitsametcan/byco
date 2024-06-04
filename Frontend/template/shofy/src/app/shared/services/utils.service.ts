@@ -75,6 +75,7 @@ export class UtilsService {
 
   // handle Open Modal
   handleOpenModal(id: string, item: IProduct) {
+    console.log("modal ac" +item.title);
     this.isProductModalOpen = true;
     this.modalId = id;
     this.product = item;
