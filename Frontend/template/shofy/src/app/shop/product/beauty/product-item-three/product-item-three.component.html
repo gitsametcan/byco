@@ -1,6 +1,7 @@
 <div [ngClass]="'tp-product-item-3 ' + (primary_style ? 'tp-product-style-primary' : '') + ' mb-50 ' + (isCenter ? 'text-center' : '')">
   <div class="tp-product-thumb-3 mb-15 fix p-relative z-index-1"
-  [ngStyle]="{'background-color': style_2 ? '#f6f6f6' : '#fff'}">
+  [ngStyle]="{'background-color': style_2 ? '#f6f6f6' : '#fff'}"
+  style="width: 300px; height: 300px; display: flex; justify-content: center; align-items: center;">
      <a [routerLink]="['/shop/shop-details', product.id]">
         <img [src]="product.img" alt="product-img">
      </a>

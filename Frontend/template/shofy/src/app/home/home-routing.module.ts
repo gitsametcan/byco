@@ -6,11 +6,11 @@ import { ElectronicsComponent } from './electronics/electronics.component';
 import { JewelryComponent } from './jewelry/jewelry.component';
 
 const routes: Routes = [
-  {
-    path:'electronic',
-    component:ElectronicsComponent,
-    title:'Shofy - Multipurpose eCommerce Angular Template'
-  },
+  // {
+  //   path:'electronic',
+  //   component:ElectronicsComponent,
+  //   title:'Shofy - Multipurpose eCommerce Angular Template'
+  // },
  {
      path:'projeler',
      component:FashionComponent,

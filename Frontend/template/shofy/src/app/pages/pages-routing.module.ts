@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path:'contact',
     component:ContactComponent,
-    title:'Contact Page'
+    title:'Iletişim'
   },
   {
     path:'hakkimizda',
@@ -39,7 +39,7 @@ const routes: Routes = [
   {
     path:'biten-projeler/:category',
     component:BlogDetailsComponent,
-    title:'Blog Details Page'
+    title:'Biten Projeler'
   },
   {
     path:'privacy',

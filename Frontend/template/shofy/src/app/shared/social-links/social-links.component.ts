@@ -25,12 +25,12 @@ export class SocialLinksComponent {
       link:'https://www.linkedin.com/company/byco',
       icon:'fa-brands fa-linkedin-in',
       title:'Linkedin'
+    },
+    {
+      id:4,
+      link:'https://www.instagram.com/byco_elektrik/',
+      icon:'fa-brands fa-instagram',
+      title:'Vimeo'
     }
-    // {
-    //   id:4,
-    //   link:'https://vimeo.com/',
-    //   icon:'fa-brands fa-vimeo-v',
-    //   title:'Vimeo'
-    // },
   ]
 }

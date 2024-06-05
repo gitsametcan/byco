@@ -85,22 +85,25 @@
       </li>
     </ul>
   </li>
-  <li style="text-align: center !important;">
-    <a [routerLink]="'/shop'" style="color: black; text-align: center;">
-        <p style="text-align: center !important; margin-top: 13px; line-height: 0px;"><span style=
-            "margin-top: 5px;
-            font-family: 'Poppins', sans-serif !important;
-            font-weight: 500;
-            font-size: 16px;
-            letter-spacing:1px;
-            color: rgb(167, 19, 19);
-            text-align: center;
-            background-image: linear-gradient(to right, #ffffff 0%, #28a2ca 100%);
-            border-radius: 4px;
-            ">
-            e-TİCARET
-            </span></p>
-        
-    </a>
-  </li>
+  <li style="text-align: center;">
+    <a [routerLink]="'/shop'" style="
+        background-image: linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%);
+        border: none;
+        border-radius: 15px;
+        color: black;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        padding: 10px 20px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        transition: background-image 0.3s ease;
+    " onmouseover="this.style.backgroundImage='linear-gradient(to right, #3da8c5 0%, #1b7495 100%)'"
+        onmouseout="this.style.backgroundImage='linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%)'"
+    >
+        e-TİCARET
+  </a>
+</li>
 </ul>

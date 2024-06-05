@@ -24,9 +24,9 @@ export class SearchComponent {
   }
   // select option
   public selectOptions = [
-    { value: 'ascending', text: 'Default Sorting' },
-    { value: 'low-to-high', text: 'Low to Hight' },
-    { value: 'high-to-low', text: 'High to Low' },
+    { value: 'ascending', text: 'Varsayılan Sıralama' },
+    { value: 'low-to-high', text: 'Önce düşük fiyatlı' },
+    { value: 'high-to-low', text: 'Önce yüksek fiyatlı' },
     { value: 'new-added', text: 'New Added' },
     { value: 'on-sale', text: 'On Sale' },
   ];

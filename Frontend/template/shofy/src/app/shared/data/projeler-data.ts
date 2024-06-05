@@ -520,6 +520,136 @@ const projeler_data: Iproje[] = [
         "isveren": "",
         "aciklama": "st",
         "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 53,
+        "ad": "Mona Art Şile Villaları",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 54,
+        "ad": "İpektül Aynalı Çarşı",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 55,
+        "ad": "Pegasus Denizcilik",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 56,
+        "ad": "Aynalı Çarşı",
+        "lokasyon": "Maslak 1453",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 57,
+        "ad": "Emegar Gübre",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 58,
+        "ad": "Maslak Ofis Projesi Octet",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 59,
+        "ad": "Günaydın",
+        "lokasyon": "Marmara Forum",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 60,
+        "ad": "Emirgan Sütiş",
+        "lokasyon": "Cevahir AVM",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 61,
+        "ad": "Happy Moons",
+        "lokasyon": "Cevahir AVM",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 62,
+        "ad": "Antalya Havaalanı DOCO",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 63,
+        "ad": "Sushiko",
+        "lokasyon": "Cevahir AVM",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 64,
+        "ad": "Araç Kiralama Hizmetleri",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
+    },
+    {
+        "id": 65,
+        "ad": "DO&CO",
+        "lokasyon": "",
+        "tamamlanma": "",
+        "alan": "",
+        "isveren": "",
+        "aciklama": "devam",
+        "img": "/assets/img/devamProje/noimagen.jpg"
     }
 ];
 

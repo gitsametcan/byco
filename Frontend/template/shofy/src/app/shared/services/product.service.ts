@@ -52,14 +52,14 @@ export class ProductService {
     const max_price = all_products.reduce((max, product) => {
       return product.price > max ? product.price : max;
     }, 0);
-    return max_price
+    return 250
   }
 // shop filterSelect
   public filterSelect = [
-    { value: 'asc', text: 'Default Sorting' },
-    { value: 'low', text: 'Low to Hight' },
-    { value: 'high', text: 'High to Low' },
-    { value: 'on-sale', text: 'On Sale' },
+    { value: 'asc', text: 'Varsayılan Sıralama' },
+    { value: 'low', text: 'Önce düşük fiyatlı' },
+    { value: 'high', text: 'Önce yüksek fiyatlı' },
+    { value: 'on-sale', text: 'İndirimde' },
   ];
 
     // Get Product Filter
