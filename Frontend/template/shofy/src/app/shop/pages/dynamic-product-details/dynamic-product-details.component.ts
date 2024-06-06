@@ -31,7 +31,7 @@ export class DynamicProductDetailsComponent implements OnInit {
     ).subscribe((product: IProduct | null | undefined) => {
       if (!product) {
         // Product not found, navigate to 404 page
-        this.router.navigate(['/404']);
+        this.router.navigate(['/shop']);
       } else {
         this.product = product;
       }

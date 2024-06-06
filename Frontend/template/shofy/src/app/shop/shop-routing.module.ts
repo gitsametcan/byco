@@ -82,7 +82,7 @@ const routes: Routes = [
   {
     path:'shop-details/:id',
     component:DynamicProductDetailsComponent,
-    title:'Shop Details Page'
+    title:'Ürün Sayfası'
   },
   {
     path:'shop-details-with-video',
@@ -117,7 +117,7 @@ const routes: Routes = [
   {
     path:'compare',
     component:CompareComponent,
-    title:'Shop Compare Page'
+    title:'Ürün Karşılaştır'
   },
   {
     path:'order',

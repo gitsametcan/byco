@@ -59,17 +59,17 @@ const routes: Routes = [
   {
     path:'login',
     component:LoginComponent,
-    title:'Login Page'
+    title:'Giriş'
   },
   {
     path:'register',
     component:RegisterComponent,
-    title:'Register Page'
+    title:'Kaydol'
   },
   {
     path:'forgot',
     component:ForgotPasswordComponent,
-    title:'Forgot Page'
+    title:'Şifre Yenileme'
   },
   {
     path:'checkout',
