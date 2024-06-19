@@ -1,5 +1,5 @@
 <div [ngClass]="['tp-product-item-2',spacing ? 'mb-40' : '']">
-  <div class="tp-product-thumb-2 p-relative z-index-1 fix w-img" style="width: 300px; height: 300px; display: flex; justify-content: center; align-items: center;">
+  <div class="tp-product-thumb-2 p-relative z-index-1 fix w-img" style="width: 230px; height: 230px; display: flex; justify-content: center; align-items: center;">
      <a [routerLink]="['/shop/shop-details', product.id]">
         <img [src]="product.img" alt="">
      </a>
@@ -59,7 +59,7 @@
         <a [routerLink]="['/shop/shop-details', product.id]">{{product.category.name}}</a>
      </div>
      <h3 class="tp-product-title-2">
-        <a [routerLink]="['/shop/shop-details', product.id]">{{product.title}}</a>
+        <a [routerLink]="['/shop/shop-details', product.id]" style="font-size: 15px;">{{product.title}}</a>
      </h3>
      <!-- <div class="tp-product-rating-icon tp-product-rating-icon-2">
         <span><i class="fa-solid fa-star"></i></span>
@@ -69,8 +69,8 @@
         <span><i class="fa-solid fa-star"></i></span>
      </div> -->
      <div class="tp-product-price-wrapper-2">
-        <ng-container *ngIf="product.discount > 0; else noDiscount">
-          <span class="tp-product-price-2 old-price">{{ product.price }} TL</span>
+        <ng-container *ngIf="1 > 0; else noDiscount">
+          <span class="tp-product-price-2 old-price">{{ product.price*1.1 | number:'1.2-2' }} TL</span>
           <span class="tp-product-price-2 new-price">
             {{ (product.price - (product.price * product.discount / 100)).toFixed(2) }} TL
           </span>

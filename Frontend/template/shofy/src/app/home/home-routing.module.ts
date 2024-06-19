@@ -22,9 +22,9 @@ const routes: Routes = [
     title:'BYCO'
   },
   {
-    path:'admin',
+    path:'teklif/:id',
     component:JewelryComponent,
-    title:'Proje Yükle'
+    title:'Teklif Al'
   },
 ];
 

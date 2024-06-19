@@ -82,7 +82,7 @@
                     </ul>
                   </div>
                   <div class="tp-shop-top-result">
-                    <p>Gösterilen 1–{{ products.length }} taneden {{ paginate.totalItems }} tanesi</p>
+                    <p>Gösterilen {{ paginate.totalItems }} taneden {{ products.length }} tanesi</p>
                   </div>
                 </div>
               </div>
@@ -108,7 +108,7 @@
 
             <div *ngIf="activeTab === 'grid'">
               <div class="row infinite-container">
-                <div *ngFor="let item of products" class="col-xl-4 col-md-6 col-sm-6 infinite-item">
+                <div *ngFor="let item of products" class="col-xl-3 col-md-4 col-sm-6 infinite-item">
                   <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
                 </div>
               </div>
