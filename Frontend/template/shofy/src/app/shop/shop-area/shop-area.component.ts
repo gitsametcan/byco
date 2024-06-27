@@ -27,7 +27,7 @@ export class ShopAreaComponent {
   public status: string | null = null;
   public brand: string | null = null;
   public pageNo: number = 1;
-  public pageSize: number = 9;
+  public pageSize: number = 12;
   public paginate: any = {}; // Pagination use only
   public sortBy: string = 'asc'; // Sorting Order
   public mobileSidebar: boolean = false;
