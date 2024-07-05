@@ -42,7 +42,7 @@ const routes: Routes = [
     title:'Biten Projeler'
   },
   {
-    path:'privacy',
+    path:'privacy/:type',
     component:DynamicBlogDetailsComponent,
     title:'Privacy Policy'
   },

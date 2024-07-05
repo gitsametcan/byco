@@ -25,6 +25,7 @@ export class CheckoutComponent {
   isOpenLogin = false;
   isOpenCoupon = false;
   isUserLogin = false;
+  isTermAccepted = false;
   
   infoUpdated: boolean = false;
   shipCost: number = 0;
@@ -47,6 +48,12 @@ export class CheckoutComponent {
 
   constructor(public cartService: CartService,private toastrService: ToastrService) { }
 
+  showModal: boolean = false;
+
+  toggleModal(): void {
+    this.showModal = !this.showModal;
+  }
+
   handleOpenLogin() {
     this.isOpenLogin = !this.isOpenLogin;
   }
@@ -63,6 +70,12 @@ export class CheckoutComponent {
     //   this.shipCost = value as number;
     // }
   }
+
+  onCheckboxClick(event: any): void {
+    console.log('Tıklandı', event.target.checked);
+    this.isTermAccepted = event.target.checked;
+  }
+
 
   public countrySelectOptions = [
     { value: 'select-country', text: 'Select Country' },
@@ -101,9 +114,6 @@ export class CheckoutComponent {
   public checkoutForm!: FormGroup;
   public formSubmitted = false;
   
-
-
-
   ngOnInit () {
     this.checkoutForm = new FormGroup({
       firstName:new FormControl(null),
@@ -122,30 +132,9 @@ export class CheckoutComponent {
   this.infoUpdated= true;
   }
 
-//   onSubmit() {
-//     console.log("sadad");
-//     console.log('checkout-form-value', this.checkoutForm);
-//     this.formSubmitted = true;
-//     if (this.checkoutForm.valid) {
-//       console.log('checkout-form-value', this.checkoutForm);
-//       this.toastrService.success(`Order successfully`);
-//       this.checkoutDoldur();
-//       this.GetPostChechout(this.checkouts);
-      
-    
-//       this.checkoutForm.reset();
-//       this.formSubmitted = false; // Reset formSubmitted to false
-//     }
-//     console.log(this.cartService.getCartProducts());
-//     //console.log('checkout-form', this.checkoutForm.value);
-//   }
-
   checkoutDoldur(){
     console.log("checkdoldur");
     this.checkouts.session_key = String(this.getCookie("session_key"));
-
-
-    
 
     this.checkouts.satilan_urunler=[];
 

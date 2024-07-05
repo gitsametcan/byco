@@ -11,8 +11,17 @@ import blogData from '@/data/blog-data';
 export class DynamicBlogDetailsComponent {
 
 
-  constructor(
-  ) {}
+  
+  constructor(private route: ActivatedRoute) {}
+
+  type =  "gizlilik";
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.type = params.get('type') || 'defaultType';
+      console.log(this.type);
+    });
+  }
 
   
 }

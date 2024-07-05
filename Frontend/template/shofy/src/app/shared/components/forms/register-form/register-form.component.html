@@ -1,5 +1,7 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="tp-login-input-wrapper">
+
+    <!-- Name Input -->
     <div class="tp-login-input-box">
       <div class="tp-login-input">
         <input id="name" type="text" placeholder="İsminiz" formControlName="name">
@@ -12,6 +14,7 @@
       </span>
     </div>
 
+    <!-- Surname Input -->
     <div class="tp-login-input-box">
       <div class="tp-login-input">
         <input id="surname" type="text" placeholder="Soyisminiz" formControlName="surname">
@@ -24,6 +27,7 @@
       </span>
     </div>
 
+    <!-- Email Input -->
     <div class="tp-login-input-box">
       <div class="tp-login-input">
         <input id="email" type="email" placeholder="info@byco.com.tr" formControlName="email">
@@ -36,6 +40,7 @@
       </span>
     </div>
 
+    <!-- Phone Number Input -->
     <div class="tp-login-input-box">
         <div class="tp-login-input">
           <input id="tel" type="text" placeholder="0555 555 55 55" formControlName="tel">
@@ -48,6 +53,7 @@
         </span>
       </div>
 
+      <!-- Password Input -->
     <div class="tp-login-input-box">
       <div class="p-relative">
         <div class="tp-login-input">
@@ -97,17 +103,32 @@
       </span>
     </div>
   </div>
+
+
+
+
+
+
+
   <div class="tp-login-input-box">
-    <div class="tp-login-input">
-      <input id="type" type="text" placeholder="Hesap Tipi" formControlName="type">
+    <div class="tp-login-input-title">Hesap Tipi (bireysel/kurumsal)</div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="accountType" id="individual" formControlName="accountType" value="individual" (change)="updateAccountType('individual')">
+      <label class="form-check-label" for="individual">Bireysel</label>
     </div>
-    <div class="tp-login-input-title">
-      <label for="type">Hesap Tipi (bireysel/kurumsal)</label>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="accountType" id="corporate" formControlName="accountType" value="corporate" (change)="updateAccountType('corporate')">
+      <label class="form-check-label" for="corporate">Kurumsal</label>
     </div>
-    <span *ngIf="type?.hasError('required') && (type?.touched || formSubmitted)" class="text-danger">
-      Bu alanda <b>bireysel</b> ya da <b>kurumsal</b> yazmalıdır.   
+    <span *ngIf="isShowTypeMessage" class="text-danger">
+      Kullanıcı tipi seçilmelidir.
     </span>
   </div>
+  
+
+
+
+  <!-- VKNO Input -->
   <div class="tp-login-input-box">
     <div class="tp-login-input">
       <input id="vkno" type="text" placeholder="Kimlik No / Vergi No" formControlName="vkno">
@@ -119,14 +140,19 @@
       Bu alana bireysel için kimlik numaranızı, kurumsal için vergi numaranızı yazın.  
     </span>
   </div>
+
+  <!-- Terms and Conditions Checkbox -->
   <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
     <div class="tp-login-remeber">
       <input id="remeber" type="checkbox">
       <label for="remeber">I accept the terms of the Service & <a href="#">Privacy Policy</a>.</label>
     </div>
   </div>
+
+
+  <!-- Submit Button -->
   <div class="tp-login-bottom">
-    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,tel?.value, password?.value, type?.value, vkno?.value)">Kaydol</button>
+    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,tel?.value, password?.value, vkno?.value)">Kaydol</button>
   </div>
 </form>
 <button type="submit"  (click)="gec()">Kayıtlı Mısın, Giriş Yap</button>

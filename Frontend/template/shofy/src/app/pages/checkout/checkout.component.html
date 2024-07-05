@@ -204,6 +204,15 @@
                           {{(cartService.totalPriceQuantity().total - discount).toFixed(2)}} TL
                         </span>
                       </li>
+
+
+                      <li class="tp-order-info-list-total">
+                              <input type="checkbox" id="termsCheckbox" (click)="onCheckboxClick($event)">
+                              <label for="termsCheckbox">
+                                <span (click)="toggleModal()" style="cursor: pointer; text-decoration: underline;">Kullanım Koşulları</span> Kabul Ediyorum
+                              </label>
+                            </li>
+                    
                     </ul>
                   </div>
                   <!-- <div class="tp-checkout-payment">
@@ -239,6 +248,318 @@
   <!-- checkout area end -->
 </main>
 
+
+<style>
+  .modal {
+display: flex;
+position: fixed;
+z-index: 90;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.75);
+justify-content: center;
+align-items: center;
+}
+
+.modal-content {
+background-color: #fefefe;
+margin: auto;
+padding: 20px;
+border: 1px solid #888;
+width: 50%;
+margin-bottom: 30px;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.close {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+</style>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="toggleModal()">&times;</span>
+    <h3>GİZLİLİK POLİTİKASI</h3>
+    <p>
+      <br>BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi, müşterilerine en iyi,  kusursuz hizmeti verebilmek ve kanuni yükümlülükleri eksiksiz yerine getirmek adına bazı kişisel bilgilerinizi (isim, yaş, ilgi alanlarınız, e-posta vb.) sadece şipariş sırasında sizlerden talep etmektedir.
+      <br>BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi olarak 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) ve ilgili mevzuat ve yasal düzenlemelerden doğan işlemlerimiz çerçevesinde kişisel verilerinizin işlenmesi, depolanması/saklanması ve aktarımı ile ilgili veri maliklerini aydınlatmak amacıyla işbu Kişisel Verilerin İşlenmesi Gizlilik Politikası ve Aydınlatma Metni’ni size sunmaktayız.
+      <br>KVKK ve ilgili mevzuat çerçevesinde, kişisel verilerinizle ilgili olarak aşağıdaki haklara sahipsiniz;
+      <br>Kişisel verilerinizin işlenip işlenmediğini öğrenme,
+      <br>Kişisel verileriniz işlenmişse, hangi kişisel verilerinizin işlendiğini ve bu verilerin işlenme amaçlarını öğrenme,
+      <br>Kişisel verilerinizin işlenme amacına uygun kullanılıp kullanılmadığını öğrenme,
+      <br>Yurt içinde veya yurt dışında kişisel verilerinizin aktarıldığı üçüncü kişileri bilme,
+      <br>Kişisel verilerinizin eksik veya yanlış işlenmiş olması halinde bunların düzeltilmesini talep etme,
+      <br>KVKK mevzuatında öngörülen şartlar çerçevesinde kişisel verilerinizin silinmesini veya yok edilmesini isteme,
+      <br>Eksik veya yanlış verilerin düzeltilmesi, kişisel verilerinizin silinmesi veya yok edilmesi talebinde bulunduğunuzda, bu durumun kişisel verilerinizi aktardığımız üçüncü kişilere bildirilmesini isteme,
+      <br>Kişisel verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya çıkmasına itiraz etme,
+      <br>Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğramanız halinde bu zararın giderilmesini talep etme.
+      <br>Bu hakları kullanmak için ilgili taleplerinizi veri sorumlusuna yöneltebilirsiniz. Veri sorumlusu, talebinizi aldıktan sonra gerekli süre içinde talebinizi değerlendirip size geri dönüş yapmakla yükümlüdür.
+      <br>Bu bilgiler, münhasıran kampanya çalışmaları, müşteri profillerine yönelik özel promosyon faaliyetlerinin kurgulanması ve istenmeyen e-postaların iletilmemesine yönelik müşteri "sınıflandırma” çalışmalarında sadece BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi bünyesinde anonim olarak toplanmakla birlikte ilgili yasal mevzuat dahilinde müşteri tarafından gerekli izin ve icazet usulüne uygun olarak verildi ise verilen onayın kapsamına uygun olarak ticari amaçla kullanmamakta ve hiçbir şekilde bu bilgilerin izin kapsamı dışında 3. Kişiler ile paylaşımını yapmamaktadır.
+      <br>BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi, e-posta adresleri ve üyelik formlarında istediği kişisel bilgilerin haricinde site kullanımı sırasında izlediği, ziyaretçi hareket ve tercihlerini analiz ederek yorumlamaktadır. Kişisel bilgiler içermeyen bu istatistiksel veriler, BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi müşterilerine daha özel ve etkin bir alışveriş deneyimi yaşatmak amacıyla  BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi tarafından analiz edilmekte ve kullanılmaktadır.
+      <br>Müşteri bilgileri, ancak resmi makamlarca usulü dairesinde bu bilgilerin talep edilmesi halinde ve yürürlükteki emredici mevzuat hükümleri gereğince resmi makamlara açıklama yapmak zorunda olduğu durumlarda resmi makamlara açıklanabilecektir. Müşterinin sisteme girdiği tüm bilgilere sadece Müşteri ulaşabilmekte ve bu bilgileri sadece Müşteri değiştirebilmektedir.
+      <br>Ödeme sayfasında istenen kredi kartı bilgileriniz, siteden alışveriş yapan siz değerli müşterilerimizin güvenliğini en üst seviyede tutmak amacıyla hiçbir şekilde bizim bünyemize girişi sağlanmayacaktır veya ona hizmet veren güvenli ödeme yöntemlerini sağlayan bankacılık şirketinde yapılan sözleşme dahilinde hassasiyetle muhafaza edilmektedir. Bu şekilde ödemeye yönelik tüm işlemlerin T. Garanti Bankası A.Ş./Garanti BBVA kendi arayüzü üzerinden banka ve bilgisayarınız arasında gerçekleşmesi sağlanmaktadır.
+      <br>Ayrıca OprenSSL ve Natro tarafından sağlanan Secure Socket Layer sertifikamız sayesinde kişisel bilgileriniz şifrelenmektedir.
+      
+      <br> BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi
+      <br> Pazartesi – Cuma 09.00-18.00 Cumartesi 09.00-14.00 
+      <br> 0216 356 29 26/30 Pbx  // Mail : muhasebe@byco.com.tr
+      <br> Küçükbakkalköy Mah. KocaSinan Cad. Denizatı Apt. No:8/10A Ataşehir/ İstanbul
+
+    </p>
+      
+      
+      <h3>MESAFELİ SATIŞ SÖZLEŞMESİ</h3>
+      
+      <h4>TARAFLAR</h4>
+      
+      İşbu Mesafeli Satış Sözleşmesi ("Sözleşme") Küçükbakkalköy Mah. KocaSinan Cad. Denizatı Apt. No:8/10A Ataşehir/ İstanbul  adresinde faaliyette bulunan BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi
+       Şirketi ("Satıcı") ve hizmetlerini/ürünlerini www.byco.com.tr alan adlı internet sitesi üzerinden satın alan kişi ("Alıcı") aşağıda bilgileri verilen Satıcı ve Alıcı arasında elektronik ortamda imzalanmış kabul edilmektedir.
+      Taraflar, işbu Sözleşme'nin tamamını okuduklarını, içeriğini bütünü ile anladıklarını ve tüm hükümlerini onayladıklarını kabul, beyan ve taahhüt eder.
+      
+      <h6>SATICI'NIN BİLGİLERİ:</h6>
+
+      <br>Satıcının Ticaret Unvanı / Adı ve Soyadı	:	BYCO MÜHENDİSLİK ELEKTRİK TAAHHÜT VE İNŞAAT TİCARET ANONİM ŞİRKETİ
+      <br>Satıcının Adresi	:	Küçükbakkalköy Mahallesi Koca Sinan Cad. Denizatı Apt. No:8/10A Ataşehir İstanbul
+      <br>Satıcının Mersis Numarası	:	0191057784844479
+      <br>Satıcının Vergi Kimlik Numarası	:	1910577848
+      <br>Satıcının Telefonu	:	0216 356 29 26
+      <br>Satıcı KEP ve E-posta Bilgileri	:	byco@hs03.kep.tr
+
+
+      <h6>ALICI'NIN BİLGİLERİ:</h6>
+
+      <br>Teslim Edilecek Kişi	:	{{myObject.adsoyad}}
+      <br>Teslimat Adresi	:	{{myObject.adres}}
+      <br>Telefon	:	{{myObject.telefon}}
+      <br>E-posta/Kullanıcı Adı	:	{{myObject.email}}
+      <br>
+      <br>İşbu sözleşme dahilinde gerektiği takdirde Satıcı ve Alıcı tek başına "Taraf", birlikte "Taraflar" olarak anılabilecektir.
+      Alıcı, işbu ürün ve hizmet satın alımını yaparak, Sözleşme'nin tamamını okuduğunu, içeriğini bütünü ile kavradığını ve tüm hükümlerini onayladığını kabul, beyan ve taahhüt eder.  Aynı şekilde Satıcı de aşağıdaki hususları Satıcı'ya beyan ve taahhüt eder.  Bu nedenle, hizmet satın alınırken Alıcı tarafından verilmiş olan bilgilerinin doğruluğu Alıcı tarafından taahhüt edilmektedir.
+      Tabii, işbu sözleşme metnini daha detaylı ve düzenli bir şekilde yeniden yazalım:
+      
+      <h4>SÖZLEŞME'NİN KURULMASI</h4>
+      
+      ALICI, işbu Sözleşme'yi okuduğunu, anladığını, haklarının ve yükümlülüklerinin bilincinde olduğunu kabul eder.
+      
+      TARAFLAR, Sözleşme ile kararlaştırılan edimler arasında herhangi bir oransızlık bulunmadığını ve karşılıklı edimlerin işin niteliğine uygun olduğunu, Sözleşme konusu işlemler kapsamında herhangi bir tecrübesizliklerinin bulunmadığını kabul ederler.
+      
+      ALICI, Sözleşme kapsamında yer alan işlemlerin kendi menfaatine uygun olduğu konusunda tam bir kanaate varmıştır ve tüm şartlara kendi özgür iradesi ile, hiçbir güçlük veya sıkıntı içinde olmadan, düşünerek, isteyerek ve bilerek uymayı kabul eder.
+      
+      TARAFLAR, Sözleşme hükümlerinin haksız şart sayılabilecek bir özellik taşımadığını, menfaatler dengesi bakımından bir haksızlık olmadığını kabul ederler.
+      
+      İŞBU SÖZLEŞME HÜKÜMLERİ, Tüketici Sözleşmeleri Yönetmeliği hükümleri uyarınca herhangi bir haksız şart içermemektedir. Hükümler dürüstlük ve iyi niyet kuralına aykırılık teşkil etmemekte olup tüketiciyi koruma mevzuatına uygun olarak hazırlanmıştır.
+      
+      İŞBU SÖZLEŞME HÜKÜMLERİ, Türk Borçlar Kanunu hükümleri de dikkate alınarak hazırlanmıştır. Türk Borçlar Kanunu'nun 21. maddesinde öngörülen bağlayıcılık ve içerik denetimi alıcı tarafından yapılmıştır. İşbu sözleşme hükümlerinden hiçbiri işbu Sözleşme'nin niteliğine ve işin özelliğine yabancı (şaşırtıcı şartlar) nitelik taşımaz. İşbu Sözleşme hükümleri açık ve anlaşılır bir şekilde yazılmış olup birden çok anlamı ifade etmemektedir.
+      
+      <h4>SÖZLEŞME'NİN KONUSU VE KAPSAMI</h4>
+      
+      İşbu Sözleşme'nin konusu, Alıcı'nın Satıcı'ya ait www.byco.com.tr alan adlı internet sitesi ("Site") üzerinden elektronik ortamda siparişini yaptığı aşağıda nitelikleri ve satış fiyatı belirtilen ürünün satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkındaki Kanun ve Mesafeli Sözleşmeler Yönetmeliği gereğince Taraflar'ın hak ve yükümlülüklerinin belirlenmesinden ibarettir.
+      
+      <h4>**SÖZLEŞME KONUSU MAL VEYA HİZMETİN TEMEL NİTELİKLERİ**</h4>
+      
+      İşbu Sözleşme konusu ürünün temel nitelikleri, satış bedeli, teslimat ve ödeme koşulları aşağıdaki gibidir:
+
+      <style>
+        .product-table {
+  width: 100%;
+  border-collapse: collapse; /* Tablo çizgilerinin birleşmesi için */
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd; /* Hücreler arası kenarlık */
+  padding: 8px; /* Hücre içi boşluk */
+  text-align: left; /* Metin hizalaması */
+}
+
+.product-table th {
+  background-color: #f4f4f4; /* Başlık arkaplan rengi */
+  color: #333; /* Başlık yazı rengi */
+}
+
+.product-table tr:nth-child(even) {background-color: #f9f9f9;} /* Çift satırlar için arkaplan rengi */
+.product-table tr:hover {background-color: #e9e9e9;} /* Satır üzerine gelindiğinde arkaplan rengi */
+
+      </style>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Ürün Adı</th>
+            <th>Açıklama</th>
+            <th>Miktar</th>
+            <th>Fiyat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartService.getCartProducts()">
+            <td>{{ item.title }}</td>
+            <td>{{item.description}}</td>
+            <td>x {{ item.orderQuantity }}</td>
+            <td>
+              <ng-container *ngIf="item.discount > 0; else noDiscount">
+                {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
+              </ng-container>
+              <ng-template #noDiscount>
+                {{ item.price.toFixed(2) }} TL
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+      <h4>ÖDEME VE TESLİMAT ŞARTLARI</h4>
+      
+      <h6>1. Ödeme Detayları</h6>
+      
+      <br>Kargo Hariç Toplam Ürün Bedeli: {{(cartService.totalPriceQuantity().total - discount).toFixed(2)}} TRY
+      
+      <br>Kargo Ücreti: 120 TRY
+      
+      <br>Kargo ve Tüm Vergiler Dahil Toplam Ürün Bedeli: {{(cartService.totalPriceQuantity().total - discount+120).toFixed(2)}}
+      
+      <br>Ödeme Şekli: Ödemeye yönelik tüm işlemlerin T. Garanti Bankası A.Ş./Garanti BBVA kendi arayüzü üzerinden banka ve bilgisayarınız arasında gerçekleşmesi sağlanmaktadır
+      
+      <br>Ödeme Şekli Açıklaması: Yukarıda belirtilen toplam ürün bedeli, Alıcı tarafından T. Garanti Bankası A.Ş./Garanti BBVA aracılığıyla Satıcı'ya ödenecektir.
+      
+      <h6>2. Teslimat Detayları</h6>
+      
+      <br>Teslimat Adresi: {{myObject.adres}}
+      <br>Teslim Edilecek Kişi: {{myObject.adsoyad}}
+      <h6>3. Teslimat Koşulları</h6>
+      Sözleşme konusu ürün/ürünler, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) gün içinde Alıcı'nın teslimat adresine teslim edilecektir. Teslim süresi, Alıcı'nın teslimat adresinin uzaklığına ve taşıyıcı firmanın hizmet verdiği koşullara bağlı olarak değişiklik gösterebilir.
+      
+      <h6>4. Taşıyıcı Firma Bilgileri</h6>
+      
+      <br>Taşıyıcı Firma: Yurtiçi Kargo
+      <br>Kargo Bilgisi: Kargo bilgileri otomatik olarak müşteriye gösterilecektir.
+      <h6>5. Teslimat Adresi ve Kişi Bilgileri</h6>
+      <br>Teslimat Adresi: {{myObject.adres}}
+      <br>Teslim Edilecek Kişi: {{myObject.adsoyad}}
+      <h6>6. Teslimat Süresi</h6>
+      Sözleşme konusu ürün/hizmet, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) günlük yasal süreyi aşmamak koşulu ile her bir ürün için Alıcı'nın belirtilen teslimat adresine veya gösterdiği adrese 30 günlük süre içinde teslim edilecektir.
+      Yukarıda belirtilen toplam ürün bedeli, BYCO Mühendislik Elektrik Taahhüt Ve İnşaat Ticaret Anonim Şirketi tarafından Alıcı'dan tahsil edilmektedir
+      
+      <h4>TESLİMAT</h4>
+      
+      Teslimat Süresi ve Şartları
+      Sözleşme konusu ürün, Alıcı'nın isteği veya kişisel ihtiyaçları doğrultusunda hazırlanan bir ürün olmadıkça yasal 30 (otuz) günlük süreyi aşmamak koşulu ile her bir ürün için Alıcı'nın yerleşim yerinin uzaklığına bağlı olarak ön bilgilendirme formunda belirtilen süre içinde Alıcı'ya veya gösterdiği adrese teslim edilir. Ürün, siparişin Satıcı'ya ulaşmasını takip eden 30 günlük yasal süre içinde teslim edilir.
+      
+      Ödeme Şartı ve Teslimatın Koşulları
+      Şüpheye mahal vermemek kaydıyla, işbu Sözleşme'ye konu ürünün teslimatı için Alıcı tarafından elektronik ortamda teyit edilmiş olması ve ürün(lerin) bedelinin Alıcı'nın tercih ettiği ödeme şekli ile tam ve eksiksiz olarak ödenmiş olması şarttır. Ürün bedeli ödenmez, eksik ödenir veya ödeme banka kayıtlarında iptal edilirse, Satıcı ürünün teslimi yükümlülüğünden kurtulmuş kabul edilir.
+      
+      Ürünün Teslim Edilemeyeceği Durumlar
+      Sipariş konusu mal ya da hizmet ediminin yerine getirilmesinin imkansızlaştığı hallerde, Satıcı bu durumu öğrendiği tarihten itibaren 3 (üç) gün içinde Alıcı'ya yazılı olarak veya kalıcı veri sağlayıcısı ile bildirir ve varsa teslimat masrafları da dâhil olmak üzere tahsil edilen tüm ödemeleri bildirim tarihinden itibaren en geç 14 (on dört) gün içinde Alıcı'ya iade eder.
+      
+      <h4>ALICI'NIN BEYAN VE TAAHHÜTLERİ</h4>
+      
+      Alıcı, Site'de yer alan Sözleşme konusu mal veya hizmetin temel nitelikleri, satış fiyatı ve ödeme şekli ile teslimat ve kargo bedeline ilişkin olarak Satıcı tarafından yüklenen ön bilgileri okuyup bilgi sahibi olduğunu, elektronik ortamda gerekli teyidi verdiğini ve Site üzerinden siparişi onaylaması ile ÖDEME YÜKÜMLÜLÜĞÜ altına girdiğinin bilincinde olduğunu, satış bedelinin ödeme işlemi için bilgilerini girmiş olduğu kredi kartından/banka kartından tahsil edileceğini kabul, beyan ve taahhüt eder.
+      
+      Alıcı, işbu Sözleşme'yi ve Ön Bilgilendirme Formunu elektronik ortamda teyit etmekle mesafeli sözleşmelerin akdinden önce Satıcı tarafından Alıcı'ya verilmesi gereken adres, siparişi verilen mal veya hizmete ait temel özellikler, mal veya hizmetin vergiler dahil fiyatı, ödeme ve teslimat ile teslimat fiyatı bilgilerini de doğru ve eksiksiz olarak edindiğini teyit etmiş olur.
+      
+      Mal veya hizmetin tesliminden sonra Alıcı'ya ait kredi kartının Alıcı'nın kusurundan kaynaklanmayan bir şekilde yetkisiz kişilerce haksız veya hukuka aykırı olarak kullanılması nedeni ile ilgili banka veya finans kuruluşunun mal veya hizmetin bedelini Satıcı'ya ödememesi halinde, Alıcı kendisine teslim edilmiş olması kaydıyla mal veya hizmeti 3 (üç) gün içinde Satıcı'ya iade etmekle yükümlüdür. Bu durumda teslimat giderleri Alıcı'ya aittir.
+      
+      Sözleşme konusu mal veya hizmet, Alıcı'dan başka bir kişiye teslim edilecekse, teslim edilecek kişinin teslimatı kabul etmemesinden Satıcı sorumlu tutulamaz. Alıcı, siparişin teslimini talep ettiği adreste bulunmaz ise siparişi kesinlikle başka bir adrese bırakılmayacaktır. Bu durumda Alıcı kendisinin bulunmadığı bir adrese sipariş vermiş olması sebebiyle doğacak kanuni yükümlülükleri kabul etmek durumundadır.
+      
+      Sözleşme konusu ürün, Alıcı'dan başka bir kişi/kuruluşa teslim edilecek ise, teslim edilecek kişi/kuruluşun teslimatı kabul etmemesinden Satıcı sorumlu tutulamaz. Satıcı, Sözleşme konusu ürünün sağlam, eksiksiz, siparişte belirtilen niteliklere uygun olarak teslim edilmesinden sorumludur.
+      
+      Haklı bir sebebe dayanmak şartıyla Satıcı, Sözleşme'den doğan ifa yükümlülüğünün süresi dolmadan ve Alıcı'yı bilgilendirmek ve açıkça onayını almak şartıyla, Alıcı'ya eşit kalite ve fiyatta mal veya hizmet tedarik edebilir.
+      
+      Sözleşme konusu ürünün teslimatı için işbu Sözleşme'nin elektronik ortamda teyit edilmesi ve Sözleşme konusu siparişin bedelinin ödenmesi şarttır. Herhangi bir nedenle ürün bedeli ödenmez veya banka kayıtlarında iptal edilirse, Satıcı işbu Sözleşme kapsamındaki ürün teslimi yükümlülüğünden kurtulmuş kabul edilir.
+      
+      Satıcı, malın Alıcı veya Alıcı'nın belirlediği taşıyıcı dışında başka bir taşıyıcı ile teslim edilmesini talep etmesi durumunda, malın ilgili taşıyıcıya tesliminden itibaren oluşabilecek kayıp veya hasardan sorumlu değildir.
+      
+      Satıcı tarafından sunulan hizmet perakende satış kapsamında son kullanıcıya yöneliktir; Satıcı, Alıcı'nın yeniden satış amacı bulunduğundan şüphe etmesi halinde işbu Sözleşme kurulmuş olsa dahi siparişi iptal etme ve ürünleri teslim etmeme hakkını saklı tutar.
+      
+      Alıcı, ürünü teslim almadan önce muayenesini yapmalı, olağan muayene ile tespit edilebilen ayıplı ve hasarlı ürünü Satıcı yetkilisinden veya kargo şirketinden teslim almamalıdır. Alıcı, malı gözden geçirmeyi ihmal eder ve malı teslim alırsa, ürünün sağlam ve hasarsız olduğunu kabul etmiş sayılır.
+      <h4>SATICI'NIN BEYAN VE TAAHHÜTLERİ</h4>
+      
+      Satıcı, Sözleşme konusu mal veya hizmetin tüketici mevzuatına uygun olarak sağlam, eksiksiz, siparişte belirtilen niteliklere uygun ve varsa garanti belgeleri ve kullanım kılavuzları ile Alıcı'ya teslim edilmesinden sorumludur.
+      
+      Satıcı, haklı bir sebebe dayanmak ve Alıcı'yı bilgilendirmek ve açıkça onayını almak şartıyla Sözleşme'den doğan ifa yükümlülüğünün süresi dolmadan Alıcı'ya eşit kalite ve fiyatta farklı bir ürün tedarik edebilir.
+      
+      <h4>ALICI'NIN CAYMA HAKKI</h4>
+      
+      Sözleşme'de düzenlenen diğer hükümler saklı kalmak kaydıyla, işbu 8. madde altında düzenlenen hüküm ve şartlar yalnızca Alıcı'nın ilgili mevzuat kapsamında tüketici sıfatını haiz olması durumunda geçerli olacaktır.
+      
+      6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği kapsamındaki tüketici sıfatını haiz Alıcılar için cayma hakkı ve kullanımı:
+      
+      Tüketici Alıcı; hizmet ifasına ilişkin sözleşmelerde sözleşmenin kurulduğu günden; mal satışına ilişkin mesafeli sözleşmelerde, malı teslim aldığı tarihten itibaren 14 (on dört) gün içerisinde herhangi bir gerekçe göstermeksizin ve cezai şart ödemeksizin sözleşmeden cayma hakkına sahiptir.
+      
+      Cayma hakkının kullanıldığına dair bildirimin bu süre içinde yazılı olarak veya kalıcı veri saklayıcısı ile Satıcı'ya yöneltilmiş olması yeterlidir. Cayma bildiriminin yapılabileceği Satıcı'ya ait iletişim bilgileri aşağıdaki gibidir:
+      
+      <br>Telefon: 0216 356 29 26
+      <br>Mail: info@byco.com.tr
+      
+      <br>Alıcı, cayma hakkını kullanmak istediğinde ürünü, bu süre içinde Satıcı'ya iade etmekle yükümlüdür. İade işlemi için gerekli koşullar ve prosedürler, Satıcı tarafından belirlenmiş olup, Alıcı bu koşulları yerine getirmekle yükümlüdür.
+      
+      Cayma hakkının kullanılması durumunda ürün bedeli, Alıcı tarafından Satıcı'ya iade edildikten sonra, Satıcı tarafından yasal mevzuat çerçevesinde ve Alıcı'nın tercihine bağlı olarak iade edilir.
+      
+      Yukarıda belirtilen metin, Satıcı'nın sorumluluklarını ve Alıcı'nın cayma hakkını daha ayrıntılı bir şekilde açıklamaktadır. Her iki taraf için de netlik sağlamak amacıyla bu düzenlemelerin Sözleşme'nin her aşamasında göz önünde bulundurulması önemlidir.
+      <br>Açık Adres: Küçükbakkalköy Mahallesi Koca Sinan Cad. Denizatı Apt. No:8/10A Ataşehir İstanbul
+      <br>Telefon: 0216 356 29 26
+      <br>E-posta: info@byco.com.tr
+      <br>Cayma hakkının kullanıldığına ilişkin bildirimin Satıcı'ya ulaşmasına müteakip tüketici Alıcı bilgilendirilecektir.
+      Satıcı, tüketici Alıcı'nın cayma hakkını kullandığına ilişkin bildirimin kendisine ulaştığı tarihten itibaren 14 (on dört) gün içerisinde, varsa malın tüketici Alıcı'ya teslim masrafları da dahil olmak üzere tüketici Alıcı'nın ilgili mal veya hizmete ilişkin Satıcı'ya yaptığı tüm ödemeleri, satın alırken kullanılan ödeme aracına uygun bir şekilde ve tüketiciye herhangi bir masraf veya yükümlülük getirmeksizin tek seferde, tüketici Alıcı'ya iade edecektir.
+      Tüketici Alıcı'nın cayma hakkını kullanması halinde Satıcı'nın öngördüğü ürünü iade alacak olan kargo şirketi Şirket'in anlaşmalı olduğu Yurtiçi Kargo. Cayma hakkının kullanılması halinde burada belirtilen kargo şirketi aracılığıyla malın geri gönderilmesi durumunda tüketici Alıcı iadeye ilişkin masraflardan sorumlu tutulmaz. Tüketici Alıcı'nın iade edeceği malı işbu Sözleşme'de belirtilen Satıcı'nın anlaşmalı kargo şirketi dışında bir kargo şirketi ile göndermesi halinde, iade kargo masrafları ve malın kargo sürecinde uğrayacağı hasardan Satıcı sorumlu değildir. İade için anlaşmalı olunan kargo firmasının tüketici Alıcı'nın bulunduğu yerde şubesinin olmaması durumunda Satıcı, ilave hiçbir masraf talep etmeksizin iade edilmek istenen malın tüketiciden alınmasını sağlamakla yükümlüdür.
+      
+      <h4>TÜKETİCİ ALICI'NIN CAYMA HAKKI VE İADE PROSEDÜRÜ</h4>
+      
+       <h5>TÜKETİCİ ALICI'NIN CAYMA HAKKI:</h5>
+      
+      Tüketici Alıcı, hizmet ifasına ilişkin sözleşmelerde sözleşmenin kurulduğu günden; mal satışına ilişkin mesafeli sözleşmelerde, malı teslim aldığı tarihten itibaren 14 (on dört) gün içerisinde herhangi bir gerekçe göstermeksizin ve cezai şart ödemeksizin sözleşmeden cayma hakkına sahiptir.
+      
+      Cayma hakkının kullanıldığına dair bildirimin bu süre içinde Satıcı'ya yazılı olarak veya kalıcı veri saklayıcısı ile ulaştırılması yeterlidir.
+      
+      <h5>CAYMA HAKKININ KULLANIM ŞARTLARI:</h5>
+      
+      Tüketici Alıcı, cayma süresi içinde malı, işleyişine, teknik özelliklerine ve kullanım talimatlarına uygun bir şekilde kullanmalıdır. Aksi halde malda meydana gelen değişiklik ve bozulmalardan sorumludur.
+      
+      Tüketici Alıcı'nın cayma hakkını kullanabilmesi için, malı Satıcı'ya geri göndermesi gerekmektedir. İadeye konu mal ile birlikte malın faturası, kutusu, ambalajı, varsa standart aksesuarları ve hediye edilen diğer ürünlerin eksiksiz ve hasarsız olarak Satıcı'ya iade edilmesi gerekmektedir.
+      
+      <h5>İADE İŞLEMİ VE ÖDEME İADESİ:</h5>
+      Banka hesapları veya kredi kartları aracılığıyla ödenen sipariş bedellerinin iadesi ve tüketici Alıcı'nın hesaplarına yansıması tamamen banka işlem süreci ile ilgili olduğundan, olası gecikmeler için Satıcı'nın müdahalede bulunması mümkün değildir.
+      Tüketici Alıcı, malın iadesi sonrasında Satıcı tarafından yasal mevzuat çerçevesinde ve Alıcı'nın tercihine bağlı olarak iade edilen ürün bedelini alır.
+      
+      <h5>CAYMA HAKKININ KULLANILAMAYACAĞI DURUMLAR:</h5>
+      
+      Mesafeli Satış Yönetmeliği'nin 15. Maddesi uyarınca, aşağıdaki durumlarda tüketici Alıcı cayma hakkını kullanamaz:
+      
+      <br>(a) Finansal piyasalardaki dalgalanmalara bağlı olarak değişen ve Satıcı veya sağlayıcının kontrolünde olmayan mal veya hizmetler.
+      <br>(b) Tüketicinin istekleri veya kişisel ihtiyaçları doğrultusunda hazırlanan mallar.
+      <br>(c) Çabuk bozulabilen veya son kullanma tarihi geçebilecek mallar.
+      <br>(ç) Sağlık ve hijyen açısından uygun olmayan malların teslimi.
+      <br>(d) Başka ürünlerle karışan ve doğası gereği ayrıştırılması mümkün olmayan mallar.
+      <br>(e) Ambalajı, bantı, mührü, paketi gibi koruyucu unsurları açılmış olan kitap, dijital içerik ve bilgisayar sarf malzemeleri.
+      <br>(f) Gazete ve dergi gibi süreli yayınlar.
+      <br>(g) Belirli bir tarihte veya dönemde yapılan konaklama, eşya taşıma, araba kiralama, yiyecek-içecek tedariki ve eğlence veya dinlenme amacıyla yapılan boş zamanın değerlendirilmesi.
+      <br>(ğ) Elektronik ortamda anında ifa edilen hizmetler veya tüketiciye anında teslim edilen gayri maddi mallar.
+      <br>(h) Tüketici onayı ile ifasına başlanan hizmetler.
+      <h5>ŞİKAYET VE İTİRAZ PROSEDÜRÜ:</h5>
+      İşbu Sözleşme'den dolayı tüketici Alıcı'nın her türlü şikayet ve itirazları, Ticaret Bakanlığı tarafından her yıl Aralık ayında belirlenen parasal sınırlara göre Alıcı'nın yerleşim yerinin bulunduğu veya tüketici işleminin yapıldığı yerdeki Tüketici Sorunları Hakem Heyeti'ne veya Tüketici Mahkemesi'ne yapılabilir.
+      
+      
+      
+      
+      
+      
+      
+
+  </div>
+</div>
 
 <!-- footer start -->
 <app-footer-two></app-footer-two>

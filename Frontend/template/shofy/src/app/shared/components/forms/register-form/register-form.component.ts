@@ -16,8 +16,11 @@ export class RegisterFormComponent {
     this.isShowPass = !this.isShowPass;
   }
 
+  isShowTypeMessage = false;
+
   public registerForm!: FormGroup;
   public formSubmitted = false;
+  public userType = "null";
 
   constructor(private toastrService: ToastrService, private router: Router) { }
 
@@ -33,9 +36,10 @@ export class RegisterFormComponent {
     })
   }
 
-  kaydol(name:string,surname:string,email:string, tel:string, password:string, type:string, vkno:string){
-    if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6){
-        console.log(name +" " + surname + " " +email + " "+password)
+  kaydol(name:string,surname:string,email:string, tel:string, password:string, vkno:string){
+    if(this.userType!="null") console.log("null");
+    if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"){
+        console.log(name +" " + surname + " " +email + " "+password+"  tip:"+this.userType)
         fetch(`https://bycobackend.online:5001/api/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
@@ -54,7 +58,7 @@ export class RegisterFormComponent {
                 email: email, 
                 password: password, 
                 telefon: tel,
-                tip: type, 
+                tip: this.userType, 
                 vergi_no_kimlik_no: vkno
               }
             ), 
@@ -67,6 +71,17 @@ export class RegisterFormComponent {
           }
         );
     }
+    else if(this.userType!="null") this.isShowTypeMessage=true;
+  }
+
+  updateAccountType(type: 'individual' | 'corporate') {
+    if (type === 'individual') {
+      this.userType = "bireysel";
+      console.log(this.userType);
+    } else {
+      this.userType = "kurumsal";
+      console.log(this.userType);
+    }
   }
 
   gec(){
@@ -75,7 +90,11 @@ export class RegisterFormComponent {
 
   onSubmit() {
     this.formSubmitted = true;
-    if (this.registerForm.valid) {
+    if(this.userType!="null"){
+      this.isShowTypeMessage = true;
+
+    }
+    else if (this.registerForm.valid) {
       console.log('register-form-value', this.registerForm.value);
       this.toastrService.success(`Message sent successfully`);
 
@@ -90,6 +109,5 @@ export class RegisterFormComponent {
   get email() { return this.registerForm.get('email') }
   get tel() {return this.registerForm.get('tel')}
   get password() { return this.registerForm.get('password') }
-  get type() { return this.registerForm.get('type') }
   get vkno() { return this.registerForm.get('vkno') }
 }
