@@ -244,26 +244,26 @@ export class CheckoutComponent {
   odemeYap() {
 
     try {
-      
-      let cardholderElement = document.querySelector("#cardholder-name") as HTMLInputElement;
-      if (cardholderElement) {
-        console.log("cardholder-name : " + cardholderElement.value);
+
+      const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
+      if (cardNameInput) {
+        console.log("cardholder-name : " + cardNameInput.value);
       }
       else {
         console.error("cardholder-name element not found");
       }
 
-      let ccnElement = document.querySelector("#ccn") as HTMLInputElement;
-      if (ccnElement) {
-        console.log("ccn : " + ccnElement.value);
+      const cardNumber = document.getElementById("card-number") as HTMLInputElement;
+      if (cardNumber) {
+        console.log("ccn : " + cardNumber.value);
       }
       else {
         console.error("ccn element not found");
       }
 
-      let expiryElement = document.querySelector("#expiry-date") as HTMLInputElement;
-      if (expiryElement) {
-        console.log("expiry-date : " + expiryElement.value);
+      const validityInput = document.getElementById("validity-input") as HTMLInputElement;
+      if (validityInput) {
+        console.log("expiry-date : " + validityInput.value);
       }
       else {
         console.error("expiry-date element not found");
@@ -277,7 +277,7 @@ export class CheckoutComponent {
         console.error("cvv element not found");
       }
 
-      let adresElement = document.querySelector("#address") as HTMLInputElement;
+      let adresElement = document.querySelector("#billing-address") as HTMLInputElement;
       if (adresElement) {
         console.log("address : " + adresElement.value);
       }
@@ -287,7 +287,7 @@ export class CheckoutComponent {
 
       let objSehirler = document.querySelector("#select") as HTMLSelectElement;
       if (objSehirler) {
-        console.log("select : " + objSehirler[objSehirler.selectedIndex].textContent );
+        console.log("select : " + objSehirler[objSehirler.selectedIndex].textContent);
       }
       else {
         console.error("select element not found");
@@ -300,7 +300,7 @@ export class CheckoutComponent {
       else {
         console.error("selectstate element not found");
       }
-      
+
       let zipElement = document.querySelector("#zip") as HTMLInputElement;
       if (zipElement) {
         console.log("zip : " + zipElement.value);
@@ -334,97 +334,206 @@ export class CheckoutComponent {
     this.togglePaymentModal();
 
     /*
-    var x = new Card({
-      form: 'form',
-      container: '.card',
-      formSelectors: {
-        numberInput: 'input[name=number]',
-        expiryInput: 'input[name=expiry]',
-        cvcInput: 'input[name=cvv]',
-        nameInput: 'input[name=name]'
-      },
-    
-      width: 390, // optional — default 350px
-      formatting: true,
-    
-      placeholders: {
-        number: '•••• •••• •••• ••••',
-        name: 'Full Name',
-        expiry: '••/••',
-        cvc: '•••'
-      }
-    })
-    */
+    try {
+      const cardNumber = document.getElementById("card-number") as HTMLInputElement;
+      const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
+      const validityInput = document.getElementById("validity-input") as HTMLInputElement;
+      const cvvInput = document.getElementById("cvv") as HTMLInputElement;
+
+      //Reflip card
+      document.addEventListener("click", () => {
+        
+      });
+
+      window.onload = () => {
+        cvvInput.value = "";
+        validityInput.value = "";
+        cardNameInput.value = "";
+        cardNumber.value = "";
+      };
+    } catch (error) {
+      console.error("Err");
+    }
+      */
   }
 
-  checkccn() {
+  onNumberChange() {
+    const cardNumber = document.getElementById("card-number") as HTMLInputElement;
+    const cardNumberDisplay = document.querySelectorAll(".card-number-display");
+    let currentSpanIndex = 0;
 
-    let ccnElement = document.querySelector("#ccn") as HTMLInputElement;
-    if (ccnElement) {
-      console.error("ccn element found");
-      var ccn = ccnElement.value;
-      if (ccn.length >= 16) {
-        ccnElement.value = ccn.substring(0, 4) + " " + ccn.substring(4, 8) + " " + ccn.substring(8, 12) + " " + ccn.substring(12, 16);
+    const inputNumber = cardNumber.value.replace(/\D/g, "");
+    cardNumber.value = cardNumber.value.slice(0, 16).replace(/\D/g, "");
+
+    for (let i = 0; i < cardNumberDisplay.length; i++) {
+      if (i < inputNumber.length) {
+        cardNumberDisplay[i].textContent = inputNumber[i];
       } else {
-        ccnElement.value = "";
+        cardNumberDisplay[i].textContent = "_";
       }
     }
-    else {
-      console.error("ccn element not found");
+
+    if (inputNumber.length <= cardNumberDisplay.length) {
+      currentSpanIndex = inputNumber.length;
+    } else {
+      currentSpanIndex = cardNumberDisplay.length;
     }
   }
 
-  checkexpiry() {
-    let expiryElement = document.querySelector("#expiry-date") as HTMLInputElement;
-    if (expiryElement) {
-      console.error("expiry element found");
-      var expiry = expiryElement.value;
-      if (expiry.length >= 5) {
-        expiryElement.value = expiry.substring(0, 2) + "/" + expiry.substring(2, 4);
-        if (parseInt(expiryElement.value.substring(0, 2)) > 12 
-        || parseInt(expiryElement.value.substring(0, 2)) < 1){
-          expiryElement.value = "12" + "/" + expiry.substring(2, 4);
+  onCardNameChange() {
+    const cardHolderName = document.getElementById("card-holder-name") as HTMLInputElement;
+    const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
+    cardHolderName.innerText = cardNameInput.value;
+
+    if (cardNameInput.value.length < 1) {
+      cardHolderName.innerText = "Your Name Here";
+    } else if (cardNameInput.value.length > 30) {
+      cardNameInput.value = cardNameInput.value.slice(0, 30);
+    } else {
+      cardHolderName.innerText = cardNameInput.value;
+    }
+  }
+
+  validateExpiryDate() {
+    const displayValidity = document.getElementById("validity") as HTMLInputElement;
+    const validityInput = document.getElementById("validity-input") as HTMLInputElement;
+
+    const inputString = validityInput.value;
+    let formattedString = "";
+
+    if (inputString.length < 1 || inputString.length > 5) {
+      formattedString = "";
+      displayValidity.innerText = formattedString;
+      validityInput.value = formattedString;
+    }
+    //const parts = inputString.split("-");
+    //const year = parts[0].slice(2);
+    //const month = parts[1];
+
+    formattedString = inputString;
+    validityInput.value = formattedString;
+    displayValidity.innerText = formattedString;
+
+    if (inputString.length == 3 && inputString[2] != "/") {
+      formattedString = inputString.slice(0, 2) + "/" + inputString.slice(2, 3);
+    } else if (inputString.length == 3 && inputString[2] == "/") { 
+      formattedString = inputString.slice(0, 2);
+    } else if (inputString.length > 3) {
+      formattedString = inputString.slice(0, 2) + "/" + inputString.slice(3 , 5);
+    }
+
+    if (parseInt(inputString.slice(0, 2)) > 12 || parseInt(inputString.slice(0, 2)) < 0) {
+      formattedString = "0" + inputString.slice(0, 1) + "/" + "25";
+    }
+    validityInput.value = formattedString;
+    displayValidity.innerText = formattedString;
+  }
+
+  onCVVChange() {
+    const cvvInput = document.getElementById("cvv") as HTMLInputElement;
+    const cvvDisplay = document.getElementById("cvv-display") as HTMLInputElement;
+    cvvDisplay.innerText = cvvInput.value;
+
+    const userInput = cvvInput.value;
+    const sanitizedInput = userInput.slice(0, 4);
+    const numericInput = sanitizedInput.replace(/\D/g, "");
+    cvvInput.value = numericInput;
+    cvvDisplay.innerText = numericInput;
+  }
+
+  onCVVclick() {
+    document.getElementById("card")!.style.transform = "rotateY(180deg)";
+  }
+
+  onCVVnotfocused() {
+    if (document.activeElement!.id != "cvv") {
+      document.getElementById("card")!.style.transform = "rotateY(0deg)";
+    }
+  }
+
+  onAddressChange() {
+    const addressInput = document.getElementById("billing-address") as HTMLInputElement;
+    addressInput.innerText = addressInput.value;
+
+    if (addressInput.value.length < 1) {
+      addressInput.innerText = "Your Address Here";
+    } else if (addressInput.value.length > 50) {
+      addressInput.value = addressInput.value.slice(0, 50);
+    } else {
+      addressInput.innerText = addressInput.value;
+    }
+  }
+
+
+  /*
+    checkccn() {
+  
+      let ccnElement = document.querySelector("#ccn") as HTMLInputElement;
+      if (ccnElement) {
+        console.error("ccn element found");
+        var ccn = ccnElement.value;
+        if (ccn.length >= 16) {
+          ccnElement.value = ccn.substring(0, 4) + " " + ccn.substring(4, 8) + " " + ccn.substring(8, 12) + " " + ccn.substring(12, 16);
+        } else {
+          ccnElement.value = "";
         }
-      } else {
-        expiryElement.value = "";
+      }
+      else {
+        console.error("ccn element not found");
       }
     }
-    else {
-      console.error("expiry element not found");
-    }
-  }
-
-  checkcvc() {
-    let cvcElement = document.querySelector("#cvv") as HTMLInputElement;
-    if (cvcElement) {
-      console.error("cvc element found");
-      var cvc = cvcElement.value;
-      if (cvc.length >= 3) {
-        cvcElement.value = cvc.substring(0, 3);
-      } else {
-        cvcElement.value = "";
+  
+    checkexpiry() {
+      let expiryElement = document.querySelector("#expiry-date") as HTMLInputElement;
+      if (expiryElement) {
+        console.error("expiry element found");
+        var expiry = expiryElement.value;
+        if (expiry.length >= 5) {
+          expiryElement.value = expiry.substring(0, 2) + "/" + expiry.substring(2, 4);
+          if (parseInt(expiryElement.value.substring(0, 2)) > 12
+            || parseInt(expiryElement.value.substring(0, 2)) < 1) {
+            expiryElement.value = "12" + "/" + expiry.substring(2, 4);
+          }
+        } else {
+          expiryElement.value = "";
+        }
+      }
+      else {
+        console.error("expiry element not found");
       }
     }
-    else {
-      console.error("cvc element not found");
-    }
-  }
-
-  checkzip() {
-    let zipElement = document.querySelector("#zip") as HTMLInputElement;
-    if (zipElement) {
-      console.error("zip element found");
-      var zip = zipElement.value;
-      if (zip.length >= 5) {
-        zipElement.value = zip.substring(0, 5);
-      } else {
-        zipElement.value = "";
+  
+    checkcvc() {
+      let cvcElement = document.querySelector("#cvv") as HTMLInputElement;
+      if (cvcElement) {
+        console.error("cvc element found");
+        var cvc = cvcElement.value;
+        if (cvc.length >= 3) {
+          cvcElement.value = cvc.substring(0, 3);
+        } else {
+          cvcElement.value = "";
+        }
+      }
+      else {
+        console.error("cvc element not found");
       }
     }
-    else {
-      console.error("zip element not found");
+  */
+    checkzip() {
+      let zipElement = document.querySelector("#zip") as HTMLInputElement;
+      if (zipElement) {
+        var zip = zipElement.value;
+        if (zip.length >= 5) {
+          zipElement.value = zip.substring(0, 5);
+        } else {
+          zipElement.value = zipElement.value;
+        }
+      }
+      else {
+        console.error("zip element not found");
+      }
     }
-  }
+    
 
   // Define fnIlceler first
   fnIlceler(strSehir_ID: number) {

@@ -281,78 +281,102 @@
 </main>
 
 <div class="modal" *ngIf="showPaymentModal">
-  <div class="payment-modal-content">
-    <span class="close" (click)="togglePaymentModal()">&times;</span>
-    <h1>Ödeme Bilgileri</h1>
-
-    <!--
-    <form action="/submit-payment" method="POST">
-
-      <div class="container-fluid grid">
-
-        <div class="row pull-center">
-          <div class="col-md-4">
-
-            <div class="well">
-
-              <div class="row card">
-              </div>
-
-              <br />
-
-              <div class="row-fluid">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label>Credit Card Number </label>
-                    <input type="text" name="number" class="form-control" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Expiration</label>
-
-                    <input type="text" placeholder="MM/YY" name="expiry" class="form-control" />
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="row-fluid">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" class="form-control" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-
-                    <label>CVV </label>
-
-                    <input type="text" name="cvv" class="form-control" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row ">
-
-                <div class="col-md-12 text-right">
-                  <button type="button" class="btn btn-success">Submit</button>
-                  <button type="button" class="btn btn-info">Clear</button>
-                </div>
-
-              </div>
-
+    <div class="wrapper">
+      <span class="close" (click)="togglePaymentModal()">&times;</span>
+      <h1>Ödeme Bilgileri</h1>
+      <div class="credit-card" id="card">
+        <div class="card-front">
+          <div class="branding">
+            <img src="assets\img\byco\bycologo.png" class="chip-img" />
+            <img src="assets\img\byco\cisco.jpeg" class="visa-logo" />
+          </div>
+          <div class="card-number">
+            <div>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+            </div>
+            <div>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+            </div>
+            <div>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+            </div>
+            <div>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+              <span class="card-number-display">_</span>
+            </div>
+          </div>
+          <div class="details">
+            <div>
+              <span>Kart Sahibi</span>
+              <span id="card-holder-name">Adınız</span>
+            </div>
+            <div>
+              <span>SKT</span>
+              <span id="validity">06/28</span>
             </div>
           </div>
         </div>
+        <div class="card-back">
+          <div class="black-strip"></div>
+          <div class="white-strip">
+            <span>CVV</span>
+            <div id="cvv-display"></div>
+          </div>
+          <img src="assets\img\byco\bycologo.png" class="visa-logo" />
+        </div>
       </div>
-    </form>
-      -->
+      <form id="card-form" (click)="onCVVnotfocused()">
+        <label for="card-number">Kart Numarası</label>
+        <input type="number" id="card-number" placeholder="1234 1234 1234 1234" (input)="onNumberChange()" />
+        <label for="card-holder">Kart Sahibinin İsmi</label>
+        <input type="text" id="card-name-input" placeholder="Your Name" (input)="onCardNameChange()" />
+        <div class="date-cvv">
+          <div>
+            <label for="validity">Son Kullanma Tarihi</label>
+            <input type="text" id="validity-input" placeholder="AA/YY" (input)="validateExpiryDate()" />
+          </div>
+          <div>
+            <label for="cvv">CVV</label>
+            <input type="number" id="cvv" placeholder="***" (input)="onCVVChange()" (click)="onCVVclick()" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="billing-address">Fatura Adresi</label>
+          <input type="text" id="billing-address" name="billing-address" (input)="onAddressChange()" maxlength="100" required>
+        </div>
+        <div class="form-group">
+          <label for="select">Şehir</label>
+          <select id="select" name="select" (click)="fnSehirler()">
+            <option value="" disabled selected>Seçiniz</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="selectstate">İlçe</label>
+          <select id="selectstate" name="selectstate">
+            <option value="" disabled selected>Seçiniz</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="zip">ZIP/Posta Kodu</label>
+          <input type="number" id="zip" name="zip" pattern="\d{5}" maxlength="5" placeholder="34848" (input)="checkzip()" required>
+        </div>
+        <button type="submit" id="submit-payment-btn" (click)="odemeYap()">Ödemeyi Onayla</button>
+      </form>
+    </div>
 
 
-
+    <!--
     <form action="/submit-payment" method="POST">
       <div class="form-group">
         <label for="cardholder-name">Kart Sahibinin İsmi</label>
@@ -393,8 +417,9 @@
       </div>
       <button type="submit" id="submit-payment-btn" (click)="odemeYap()">Ödemeyi Onayla</button>
     </form>
+    -->
   </div>
-</div>
+
 
 <style>
   .modal {
@@ -438,6 +463,145 @@
 
   /* payment model styles */
 
+  .wrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 75%;
+    left: 50%;
+    background-color: #ffffff;
+    width: 500px;
+    padding: 3em;
+    border-radius: 1em;
+    perspective: 800px;
+  }
+
+  .credit-card {
+    position: relative;
+    width: 350px;
+    height: 220px;
+    margin: auto;
+    transform-style: preserve-3d;
+    transition: 0.3s;
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    background: linear-gradient(#33a4f8, #206df9);
+    border-radius: 1em;
+    backface-visibility: hidden;
+  }
+
+  .card-front {
+    padding: 2em 1em;
+  }
+
+  .branding {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .branding img {
+    width: 75px;
+    height: auto;
+  }
+
+  .card-back {
+    position: absolute;
+    transform: rotateY(180deg);
+  }
+
+  .card-number {
+    color: #ffffff;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    font-size: 2em;
+    margin-top: 2em;
+  }
+
+  .details {
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5em;
+    font-size: 1em;
+  }
+
+  .details span {
+    display: block;
+  }
+
+  .details #card-holder-name {
+    text-transform: uppercase;
+    font-size: large;
+  }
+
+  .card-back .black-strip {
+    position: relative;
+    background-color: #000000;
+    height: 50px;
+    top: 2em;
+  }
+
+  .card-back .white-strip {
+    top: 3em;
+    position: relative;
+    text-align: right;
+  }
+
+  .card-back .white-strip span {
+    margin-right: 1em;
+  }
+
+  .card-back .white-strip div {
+    height: 30px;
+    background-color: #ffffff;
+    margin-top: 0.5em;
+  }
+
+  .card-back .visa-logo {
+    position: absolute;
+    width: 100px;
+    margin-top: 4em;
+    right: 1em;
+  }
+
+  #card-form {
+    margin-top: 2em;
+  }
+
+  #card-form label,
+  input {
+    display: block;
+  }
+
+  #card-form label {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+  }
+
+  #card-form input {
+    width: 100%;
+    border: 1px solid #000000;
+    padding: 1em 0.5em;
+    border-radius: 0.5em;
+  }
+
+  #card-form input:not(:last-child) {
+    margin-bottom: 1em;
+  }
+
+  #card-form .date-cvv {
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+/*
   .payment-modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -451,20 +615,21 @@
   .container-fluid {
     margin-top: 15px;
   }
-
+*/
   .form-group {
     margin-bottom: 1rem;
     width: 100%;
     justify-content: center;
     justify-items: center;
   }
+    
 
-  #expiry-date,
+  /*#expiry-date,*/
   #select,
   #selectstate {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 4px;
     box-sizing: border-box;
     margin-top: 0px;
@@ -472,6 +637,7 @@
     resize: vertical;
   }
 
+  /*
   #expiry-date,
   #cvv,
   #zip {
@@ -479,6 +645,7 @@
     padding: 12px;
     margin: 10px;
   }
+    */
 
   #submit-payment-btn {
     background-color: #4CAF50;
@@ -493,6 +660,8 @@
   #submit-payment-btn:hover {
     opacity: 0.5;
   }
+
+
 </style>
 
 <div class="modal" *ngIf="showPolicyModal">
