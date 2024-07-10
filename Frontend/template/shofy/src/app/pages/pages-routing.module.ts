@@ -26,11 +26,13 @@ const routes: Routes = [
     component:BlogComponent,
     title:'Hakkımızda'
   },
+  /*
   {
     path:'blog-grid',
     component:BlogGridComponent,
     title:'Blog Grid Page'
   },
+  */
   {
     path:'hizmetler',
     component:BlogListComponent,
@@ -44,17 +46,17 @@ const routes: Routes = [
   {
     path:'privacy/:type',
     component:DynamicBlogDetailsComponent,
-    title:'Privacy Policy'
+    title:'Gizlilik Politikası'
   },
   {
     path:'coupons',
     component:CouponComponent,
-    title:'Coupon Page'
+    title:'Kupon Ekranı'
   },
   {
     path:'about',
     component:AboutComponent,
-    title:'About Page'
+    title:'Hakkımızda'
   },
   {
     path:'login',
@@ -74,17 +76,17 @@ const routes: Routes = [
   {
     path:'checkout',
     component:CheckoutComponent,
-    title:'Checkout Page'
+    title:'Ödeme Sayfası'
   },
   {
     path:'profile',
     component:ProfileComponent,
-    title:'Profile Page'
+    title:'Profil'
   },
   {
     path:'search',
     component:SearchComponent,
-    title:'Search Page'
+    title:'Arama Sayfası'
   },
 ];
 

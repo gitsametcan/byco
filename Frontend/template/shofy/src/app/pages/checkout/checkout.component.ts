@@ -40,12 +40,12 @@ export class CheckoutComponent {
 
   myObject = {
     user_id: "",
-    adsoyad: 'Süleyman Rıfkı',
-    email: 'byco@byco.com.tr',
-    vkno: '12345678910',
+    adsoyad: '',
+    email: '',
+    vkno: '',
     tip: '1',
-    telefon: '05555555555',
-    adres: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23',
+    telefon: '',
+    adres: '',
     discount: '00'
   };
 
