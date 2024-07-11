@@ -67,7 +67,7 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="email" name="mail" id="mail" placeholder="Eposta Adresiniz" value="{{myObject.email}}"
+                            <input type="email" name="mail" id="mail" placeholder="Mail Adresiniz" value="{{myObject.email}}"
                               [(ngModel)]="myObject.email" required>
                             <span>
                               <svg width="18" height="16" viewBox="0 0 18 16" fill="none"
@@ -267,7 +267,7 @@
                     </div>
                   </div> -->
                   <div class="tp-checkout-btn-wrapper">
-                    <button type="submit" class="tp-checkout-btn w-100" (click)="siparisGonder()">Sipariş Ver</button>
+                    <button type="submit" class="tp-checkout-btn w-100" (click)="siparisGonder()">Sepeti Onayla</button>
                   </div>
                 </div>
               </div>
@@ -321,9 +321,9 @@
               <span>Kart Sahibi</span>
               <span id="card-holder-name">Adınız</span>
             </div>
-            <div>
+            <div id="expirybox">
               <span>SKT</span>
-              <span id="validity">06/28</span>
+              <span id="displayvalidity">06/28</span>
             </div>
           </div>
         </div>
@@ -336,42 +336,43 @@
           <img src="assets\img\byco\bycologo.png" class="visa-logo" />
         </div>
       </div>
-      <form id="card-form" (click)="onCVVnotfocused()">
-        <label for="card-number">Kart Numarası</label>
-        <input type="number" id="card-number" placeholder="1234 1234 1234 1234" (input)="onNumberChange()" />
-        <label for="card-holder">Kart Sahibinin İsmi</label>
-        <input type="text" id="card-name-input" placeholder="Your Name" (input)="onCardNameChange()" />
+      <form id="card-form" [formGroup]="paymentForm" (click)="onCVVnotfocused()" (ngSubmit)="updatePaymentInfo()">
+        <label for="ccn">Kart Numarası</label>
+        <input type="number" id="ccn" name="ccn" formControlName="ccn" placeholder="1234 1234 1234 1234" value="{{myObject.ccn}}" (input)="onNumberChange()"/>
+        <label for="cardholder">Kart Sahibinin İsmi</label>
+        <input type="text" id="cardholder" name="cardholder" formControlName="cardholder" placeholder="Kart Sahibinin Adı Soyadı" value="{{myObject.cardholder}}" (input)="onCardNameChange()"/>
         <div class="date-cvv">
           <div>
             <label for="validity">Son Kullanma Tarihi</label>
-            <input type="text" id="validity-input" placeholder="AA/YY" (input)="validateExpiryDate()" />
+            <input type="text" id="validity" name="validity" formControlName="validity" placeholder="AA/YY" maxlength="5" value="{{myObject.validity}}" (input)="validateExpiryDate()"/>
           </div>
           <div>
             <label for="cvv">CVV</label>
-            <input type="number" id="cvv" placeholder="***" (input)="onCVVChange()" (click)="onCVVclick()" />
+            <input type="number" id="cvv" name="cvv" formControlName="cvv" placeholder="***" value="{{myObject.cvv}}" (click)="onCVVclick()" (input)="onCVVChange()"/>
           </div>
         </div>
         <div class="form-group">
-          <label for="billing-address">Fatura Adresi</label>
-          <input type="text" id="billing-address" name="billing-address" (input)="onAddressChange()" maxlength="100" required>
+          <label for="billingadress">Fatura Adresi</label>
+          <input type="text" id="billingadress" name="billingaddress" formControlName="billingadress" value="{{myObject.billingadress}}" maxlength="100" required>
         </div>
         <div class="form-group">
           <label for="select">Şehir</label>
-          <select id="select" name="select" (click)="fnSehirler()">
+          <select id="select" name="select" formControlName="select" value="{{myObject.select}}" (click)="fnSehirler()" >
             <option value="" disabled selected>Seçiniz</option>
           </select>
         </div>
         <div class="form-group">
           <label for="selectstate">İlçe</label>
-          <select id="selectstate" name="selectstate">
+          <select id="selectstate" name="selectstate" formControlName="selectstate" value="{{myObject.selectstate}}">
             <option value="" disabled selected>Seçiniz</option>
           </select>
         </div>
         <div class="form-group">
           <label for="zip">ZIP/Posta Kodu</label>
-          <input type="number" id="zip" name="zip" pattern="\d{5}" maxlength="5" placeholder="34848" (input)="checkzip()" required>
+          <input type="number" id="zip" name="zip" formControlName="zip" pattern="\d{5}" maxlength="5" placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
         </div>
-        <button type="submit" id="submit-payment-btn" (click)="odemeYap()">Ödemeyi Onayla</button>
+        <button type="submit" id="submit-payment-btn" name="submit-payment-btn" 
+        (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">Ödemeyi Onayla</button>
       </form>
     </div>
 
@@ -396,8 +397,8 @@
         <input type="text" id="cvv" name="cvv" pattern="\d{3,4}" maxlength="4" placeholder="123" required>
       </div>
       <div class="form-group">
-        <label for="billing-address">Fatura Adresi</label>
-        <input type="text" id="billing-address" name="billing-address" maxlength="100" required>
+        <label for="billingadress">Fatura Adresi</label>
+        <input type="text" id="billingadress" name="billingadress" maxlength="100" required>
       </div>
       <div class="form-group">
         <label for="select">Şehir</label>

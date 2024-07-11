@@ -36,6 +36,7 @@ export class CheckoutComponent {
   userid: number = -1;
   discount: number = 0;
   objCities: ICity[] = [];
+  paymentInfoUpdated: boolean = false;
 
 
   myObject = {
@@ -46,7 +47,15 @@ export class CheckoutComponent {
     tip: '1',
     telefon: '',
     adres: '',
-    discount: '00'
+    discount: '00',
+    ccn: '',
+    cardholder: '',
+    validity: '',
+    cvv: '',
+    billingadress: '',
+    select: '',
+    selectstate: '',
+    zip: '',
   };
 
   constructor(public cartService: CartService, private toastrService: ToastrService) { }
@@ -96,9 +105,9 @@ export class CheckoutComponent {
   changeHandler(selectedOption: { value: string; text: string }) {
     console.log('Selected option:', selectedOption);
 
-    // Update the 'country' form control with the selected option's value
-    this.checkoutForm.patchValue({
-      state: selectedOption.value
+    // Update the 'city' form control with the selected option's value
+    this.paymentForm.patchValue({
+      select: selectedOption.value,
     });
   }
 
@@ -122,6 +131,9 @@ export class CheckoutComponent {
   public checkoutForm!: FormGroup;
   public formSubmitted = false;
 
+  public paymentForm!: FormGroup;
+  public paymentFormSubmitted = false;
+
   ngOnInit() {
     this.checkoutForm = new FormGroup({
       firstName: new FormControl(null),
@@ -132,13 +144,30 @@ export class CheckoutComponent {
     })
     this.urunler = this.cartService.getCartProducts();
     this.getIdFromSession();
+
     this.objCities = cities_data;
+    this.paymentForm = new FormGroup({
+      ccn: new FormControl(null),
+      cardholder: new FormControl(null),
+      validity: new FormControl(null),
+      cvv: new FormControl(null),
+      billingadress: new FormControl(null),
+      select: new FormControl(null),
+      selectstate: new FormControl(null),
+      zip: new FormControl(null),
+    })
   }
 
   updateInfo() {
     console.log(this.myObject);
 
     this.infoUpdated = true;
+  }
+
+  updatePaymentInfo() {
+    console.log(this.myObject);
+
+    this.paymentInfoUpdated = true;
   }
 
   checkoutDoldur() {
@@ -241,10 +270,35 @@ export class CheckoutComponent {
       })
   }
 
-  odemeYap() {
+  odemeYap(ccn: number, cardholder: string, validity: string, cvv: number, billingadress: string, select: string, selectstate: string, zip: number) {
+
+    if (ccn == null || cardholder == null || validity == null || cvv == null || billingadress == null || select == null || selectstate == null || zip == null) {
+      this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
+      return;
+    }
+
+    console.log("adsoyad : " + this.myObject.adsoyad);
+    console.log("email : " + this.myObject.email);
+    console.log("vkno : " + this.myObject.vkno);
+    console.log("tip : " + this.myObject.tip);
+    console.log("telefon : " + this.myObject.telefon); 
+    console.log("adres : " + this.myObject.adres);
+    console.log("discount : " + this.myObject.discount);
+    console.log("ccn : " + ccn);
+    console.log("cardholder : " + cardholder);
+    console.log("validity : " + validity);
+    console.log("cvv : " + cvv);
+    console.log("billingadress : " + billingadress);
+    console.log("select : " + select);
+    console.log("selectstate : " + selectstate);
+    console.log("zip : " + zip);
+
+    console.log(this.cartService.getCartProducts());
 
     try {
 
+
+      /*
       const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
       if (cardNameInput) {
         console.log("cardholder-name : " + cardNameInput.value);
@@ -261,9 +315,9 @@ export class CheckoutComponent {
         console.error("ccn element not found");
       }
 
-      const validityInput = document.getElementById("validity-input") as HTMLInputElement;
-      if (validityInput) {
-        console.log("expiry-date : " + validityInput.value);
+      const validity = document.getElementById("validity-input") as HTMLInputElement;
+      if (validity) {
+        console.log("expiry-date : " + validity.value);
       }
       else {
         console.error("expiry-date element not found");
@@ -287,10 +341,10 @@ export class CheckoutComponent {
 
       let objSehirler = document.querySelector("#select") as HTMLSelectElement;
       if (objSehirler) {
-        console.log("select : " + objSehirler[objSehirler.selectedIndex].textContent);
+        console.log("selectcity : " + objSehirler[objSehirler.selectedIndex].textContent);
       }
       else {
-        console.error("select element not found");
+        console.error("selectcity element not found");
       }
 
       let objIlceler = document.querySelector("#selectstate") as HTMLSelectElement;
@@ -308,6 +362,41 @@ export class CheckoutComponent {
       else {
         console.error("zip element not found");
       }
+
+      let phoneElement = document.querySelector("#tel") as HTMLInputElement;
+      if (phoneElement) {
+        console.log("tel : " + phoneElement.value);
+      }
+      else {
+        console.error("phone element not found");
+      }
+
+      let emailElement = document.querySelector("#mail") as HTMLInputElement;
+      if (emailElement) {
+        console.log("email : " + emailElement.value);
+      }
+      else {
+        console.error("email element not found");
+      }
+
+      let nameElement = document.querySelector("#adsoyad") as HTMLInputElement;
+      if (nameElement) {
+        console.log("name : " + nameElement.value);
+      }
+      else {
+        console.error("name element not found");
+      }
+
+      let vkno = document.querySelector("#vkno") as HTMLInputElement;
+      if (vkno) {
+        console.log("vkno : " + vkno.value);
+      }
+      else {
+        console.error("vkno element not found");
+      }
+      */
+
+
 
     } catch (error) {
       console.error("An error occurred in odemeYap:", error);
@@ -331,13 +420,18 @@ export class CheckoutComponent {
   }
 
   siparisGonder() {
-    this.togglePaymentModal();
+
+    if (this.isTermAccepted) {
+      this.togglePaymentModal();
+    } else {
+      this.toastrService.error('Lütfen ödeme koşullarını kabul edin.', 'Hata');
+    }
 
     /*
     try {
       const cardNumber = document.getElementById("card-number") as HTMLInputElement;
       const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
-      const validityInput = document.getElementById("validity-input") as HTMLInputElement;
+      const validity = document.getElementById("validit y-input") as HTMLInputElement;
       const cvvInput = document.getElementById("cvv") as HTMLInputElement;
 
       //Reflip card
@@ -347,7 +441,7 @@ export class CheckoutComponent {
 
       window.onload = () => {
         cvvInput.value = "";
-        validityInput.value = "";
+        validity.value = "";
         cardNameInput.value = "";
         cardNumber.value = "";
       };
@@ -358,7 +452,7 @@ export class CheckoutComponent {
   }
 
   onNumberChange() {
-    const cardNumber = document.getElementById("card-number") as HTMLInputElement;
+    const cardNumber = document.getElementById("ccn") as HTMLInputElement;
     const cardNumberDisplay = document.querySelectorAll(".card-number-display");
     let currentSpanIndex = 0;
 
@@ -382,7 +476,7 @@ export class CheckoutComponent {
 
   onCardNameChange() {
     const cardHolderName = document.getElementById("card-holder-name") as HTMLInputElement;
-    const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
+    const cardNameInput = document.getElementById("cardholder") as HTMLInputElement;
     cardHolderName.innerText = cardNameInput.value;
 
     if (cardNameInput.value.length < 1) {
@@ -395,37 +489,37 @@ export class CheckoutComponent {
   }
 
   validateExpiryDate() {
-    const displayValidity = document.getElementById("validity") as HTMLInputElement;
-    const validityInput = document.getElementById("validity-input") as HTMLInputElement;
+    const displayValidity = document.getElementById("displayvalidity") as HTMLInputElement;
+    const validity = document.getElementById("validity") as HTMLInputElement;
 
-    const inputString = validityInput.value;
+    const inputString = validity.value;
     let formattedString = "";
 
     if (inputString.length < 1 || inputString.length > 5) {
       formattedString = "";
       displayValidity.innerText = formattedString;
-      validityInput.value = formattedString;
+      validity.value = formattedString;
     }
     //const parts = inputString.split("-");
     //const year = parts[0].slice(2);
     //const month = parts[1];
 
     formattedString = inputString;
-    validityInput.value = formattedString;
+    validity.value = formattedString;
     displayValidity.innerText = formattedString;
 
     if (inputString.length == 3 && inputString[2] != "/") {
       formattedString = inputString.slice(0, 2) + "/" + inputString.slice(2, 3);
-    } else if (inputString.length == 3 && inputString[2] == "/") { 
+    } else if (inputString.length == 3 && inputString[2] == "/") {
       formattedString = inputString.slice(0, 2);
     } else if (inputString.length > 3) {
-      formattedString = inputString.slice(0, 2) + "/" + inputString.slice(3 , 5);
+      formattedString = inputString.slice(0, 2) + "/" + inputString.slice(3, 5);
     }
 
     if (parseInt(inputString.slice(0, 2)) > 12 || parseInt(inputString.slice(0, 2)) < 0) {
       formattedString = "0" + inputString.slice(0, 1) + "/" + "25";
     }
-    validityInput.value = formattedString;
+    validity.value = formattedString;
     displayValidity.innerText = formattedString;
   }
 
@@ -470,12 +564,11 @@ export class CheckoutComponent {
   
       let ccnElement = document.querySelector("#ccn") as HTMLInputElement;
       if (ccnElement) {
-        console.error("ccn element found");
         var ccn = ccnElement.value;
         if (ccn.length >= 16) {
           ccnElement.value = ccn.substring(0, 4) + " " + ccn.substring(4, 8) + " " + ccn.substring(8, 12) + " " + ccn.substring(12, 16);
         } else {
-          ccnElement.value = "";
+          //ccnElement.value = "";
         }
       }
       else {
@@ -484,9 +577,8 @@ export class CheckoutComponent {
     }
   
     checkexpiry() {
-      let expiryElement = document.querySelector("#expiry-date") as HTMLInputElement;
+      let expiryElement = document.querySelector("#validity") as HTMLInputElement;
       if (expiryElement) {
-        console.error("expiry element found");
         var expiry = expiryElement.value;
         if (expiry.length >= 5) {
           expiryElement.value = expiry.substring(0, 2) + "/" + expiry.substring(2, 4);
@@ -506,7 +598,6 @@ export class CheckoutComponent {
     checkcvc() {
       let cvcElement = document.querySelector("#cvv") as HTMLInputElement;
       if (cvcElement) {
-        console.error("cvc element found");
         var cvc = cvcElement.value;
         if (cvc.length >= 3) {
           cvcElement.value = cvc.substring(0, 3);
@@ -519,21 +610,21 @@ export class CheckoutComponent {
       }
     }
   */
-    checkzip() {
-      let zipElement = document.querySelector("#zip") as HTMLInputElement;
-      if (zipElement) {
-        var zip = zipElement.value;
-        if (zip.length >= 5) {
-          zipElement.value = zip.substring(0, 5);
-        } else {
-          zipElement.value = zipElement.value;
-        }
-      }
-      else {
-        console.error("zip element not found");
+  checkzip() {
+    let zipElement = document.querySelector("#zip") as HTMLInputElement;
+    if (zipElement) {
+      var zip = zipElement.value;
+      if (zip.length >= 5) {
+        zipElement.value = zip.substring(0, 5);
+      } else {
+        zipElement.value = zipElement.value;
       }
     }
-    
+    else {
+      console.error("zip element not found");
+    }
+  }
+
 
   // Define fnIlceler first
   fnIlceler(strSehir_ID: number) {
@@ -601,4 +692,14 @@ export class CheckoutComponent {
   get address() { return this.checkoutForm.get('address') }
   get phone() { return this.checkoutForm.get('phone') }
   get email() { return this.checkoutForm.get('email') }
+
+  get ccn() { return this.paymentForm.get('ccn') }
+  get cardholder() { return this.paymentForm.get('cardholder') }
+  get validity() { return this.paymentForm.get('validity') }
+  get cvv() { return this.paymentForm.get('cvv') }
+  get billingadress() { return this.paymentForm.get('billingadress') }
+  get select() { return this.paymentForm.get('select') }
+  get selectstate() { return this.paymentForm.get('selectstate') }
+  get zip() { return this.paymentForm.get('zip') }
+
 }
