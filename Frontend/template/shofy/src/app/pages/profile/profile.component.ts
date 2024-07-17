@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ export class ProfileComponent {
   benimUrl = "https://bycobackend.online:5001/api";
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private toastrService: ToastrService) { }
 
 
   public genderSelectOptions = [
@@ -304,5 +305,6 @@ export class ProfileComponent {
       console.error("Error: " + err);
     })
 
+    this.toastrService.success('Ürün başarıyla eklendi.', 'Başarılı');
   }
 }
