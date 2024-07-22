@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/shared/services/product.service';
   styleUrls: ['./status-filter.component.scss'],
 })
 export class StatusFilterComponent {
-  status: string[] = ['İndirimde', 'Stokta','Tükendi'];
+  status: string[] = ['İndirimde', 'Stokta', 'Tükendi'];
   activeQuery: string = '';
 
   constructor(
@@ -17,7 +17,7 @@ export class StatusFilterComponent {
     private router: Router,
     private viewScroller: ViewportScroller,
     public productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
@@ -26,8 +26,13 @@ export class StatusFilterComponent {
   }
 
   handleStatusRoute(status: string): void {
-    const newStatus = status.toLowerCase().split(' ').join('-');
+    let newStatus = status.toLowerCase().split(' ').join('-');
     // Define the query parameters as an object
+
+    if (this.activeQuery === newStatus) {
+      newStatus = '';
+    }
+
     const queryParams: Params = {
       status: newStatus,
     };
