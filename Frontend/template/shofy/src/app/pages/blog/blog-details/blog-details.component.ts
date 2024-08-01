@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import blogData from '@/data/blog-data';
 import Swiper from 'swiper';
-import { Navigation, Pagination,Scrollbar } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { ProductService } from '@/shared/services/product.service';
 import { IProduct } from '@/types/product-type';
 import projeler_data from '@/data/projeler-data';
@@ -16,68 +16,78 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./blog-details.component.scss']
 })
 export class BlogDetailsComponent {
-    benimUrl = "https://bycobackend.online:5001/api";
 
-    public popular_prd: IProduct[] = [];
-    public projeler:Iproje[] = [];
-    public projeDevam: Iproje[] = [];
-    public getParam = "";
-  
-    constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute) {
-      this.productService.products.subscribe((products) => {
-        this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
-      });
-    }
-    paramEqulizer(gelen:any):void{
-        this.getParam = gelen;
-        console.log(this.getParam);
-    }
-  
-  
-    ngOnInit(): void {
-        this.paramEqulizer(this.route.snapshot.paramMap.get('category'));
-      for (let i = 0; i < projeler_data.length; i++) {
-          if (projeler_data[i].aciklama === this.getParam) {
-              this.projeDevam.push(projeler_data[i]);
-          }
-        }
-      new Swiper('.tp-category-slider-active-2', {
-        slidesPerView: 5,
-        spaceBetween: 20,
-        loop: false,
-        modules: [Pagination, Navigation, Scrollbar],
-        pagination: {
-          el: '.tp-category-slider-dot',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.tp-category-slider-button-next',
-          prevEl: '.tp-category-slider-button-prev',
-        },
-        scrollbar: {
-          el: '.swiper-scrollbar',
-          draggable: true,
-          dragClass: 'tp-swiper-scrollbar-drag',
-          snapOnRelease: true,
-        },
-        breakpoints: {
-          '1200': {
-            slidesPerView: 5,
-          },
-          '992': {
-            slidesPerView: 3,
-          },
-          '768': {
-            slidesPerView: 2,
-          },
-          '576': {
-            slidesPerView: 2,
-          },
-          '0': {
-            slidesPerView: 1,
-          },
-        },
-      });
-    }
+  benimUrl = "https://bycobackend.online:5001/api";
 
+  public popular_prd: IProduct[] = [];
+  public projeler: Iproje[] = [];
+  public projeDevam: Iproje[] = [];
+  public getParam = "";
+
+  public swiper: any;
+
+  constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute) {
+    this.productService.products.subscribe((products) => {
+      this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
+    });
+  }
+  paramEqulizer(gelen: any): void {
+    this.getParam = gelen;
+    console.log(this.getParam);
+  }
+
+
+  ngOnInit(): void {
+    this.paramEqulizer(this.route.snapshot.paramMap.get('category'));
+    for (let i = 0; i < projeler_data.length; i++) {
+      if (projeler_data[i].aciklama === this.getParam) {
+        this.projeDevam.push(projeler_data[i]);
+      }
+    }
+    this.swiper = new Swiper('.tp-category-slider-active-2', {
+      slidesPerView: 5,
+      spaceBetween: 20,
+      loop: false,
+      modules: [Pagination, Navigation, Scrollbar],
+      pagination: {
+        el: '.tp-category-slider-dot',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.tp-category-slider-button-next',
+        prevEl: '.tp-category-slider-button-prev',
+      },
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+        dragClass: 'tp-swiper-scrollbar-drag',
+        snapOnRelease: true,
+      },
+      breakpoints: {
+        '1200': {
+          slidesPerView: 5,
+        },
+        '992': {
+          slidesPerView: 3,
+        },
+        '768': {
+          slidesPerView: 2,
+        },
+        '576': {
+          slidesPerView: 2,
+        },
+        '0': {
+          slidesPerView: 1,
+        },
+      },
+    });
+  }
+
+
+  goNext() {
+    this.swiper.slideNext();
+  }
+  goPrev() {
+    this.swiper.slidePrev();
+  }
 }

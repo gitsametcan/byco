@@ -81,6 +81,12 @@
        <div class="row">
           <div class="col-xl-12">
              <div class="tp-category-slider-2 p-relative">
+                  <div class="swiper-button-prev tp-swiper-button-nav" (click)="goPrev()">
+                     <i class="lnr lnr-arrow-left"></i>
+                  </div>
+                  <div class="swiper-button-next tp-swiper-button-nav" (click)="goNext()">
+                     <i class="lnr lnr-arrow-right"></i>
+                  </div>
                 <div class="tp-category-slider-active-2 swiper-container mb-50">
                    <div class="swiper-wrapper">
                       <div *ngFor="let item of projeDevam" class="tp-category-item-2 p-relative z-index-1 text-center swiper-slide" style="background-color: grey; display:flex; justify-content: center;">

@@ -9,6 +9,7 @@
 <!-- compare area start -->
 <section class="tp-compare-area pb-120">
   <div class="container">
+    <button (click)="goBack()" class="tp-back-btn">Geri Dön</button> <!-- Navigate Back Button -->
     <div *ngIf="compareService.getCompareProducts().length === 0" class="text-center pt-50">
       <h3>Karşılaştırılacak ürün bulunamadı</h3>
       <a routerLink="/shop" class="tp-cart-checkout-btn mt-20">Alışverişe devam et</a>

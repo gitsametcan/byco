@@ -50,9 +50,10 @@ export class ProductService {
   // Get max price
   public get maxPrice(): number {
     const max_price = all_products.reduce((max, product) => {
+      console.log('product.price', product.price);
       return product.price > max ? product.price : max;
     }, 0);
-    return 250
+    return 250;
   }
 // shop filterSelect
   public filterSelect = [
@@ -172,17 +173,12 @@ export class ProductService {
     this.sendRequest('Urun/GetAllResponse','GET')
     .then(response => {
         this.urunler = response;
-      console.log(response);
-      console.log("responsun" + this.urunler);
     })
     .catch(err => {
       console.error("Error: " + err);
     })
-    console.log("ürünler"+this.urunler);
 
     return this.urunler;
-
-
   }
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {

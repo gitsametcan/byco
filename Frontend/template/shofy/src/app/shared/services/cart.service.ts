@@ -28,10 +28,11 @@ export class CartService {
     if (payload.status === 'tükendi' || payload.quantity === 0) {
       this.toastrService.error(`Tükendi ${payload.title}`);
     }
+    
     else if (!isExist) {
       const newItem = {
         ...payload,
-        orderQuantity: 1,
+        orderQuantity: 1, //this.orderQuantity olursa doğru ekler
       };
       state.cart_products.push(newItem);
       this.toastrService.success(`${payload.title} sepete eklendi`);
@@ -40,6 +41,7 @@ export class CartService {
         if (item.id === payload.id) {
           if (typeof item.orderQuantity !== "undefined") {
             if (item.quantity >= item.orderQuantity + this.orderQuantity) {
+              console.log("item.quantity" + item.quantity + "item.orderQuantity" + item.orderQuantity + "this.orderQuantity" + this.orderQuantity); 
               item.orderQuantity =
                 this.orderQuantity !== 1
                   ? this.orderQuantity + item.orderQuantity

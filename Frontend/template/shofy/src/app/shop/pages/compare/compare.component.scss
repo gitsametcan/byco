@@ -1,0 +1,14 @@
+.tp-back-btn {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Button padding */
+    margin-bottom: 20px; /* Space below the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  .tp-back-btn:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+  }

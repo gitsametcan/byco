@@ -111,7 +111,7 @@
         <button (click)="urunuSil(product)" class="tp-product-details-add-to-cart-btn w-100">Ürünü Sil</button>
      </div>
     </div>
-    <a *ngIf="myObject.tip!=='0'" [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Hemen Al</a>
+    <a *ngIf="myObject.tip!=='0'" (click)="cartService.addCartProduct(product)" [routerLink]="['/pages/checkout']" class="tp-product-details-buy-now-btn w-100 text-center">Hemen Al</a>
     <!-- <a *ngIf="myObject.tip!=='0'" [routerLink]="['/anasayfa/teklif/', product.id]" class="tp-product-details-buy-now-btn w-100 text-center" style="margin-top: 10px; background-color: rgb(27, 132, 177);">Çoklu alımlar için özel teklif alabilirsiniz</a> -->
  </div>
 

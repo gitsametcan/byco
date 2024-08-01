@@ -66,6 +66,14 @@ export class ShopAreaComponent {
       this.pageNo = params['page'] ? params['page'] : this.pageNo;
       this.sortBy = params['sortBy'] ? params['sortBy'] : 'asc';
 
+      //console.log('products', this.productService.urunler);
+
+      this.maxPrice = this.productService.urunler.reduce((max, product) => {
+        return product.price > max ? product.price : max;
+      } , 0);
+      //this.productService.maxPrice = this.maxPrice;
+      console.log('maxPrice', this.maxPrice);
+
       // Get Filtered Products..
       this.productService.filterProducts().subscribe((response) => {
         // Sorting Filter
