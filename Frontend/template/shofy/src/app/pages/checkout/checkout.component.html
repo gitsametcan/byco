@@ -5,7 +5,7 @@
 <main>
   <!-- breadcrumb area start -->
   <div style="background-color: #EFF1F5;">
-    <app-breadcrumb-one title="Ödeme Sayfası" subtitle="Ödeme"></app-breadcrumb-one>
+    <app-breadcrumb-one [title]="title" [subtitle]="subtitle"></app-breadcrumb-one>
   </div>
   <!-- breadcrumb area end -->
 
@@ -39,25 +39,26 @@
           <form [formGroup]="checkoutForm">
             <div class="row">
               <div class="col-lg-7">
-                <div class="tp-checkout-bill-area">
+                <div class="tp-checkout-bill-area" *ngIf="currentStep == 0">
                   <h3 class="tp-checkout-bill-title">Bilgiler</h3>
                   <form (ngSubmit)="updateInfo()" #updateInfoForm="ngForm">
                     <div class="row">
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="adsoyad" id="adsoyad" placeholder="Adınız Soyadınız" value="{{myObject.adsoyad}}"
-                              [(ngModel)]="myObject.adsoyad" required>
+                            <input type="text" name="adsoyad" id="adsoyad" placeholder="Adınız Soyadınız"
+                                   value="{{myObject.adsoyad}}"
+                                   [(ngModel)]="myObject.adsoyad" required>
                             <span>
                               <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                                   xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   d="M9 9C11.2091 9 13 7.20914 13 5C13 2.79086 11.2091 1 9 1C6.79086 1 5 2.79086 5 5C5 7.20914 6.79086 9 9 9Z"
                                   stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                  stroke-linejoin="round"/>
                                 <path d="M15.5 17.6C15.5 14.504 12.3626 12 8.5 12C4.63737 12 1.5 14.504 1.5 17.6"
-                                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
                               </svg>
                             </span>
                           </div>
@@ -67,18 +68,19 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="email" name="mail" id="mail" placeholder="Mail Adresiniz" value="{{myObject.email}}"
-                              [(ngModel)]="myObject.email" required>
+                            <input type="email" name="mail" id="mail" placeholder="E-Posta" value="{{myObject.email}}"
+                                   [(ngModel)]="myObject.email" required>
                             <span>
                               <svg width="18" height="16" viewBox="0 0 18 16" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                                   xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   d="M13 14.6H5C2.6 14.6 1 13.4 1 10.6V5C1 2.2 2.6 1 5 1H13C15.4 1 17 2.2 17 5V10.6C17 13.4 15.4 14.6 13 14.6Z"
                                   stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                  stroke-linejoin="round"/>
                                 <path d="M13 5.3999L10.496 7.3999C9.672 8.0559 8.32 8.0559 7.496 7.3999L5 5.3999"
-                                  stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                      stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"/>
                               </svg>
                             </span>
                           </div>
@@ -87,8 +89,9 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="vkno" id="vkno" placeholder="Vergi Kimlik Numarası (VKNO)" value="{{myObject.vkno}}"
-                              [(ngModel)]="myObject.vkno" required>
+                            <input type="text" name="vkno" id="vkno" placeholder="TC Kimlik Numarası"
+                                   value="{{myObject.vkno}}"
+                                   [(ngModel)]="myObject.vkno" required>
                             <span>
                               <i class="fa-light fa-clipboard-list-check"></i>
                             </span>
@@ -98,21 +101,22 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="tel" id="tel" placeholder="Telefon Numaranız" value="{{myObject.telefon}}"
-                              [(ngModel)]="myObject.telefon" required>
+                            <input type="text" name="tel" id="tel" placeholder="Telefon Numaranız"
+                                   value="{{myObject.telefon}}"
+                                   [(ngModel)]="myObject.telefon" required>
                             <span>
                               <svg width="15" height="18" viewBox="0 0 15 18" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                                   xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   d="M13.9148 5V13C13.9148 16.2 13.1076 17 9.87892 17H5.03587C1.80717 17 1 16.2 1 13V5C1 1.8 1.80717 1 5.03587 1H9.87892C13.1076 1 13.9148 1.8 13.9148 5Z"
                                   stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                  stroke-linejoin="round"/>
                                 <path opacity="0.4" d="M9.08026 3.80054H5.85156" stroke="currentColor"
-                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path opacity="0.4"
-                                  d="M7.45425 14.6795C8.14522 14.6795 8.70537 14.1243 8.70537 13.4395C8.70537 12.7546 8.14522 12.1995 7.45425 12.1995C6.76327 12.1995 6.20312 12.7546 6.20312 13.4395C6.20312 14.1243 6.76327 14.6795 7.45425 14.6795Z"
-                                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                  stroke-linejoin="round" />
+                                      d="M7.45425 14.6795C8.14522 14.6795 8.70537 14.1243 8.70537 13.4395C8.70537 12.7546 8.14522 12.1995 7.45425 12.1995C6.76327 12.1995 6.20312 12.7546 6.20312 13.4395C6.20312 14.1243 6.76327 14.6795 7.45425 14.6795Z"
+                                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
                               </svg>
                             </span>
                           </div>
@@ -138,17 +142,18 @@
                       <div class="col-xxl-12">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="adress" id="adress" placeholder="Adresiniz" value="{{myObject.adres}}"
-                              [(ngModel)]="myObject.adres" required>
+                            <input type="text" name="adress" id="adress" placeholder="Adresiniz"
+                                   value="{{myObject.adres}}"
+                                   [(ngModel)]="myObject.adres" required>
                             <span>
                               <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                                   xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   d="M7.99377 10.1461C9.39262 10.1461 10.5266 9.0283 10.5266 7.64946C10.5266 6.27061 9.39262 5.15283 7.99377 5.15283C6.59493 5.15283 5.46094 6.27061 5.46094 7.64946C5.46094 9.0283 6.59493 10.1461 7.99377 10.1461Z"
-                                  stroke="currentColor" stroke-width="1.5" />
+                                  stroke="currentColor" stroke-width="1.5"/>
                                 <path
                                   d="M1.19707 6.1933C2.79633 -0.736432 13.2118 -0.72843 14.803 6.2013C15.7365 10.2663 13.1712 13.7072 10.9225 15.8357C9.29079 17.3881 6.70924 17.3881 5.06939 15.8357C2.8288 13.7072 0.263493 10.2583 1.19707 6.1933Z"
-                                  stroke="currentColor" stroke-width="1.5" />
+                                  stroke="currentColor" stroke-width="1.5"/>
                               </svg>
                             </span>
                           </div>
@@ -173,9 +178,207 @@
                   <div *ngIf="infoUpdated" class="success-message" style="color: green;">
                     Bilgiler başarıyla güncellendi.
                   </div>
+                </div>
 
+                <div class="tp-checkout-address-area" *ngIf="currentStep == 1">
+
+                  <!-- address area start -->
+                  <form [formGroup]="shippingAddressForm">
+                    <div class="form-group">
+                      <label for="shippingaddress">Kargo Adresi</label>
+                      <input type="text" id="shippingaddress" name="shippingaddress" formControlName="shippingaddress"
+                             value="{{myObject.billingadress}}" maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="shippingselect">Şehir</label>
+                      <select name="shippingselect" id="shippingselect" formControlName="shippingselect"
+                              value="{{myObject.select}}" (click)="fnSehirler()">
+                        <option value="" disabled selected>Seçiniz</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="shippingselectstate">İlçe</label>
+                      <select name="shippingselectstate" id="shippingselectstate" formControlName="shippingselectstate"
+                              value="{{myObject.selectstate}}">
+                        <option value="" disabled selected>Seçiniz</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="shippingzip">ZIP/Posta Kodu</label>
+                      <input type="number" name="shippingzip" id="shippingzip" formControlName="shippingzip"
+                             pattern="\d{5}" maxlength="5"
+                             placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
+                    </div>
+
+                    <div class="billing-checkbox" style="margin-top: 1vh;">
+                      <input type="checkbox" id="billingCheckbox" name="billingCheckbox"
+                             formControlName="billingCheckbox"
+                             (input)="onBillingCheckboxClick()">
+                      <label for="billingCheckbox">Fatura adresi ile aynı</label>
+                    </div>
+
+                    <div class="billing-address" *ngIf="!isBillingAddressSame">
+                      <div class="form-group">
+                        <label for="billingaddress">Fatura Adresi</label>
+                        <input type="text" id="billingaddress" name="billingaddress" formControlName="billingadress"
+                               value="{{myObject.billingadress}}" maxlength="100" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="select">Şehir</label>
+                        <select name="select" id="select" formControlName="select" value="{{myObject.select}}"
+                                (click)="fnSehirler()">
+                          <option value="" disabled selected>Seçiniz</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="selectstate">İlçe</label>
+                        <select name="selectstate" id="selectstate" formControlName="selectstate"
+                                value="{{myObject.selectstate}}">
+                          <option value="" disabled selected>Seçiniz</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="zip">ZIP/Posta Kodu</label>
+                        <input type="number" name="zip" id="zip" formControlName="zip" pattern="\d{5}" maxlength="5"
+                               placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
+                      </div>
+                    </div>
+
+                    <!--
+                    <button type="submit" name="submit-payment-btn"
+                            (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">Ödemeyi Onayla</button>
+                  -->
+                  </form>
+                  <!-- address area end -->
+                </div>
+
+                <div class="tp-checkout-summary" *ngIf="currentStep == 2 && showPaymentModal">
+                  <h3 class="tp-checkout-summary-title">Ödeme Bilgileri</h3>
+                  <div class="tp-checkout-summary-list">
+                    <ul>
+                      <li>
+                        <label>Kart Sahibi</label>
+                        <label>{{ myObject.adsoyad }}</label>
+                      </li>
+                      <li>
+                        <label>E-Posta</label>
+                        <label>{{ myObject.email }}</label>
+                      </li>
+                      <li>
+                        <label>TCKN / VKNO</label>
+                        <label>{{ myObject.vkno }}</label>
+                      </li>
+                      <li>
+                        <label>Tip</label>
+                        <label>{{ myObject.tip }}</label>
+                      </li>
+                      <li>
+                        <label>Telefon</label>
+                        <label>{{ myObject.telefon }}</label>
+                      </li>
+                      <li>
+                        <label>Şehir</label>
+                        <label>{{ select?.value }}</label>
+                      </li>
+                      <li>
+                        <label>İlçe</label>
+                        <label>{{ selectstate?.value }}</label>
+                      </li>
+                      <li>
+                        <label>ZIP/Posta Kodu</label>
+                        <label>{{ zip?.value }}</label>
+                      </li>
+                    </ul>
+                  </div>
 
                 </div>
+
+
+                <div class="modal" *ngIf="currentStep == 2 && !showPaymentModal">
+                  <div class="wrapper">
+                    <span class="close" (click)="togglePaymentModal()">&times;</span>
+                    <h1>Ödeme Bilgileri</h1>
+                    <div class="credit-card" id="card">
+                      <div class="card-front">
+                        <div class="branding">
+                          <img src="assets\img\byco\bycologo.png" class="chip-img"/>
+                        </div>
+                        <div class="card-number">
+                          <div>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                          </div>
+                          <div>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                          </div>
+                          <div>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                          </div>
+                          <div>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                            <span class="card-number-display">_</span>
+                          </div>
+                        </div>
+                        <div class="details">
+                          <div>
+                            <span>Kart Sahibi</span>
+                            <span id="card-holder-name">Adınız</span>
+                          </div>
+                          <div id="expirybox">
+                            <span>SKT</span>
+                            <span id="displayvalidity">06/28</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-back">
+                        <div class="black-strip"></div>
+                        <div class="white-strip">
+                          <span>CVV</span>
+                          <div id="cvv-display"></div>
+                        </div>
+                        <img src="assets\img\byco\bycologo.png" class="visa-logo"/>
+                      </div>
+                    </div>
+                    <form id="card-form" [formGroup]="paymentForm" (click)="onCVVnotfocused()"
+                          (ngSubmit)="updatePaymentInfo()">
+                      <label for="ccn">Kart Numarası</label>
+                      <input type="number" id="ccn" name="ccn" formControlName="ccn" placeholder="1234 1234 1234 1234"
+                             value="{{myObject.ccn}}" (input)="onNumberChange()"/>
+                      <label for="cardholder">Kart Sahibinin İsmi</label>
+                      <input type="text" id="cardholder" name="cardholder" formControlName="cardholder"
+                             placeholder="Kart Sahibinin Adı Soyadı" value="{{myObject.cardholder}}"
+                             (input)="onCardNameChange()"/>
+                      <div class="date-cvv">
+                        <div>
+                          <label for="validity">Son Kullanma Tarihi</label>
+                          <input type="text" id="validity" name="validity" formControlName="validity"
+                                 placeholder="AA/YY" maxlength="5" value="{{myObject.validity}}"
+                                 (input)="validateExpiryDate()"/>
+                        </div>
+                        <div>
+                          <label for="cvv">CVV</label>
+                          <input type="number" id="cvv" name="cvv" formControlName="cvv" placeholder="***"
+                                 value="{{myObject.cvv}}" (click)="onCVVclick()" (input)="onCVVChange()"/>
+                        </div>
+                      </div>
+                      <button type="submit" id="submit-payment-btn" name="submit-payment-btn"
+                              (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">
+                        Ödemeyi Onayla
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
               </div>
               <div class="col-lg-5">
                 <!-- checkout place order -->
@@ -193,19 +396,19 @@
 
                       <!-- item list -->
                       <li *ngFor="let item of cartService.getCartProducts()" class="tp-order-info-list-desc">
-                        <p>{{item.title}} <span> x {{item.orderQuantity}}</span></p>
+                        <p>{{ item.title }} <span> x {{ item.orderQuantity }}</span></p>
                         <span *ngIf="item.discount > 0; else noDiscount">
                           {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
                         </span>
                         <ng-template #noDiscount>
-                          <span>{{item.price.toFixed(2)}} TL</span>
+                          <span>{{ item.price.toFixed(2) }} TL</span>
                         </ng-template>
                       </li>
 
                       <!-- subtotal -->
                       <li class="tp-order-info-list-subtotal">
                         <span>Ara Toplam</span>
-                        <span>{{cartService.totalPriceQuantity().total.toFixed(2)}} TL</span>
+                        <span>{{ cartService.totalPriceQuantity().total.toFixed(2) }} TL</span>
                       </li>
 
                       <!-- shipping -->
@@ -213,7 +416,7 @@
                         <span>İndirim</span>
                         <div class="tp-order-info-list-shipping-item d-flex flex-column align-items-end">
                           <span>
-                            <span>{{discount}} TL</span>
+                            <span>{{ discount }} TL</span>
                           </span>
                           <!-- <span>
                             <input id="local_pickup" type="radio" name="shipping">
@@ -231,7 +434,7 @@
                       <li class="tp-order-info-list-total">
                         <span>Toplam</span>
                         <span>
-                          {{(cartService.totalPriceQuantity().total - discount).toFixed(2)}} TL
+                          {{ (cartService.totalPriceQuantity().total - discount).toFixed(2) }} TL
                         </span>
                       </li>
 
@@ -240,7 +443,7 @@
                         <input type="checkbox" id="termsCheckbox" (click)="onCheckboxClick($event)">
                         <label for="termsCheckbox">
                           <span (click)="togglePolicyModal()"
-                            style="cursor: pointer; text-decoration: underline;">Kullanım Koşullarını</span> Kabul
+                                style="cursor: pointer; text-decoration: underline;">Kullanım Koşullarını</span> Kabul
                           Ediyorum
                         </label>
                       </li>
@@ -267,7 +470,13 @@
                     </div>
                   </div> -->
                   <div class="tp-checkout-btn-wrapper">
-                    <button type="submit" class="tp-checkout-btn w-100" (click)="siparisGonder()">Sepeti Onayla</button>
+                    <button type="submit" class="tp-checkout-btn w-100" (click)="nextStep()">{{ nextButtonText }}
+                    </button>
+                  </div>
+                  <div class="tp-checkout-btn-wrapper" style="margin-top: 1vh;">
+                    <button type="submit" class="tp-checkout-btn w-100"
+                            (click)="previousStep()">{{ previousButtonText }}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -278,8 +487,10 @@
     </div>
   </section>
   <!-- checkout area end -->
+
 </main>
 
+<!--
 <div class="modal" *ngIf="showPaymentModal">
     <div class="wrapper">
       <span class="close" (click)="togglePaymentModal()">&times;</span>
@@ -350,75 +561,55 @@
             <input type="number" id="cvv" name="cvv" formControlName="cvv" placeholder="***" value="{{myObject.cvv}}" (click)="onCVVclick()" (input)="onCVVChange()"/>
           </div>
         </div>
-        <div class="form-group">
-          <label for="billingadress">Fatura Adresi</label>
-          <input type="text" id="billingadress" name="billingaddress" formControlName="billingadress" value="{{myObject.billingadress}}" maxlength="100" required>
-        </div>
-        <div class="form-group">
-          <label for="select">Şehir</label>
-          <select id="select" name="select" formControlName="select" value="{{myObject.select}}" (click)="fnSehirler()" >
-            <option value="" disabled selected>Seçiniz</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="selectstate">İlçe</label>
-          <select id="selectstate" name="selectstate" formControlName="selectstate" value="{{myObject.selectstate}}">
-            <option value="" disabled selected>Seçiniz</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="zip">ZIP/Posta Kodu</label>
-          <input type="number" id="zip" name="zip" formControlName="zip" pattern="\d{5}" maxlength="5" placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
-        </div>
-        <button type="submit" id="submit-payment-btn" name="submit-payment-btn" 
+        <button type="submit" id="submit-payment-btn" name="submit-payment-btn"
         (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">Ödemeyi Onayla</button>
       </form>
     </div>
-
-
-    <!--
-    <form action="/submit-payment" method="POST">
-      <div class="form-group">
-        <label for="cardholder-name">Kart Sahibinin İsmi</label>
-        <input type="text" id="cardholder-name" name="cardholder-name" maxlength="40" placeholder="Samet Can" required>
-      </div>
-      <div class="form-group">
-        <label for="card-number">Kart Numarası</label>
-        <input id="ccn" name="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19"
-          placeholder="XXXX XXXX XXXX XXXX" required (change)="checkccn()">
-      </div>
-      <div class="form-group">
-        <label for="expiry-date">Son Kullanma Tarihi</label>
-        <input type="datetime" id="expiry-date" name="expiry-date" pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="AA/YY" (change)="checkexpiry()"
-          required>
-
-        <label for="cvv">CVC / CVV</label>
-        <input type="text" id="cvv" name="cvv" pattern="\d{3,4}" maxlength="4" placeholder="123" required>
-      </div>
-      <div class="form-group">
-        <label for="billingadress">Fatura Adresi</label>
-        <input type="text" id="billingadress" name="billingadress" maxlength="100" required>
-      </div>
-      <div class="form-group">
-        <label for="select">Şehir</label>
-        <select id="select" name="select" (click)="fnSehirler()">
-          <option value="" disabled selected>Seçiniz</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="selectstate">İlçe</label>
-        <select id="selectstate" name="selectstate">
-          <option value="" disabled selected>Seçiniz</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="zip">ZIP/Posta Kodu</label>
-        <input type="number" id="zip" name="zip" pattern="\d{5}" maxlength="5" placeholder="34848" (change)="checkzip()" required>
-      </div>
-      <button type="submit" id="submit-payment-btn" (click)="odemeYap()">Ödemeyi Onayla</button>
-    </form>
     -->
+
+<!--
+<form action="/submit-payment" method="POST">
+  <div class="form-group">
+    <label for="cardholder-name">Kart Sahibinin İsmi</label>
+    <input type="text" id="cardholder-name" name="cardholder-name" maxlength="40" placeholder="Samet Can" required>
   </div>
+  <div class="form-group">
+    <label for="card-number">Kart Numarası</label>
+    <input id="ccn" name="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19"
+      placeholder="XXXX XXXX XXXX XXXX" required (change)="checkccn()">
+  </div>
+  <div class="form-group">
+    <label for="expiry-date">Son Kullanma Tarihi</label>
+    <input type="datetime" id="expiry-date" name="expiry-date" pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="AA/YY" (change)="checkexpiry()"
+      required>
+
+    <label for="cvv">CVC / CVV</label>
+    <input type="text" id="cvv" name="cvv" pattern="\d{3,4}" maxlength="4" placeholder="123" required>
+  </div>
+  <div class="form-group">
+    <label for="billingadress">Fatura Adresi</label>
+    <input type="text" id="billingadress" name="billingadress" maxlength="100" required>
+  </div>
+  <div class="form-group">
+    <label for="select">Şehir</label>
+    <select id="select" name="select" (click)="fnSehirler()">
+      <option value="" disabled selected>Seçiniz</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="selectstate">İlçe</label>
+    <select id="selectstate" name="selectstate">
+      <option value="" disabled selected>Seçiniz</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="zip">ZIP/Posta Kodu</label>
+    <input type="number" id="zip" name="zip" pattern="\d{5}" maxlength="5" placeholder="34848" (change)="checkzip()" required>
+  </div>
+  <button type="submit" id="submit-payment-btn" (click)="odemeYap()">Ödemeyi Onayla</button>
+</form>
+
+</div>-->
 
 
 <style>
@@ -466,7 +657,7 @@
   .wrapper {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 75%;
+    top: 50%;
     left: 50%;
     background-color: #ffffff;
     width: 500px;
@@ -601,32 +792,31 @@
   }
 
 
-/*
-  .payment-modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 25%;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  }
+  /*
+    .payment-modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 25%;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
 
-  .container-fluid {
-    margin-top: 15px;
-  }
-*/
+    .container-fluid {
+      margin-top: 15px;
+    }
+  */
   .form-group {
     margin-bottom: 1rem;
     width: 100%;
     justify-content: center;
     justify-items: center;
   }
-    
+
 
   /*#expiry-date,*/
-  #select,
-  #selectstate {
+  #select, #selectstate, #shippingselect, #shippingselectstate {
     width: 100%;
     padding: 12px;
     border: 1px solid #000000;
@@ -746,10 +936,10 @@
 
     <h6>ALICI'NIN BİLGİLERİ:</h6>
 
-    <br>Teslim Edilecek Kişi : {{myObject.adsoyad}}
-    <br>Teslimat Adresi : {{myObject.adres}}
-    <br>Telefon : {{myObject.telefon}}
-    <br>E-posta/Kullanıcı Adı : {{myObject.email}}
+    <br>Teslim Edilecek Kişi : {{ myObject.adsoyad }}
+    <br>Teslimat Adresi : {{ myObject.adres }}
+    <br>Telefon : {{ myObject.telefon }}
+    <br>E-posta/Kullanıcı Adı : {{ myObject.email }}
     <br>
     <br>İşbu sözleşme dahilinde gerektiği takdirde Satıcı ve Alıcı tek başına "Taraf", birlikte "Taraflar" olarak
     anılabilecektir.
@@ -831,27 +1021,27 @@
     </style>
     <table class="product-table">
       <thead>
-        <tr>
-          <th>Ürün Adı</th>
-          <th>Açıklama</th>
-          <th>Miktar</th>
-          <th>Fiyat</th>
-        </tr>
+      <tr>
+        <th>Ürün Adı</th>
+        <th>Açıklama</th>
+        <th>Miktar</th>
+        <th>Fiyat</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of cartService.getCartProducts()">
-          <td>{{ item.title }}</td>
-          <td>{{item.description}}</td>
-          <td>x {{ item.orderQuantity }}</td>
-          <td>
-            <ng-container *ngIf="item.discount > 0; else noDiscount">
-              {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
-            </ng-container>
-            <ng-template #noDiscount>
-              {{ item.price.toFixed(2) }} TL
-            </ng-template>
-          </td>
-        </tr>
+      <tr *ngFor="let item of cartService.getCartProducts()">
+        <td>{{ item.title }}</td>
+        <td>{{ item.description }}</td>
+        <td>x {{ item.orderQuantity }}</td>
+        <td>
+          <ng-container *ngIf="item.discount > 0; else noDiscount">
+            {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
+          </ng-container>
+          <ng-template #noDiscount>
+            {{ item.price.toFixed(2) }} TL
+          </ng-template>
+        </td>
+      </tr>
       </tbody>
     </table>
 
@@ -860,12 +1050,14 @@
 
     <h6>1. Ödeme Detayları</h6>
 
-    <br>Kargo Hariç Toplam Ürün Bedeli: {{(cartService.totalPriceQuantity().total - discount).toFixed(2)}} TRY
+    <br>Kargo Hariç Toplam Ürün Bedeli: {{ (cartService.totalPriceQuantity().total - discount).toFixed(2) }} TRY
 
     <br>Kargo Ücreti: 120 TRY
 
-    <br>Kargo ve Tüm Vergiler Dahil Toplam Ürün Bedeli: {{(cartService.totalPriceQuantity().total -
-    discount+120).toFixed(2)}}
+    <br>Kargo ve Tüm Vergiler Dahil Toplam Ürün Bedeli: {{
+      (cartService.totalPriceQuantity().total -
+        discount + 120).toFixed(2)
+    }}
 
     <br>Ödeme Şekli: Ödemeye yönelik tüm işlemlerin T. Garanti Bankası A.Ş./Garanti BBVA kendi arayüzü üzerinden banka
     ve bilgisayarınız arasında gerçekleşmesi sağlanmaktadır
@@ -875,8 +1067,8 @@
 
     <h6>2. Teslimat Detayları</h6>
 
-    <br>Teslimat Adresi: {{myObject.adres}}
-    <br>Teslim Edilecek Kişi: {{myObject.adsoyad}}
+    <br>Teslimat Adresi: {{ myObject.adres }}
+    <br>Teslim Edilecek Kişi: {{ myObject.adsoyad }}
     <h6>3. Teslimat Koşulları</h6>
     Sözleşme konusu ürün/ürünler, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) gün içinde Alıcı'nın teslimat
     adresine teslim edilecektir. Teslim süresi, Alıcı'nın teslimat adresinin uzaklığına ve taşıyıcı firmanın hizmet
@@ -887,8 +1079,8 @@
     <br>Taşıyıcı Firma: Yurtiçi Kargo
     <br>Kargo Bilgisi: Kargo bilgileri otomatik olarak müşteriye gösterilecektir.
     <h6>5. Teslimat Adresi ve Kişi Bilgileri</h6>
-    <br>Teslimat Adresi: {{myObject.adres}}
-    <br>Teslim Edilecek Kişi: {{myObject.adsoyad}}
+    <br>Teslimat Adresi: {{ myObject.adres }}
+    <br>Teslim Edilecek Kişi: {{ myObject.adsoyad }}
     <h6>6. Teslimat Süresi</h6>
     Sözleşme konusu ürün/hizmet, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) günlük yasal süreyi aşmamak koşulu
     ile her bir ürün için Alıcı'nın belirtilen teslimat adresine veya gösterdiği adrese 30 günlük süre içinde teslim
@@ -1062,12 +1254,6 @@
     İşbu Sözleşme'den dolayı tüketici Alıcı'nın her türlü şikayet ve itirazları, Ticaret Bakanlığı tarafından her yıl
     Aralık ayında belirlenen parasal sınırlara göre Alıcı'nın yerleşim yerinin bulunduğu veya tüketici işleminin
     yapıldığı yerdeki Tüketici Sorunları Hakem Heyeti'ne veya Tüketici Mahkemesi'ne yapılabilir.
-
-
-
-
-
-
 
 
   </div>

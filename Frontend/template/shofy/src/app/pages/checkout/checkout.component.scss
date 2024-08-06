@@ -1,0 +1,27 @@
+.tp-checkout-summary-list label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2vh;
+}
+
+.billing-checkbox {
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  transition: background-color 0.3s, color 0.3s, 0.3s, box-shadow 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  -moz-transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  -ms-transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  -o-transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}

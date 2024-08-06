@@ -14,3 +14,10 @@
     </div>
   </div>
 </section>
+
+<div class="breadcrumb flat" *ngIf="title === 'Sepetim' || title === 'Kişisel Bilgilerim' || title === 'Adres Bilgilerim' || title === 'Ödeme Bilgilerim'">
+  <a routerLink="/pages/cart" href="#/pages/cart" [ngClass]="{active: title === 'Sepetim'}">Sepetim</a>
+  <a routerLink="/pages/checkout" [ngClass]="{active: title === 'Kişisel Bilgilerim'}">Kişisel Bilgilerim</a>
+  <a routerLink="/pages/checkout" [ngClass]="{active: title === 'Adres Bilgilerim'}">Adres Bilgilerim</a>
+  <a routerLink="/pages/checkout" [ngClass]="{active: title === 'Ödeme Bilgilerim'}">Ödeme Bilgilerim</a>
+</div>

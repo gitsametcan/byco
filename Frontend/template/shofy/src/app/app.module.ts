@@ -7,28 +7,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/pages/shop/shop.component';
 import { ShopModule } from './shop/shop.module';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AddressComponent } from './address/address.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShopComponent
+    ShopComponent,
+    AddressComponent
   ],
-  imports: [
-    SharedModule,
-    ShopModule,
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut: 3000,
-      progressBar: false,
-      enableHtml: true,
-      positionClass:'toast-top-center'
-    }),
-  ],
+    imports: [
+        SharedModule,
+        ShopModule,
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            timeOut: 3000,
+            progressBar: false,
+            enableHtml: true,
+            positionClass: 'toast-top-center'
+        }),
+        ReactiveFormsModule,
+    ],
   exports:[
     ShopComponent,
   ],

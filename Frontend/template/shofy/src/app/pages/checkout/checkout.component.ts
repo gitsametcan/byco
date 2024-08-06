@@ -38,6 +38,13 @@ export class CheckoutComponent {
   objCities: ICity[] = [];
   paymentInfoUpdated: boolean = false;
 
+  currentStep: number = 0;
+  titles: string[] = ['Kişisel Bilgilerim', 'Adres Bilgilerim', 'Ödeme Bilgilerim'];
+  title: string = this.titles[0];
+  subtitle: string = this.titles[0];
+  nextButtonText: string = 'Sonraki Adım';
+  previousButtonText: string = 'Önceki Adım';
+
 
   myObject = {
     user_id: "",
@@ -93,7 +100,6 @@ export class CheckoutComponent {
     this.isTermAccepted = event.target.checked;
   }
 
-
   public countrySelectOptions = [
     { value: 'select-country', text: 'Select Country' },
     { value: 'avrupa', text: 'Avrupa' },
@@ -106,7 +112,7 @@ export class CheckoutComponent {
     console.log('Selected option:', selectedOption);
 
     // Update the 'city' form control with the selected option's value
-    this.paymentForm.patchValue({
+    this.addressForm.patchValue({
       select: selectedOption.value,
     });
   }
@@ -134,6 +140,13 @@ export class CheckoutComponent {
   public paymentForm!: FormGroup;
   public paymentFormSubmitted = false;
 
+  public addressForm!: FormGroup;
+  public addressFormSubmitted = false
+  isPersonalInfoCompleted: boolean = false;
+
+  isBillingAddressSame: boolean = false;
+  public shippingAddressForm!: FormGroup;
+
   ngOnInit() {
     this.checkoutForm = new FormGroup({
       firstName: new FormControl(null),
@@ -155,6 +168,21 @@ export class CheckoutComponent {
       select: new FormControl(null),
       selectstate: new FormControl(null),
       zip: new FormControl(null),
+    })
+
+    this.addressForm = new FormGroup({
+      billingadress: new FormControl(null),
+      select: new FormControl(null),
+      selectstate: new FormControl(null),
+      zip: new FormControl(null),
+    })
+
+    this.shippingAddressForm = new FormGroup({
+      billingCheckbox: new FormControl(null),
+      shippingaddress: new FormControl(null),
+      shippingselect: new FormControl(null),
+      shippingselectstate: new FormControl(null),
+      shippingzip: new FormControl(null),
     })
   }
 
@@ -272,6 +300,9 @@ export class CheckoutComponent {
 
   odemeYap(ccn: number, cardholder: string, validity: string, cvv: number, billingadress: string, select: string, selectstate: string, zip: number) {
 
+    if (this.currentStep != 2)
+      return;
+
     if (ccn == null || cardholder == null || validity == null || cvv == null || billingadress == null || select == null || selectstate == null || zip == null) {
       this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
       return;
@@ -281,7 +312,7 @@ export class CheckoutComponent {
     console.log("email : " + this.myObject.email);
     console.log("vkno : " + this.myObject.vkno);
     console.log("tip : " + this.myObject.tip);
-    console.log("telefon : " + this.myObject.telefon); 
+    console.log("telefon : " + this.myObject.telefon);
     console.log("adres : " + this.myObject.adres);
     console.log("discount : " + this.myObject.discount);
     console.log("ccn : " + ccn);
@@ -419,6 +450,39 @@ export class CheckoutComponent {
     */
   }
 
+  previousStep() {
+    if (this.currentStep == 0) {
+      this.currentStep = 0;
+    } else {
+      this.currentStep = this.currentStep - 1;
+    }
+    this.nextButtonText = 'Sonraki Adım';
+    this.title = this.titles[this.currentStep];
+    this.subtitle = this.titles[this.currentStep];
+  }
+
+  nextStep() {
+    if (this.currentStep < 2) {
+      this.currentStep = this.currentStep + 1;
+      this.nextButtonText = 'Sonraki Adım';
+      if (this.currentStep == 2) {
+        this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
+      }
+    } else if (this.currentStep == 2) {
+      this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
+      this.togglePaymentModal();
+    } else {
+      this.nextButtonText = 'Sonraki Adım';
+      this.currentStep = 0;
+    }
+    this.title = this.titles[this.currentStep];
+    this.subtitle = this.titles[this.currentStep];
+  }
+
+  onBillingCheckboxClick() {
+    this.isBillingAddressSame = !this.isBillingAddressSame;
+  }
+
   siparisGonder() {
 
     if (this.isTermAccepted) {
@@ -436,7 +500,7 @@ export class CheckoutComponent {
 
       //Reflip card
       document.addEventListener("click", () => {
-        
+
       });
 
       window.onload = () => {
@@ -561,7 +625,7 @@ export class CheckoutComponent {
 
   /*
     checkccn() {
-  
+
       let ccnElement = document.querySelector("#ccn") as HTMLInputElement;
       if (ccnElement) {
         var ccn = ccnElement.value;
@@ -575,7 +639,7 @@ export class CheckoutComponent {
         console.error("ccn element not found");
       }
     }
-  
+
     checkexpiry() {
       let expiryElement = document.querySelector("#validity") as HTMLInputElement;
       if (expiryElement) {
@@ -594,7 +658,7 @@ export class CheckoutComponent {
         console.error("expiry element not found");
       }
     }
-  
+
     checkcvc() {
       let cvcElement = document.querySelector("#cvv") as HTMLInputElement;
       if (cvcElement) {
@@ -627,27 +691,46 @@ export class CheckoutComponent {
 
 
   // Define fnIlceler first
-  fnIlceler(strSehir_ID: number) {
+  fnIlceler(strSehir_ID: number, isShipping: boolean = false) {
     try {
-      let objIlceler = document.querySelector("#selectstate") as HTMLSelectElement;
-      if (!objIlceler) throw new Error("Select element not found");
+      if (isShipping) {
+        let objIlceler = document.querySelector("#selectstate") as HTMLSelectElement;
+        if (!objIlceler) throw new Error("Select element not found");
 
-      while (objIlceler.options.length > 0) {
-        objIlceler.remove(0);
-      }
-
-      let option = document.createElement("option");
-      if (!option) throw new Error("Option element not created");
-
-      for (let i = 0; i < cities_data[strSehir_ID].districts.length; i++) {
-
-        option = document.createElement("option");
+        while (objIlceler.options.length > 0) {
+          objIlceler.remove(0);
+        }
+        let option = document.createElement("option");
         if (!option) throw new Error("Option element not created");
 
-        option.text = cities_data[strSehir_ID].districts[i].text;
-        option.value = cities_data[strSehir_ID].districts[i].value.toString();
-        objIlceler.appendChild(option);
+        for (let i = 0; i < cities_data[strSehir_ID].districts.length; i++) {
 
+          option = document.createElement("option");
+          if (!option) throw new Error("Option element not created");
+
+          option.text = cities_data[strSehir_ID].districts[i].text;
+          option.value = cities_data[strSehir_ID].districts[i].value.toString();
+          objIlceler.appendChild(option);
+
+        }
+      } else {
+        let objIlceler2 = document.querySelector("#shippingselectstate") as HTMLSelectElement;
+        if (!objIlceler2) throw new Error("Select element not found");
+        while (objIlceler2.options.length > 0) {
+          objIlceler2.remove(0);
+        }
+        let option = document.createElement("option");
+        if (!option) throw new Error("Option element not created");
+
+        for (let i = 0; i < cities_data[strSehir_ID].districts.length; i++) {
+
+          option = document.createElement("option");
+          if (!option) throw new Error("Option element not created");
+
+          option.text = cities_data[strSehir_ID].districts[i].text;
+          option.value = cities_data[strSehir_ID].districts[i].value.toString();
+          objIlceler2.appendChild(option);
+        }
       }
 
     } catch (error) {
@@ -660,12 +743,13 @@ export class CheckoutComponent {
   // Define fnSehirler next
   fnSehirler() {
 
-    try {
-      let objSehirler = document.querySelector("#select") as HTMLSelectElement;
-      if (!objSehirler) throw new Error("Select element not found");
+    let objSehirler: HTMLSelectElement | null = document.querySelector("#select");
+    let objSehirler2: HTMLSelectElement | null = document.querySelector("#shippingselect");
+    let option: HTMLOptionElement | null = document.createElement("option");
 
-      let option = document.createElement("option");
-      if (!option) throw new Error("Option element not created");
+    try {
+      //if (!objSehirler) throw new Error("Select element not found");
+      if (!objSehirler2) return;
 
       for (let i = 0; i < this.objCities.length; i++) {
         option = document.createElement("option");
@@ -673,12 +757,23 @@ export class CheckoutComponent {
 
         option.text = this.objCities[i].text;
         option.value = this.objCities[i].value.toString();
-        objSehirler.appendChild(option);
+        objSehirler2.appendChild(option.cloneNode(true));
+        if (!objSehirler) continue;
+        objSehirler?.appendChild(option);
       }
 
-      objSehirler.addEventListener("click", (event) => {
-        let strSehir_ID = objSehirler.selectedIndex;
-        this.fnIlceler(strSehir_ID - 1);
+      objSehirler2.addEventListener("click", (event) => {
+        if (!objSehirler2) return;
+        let strSehir_ID2 = objSehirler2.selectedIndex;
+        this.fnIlceler(strSehir_ID2 - 1, false);
+      });
+
+      if (!objSehirler) return;
+
+      objSehirler?.addEventListener("click", (event) => {
+        if (!objSehirler) return;
+        let strSehir_ID = objSehirler?.selectedIndex;
+        this.fnIlceler(strSehir_ID - 1, true);
       });
 
     } catch (error) {
@@ -697,9 +792,9 @@ export class CheckoutComponent {
   get cardholder() { return this.paymentForm.get('cardholder') }
   get validity() { return this.paymentForm.get('validity') }
   get cvv() { return this.paymentForm.get('cvv') }
-  get billingadress() { return this.paymentForm.get('billingadress') }
-  get select() { return this.paymentForm.get('select') }
-  get selectstate() { return this.paymentForm.get('selectstate') }
-  get zip() { return this.paymentForm.get('zip') }
 
+  get billingadress() { return this.addressForm.get('billingadress') }
+  get select() { return this.addressForm.get('select') }
+  get selectstate() { return this.addressForm.get('selectstate') }
+  get zip() { return this.addressForm.get('zip') }
 }
