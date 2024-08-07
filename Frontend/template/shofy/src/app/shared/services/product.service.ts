@@ -50,7 +50,6 @@ export class ProductService {
   // Get max price
   public get maxPrice(): number {
     const max_price = all_products.reduce((max, product) => {
-      console.log('product.price', product.price);
       return product.price > max ? product.price : max;
     }, 0);
     return 250;
@@ -182,7 +181,7 @@ export class ProductService {
   }
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
-    
+
     return fetch(`${this.benimUrl}/${url}`, {
       method: method,
       mode: 'cors',
@@ -194,7 +193,7 @@ export class ProductService {
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data), 
+      body: JSON.stringify(data),
   })
   .then(response => {
     if (!response.ok) {

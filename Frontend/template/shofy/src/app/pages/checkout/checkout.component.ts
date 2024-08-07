@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CartService } from '@/shared/services/cart.service';
-import { ToastrService } from 'ngx-toastr';
-import { IProduct } from '@/types/product-type';
-import { checkk } from '@/types/checkt-type';
-import { ICity } from '@/types/cities-type';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CartService} from '@/shared/services/cart.service';
+import {ToastrService} from 'ngx-toastr';
+import {IProduct} from '@/types/product-type';
+import {checkk} from '@/types/checkt-type';
+import {ICity} from '@/types/cities-type';
 import cities_data from '@/data/city-data';
-
-
 
 
 @Component({
@@ -38,6 +36,12 @@ export class CheckoutComponent {
   objCities: ICity[] = [];
   paymentInfoUpdated: boolean = false;
 
+  personalPlaceholders: string[] = ['Adınız Soyadınız', 'E-posta Adresiniz', 'TC Kimlik Numaranız', 'Telefon Numaranız',
+    'Ev Adresiniz'];
+  companyPlaceholders: string[] = ['Şirket Adı', 'E-posta Adresiniz', 'Vergi Kimlik Numaranız', 'Telefon Numaranız',
+    'Şirket Adresiniz'];
+  placeholderType: string[] = this.personalPlaceholders;
+
   currentStep: number = 0;
   titles: string[] = ['Kişisel Bilgilerim', 'Adres Bilgilerim', 'Ödeme Bilgilerim'];
   title: string = this.titles[0];
@@ -59,13 +63,18 @@ export class CheckoutComponent {
     cardholder: '',
     validity: '',
     cvv: '',
-    billingadress: '',
+    billingaddress: '',
     select: '',
     selectstate: '',
     zip: '',
   };
+  protected selectedShippingCity: number = 0;
+  protected selectedShippingDistrict: number = 0;
+  protected selectedBillingCity: number = 0;
+  protected selectedBillingDistrict: number = 0;
 
-  constructor(public cartService: CartService, private toastrService: ToastrService) { }
+  constructor(public cartService: CartService, private toastrService: ToastrService) {
+  }
 
   showPolicyModal: boolean = false;
   showPaymentModal: boolean = false;
@@ -81,6 +90,7 @@ export class CheckoutComponent {
   handleOpenLogin() {
     this.isOpenLogin = !this.isOpenLogin;
   }
+
   handleOpenCoupon() {
     this.isOpenCoupon = !this.isOpenCoupon;
   }
@@ -96,27 +106,48 @@ export class CheckoutComponent {
   }
 
   onCheckboxClick(event: any): void {
-    console.log('Tıklandı', event.target.checked);
     this.isTermAccepted = event.target.checked;
-  }
-
-  public countrySelectOptions = [
-    { value: 'select-country', text: 'Select Country' },
-    { value: 'avrupa', text: 'Avrupa' },
-    { value: 'asya', text: 'Asya' },
-    { value: 'afrika', text: 'Afrika' },
-    { value: 'amerika', text: 'Amerika' },
-  ];
-
-  changeHandler(selectedOption: { value: string; text: string }) {
-    console.log('Selected option:', selectedOption);
-
-    // Update the 'city' form control with the selected option's value
-    this.addressForm.patchValue({
-      select: selectedOption.value,
+    console.log('Tıklandı', this.isTermAccepted);
+    this.checkoutForm.patchValue({
+      usePolicy: this.isTermAccepted
     });
   }
 
+  public countrySelectOptions = [
+    {value: 'select-country', text: 'Select Country'},
+    {value: 'avrupa', text: 'Avrupa'},
+    {value: 'asya', text: 'Asya'},
+    {value: 'afrika', text: 'Afrika'},
+    {value: 'amerika', text: 'Amerika'},
+  ];
+
+  assignShippingDistricts(event: Event) {
+    this.selectedShippingCity = (event.target as HTMLSelectElement).selectedIndex;
+    this.fnIlceler(this.selectedShippingCity, false);
+  }
+
+  assignBillingDistricts(event: Event) {
+    this.selectedBillingCity = (event.target as HTMLSelectElement).selectedIndex;
+    this.fnIlceler(this.selectedBillingCity, true);
+  }
+
+  shippingDistrictChangeHandler($event: Event) {
+    this.selectedShippingDistrict = ($event.target as HTMLSelectElement).selectedIndex;
+  }
+
+  billingDistrictChangeHandler($event: Event) {
+    this.selectedBillingDistrict = ($event.target as HTMLSelectElement).selectedIndex;
+  }
+
+  shippingCityChangeHandler(city: number) {
+    // Update the 'city' form control with the selected option's value
+    this.selectedShippingCity = city;
+  }
+
+  billingCityChangeHandler(city: number) {
+    // Update the 'city' form control with the selected option's value
+    this.selectedBillingCity = city;
+  }
 
   handleCouponSubmit() {
     console.log(this.couponCode);
@@ -140,7 +171,7 @@ export class CheckoutComponent {
   public paymentForm!: FormGroup;
   public paymentFormSubmitted = false;
 
-  public addressForm!: FormGroup;
+  public billingAddressForm!: FormGroup;
   public addressFormSubmitted = false
   isPersonalInfoCompleted: boolean = false;
 
@@ -149,40 +180,39 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this.checkoutForm = new FormGroup({
-      firstName: new FormControl(null),
-      lastName: new FormControl(null),
-      address: new FormControl(null),
-      phone: new FormControl(null),
-      email: new FormControl(null),
+      persontype: new FormControl(null, Validators.required),
+      name: new FormControl(null, Validators.required),
+      id: new FormControl(null, Validators.required),
+      address: new FormControl(null, Validators.required),
+      phone: new FormControl(null, Validators.required),
+      email: new FormControl(null, Validators.required),
+      usePolicy: new FormControl(null, Validators.requiredTrue),
     })
     this.urunler = this.cartService.getCartProducts();
     this.getIdFromSession();
 
     this.objCities = cities_data;
+
     this.paymentForm = new FormGroup({
-      ccn: new FormControl(null),
-      cardholder: new FormControl(null),
-      validity: new FormControl(null),
-      cvv: new FormControl(null),
-      billingadress: new FormControl(null),
-      select: new FormControl(null),
-      selectstate: new FormControl(null),
-      zip: new FormControl(null),
+      ccn: new FormControl(null, Validators.required),
+      cardholder: new FormControl(null, Validators.required),
+      validity: new FormControl(null, Validators.required),
+      cvv: new FormControl(null, Validators.required),
     })
 
-    this.addressForm = new FormGroup({
-      billingadress: new FormControl(null),
-      select: new FormControl(null),
-      selectstate: new FormControl(null),
-      zip: new FormControl(null),
+    this.billingAddressForm = new FormGroup({
+      billingaddress: new FormControl(null, Validators.required),
+      select: new FormControl(null, Validators.required),
+      selectstate: new FormControl(null, Validators.required),
+      zip: new FormControl(null, Validators.maxLength(5)),
     })
 
     this.shippingAddressForm = new FormGroup({
-      billingCheckbox: new FormControl(null),
-      shippingaddress: new FormControl(null),
-      shippingselect: new FormControl(null),
-      shippingselectstate: new FormControl(null),
-      shippingzip: new FormControl(null),
+      billingCheckbox: new FormControl(null, Validators.required),
+      shippingaddress: new FormControl(null, Validators.required),
+      shippingselect: new FormControl(null, Validators.required),
+      shippingselectstate: new FormControl(null, Validators.required),
+      shippingzip: new FormControl(null, Validators.maxLength(5)),
     })
   }
 
@@ -263,7 +293,6 @@ export class CheckoutComponent {
   }
 
 
-
   getCookie(name: string) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -298,12 +327,12 @@ export class CheckoutComponent {
       })
   }
 
-  odemeYap(ccn: number, cardholder: string, validity: string, cvv: number, billingadress: string, select: string, selectstate: string, zip: number) {
+  odemeYap(ccn: number, cardholder: string, validity: string, cvv: number, billingaddress: string, select: string, selectstate: string, zip: number) {
 
     if (this.currentStep != 2)
       return;
 
-    if (ccn == null || cardholder == null || validity == null || cvv == null || billingadress == null || select == null || selectstate == null || zip == null) {
+    if (this.checkoutForm.invalid || this.paymentForm.invalid || this.billingAddressForm.invalid || this.shippingAddressForm.invalid) {
       this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
       return;
     }
@@ -319,135 +348,14 @@ export class CheckoutComponent {
     console.log("cardholder : " + cardholder);
     console.log("validity : " + validity);
     console.log("cvv : " + cvv);
-    console.log("billingadress : " + billingadress);
+    console.log("billingaddress : " + billingaddress);
     console.log("select : " + select);
     console.log("selectstate : " + selectstate);
     console.log("zip : " + zip);
 
     console.log(this.cartService.getCartProducts());
 
-    try {
 
-
-      /*
-      const cardNameInput = document.getElementById("card-name-input") as HTMLInputElement;
-      if (cardNameInput) {
-        console.log("cardholder-name : " + cardNameInput.value);
-      }
-      else {
-        console.error("cardholder-name element not found");
-      }
-
-      const cardNumber = document.getElementById("card-number") as HTMLInputElement;
-      if (cardNumber) {
-        console.log("ccn : " + cardNumber.value);
-      }
-      else {
-        console.error("ccn element not found");
-      }
-
-      const validity = document.getElementById("validity-input") as HTMLInputElement;
-      if (validity) {
-        console.log("expiry-date : " + validity.value);
-      }
-      else {
-        console.error("expiry-date element not found");
-      }
-
-      let cvcElement = document.querySelector("#cvv") as HTMLInputElement;
-      if (cvcElement) {
-        console.log("cvv : " + cvcElement.value);
-      }
-      else {
-        console.error("cvv element not found");
-      }
-
-      let adresElement = document.querySelector("#billing-address") as HTMLInputElement;
-      if (adresElement) {
-        console.log("address : " + adresElement.value);
-      }
-      else {
-        console.error("address element not found");
-      }
-
-      let objSehirler = document.querySelector("#select") as HTMLSelectElement;
-      if (objSehirler) {
-        console.log("selectcity : " + objSehirler[objSehirler.selectedIndex].textContent);
-      }
-      else {
-        console.error("selectcity element not found");
-      }
-
-      let objIlceler = document.querySelector("#selectstate") as HTMLSelectElement;
-      if (objIlceler) {
-        console.log("selectstate : " + objIlceler[objIlceler.selectedIndex].textContent);
-      }
-      else {
-        console.error("selectstate element not found");
-      }
-
-      let zipElement = document.querySelector("#zip") as HTMLInputElement;
-      if (zipElement) {
-        console.log("zip : " + zipElement.value);
-      }
-      else {
-        console.error("zip element not found");
-      }
-
-      let phoneElement = document.querySelector("#tel") as HTMLInputElement;
-      if (phoneElement) {
-        console.log("tel : " + phoneElement.value);
-      }
-      else {
-        console.error("phone element not found");
-      }
-
-      let emailElement = document.querySelector("#mail") as HTMLInputElement;
-      if (emailElement) {
-        console.log("email : " + emailElement.value);
-      }
-      else {
-        console.error("email element not found");
-      }
-
-      let nameElement = document.querySelector("#adsoyad") as HTMLInputElement;
-      if (nameElement) {
-        console.log("name : " + nameElement.value);
-      }
-      else {
-        console.error("name element not found");
-      }
-
-      let vkno = document.querySelector("#vkno") as HTMLInputElement;
-      if (vkno) {
-        console.log("vkno : " + vkno.value);
-      }
-      else {
-        console.error("vkno element not found");
-      }
-      */
-
-
-
-    } catch (error) {
-      console.error("An error occurred in odemeYap:", error);
-      // Handle the error or report it to the user here
-    }
-
-    /*
-    this.checkoutDoldur();
-    console.log(this.checkouts)
-    this.sendRequest('Satis/MakePurchase', 'POST', this.checkouts)
-      .then(response => {
-        this.cartService.clear_cartp();
-        this.togglePaymentModal();
-
-        console.log(response);
-      })
-      .catch(err => {
-        console.error();
-      })
-    */
   }
 
   previousStep() {
@@ -462,6 +370,20 @@ export class CheckoutComponent {
   }
 
   nextStep() {
+
+    try {
+      this.checkInputValidity();
+      this.updateUI();
+
+    } catch (error) {
+      console.error("An error occurred in nextStep:", error);
+      // Handle the error or report it to the user here
+      return;
+    }
+
+  }
+
+  updateUI() {
     if (this.currentStep < 2) {
       this.currentStep = this.currentStep + 1;
       this.nextButtonText = 'Sonraki Adım';
@@ -479,8 +401,50 @@ export class CheckoutComponent {
     this.subtitle = this.titles[this.currentStep];
   }
 
+  checkInputValidity() {
+    if (this.checkoutForm.invalid) {
+      //this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
+      this.toastrService.error('Lütfen tüm bilgileri giriniz.', 'Hata');
+      if (!this.isTermAccepted) {
+        this.toastrService.error('Lütfen kullanım koşullarını kabul edin.', 'Hata');
+      }
+      throw new Error("Form is invalid");
+    } else if (this.currentStep == 1 &&
+      (this.shippingAddressForm.invalid || this.billingAddressForm.invalid && !this.isBillingAddressSame)) {
+      console.log(this.shippingAddressForm);
+      console.log(this.billingAddressForm);
+      console.log(this.isBillingAddressSame);
+      this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
+      throw new Error("Form is invalid");
+    }
+  }
+
+  setAsPersonal() {
+    this.placeholderType = this.personalPlaceholders;
+  }
+
+  setAsCompany() {
+    this.placeholderType = this.companyPlaceholders;
+  }
+
   onBillingCheckboxClick() {
     this.isBillingAddressSame = !this.isBillingAddressSame;
+
+      this.billingAddressForm.patchValue({
+        billingaddress: this.shippingAddressForm.get('shippingaddress')?.value,
+        select: this.shippingAddressForm.get('shippingselect')?.value,
+        selectstate: this.shippingAddressForm.get('shippingselectstate')?.value,
+        zip: this.shippingAddressForm.get('shippingzip')?.value,
+      });
+      /* else {
+      this.billingAddressForm.patchValue({
+        billingaddress: '',
+        select: '',
+        selectstate: '',
+        zip: '',
+      });
+    }
+    */
   }
 
   siparisGonder() {
@@ -676,15 +640,21 @@ export class CheckoutComponent {
   */
   checkzip() {
     let zipElement = document.querySelector("#zip") as HTMLInputElement;
+    let zipElement2 = document.querySelector("#shippingzip") as HTMLInputElement;
     if (zipElement) {
       var zip = zipElement.value;
       if (zip.length >= 5) {
         zipElement.value = zip.substring(0, 5);
-      } else {
-        zipElement.value = zipElement.value;
       }
+    } else {
+      console.error("zip element not found");
     }
-    else {
+    if (zipElement2) {
+      var zip = zipElement2.value;
+      if (zip.length >= 5) {
+        zipElement2.value = zip.substring(0, 5);
+      }
+    } else {
       console.error("zip element not found");
     }
   }
@@ -782,19 +752,58 @@ export class CheckoutComponent {
     }
   }
 
-  get firstName() { return this.checkoutForm.get('firstName') }
-  get lastName() { return this.checkoutForm.get('lastName') }
-  get address() { return this.checkoutForm.get('address') }
-  get phone() { return this.checkoutForm.get('phone') }
-  get email() { return this.checkoutForm.get('email') }
+  get firstName() {
+    return this.checkoutForm.get('firstName')
+  }
 
-  get ccn() { return this.paymentForm.get('ccn') }
-  get cardholder() { return this.paymentForm.get('cardholder') }
-  get validity() { return this.paymentForm.get('validity') }
-  get cvv() { return this.paymentForm.get('cvv') }
+  get lastName() {
+    return this.checkoutForm.get('lastName')
+  }
 
-  get billingadress() { return this.addressForm.get('billingadress') }
-  get select() { return this.addressForm.get('select') }
-  get selectstate() { return this.addressForm.get('selectstate') }
-  get zip() { return this.addressForm.get('zip') }
+  get address() {
+    return this.checkoutForm.get('address')
+  }
+
+  get phone() {
+    return this.checkoutForm.get('phone')
+  }
+
+  get email() {
+    return this.checkoutForm.get('email')
+  }
+
+  get ccn() {
+    return this.paymentForm.get('ccn')
+  }
+
+  get cardholder() {
+    return this.paymentForm.get('cardholder')
+  }
+
+  get validity() {
+    return this.paymentForm.get('validity')
+  }
+
+  get cvv() {
+    return this.paymentForm.get('cvv')
+  }
+
+  get billingaddress() {
+    return this.billingAddressForm.get('billingaddress')
+  }
+
+  get select() {
+    return this.billingAddressForm.get('select')
+  }
+
+  get selectstate() {
+    return this.billingAddressForm.get('selectstate')
+  }
+
+  get zip() {
+    return this.billingAddressForm.get('zip')
+  }
+
+
+  protected readonly cities_data = cities_data;
 }

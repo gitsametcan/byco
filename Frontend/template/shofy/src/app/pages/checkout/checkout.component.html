@@ -41,13 +41,24 @@
               <div class="col-lg-7">
                 <div class="tp-checkout-bill-area" *ngIf="currentStep == 0">
                   <h3 class="tp-checkout-bill-title">Bilgiler</h3>
-                  <form (ngSubmit)="updateInfo()" #updateInfoForm="ngForm">
+
+                  <div class="radio-buttons">
+                    <input type="radio" id="person" value="0" name="persontype" formControlName="persontype"
+                           (input)="setAsPersonal()">
+                    <label for="person">Bireysel</label>
+                    <input type="radio" id="company" value="1" name="persontype" formControlName="persontype"
+                           (input)="setAsCompany()">
+                    <label for="company">Kurumsal</label>
+                  </div>
+
+                  <form [formGroup]="checkoutForm" (ngSubmit)="updateInfo()" #updateInfoForm="ngForm">
+
                     <div class="row">
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="adsoyad" id="adsoyad" placeholder="Adınız Soyadınız"
-                                   value="{{myObject.adsoyad}}"
+                            <input type="text" name="adsoyad" id="adsoyad" [placeholder]="placeholderType[0]"
+                                   value="{{myObject.adsoyad}}" formControlName="name"
                                    [(ngModel)]="myObject.adsoyad" required>
                             <span>
                               <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
@@ -68,8 +79,9 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="email" name="mail" id="mail" placeholder="E-Posta" value="{{myObject.email}}"
-                                   [(ngModel)]="myObject.email" required>
+                            <input type="email" name="mail" id="mail" [placeholder]="placeholderType[1]"
+                                   value="{{myObject.email}}"
+                                   [(ngModel)]="myObject.email" formControlName="email" required>
                             <span>
                               <svg width="18" height="16" viewBox="0 0 18 16" fill="none"
                                    xmlns="http://www.w3.org/2000/svg">
@@ -89,8 +101,8 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="vkno" id="vkno" placeholder="TC Kimlik Numarası"
-                                   value="{{myObject.vkno}}"
+                            <input type="text" name="vkno" id="vkno" [placeholder]="placeholderType[2]"
+                                   value="{{myObject.vkno}}" formControlName="id"
                                    [(ngModel)]="myObject.vkno" required>
                             <span>
                               <i class="fa-light fa-clipboard-list-check"></i>
@@ -101,8 +113,8 @@
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="tel" id="tel" placeholder="Telefon Numaranız"
-                                   value="{{myObject.telefon}}"
+                            <input type="text" name="tel" id="tel" [placeholder]="placeholderType[3]"
+                                   value="{{myObject.telefon}}" formControlName="phone"
                                    [(ngModel)]="myObject.telefon" required>
                             <span>
                               <svg width="15" height="18" viewBox="0 0 15 18" fill="none"
@@ -142,8 +154,8 @@
                       <div class="col-xxl-12">
                         <div class="profile__input-box">
                           <div class="profile__input">
-                            <input type="text" name="adress" id="adress" placeholder="Adresiniz"
-                                   value="{{myObject.adres}}"
+                            <input type="text" name="address" id="address" [placeholder]="placeholderType[4]"
+                                   value="{{myObject.adres}}" formControlName="address"
                                    [(ngModel)]="myObject.adres" required>
                             <span>
                               <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
@@ -187,67 +199,76 @@
                     <div class="form-group">
                       <label for="shippingaddress">Kargo Adresi</label>
                       <input type="text" id="shippingaddress" name="shippingaddress" formControlName="shippingaddress"
-                             value="{{myObject.billingadress}}" maxlength="100" required>
+                             maxlength="100" required>
                     </div>
                     <div class="form-group">
                       <label for="shippingselect">Şehir</label>
                       <select name="shippingselect" id="shippingselect" formControlName="shippingselect"
-                              value="{{myObject.select}}" (click)="fnSehirler()">
-                        <option value="" disabled selected>Seçiniz</option>
+                              (change)="assignShippingDistricts($event)">
+                        <option *ngFor="let city of objCities" [ngValue]="city.value"
+                                (click)="shippingCityChangeHandler(city.value)">{{ city.text }}
+                        </option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="shippingselectstate">İlçe</label>
                       <select name="shippingselectstate" id="shippingselectstate" formControlName="shippingselectstate"
-                              value="{{myObject.selectstate}}">
-                        <option value="" disabled selected>Seçiniz</option>
+                              (change)="shippingDistrictChangeHandler($event)">
+                        <option selected [value]="cities_data[selectedShippingCity].districts[selectedShippingDistrict].value">
+                          {{ cities_data[selectedShippingCity].districts[selectedShippingDistrict].text }}
+                        </option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="shippingzip">ZIP/Posta Kodu</label>
                       <input type="number" name="shippingzip" id="shippingzip" formControlName="shippingzip"
-                             pattern="\d{5}" maxlength="5"
-                             placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
+                             placeholder="34848">
                     </div>
 
                     <div class="billing-checkbox" style="margin-top: 1vh;">
                       <input type="checkbox" id="billingCheckbox" name="billingCheckbox"
                              formControlName="billingCheckbox"
-                             (input)="onBillingCheckboxClick()">
-                      <label for="billingCheckbox">Fatura adresi ile aynı</label>
+                             (change)="onBillingCheckboxClick()">
+                      <label for="billingCheckbox">Fatura adresi ile Kargo aynı</label>
                     </div>
 
-                    <div class="billing-address" *ngIf="!isBillingAddressSame">
-                      <div class="form-group">
-                        <label for="billingaddress">Fatura Adresi</label>
-                        <input type="text" id="billingaddress" name="billingaddress" formControlName="billingadress"
-                               value="{{myObject.billingadress}}" maxlength="100" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="select">Şehir</label>
-                        <select name="select" id="select" formControlName="select" value="{{myObject.select}}"
-                                (click)="fnSehirler()">
-                          <option value="" disabled selected>Seçiniz</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="selectstate">İlçe</label>
-                        <select name="selectstate" id="selectstate" formControlName="selectstate"
-                                value="{{myObject.selectstate}}">
-                          <option value="" disabled selected>Seçiniz</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="zip">ZIP/Posta Kodu</label>
-                        <input type="number" name="zip" id="zip" formControlName="zip" pattern="\d{5}" maxlength="5"
-                               placeholder="34848" value="{{myObject.zip}}" (input)="checkzip()" required>
-                      </div>
-                    </div>
 
                     <!--
                     <button type="submit" name="submit-payment-btn"
                             (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">Ödemeyi Onayla</button>
                   -->
+                  </form>
+                  <form [formGroup]="billingAddressForm" *ngIf="!isBillingAddressSame">
+                    <div class="billing-address">
+                      <div class="form-group">
+                        <label for="billingaddress">Fatura Adresi</label>
+                        <input type="text" id="billingaddress" name="billingaddress" formControlName="billingaddress"
+                               maxlength="100" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="select">Şehir</label>
+                        <select name="select" id="select" formControlName="select"
+                                (input)="assignBillingDistricts($event)">
+                          <option *ngFor="let city of objCities" [ngValue]="city.value"
+                                  (click)="billingCityChangeHandler(city.value)">{{ city.text }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="selectstate">İlçe</label>
+                        <select name="selectstate" id="selectstate" formControlName="selectstate"
+                                (change)="billingDistrictChangeHandler($event)">
+                          <option selected [value]="cities_data[selectedBillingCity].districts[selectedBillingDistrict].value">
+                            {{ cities_data[selectedBillingCity].districts[selectedBillingDistrict].text }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="zip">ZIP/Posta Kodu</label>
+                        <input type="number" name="zip" id="zip" formControlName="zip"
+                               placeholder="34848" >
+                      </div>
+                    </div>
                   </form>
                   <!-- address area end -->
                 </div>
@@ -257,35 +278,35 @@
                   <div class="tp-checkout-summary-list">
                     <ul>
                       <li>
-                        <label>Kart Sahibi</label>
+                        <label>Kart Sahibi :</label>
                         <label>{{ myObject.adsoyad }}</label>
                       </li>
                       <li>
-                        <label>E-Posta</label>
+                        <label>E-Posta :</label>
                         <label>{{ myObject.email }}</label>
                       </li>
                       <li>
-                        <label>TCKN / VKNO</label>
+                        <label>TCKN / VKNO :</label>
                         <label>{{ myObject.vkno }}</label>
                       </li>
                       <li>
-                        <label>Tip</label>
+                        <label>Tip :</label>
                         <label>{{ myObject.tip }}</label>
                       </li>
                       <li>
-                        <label>Telefon</label>
+                        <label>Telefon :</label>
                         <label>{{ myObject.telefon }}</label>
                       </li>
                       <li>
-                        <label>Şehir</label>
+                        <label>Şehir :</label>
                         <label>{{ select?.value }}</label>
                       </li>
                       <li>
-                        <label>İlçe</label>
+                        <label>İlçe :</label>
                         <label>{{ selectstate?.value }}</label>
                       </li>
                       <li>
-                        <label>ZIP/Posta Kodu</label>
+                        <label>ZIP/Posta Kodu :</label>
                         <label>{{ zip?.value }}</label>
                       </li>
                     </ul>
@@ -372,7 +393,7 @@
                         </div>
                       </div>
                       <button type="submit" id="submit-payment-btn" name="submit-payment-btn"
-                              (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingadress?.value, select?.value, selectstate?.value, zip?.value)">
+                              (click)="odemeYap(ccn?.value, cardholder?.value, validity?.value, cvv?.value, billingaddress?.value, select?.value, selectstate?.value, zip?.value)">
                         Ödemeyi Onayla
                       </button>
                     </form>
@@ -440,7 +461,8 @@
 
 
                       <li class="tp-order-info-list-total">
-                        <input type="checkbox" id="termsCheckbox" (click)="onCheckboxClick($event)">
+                        <input type="checkbox" id="termsCheckbox" (click)="onCheckboxClick($event)"
+                               formControlName="usePolicy">
                         <label for="termsCheckbox">
                           <span (click)="togglePolicyModal()"
                                 style="cursor: pointer; text-decoration: underline;">Kullanım Koşullarını</span> Kabul
@@ -470,12 +492,13 @@
                     </div>
                   </div> -->
                   <div class="tp-checkout-btn-wrapper">
-                    <button type="submit" class="tp-checkout-btn w-100" (click)="nextStep()">{{ nextButtonText }}
+                    <button type="submit" class="tp-checkout-btn w-100" (click)="nextStep()">
+                      {{ nextButtonText }}
                     </button>
                   </div>
-                  <div class="tp-checkout-btn-wrapper" style="margin-top: 1vh;">
-                    <button type="submit" class="tp-checkout-btn w-100"
-                            (click)="previousStep()">{{ previousButtonText }}
+                  <div class="tp-checkout-btn-wrapper">
+                    <button type="submit" id="prevBtn" class="tp-checkout-btn w-100" (click)="previousStep()">
+                      {{ previousButtonText }}
                     </button>
                   </div>
                 </div>
