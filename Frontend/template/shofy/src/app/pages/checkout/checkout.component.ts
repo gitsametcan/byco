@@ -6,6 +6,7 @@ import {IProduct} from '@/types/product-type';
 import {checkk} from '@/types/checkt-type';
 import {ICity} from '@/types/cities-type';
 import cities_data from '@/data/city-data';
+import vergiDaireleri from "@/data/vergi-daireleri";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class CheckoutComponent {
   userid: number = -1;
   discount: number = 0;
   objCities: ICity[] = [];
+
   paymentInfoUpdated: boolean = false;
 
   personalPlaceholders: string[] = ['Adınız Soyadınız', 'E-posta Adresiniz', 'TC Kimlik Numaranız', 'Telefon Numaranız',
@@ -55,6 +57,7 @@ export class CheckoutComponent {
     adsoyad: '',
     email: '',
     vkno: '',
+    vergi_dairesi: '',
     tip: '1',
     telefon: '',
     adres: '',
@@ -72,6 +75,7 @@ export class CheckoutComponent {
   protected selectedShippingDistrict: number = 0;
   protected selectedBillingCity: number = 0;
   protected selectedBillingDistrict: number = 0;
+  protected customerType: number = 0;
 
   constructor(public cartService: CartService, private toastrService: ToastrService) {
   }
@@ -420,31 +424,38 @@ export class CheckoutComponent {
   }
 
   setAsPersonal() {
+    this.customerType = 0;
     this.placeholderType = this.personalPlaceholders;
   }
 
   setAsCompany() {
+    this.customerType = 1;
     this.placeholderType = this.companyPlaceholders;
   }
 
   onBillingCheckboxClick() {
+
+    this.billingAddressForm.patchValue({
+      billingaddress: this.shippingAddressForm.get('shippingaddress')?.value,
+      select: this.shippingAddressForm.get('shippingselect')?.value,
+      selectstate: this.shippingAddressForm.get('shippingselectstate')?.value,
+      zip: this.shippingAddressForm.get('shippingzip')?.value,
+    });
+
+    this.selectedBillingCity = this.selectedShippingCity;
+    this.selectedBillingDistrict = this.selectedShippingDistrict;
+
     this.isBillingAddressSame = !this.isBillingAddressSame;
 
-      this.billingAddressForm.patchValue({
-        billingaddress: this.shippingAddressForm.get('shippingaddress')?.value,
-        select: this.shippingAddressForm.get('shippingselect')?.value,
-        selectstate: this.shippingAddressForm.get('shippingselectstate')?.value,
-        zip: this.shippingAddressForm.get('shippingzip')?.value,
-      });
-      /* else {
-      this.billingAddressForm.patchValue({
-        billingaddress: '',
-        select: '',
-        selectstate: '',
-        zip: '',
-      });
-    }
-    */
+    /* else {
+    this.billingAddressForm.patchValue({
+      billingaddress: '',
+      select: '',
+      selectstate: '',
+      zip: '',
+    });
+  }
+  */
   }
 
   siparisGonder() {
@@ -806,4 +817,5 @@ export class CheckoutComponent {
 
 
   protected readonly cities_data = cities_data;
+  protected readonly vergiDaireleri = vergiDaireleri;
 }

@@ -22,11 +22,14 @@
   align-items: center;
   justify-content: flex-start;
   align-content: center;
-  padding-left: 35px;
   cursor: pointer;
   font-size: 1.2rem;
   user-select: none;
   transition: background-color 0.3s, color 0.3s, 0.3s, box-shadow 0.3s;
+}
+
+.billing-checkbox input {
+  margin-right: 1vw;
 }
 
 .tp-checkout-btn-wrapper #prevBtn {

@@ -43,10 +43,10 @@
                   <h3 class="tp-checkout-bill-title">Bilgiler</h3>
 
                   <div class="radio-buttons">
-                    <input type="radio" id="person" value="0" name="persontype" formControlName="persontype"
+                    <input type="radio" id="person" value="0" [checked]="customerType == 0" name="persontype" formControlName="persontype"
                            (input)="setAsPersonal()">
                     <label for="person">Bireysel</label>
-                    <input type="radio" id="company" value="1" name="persontype" formControlName="persontype"
+                    <input type="radio" id="company" value="1" [checked]="customerType == 1" name="persontype" formControlName="persontype"
                            (input)="setAsCompany()">
                     <label for="company">Kurumsal</label>
                   </div>
@@ -134,6 +134,20 @@
                           </div>
                         </div>
                       </div>
+                      <div class="col-xxl-12" *ngIf="customerType == 1">
+                        <div class="profile__input-box">
+                          <div class="profile__input">
+                            <div class="form-group">
+                              <select name="vergidairesi" id="vergidairesi" formControlName="vergidairesi"
+                                      [(ngModel)]="myObject.vergi_dairesi">
+                                <option *ngFor="let item of vergiDaireleri" [value]="item">
+                                  {{ item.il + ' ' + item.ilce + ' ' + item.muhasebe_birimi_kodu + ' ' + item.vergi_dairesi }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
                           <div *ngIf="myObject.tip=='0'">Yönetici</div>
@@ -214,7 +228,8 @@
                       <label for="shippingselectstate">İlçe</label>
                       <select name="shippingselectstate" id="shippingselectstate" formControlName="shippingselectstate"
                               (change)="shippingDistrictChangeHandler($event)">
-                        <option selected [value]="cities_data[selectedShippingCity].districts[selectedShippingDistrict].value">
+                        <option
+                                [value]="cities_data[selectedShippingCity].districts[selectedShippingDistrict].value">
                           {{ cities_data[selectedShippingCity].districts[selectedShippingDistrict].text }}
                         </option>
                       </select>
@@ -222,7 +237,7 @@
                     <div class="form-group">
                       <label for="shippingzip">ZIP/Posta Kodu</label>
                       <input type="number" name="shippingzip" id="shippingzip" formControlName="shippingzip"
-                             placeholder="34848">
+                             placeholder="34848" maxlength="5">
                     </div>
 
                     <div class="billing-checkbox" style="margin-top: 1vh;">
@@ -258,7 +273,8 @@
                         <label for="selectstate">İlçe</label>
                         <select name="selectstate" id="selectstate" formControlName="selectstate"
                                 (change)="billingDistrictChangeHandler($event)">
-                          <option selected [value]="cities_data[selectedBillingCity].districts[selectedBillingDistrict].value">
+                          <option
+                                  [value]="cities_data[selectedBillingCity].districts[selectedBillingDistrict].value">
                             {{ cities_data[selectedBillingCity].districts[selectedBillingDistrict].text }}
                           </option>
                         </select>
@@ -266,7 +282,7 @@
                       <div class="form-group">
                         <label for="zip">ZIP/Posta Kodu</label>
                         <input type="number" name="zip" id="zip" formControlName="zip"
-                               placeholder="34848" >
+                               placeholder="34848" maxlength="5">
                       </div>
                     </div>
                   </form>
@@ -839,15 +855,19 @@
 
 
   /*#expiry-date,*/
-  #select, #selectstate, #shippingselect, #shippingselectstate {
+  .form-group select {
     width: 100%;
     padding: 12px;
     border: 1px solid #000000;
     border-radius: 4px;
     box-sizing: border-box;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 16px;
     resize: vertical;
+  }
+
+  .form-group option {
+    font-size: 2vh;
   }
 
   /*
