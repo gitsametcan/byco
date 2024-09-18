@@ -14,6 +14,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
+import {PaymentErrorOccurredComponent} from "./payment-error-occurred/payment-error-occurred.component";
+import {PaymentSuccessfulComponent} from "./payment-successful/payment-successful.component";
 
 const routes: Routes = [
   {
@@ -88,6 +90,16 @@ const routes: Routes = [
     component:SearchComponent,
     title:'Arama Sayfası'
   },
+  {
+    path:'payment-error-occurred',
+    component:PaymentErrorOccurredComponent,
+    title:'Ödeme Hatası'
+  },
+  {
+    path:"payment-successful",
+    component:PaymentSuccessfulComponent,
+    title:'Ödeme Başarılı'
+  }
 ];
 
 @NgModule({

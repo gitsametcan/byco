@@ -7,6 +7,7 @@ import {checkk} from '@/types/checkt-type';
 import {ICity} from '@/types/cities-type';
 import cities_data from '@/data/city-data';
 import vergiDaireleri from "@/data/vergi-daireleri";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -77,7 +78,7 @@ export class CheckoutComponent {
   protected selectedBillingDistrict: number = 0;
   protected customerType: number = 0;
 
-  constructor(public cartService: CartService, private toastrService: ToastrService) {
+  constructor(public cartService: CartService, private toastrService: ToastrService, private router: Router) {
   }
 
   showPolicyModal: boolean = false;
@@ -331,7 +332,7 @@ export class CheckoutComponent {
       })
   }
 
-  odemeYap(ccn: number, cardholder: string, validity: string, cvv: number, billingaddress: string, select: string, selectstate: string, zip: number) {
+  odemeYap() {
 
     if (this.currentStep != 2)
       return;
@@ -348,17 +349,86 @@ export class CheckoutComponent {
     console.log("telefon : " + this.myObject.telefon);
     console.log("adres : " + this.myObject.adres);
     console.log("discount : " + this.myObject.discount);
-    console.log("ccn : " + ccn);
-    console.log("cardholder : " + cardholder);
-    console.log("validity : " + validity);
-    console.log("cvv : " + cvv);
-    console.log("billingaddress : " + billingaddress);
-    console.log("select : " + select);
-    console.log("selectstate : " + selectstate);
-    console.log("zip : " + zip);
+    console.log("ccn : " + this.ccn);
+    console.log("cardholder : " + this.cardholder);
+    console.log("validity : " + this.validity);
+    console.log("cvv : " + this.cvv);
+    console.log("billingaddress : " + this.billingaddress);
+    console.log("select : " + this.select);
+    console.log("selectstate : " + this.selectstate);
+    console.log("zip : " + this.zip);
 
     console.log(this.cartService.getCartProducts());
 
+
+
+
+    // POST isteği için gerekli ödeme bilgileri
+    const paymentData = {
+      mode: 'TEST',
+      apiversion: '512',
+      secure3Dsecuritylevel: '3D_PAY',
+      terminalProvUserId: 'PROVAUT',
+      terminalUserId: 'GARANTI',
+      terminalMerchantId: '7000679',
+      terminalId: '30691297',
+      orderId: 'trytrytrytry',
+      successUrl: 'http://localhost:8000/success.html',
+      errorUrl: 'http://localhost:5232/api/error/process-error',
+      customerEmailAddress: 'eticaret@garanti.com.tr',
+      customerIpAddress: '192.168.0.1',
+      companyName: 'GARANTI TEST',
+      lang: 'tr',
+      txnTimestamp: '',
+      secure3DHash: "string",
+      txnAmount: 100,
+      txnType: 'sales',
+      txnCurrencyCode: '949',
+      txnInstallmentCount: 0,
+      cardHolderName: 'Test User',
+      cardNumber: '5406697543211173',
+      cardExpireDateMonth: '04',
+      cardExpireDateYear: '27',
+      cardCvv2: '423'
+    };
+
+    // POST isteği atan kısım
+    fetch('http://localhost:5232/api/PaymentController1/process', { // .NET API'yi burada çağırıyoruz
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(paymentData)
+    })
+      .then(response => response.text()) // HTML yanıtını alıyoruz
+      .then(htmlContent => {
+        // Yeni bir sekme açıp gelen HTML içeriğini gösteriyoruz
+        const newWindow = window.open();
+        if (newWindow) {
+          newWindow.document.write(htmlContent);
+          newWindow.document.close();
+        } else {
+          console.error('Failed to open new window');
+        }
+      })
+      .catch(error => {
+        console.error('Hata:', error);
+      });
+
+
+    setTimeout(
+      () => {
+        this.router.navigate(['/pages/payment-successful']).then(r => console.log(r));
+      },
+      1000
+    );
+    // wait for 5 seconds and then redirect to payment error page
+    setTimeout(
+      () => {
+        this.router.navigate(['/pages/payment-error-occurred']).then(r => console.log(r));
+      },
+      10000
+    );
 
   }
 

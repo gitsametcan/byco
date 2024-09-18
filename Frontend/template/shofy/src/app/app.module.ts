@@ -9,13 +9,17 @@ import { ShopComponent } from './shop/pages/shop/shop.component';
 import { ShopModule } from './shop/shop.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddressComponent } from './address/address.component';
+import { PaymentErrorOccurredComponent } from './pages/payment-error-occurred/payment-error-occurred.component';
+import { PaymentSuccessfulComponent } from './pages/payment-successful/payment-successful.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ShopComponent,
-    AddressComponent
+    AddressComponent,
+    PaymentErrorOccurredComponent,
+    PaymentSuccessfulComponent
   ],
     imports: [
         SharedModule,
