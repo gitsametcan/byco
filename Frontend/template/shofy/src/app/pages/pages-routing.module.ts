@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
 import {PaymentErrorOccurredComponent} from "./payment-error-occurred/payment-error-occurred.component";
 import {PaymentSuccessfulComponent} from "./payment-successful/payment-successful.component";
+import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 
 const routes: Routes = [
   {
@@ -104,6 +105,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy }
+  ]
 })
 export class PagesRoutingModule { }

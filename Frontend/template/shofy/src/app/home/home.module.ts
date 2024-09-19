@@ -7,6 +7,7 @@ import { FashionComponent } from './fashion/fashion.component';
 import { BeautyComponent } from './beauty/beauty.component';
 import { JewelryComponent } from './jewelry/jewelry.component';
 import { ShopModule } from './../shop/shop.module';
+import {PagesModule} from "../pages/pages.module";
 
 
 @NgModule({

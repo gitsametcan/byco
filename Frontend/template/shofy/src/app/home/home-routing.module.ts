@@ -4,6 +4,7 @@ import { BeautyComponent } from './beauty/beauty.component';
 import { FashionComponent } from './fashion/fashion.component';
 import { ElectronicsComponent } from './electronics/electronics.component';
 import { JewelryComponent } from './jewelry/jewelry.component';
+import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 
 const routes: Routes = [
   // {
@@ -25,11 +26,14 @@ const routes: Routes = [
     path:'teklif/:id',
     component:JewelryComponent,
     title:'Teklif Al'
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy }
+  ]
 })
 export class HomeRoutingModule { }

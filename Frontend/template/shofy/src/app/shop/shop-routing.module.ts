@@ -20,6 +20,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { CompareComponent } from './pages/compare/compare.component';
 import { OrderComponent } from './pages/order/order.component';
+import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 
 
 
@@ -123,11 +124,14 @@ const routes: Routes = [
     path:'order',
     component:OrderComponent,
     title:'Sipariş Ver'
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy }
+  ]
 })
 export class ShopRoutingModule { }
