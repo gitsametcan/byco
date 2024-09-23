@@ -358,10 +358,7 @@ export class CheckoutComponent {
     console.log("selectstate : " + this.selectstate);
     console.log("zip : " + this.zip);
 
-    console.log(this.cartService.getCartProducts());
-
-
-
+    console.log("cart: " + this.cartService.getCartProducts());
 
     // POST isteği için gerekli ödeme bilgileri
     const paymentData = {
@@ -369,12 +366,12 @@ export class CheckoutComponent {
       apiversion: '512',
       secure3Dsecuritylevel: '3D_PAY',
       terminalProvUserId: 'PROVAUT',
-      terminalUserId: 'GARANTI',
+      terminalUserId: 'SANALUSER',
       terminalMerchantId: '7000679',
       terminalId: '30691297',
       orderId: 'trytrytrytry',
-      successUrl: 'http://localhost:8000/success.html',
-      errorUrl: 'http://localhost:5232/api/error/process-error',
+      successUrl: 'http://localhost:80/pages/payment-successful',
+      errorUrl: 'http://localhost:80/pages/payment-error-occurred',
       customerEmailAddress: 'eticaret@garanti.com.tr',
       customerIpAddress: '192.168.0.1',
       companyName: 'GARANTI TEST',
@@ -393,7 +390,7 @@ export class CheckoutComponent {
     };
 
     // POST isteği atan kısım
-    fetch('http://localhost:5232/api/PaymentController1/process', { // .NET API'yi burada çağırıyoruz
+    fetch('http://localhost:80/api/PaymentController1/process', { // .NET API'yi burada çağırıyoruz
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -415,8 +412,7 @@ export class CheckoutComponent {
         console.error('Hata:', error);
       });
 
-
-    setTimeout(
+    /*setTimeout(
       () => {
         this.router.navigate(['/pages/payment-successful']).then(r => console.log(r));
       },
@@ -428,7 +424,7 @@ export class CheckoutComponent {
         this.router.navigate(['/pages/payment-error-occurred']).then(r => console.log(r));
       },
       10000
-    );
+    );*/
 
   }
 
