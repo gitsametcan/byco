@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-profile',
@@ -20,10 +21,10 @@ export class ProfileComponent {
   passwordMismatch: boolean = false;
   userid:number = -1;
 
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.urlhost.geturl();
 
 
-  constructor(private router: Router, private toastrService: ToastrService) { }
+  constructor(private router: Router, private toastrService: ToastrService, private urlhost:URL) { }
 
 
   public genderSelectOptions = [

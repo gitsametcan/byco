@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-contact-form',
@@ -11,8 +12,8 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = "https://bycobackend.online:5001/api";
-  constructor(private toastrService: ToastrService) { }
+  benimUrl = this.urlhost.geturl();
+  constructor(private toastrService: ToastrService, private urlhost:URL) { }
 
 
   ngOnInit () {

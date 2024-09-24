@@ -1,5 +1,6 @@
 import { ICategory } from "@/types/category-type";
 import { HttpClient } from '@angular/common/http';
+import { URL } from "../services/url";
 
 
 // class CategoryService {
@@ -51,7 +52,8 @@ import { HttpClient } from '@angular/common/http';
 // }
 
 class CategoryService {
-    benimUrl = "https://bycobackend.online:5001/api";
+    urlhost = new URL;
+    benimUrl = this.urlhost.geturl();
 
     kategori: ICategory[] = [];
     okey = false;

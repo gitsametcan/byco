@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { URL } from '@/shared/services/url';
 import { Observable } from 'rxjs';
 import { NgModule } from '@angular/core';
 
@@ -9,8 +10,8 @@ import { NgModule } from '@angular/core';
   
 
 export class Services{
-    constructor(private http:HttpClient){}
-    benimUrl = "https://bycobackend.online:5001/api";
+    constructor(private http:HttpClient, private urlhost:URL){}
+    benimUrl = this.urlhost.geturl();
 
 
     sendRequest(url: string, method: string, data?:any): Promise<any> {

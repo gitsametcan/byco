@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IProduct } from '@/types/product-type';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { CartService } from '@/shared/services/cart.service';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-product-details-wrapper',
@@ -16,7 +17,7 @@ export class ProductDetailsWrapperComponent {
   yeniFiyat: string = "";
   userid: number = -1;
 
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.urlhost.geturl();
 
   handleTextToggle() {
     this.textMore = !this.textMore;
@@ -24,7 +25,8 @@ export class ProductDetailsWrapperComponent {
 
   constructor(
     public productService: ProductService,
-    public cartService: CartService
+    public cartService: CartService,
+    private urlhost:URL
   ) {}
 
   handleIsColorVariant(product: IProduct) {

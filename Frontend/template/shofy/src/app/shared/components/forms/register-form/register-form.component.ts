@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-register-form',
@@ -17,12 +18,13 @@ export class RegisterFormComponent {
   }
 
   isShowTypeMessage = false;
+  benimUrl = this.urlhost.geturl();
 
   public registerForm!: FormGroup;
   public formSubmitted = false;
   public userType = "null";
 
-  constructor(private toastrService: ToastrService, private router: Router) { }
+  constructor(private toastrService: ToastrService, private router: Router, private urlhost: URL) { }
 
   ngOnInit () {
     this.registerForm = new FormGroup({
@@ -40,7 +42,7 @@ export class RegisterFormComponent {
     if(this.userType!="null") console.log("null");
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"){
         console.log(name +" " + surname + " " +email + " "+password+"  tip:"+this.userType)
-        fetch(`https://bycobackend.online:5001/api/User/RegisterUser`, {
+        fetch(this.benimUrl+`/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

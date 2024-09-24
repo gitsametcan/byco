@@ -7,6 +7,7 @@ import { ProductService } from '@/shared/services/product.service';
 import { Iproje } from '@/types/projelerimiz-type';
 import { ProjeService } from '@/shared/services/proje.service';
 import projeler_data from '@/data/projeler-data';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-fashion-popular-products',
@@ -19,7 +20,7 @@ export class FashionPopularProductsComponent {
 
 
     
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.urlhost.geturl();
   // add to cart
   addToCart(product: IProduct) {
     this.cartService.addCartProduct(product);
@@ -36,7 +37,7 @@ export class FashionPopularProductsComponent {
   public projeDevam: Iproje[] = [];
   public projeBiten: Iproje[] = [];
 
-  constructor(public cartService: CartService, public productService: ProductService) {
+  constructor(public cartService: CartService, public productService: ProductService, private urlhost:URL) {
     this.productService.products.subscribe((products) => {
       this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
     });

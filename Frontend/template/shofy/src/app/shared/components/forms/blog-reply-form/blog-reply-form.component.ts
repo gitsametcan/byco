@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-blog-reply-form',
@@ -9,11 +10,11 @@ import { FormControl, FormGroup,Validators } from '@angular/forms';
 })
 export class BlogReplyFormComponent {
 
-    benimUrl = "https://bycobackend.online:5001/api";
+    benimUrl = this.urlhost.geturl();
   public blogReplyForm!: FormGroup;
   public formSubmitted = false;
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService, private urlhost:URL) { }
 
   ngOnInit () {
     this.blogReplyForm = new FormGroup({

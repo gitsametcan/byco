@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of,Observable } from 'rxjs';
 import  product_data from '@/data/product-data';
 import { map } from 'rxjs/operators';
+import { URL } from './url';
 
 const all_products = product_data
 
@@ -10,7 +11,8 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
-    benimUrl = "https://bycobackend.online:5001/api";
+  urlhost = new URL();
+    benimUrl = this.urlhost.geturl();
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 

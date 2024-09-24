@@ -8,6 +8,7 @@ import projeler_data from '@/data/projeler-data';
 import { Iproje } from '@/types/projelerimiz-type';
 import { CartService } from '@/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { URL } from '@/shared/services/url';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BlogDetailsComponent {
 
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.url.geturl();
 
   public popular_prd: IProduct[] = [];
   public projeler: Iproje[] = [];
@@ -26,7 +27,7 @@ export class BlogDetailsComponent {
 
   public swiper: any;
 
-  constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute) {
+  constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute, private url:URL) {
     this.productService.products.subscribe((products) => {
       this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
     });

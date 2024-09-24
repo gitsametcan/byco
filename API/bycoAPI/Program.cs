@@ -23,10 +23,11 @@ namespace bycoAPI
 
             builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps("/etc/letsencrypt/live/4usdemoapp.com/certificate.pfx", "Byco2024.");
-    });
+    // serverOptions.ListenAnyIP(5001, listenOptions =>
+    // {
+    //     listenOptions.UseHttps("/etc/letsencrypt/live/bycobackend.online-0001/certificate.pfx", "Byco2024.");
+    // });
+    
 });
 
 

@@ -5,6 +5,7 @@ import { Services } from 'src/app/httpservices/services';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Time } from '@angular/common';
+import { URL } from '@/shared/services/url';
 
 @Component({
   selector: 'app-login-form',
@@ -14,7 +15,7 @@ import { Time } from '@angular/common';
 export class LoginFormComponent {
 
   isShowPass = false;
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.urlhost.geturl();
 
   handleShowPass () {
     this.isShowPass = !this.isShowPass;
@@ -24,7 +25,7 @@ export class LoginFormComponent {
   public formSubmitted = false;
   //public httpServices: Services;
 
-  constructor(private toastrService: ToastrService, private router: Router) { }
+  constructor(private toastrService: ToastrService, private router: Router, private urlhost:URL) { }
 
   ngOnInit () {
     this.loginForm = new FormGroup({

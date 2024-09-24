@@ -8,6 +8,7 @@ import {ICity} from '@/types/cities-type';
 import cities_data from '@/data/city-data';
 import vergiDaireleri from "@/data/vergi-daireleri";
 import {Router} from "@angular/router";
+import { URL } from '@/shared/services/url';
 
 
 @Component({
@@ -18,7 +19,7 @@ import {Router} from "@angular/router";
 export class CheckoutComponent {
 
 
-  benimUrl = "https://bycobackend.online:5001/api";
+  benimUrl = this.urlhost.geturl();
 
   public checkouts: checkk = {};
 
@@ -78,7 +79,7 @@ export class CheckoutComponent {
   protected selectedBillingDistrict: number = 0;
   protected customerType: number = 0;
 
-  constructor(public cartService: CartService, private toastrService: ToastrService, private router: Router) {
+  constructor(public cartService: CartService, private toastrService: ToastrService, private router: Router, private urlhost:URL) {
   }
 
   showPolicyModal: boolean = false;
