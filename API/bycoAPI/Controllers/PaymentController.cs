@@ -33,7 +33,7 @@ namespace bycoAPI.Controllers
 
             var content = new FormUrlEncodedContent(new[]
             {
-            new KeyValuePair<string, string>("mode", "TEST"),
+            new KeyValuePair<string, string>("mode", "PROD"),
             new KeyValuePair<string, string>("apiversion", "512"),
             new KeyValuePair<string, string>("secure3dsecuritylevel", "3D_PAY"),
             new KeyValuePair<string, string>("terminalprovuserid", "PROVAUT"),
@@ -42,13 +42,13 @@ namespace bycoAPI.Controllers
             new KeyValuePair<string, string>("terminalid", "30691297"),
             new KeyValuePair<string, string>("orderid", paymentRequest.OrderId),
             new KeyValuePair<string, string>("successurl", "http://localhost:8000/success.html"),
-            new KeyValuePair<string, string>("errorurl", "https://localhost:44313/api/error/process-error"),
+            new KeyValuePair<string, string>("errorurl", "https://localhost:5141/api/error/process-error"),
             new KeyValuePair<string, string>("customeremailaddress", paymentRequest.CustomerEmailAddress),
             new KeyValuePair<string, string>("customeripaddress", paymentRequest.CustomerIpAddress),
             new KeyValuePair<string, string>("companyname", "GARANTI TEST"),
             new KeyValuePair<string, string>("lang", "tr"),
             new KeyValuePair<string, string>("txntimestamp", DateTime.Now.ToString()),
-            new KeyValuePair<string, string>("secure3dhash", GetHashData("123qweASD/",paymentRequest.TerminalId,paymentRequest.OrderId,paymentRequest.TxnInstallmentCount,"12345678",paymentRequest.TxnAmount,paymentRequest.TxnCurrencyCode,paymentRequest.SuccessUrl,paymentRequest.TxnType,paymentRequest.ErrorUrl)),
+            new KeyValuePair<string, string>("secure3dhash", GetHashData("Byco2024.",paymentRequest.TerminalId,paymentRequest.OrderId,paymentRequest.TxnInstallmentCount,"5369796168426579617a35372e4859414233343537216279",paymentRequest.TxnAmount,paymentRequest.TxnCurrencyCode,paymentRequest.SuccessUrl,paymentRequest.TxnType,paymentRequest.ErrorUrl)),
             new KeyValuePair<string, string>("txnamount", paymentRequest.TxnAmount.ToString()),
             new KeyValuePair<string, string>("txntype", "sales"),
             new KeyValuePair<string, string>("txncurrencycode", paymentRequest.TxnCurrencyCode.ToString()),
