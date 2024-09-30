@@ -10,12 +10,11 @@ import { NgModule } from '@angular/core';
   
 
 export class Services{
-    constructor(private http:HttpClient, private urlhost:URL){}
-    benimUrl = this.urlhost.geturl();
-
+    constructor(private http:HttpClient){}
+    
 
     sendRequest(url: string, method: string, data?:any): Promise<any> {
-        return fetch(`${this.benimUrl}/${url}`, {
+        return fetch(`https://bycobackend.online:5001/api/${url}`, {
           method: method,
           mode: 'cors',
           cache: 'no-cache',

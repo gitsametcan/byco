@@ -12,8 +12,8 @@ export class ContactFormComponent {
   public contactForm!: FormGroup;
   public formSubmitted = false;
 
-  benimUrl = this.urlhost.geturl();
-  constructor(private toastrService: ToastrService, private urlhost:URL) { }
+  //benimUrl = this.urlhost.geturl();
+  constructor(private toastrService: ToastrService) { }
 
 
   ngOnInit () {
@@ -59,7 +59,7 @@ export class ContactFormComponent {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

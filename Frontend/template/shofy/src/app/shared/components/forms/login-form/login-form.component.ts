@@ -15,7 +15,7 @@ import { URL } from '@/shared/services/url';
 export class LoginFormComponent {
 
   isShowPass = false;
-  benimUrl = this.urlhost.geturl();
+  //benimUrl = this.urlhost.geturl();
 
   handleShowPass () {
     this.isShowPass = !this.isShowPass;
@@ -25,7 +25,7 @@ export class LoginFormComponent {
   public formSubmitted = false;
   //public httpServices: Services;
 
-  constructor(private toastrService: ToastrService, private router: Router, private urlhost:URL) { }
+  constructor(private toastrService: ToastrService, private router: Router) { }
 
   ngOnInit () {
     this.loginForm = new FormGroup({
@@ -73,7 +73,7 @@ export class LoginFormComponent {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

@@ -21,10 +21,10 @@ export class ProfileComponent {
   passwordMismatch: boolean = false;
   userid:number = -1;
 
-  benimUrl = this.urlhost.geturl();
+  //benimUrl = this.urlhost.geturl();
 
 
-  constructor(private router: Router, private toastrService: ToastrService, private urlhost:URL) { }
+  constructor(private router: Router, private toastrService: ToastrService) { }
 
 
   public genderSelectOptions = [
@@ -196,7 +196,7 @@ export class ProfileComponent {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

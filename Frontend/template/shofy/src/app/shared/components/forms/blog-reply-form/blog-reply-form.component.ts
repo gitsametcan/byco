@@ -10,11 +10,11 @@ import { URL } from '@/shared/services/url';
 })
 export class BlogReplyFormComponent {
 
-    benimUrl = this.urlhost.geturl();
+    //benimUrl = this.urlhost.geturl();
   public blogReplyForm!: FormGroup;
   public formSubmitted = false;
 
-  constructor(private toastrService: ToastrService, private urlhost:URL) { }
+  constructor(private toastrService: ToastrService) { }
 
   ngOnInit () {
     this.blogReplyForm = new FormGroup({
@@ -65,7 +65,7 @@ export class BlogReplyFormComponent {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

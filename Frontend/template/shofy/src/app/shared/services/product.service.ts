@@ -11,8 +11,7 @@ const all_products = product_data
   providedIn: 'root'
 })
 export class ProductService {
-  urlhost = new URL();
-    benimUrl = this.urlhost.geturl();
+    //benimUrl = this.urlhost.geturl();
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
 
@@ -184,7 +183,7 @@ export class ProductService {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
 
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

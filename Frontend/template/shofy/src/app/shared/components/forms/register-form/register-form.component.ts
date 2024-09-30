@@ -18,13 +18,13 @@ export class RegisterFormComponent {
   }
 
   isShowTypeMessage = false;
-  benimUrl = this.urlhost.geturl();
+  //benimUrl = this.urlhost.geturl();
 
   public registerForm!: FormGroup;
   public formSubmitted = false;
   public userType = "null";
 
-  constructor(private toastrService: ToastrService, private router: Router, private urlhost: URL) { }
+  constructor(private toastrService: ToastrService, private router: Router) { }
 
   ngOnInit () {
     this.registerForm = new FormGroup({
@@ -42,7 +42,7 @@ export class RegisterFormComponent {
     if(this.userType!="null") console.log("null");
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"){
         console.log(name +" " + surname + " " +email + " "+password+"  tip:"+this.userType)
-        fetch(this.benimUrl+`/User/RegisterUser`, {
+        fetch(`https://bycobackend.online:5001/api/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

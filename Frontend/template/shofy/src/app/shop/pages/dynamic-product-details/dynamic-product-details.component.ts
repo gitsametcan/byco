@@ -34,6 +34,7 @@ export class DynamicProductDetailsComponent implements OnInit {
         this.router.navigate(['/shop']);
       } else {
         this.product = product;
+        console.log("Detail page" + this.product)
       }
     });
   }

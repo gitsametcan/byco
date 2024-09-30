@@ -14,13 +14,13 @@ import { URL } from '@/shared/services/url';
   styleUrls: ['./beauty-special-products.component.scss']
 })
 export class BeautySpecialProductsComponent {
-    benimUrl = this.urlhost.geturl();
+    //benimUrl = this.urlhost.geturl();
 
     public popular_prd: IProduct[] = [];
     public projeler:Iproje[] = [];
     public projeDevam: Iproje[] = [];
   
-    constructor(public cartService: CartService, public productService: ProductService, private urlhost:URL) {
+    constructor(public cartService: CartService, public productService: ProductService) {
       this.productService.products.subscribe((products) => {
         this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
       });
@@ -88,7 +88,7 @@ export class BeautySpecialProductsComponent {
     
       sendRequest(url: string, method: string, data?:any): Promise<any> {
         
-        return fetch(`${this.benimUrl}/${url}`, {
+        return fetch(`https://bycobackend.online:5001/api/${url}`, {
           method: method,
           mode: 'cors',
           cache: 'no-cache',

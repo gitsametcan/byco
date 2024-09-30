@@ -16,8 +16,7 @@ export class ProductDetailsWrapperComponent {
   textMore = false;
   yeniFiyat: string = "";
   userid: number = -1;
-
-  benimUrl = this.urlhost.geturl();
+  benimUrl = "";
 
   handleTextToggle() {
     this.textMore = !this.textMore;
@@ -25,8 +24,7 @@ export class ProductDetailsWrapperComponent {
 
   constructor(
     public productService: ProductService,
-    public cartService: CartService,
-    private urlhost:URL
+    public cartService: CartService
   ) {}
 
   handleIsColorVariant(product: IProduct) {
@@ -81,7 +79,7 @@ export class ProductDetailsWrapperComponent {
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`${this.benimUrl}/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

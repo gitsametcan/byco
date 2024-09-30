@@ -52,8 +52,7 @@ import { URL } from "../services/url";
 // }
 
 class CategoryService {
-    urlhost = new URL;
-    benimUrl = this.urlhost.geturl();
+    //benimUrl = this.urlhost.geturl();
 
     kategori: ICategory[] = [];
     okey = false;
@@ -98,7 +97,7 @@ class CategoryService {
 
     private async sendRequest(url: string, method: string, data?: any): Promise<any> {
         try {
-            const response = await fetch(`${this.benimUrl}/${url}`, {
+            const response = await fetch(`https://bycobackend.online:5001/api/${url}`, {
                 method: method,
                 mode: 'cors',
                 cache: 'no-cache',
