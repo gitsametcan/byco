@@ -1,4 +1,6 @@
 using bycoAPI.Models;
+using bycoAPI.Services;
+using bycoAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
@@ -10,6 +12,15 @@ namespace bycoAPI.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+
+        readonly IEmailSender _emailSender;
+
+        public PaymentController(IEmailSender emailSender)
+        {
+            _emailSender = emailSender;
+        }
+
+
         [HttpPost("process")]
         public async Task<IActionResult> ProcessPayment([FromBody] PaymentRequestModel paymentRequest)
         {
@@ -18,6 +29,54 @@ namespace bycoAPI.Controllers
 
             // Ödeme işlemini gerçekleştir
             var result = await MakePayment(paymentRequest);
+
+            // Banka API'sinden dönen sonucu kontrol et
+            if (string.IsNullOrEmpty(result))
+                return StatusCode(500, "Ödeme işlemi sırasında hata oluştu.");
+
+            return Ok(result);
+        }
+
+        [HttpPost("SiparisVer")]
+        public async Task<IActionResult> SiparisVer([FromBody] HizliSiparis hp)
+        {
+            
+            PaymentRequestModel prm = new PaymentRequestModel();
+            prm.OrderId = DateTime.Now.ToString()+"byc";
+            prm.CustomerEmailAddress=hp.CustomerEmailAddress;
+            prm.CustomerIpAddress=hp.CustomerIpAddress;
+            prm.TxnAmount=hp.TxnAmount;
+            prm.CardHolderName=hp.CardHolderName;
+            prm.CardNumber=hp.CardNumber;
+            prm.CardExpireDateMonth=hp.CardExpireDateMonth;
+            prm.CardExpireDateYear=hp.CardExpireDateYear;
+            prm.CardCvv2=hp.CardCvv2;
+
+            Message ml = new Message(new string[] { "contact@byco.com.tr" });
+            ml.Subject ="Satış";
+            string bilgiler = hp.bireysel_kurumsal + "Telefon = " +hp.telefon + " Mail = " +hp.CustomerEmailAddress + " Vergi/TC No:" + hp.tcknvkn;
+            StringBuilder sb = new StringBuilder();
+            foreach(OdemeUrun ou in hp.urunler){
+                sb.Append(ou.ad + " " + ou.adet.ToString() + " " + ou.fiyat.ToString());
+                sb.Append("<br><br>");
+            }
+            sb.Append("Toplam Fiyat" + hp.TxnAmount);
+            sb.Append("<br><br>");
+            sb.Append("Fatura Adresi:" +hp.faturaAdresi);
+            sb.Append("<br><br>");
+            sb.Append("Teslimat Adresi:" +hp.teslimatAdresi);
+            sb.Append("<br><br>");
+            sb.Append(bilgiler);
+            ml.Subject=sb.ToString();
+
+            await _emailSender.Send(ml);
+
+
+
+
+
+
+            var result = await MakePayment(prm);
 
             // Banka API'sinden dönen sonucu kontrol et
             if (string.IsNullOrEmpty(result))

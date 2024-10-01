@@ -31,7 +31,7 @@ namespace bycoAPI.Controllers
         {
             Message message = new Message(new string[] { "contact@byco.com.tr" });
             message.Subject = mailRequest.konu;
-            message.Content = "İletişim<br><br>" + mailRequest.mesaj + "<br><br>Gönderen:" + mailRequest.isim + "<br>Mail:" + mailRequest.email;
+            message.Content = mailRequest.mesaj + "<br><br>ALICI:" + mailRequest.isim + "<br>Bilgiler:" + mailRequest.email;
             await _emailSender.Send(message);
             return Ok();
         }
