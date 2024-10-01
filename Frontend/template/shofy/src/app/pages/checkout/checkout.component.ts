@@ -8,7 +8,6 @@ import {ICity} from '@/types/cities-type';
 import cities_data from '@/data/city-data';
 import vergiDaireleri from "@/data/vergi-daireleri";
 import {Router} from "@angular/router";
-import { URL } from '@/shared/services/url';
 
 
 @Component({
@@ -54,7 +53,7 @@ export class CheckoutComponent {
   previousButtonText: string = 'Önceki Adım';
 
 
-  myObject = {
+  myUserObject = {
     user_id: "",
     adsoyad: '',
     email: '',
@@ -189,7 +188,7 @@ export class CheckoutComponent {
       persontype: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),
       id: new FormControl(null, Validators.required),
-      address: new FormControl(null, Validators.required),
+      //address: new FormControl(null, Validators.required),
       phone: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
       usePolicy: new FormControl(null, Validators.requiredTrue),
@@ -200,10 +199,10 @@ export class CheckoutComponent {
     this.objCities = cities_data;
 
     this.paymentForm = new FormGroup({
-      ccn: new FormControl(null, Validators.required),
-      cardholder: new FormControl(null, Validators.required),
-      validity: new FormControl(null, Validators.required),
-      cvv: new FormControl(null, Validators.required),
+      ccn: new FormControl(null, [Validators.required]),
+      cardholder: new FormControl(null, [Validators.required]),
+      validity: new FormControl(null, [Validators.required]),
+      cvv: new FormControl(null, [Validators.required, ]),
     })
 
     this.billingAddressForm = new FormGroup({
@@ -223,13 +222,13 @@ export class CheckoutComponent {
   }
 
   updateInfo() {
-    console.log(this.myObject);
+    console.log(this.myUserObject);
 
     this.infoUpdated = true;
   }
 
   updatePaymentInfo() {
-    console.log(this.myObject);
+    console.log(this.myUserObject);
 
     this.paymentInfoUpdated = true;
   }
@@ -280,7 +279,7 @@ export class CheckoutComponent {
     this.sendRequest('User/GetResponseById/' + this.userid, 'GET')
       .then(response => {
         console.log(response.data);
-        this.myObject = response.data;
+        this.myUserObject = response.data;
         this.isUserLogin = true;
         this.calculateDisc();
 
@@ -294,7 +293,7 @@ export class CheckoutComponent {
 
   calculateDisc() {
 
-    let sayi = Number(this.myObject.discount)
+    let sayi = Number(this.myUserObject.discount)
     this.discount = (this.cartService.totalPriceQuantity().total * sayi) / 100;
   }
 
@@ -340,28 +339,73 @@ export class CheckoutComponent {
 
     if (this.checkoutForm.invalid || this.paymentForm.invalid || this.billingAddressForm.invalid || this.shippingAddressForm.invalid) {
       this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
-      return;
+      //return;
     }
 
-    console.log("adsoyad : " + this.myObject.adsoyad);
-    console.log("email : " + this.myObject.email);
-    console.log("vkno : " + this.myObject.vkno);
-    console.log("tip : " + this.myObject.tip);
-    console.log("telefon : " + this.myObject.telefon);
-    console.log("adres : " + this.myObject.adres);
-    console.log("discount : " + this.myObject.discount);
-    console.log("ccn : " + this.ccn);
-    console.log("cardholder : " + this.cardholder);
-    console.log("validity : " + this.validity);
-    console.log("cvv : " + this.cvv);
-    console.log("billingaddress : " + this.billingaddress);
-    console.log("select : " + this.select);
-    console.log("selectstate : " + this.selectstate);
-    console.log("zip : " + this.zip);
+    let expMonth = "";
+    let expYear = "";
 
+      let parts = this.myUserObject.validity.split("/");
+      expMonth = parts[0];
+      expYear = parts[1];
+
+
+    // List<Entity>
+    const newCartProducts = this.cartService.getCartProducts().map(product => {
+      return {
+        name: product.description,
+        price: product.price,
+        orderQuantity: product.orderQuantity
+      }
+    });
+    const concatAddress = this.billingAddressForm.get('billingaddress')?.value + " " + this.billingAddressForm.get('zip')?.value;
+    const concatShippingAddress = this.shippingAddressForm.get('shippingaddress')?.value + " " + this.shippingAddressForm.get('shippingzip')?.value;
+
+    const shippingCost = 120;
+    const totalPrice = (this.cartService.totalPriceQuantity().total + shippingCost) * 100;
+
+    console.log("adsoyad : " + this.myUserObject.adsoyad);
+    console.log("vkno : " + this.myUserObject.vkno);
+    console.log("telefon : " + this.myUserObject.telefon);
+    console.log("bireysel_kurumsal : " + this.myUserObject.tip);
+    console.log("adres : " + concatAddress);
+    console.log("shippingaddress : " + concatShippingAddress);
+
+    // Obje basıyor
+    console.log("products : " + newCartProducts);
+    // Obje basıyor
     console.log("cart: " + this.cartService.getCartProducts());
+    // ÜRünleri basıyor
+    this.cartService.getCartProducts().forEach(product => {
+      console.log("product: " + product.title + " " + product.price + " " + product.orderQuantity);
+    });
 
-    // POST isteği için gerekli ödeme bilgileri
+    console.log("email : " + this.myUserObject.email);
+    // TODO IP?
+
+    console.log("price: " + this.cartService.totalPriceQuantity().total);
+    console.log("shippingCost: " + shippingCost);
+    console.log("totalPrice: " + totalPrice);
+
+    //console.log("discount : " + this.myUserObject.discount);
+
+    console.log("cardholder : " + this.cardholder?.value);
+    console.log("ccn : " + this.myUserObject.ccn);
+    console.log("validityDateMonth : " + expMonth);
+    console.log("validityDateYear : " + expYear);
+    console.log("cvv : " + this.myUserObject.cvv);
+
+
+
+    //console.log("validity : " + this.validity?.value);
+    //console.log("billingaddress : " + this.billingaddress?.value);
+    //console.log("select : " + this.select?.value);
+    //console.log("selectstate : " + this.selectstate?.value);
+    //console.log("zip : " + this.zip?.value);
+
+
+    /*
+    *    // POST isteği için gerekli ödeme bilgileri
     const paymentData = {
       mode: 'TEST',
       apiversion: '512',
@@ -412,6 +456,55 @@ export class CheckoutComponent {
       .catch(error => {
         console.error('Hata:', error);
       });
+*/
+
+    // POST isteği için gerekli ödeme bilgileri
+    const paymentData = {
+
+      customerEmailAddress: this.myUserObject.email.toString(),
+      txnAmount: totalPrice,
+      txnType: 'sales',
+      txnCurrencyCode: '949',
+      txnInstallmentCount: 0,
+      cardHolderName: this.cardholder?.value.toString(),
+      cardNumber: this.ccn?.value.toString(),
+      cardExpireDateMonth: expMonth,
+      cardExpireDateYear: expYear,
+      cardCvv2: this.cvv?.value.toString()
+    };
+
+    this.sendRequest('{api}+paymentcontroller1/siparisver', 'POST', paymentData)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+      })
+
+
+    /*
+        // POST isteği atan kısım
+        fetch('https://bycobackend.online:5001/api/paymentcontroller1/siparisver', { // .NET API'yi burada çağırıyoruz
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(paymentData)
+        })
+          .then(response => response.text()) // HTML yanıtını alıyoruz
+          .then(htmlContent => {
+            // Yeni bir sekme açıp gelen HTML içeriğini gösteriyoruz
+            const newWindow = window.open();
+            if (newWindow) {
+              newWindow.document.write(htmlContent);
+              newWindow.document.close();
+            } else {
+              console.error('Failed to open new window');
+            }
+          })
+          .catch(error => {
+            console.error('Hata:', error);
+          });*/
 
     /*setTimeout(
       () => {
@@ -564,6 +657,7 @@ export class CheckoutComponent {
 
     const inputNumber = cardNumber.value.replace(/\D/g, "");
     cardNumber.value = cardNumber.value.slice(0, 16).replace(/\D/g, "");
+    this.myUserObject.ccn = cardNumber.value;
 
     for (let i = 0; i < cardNumberDisplay.length; i++) {
       if (i < inputNumber.length) {
@@ -605,6 +699,7 @@ export class CheckoutComponent {
       formattedString = "";
       displayValidity.innerText = formattedString;
       validity.value = formattedString;
+      this.myUserObject.validity = formattedString;
     }
     //const parts = inputString.split("-");
     //const year = parts[0].slice(2);
@@ -613,6 +708,7 @@ export class CheckoutComponent {
     formattedString = inputString;
     validity.value = formattedString;
     displayValidity.innerText = formattedString;
+    this.myUserObject.validity = formattedString;
 
     if (inputString.length == 3 && inputString[2] != "/") {
       formattedString = inputString.slice(0, 2) + "/" + inputString.slice(2, 3);
@@ -627,6 +723,7 @@ export class CheckoutComponent {
     }
     validity.value = formattedString;
     displayValidity.innerText = formattedString;
+    this.myUserObject.validity = formattedString;
   }
 
   onCVVChange() {
@@ -639,6 +736,7 @@ export class CheckoutComponent {
     const numericInput = sanitizedInput.replace(/\D/g, "");
     cvvInput.value = numericInput;
     cvvDisplay.innerText = numericInput;
+    this.myUserObject.cvv = numericInput;
   }
 
   onCVVclick() {

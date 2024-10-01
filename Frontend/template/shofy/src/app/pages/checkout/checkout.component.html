@@ -58,8 +58,8 @@
                         <div class="profile__input-box">
                           <div class="profile__input">
                             <input type="text" name="adsoyad" id="adsoyad" [placeholder]="placeholderType[0]"
-                                   value="{{myObject.adsoyad}}" formControlName="name"
-                                   [(ngModel)]="myObject.adsoyad" required>
+                                   value="{{myUserObject.adsoyad}}" formControlName="name"
+                                   [(ngModel)]="myUserObject.adsoyad" required>
                             <span>
                               <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
                                    xmlns="http://www.w3.org/2000/svg">
@@ -80,8 +80,8 @@
                         <div class="profile__input-box">
                           <div class="profile__input">
                             <input type="email" name="mail" id="mail" [placeholder]="placeholderType[1]"
-                                   value="{{myObject.email}}"
-                                   [(ngModel)]="myObject.email" formControlName="email" required>
+                                   value="{{myUserObject.email}}"
+                                   [(ngModel)]="myUserObject.email" formControlName="email" required>
                             <span>
                               <svg width="18" height="16" viewBox="0 0 18 16" fill="none"
                                    xmlns="http://www.w3.org/2000/svg">
@@ -102,8 +102,8 @@
                         <div class="profile__input-box">
                           <div class="profile__input">
                             <input type="text" name="vkno" id="vkno" [placeholder]="placeholderType[2]"
-                                   value="{{myObject.vkno}}" formControlName="id"
-                                   [(ngModel)]="myObject.vkno" required>
+                                   value="{{myUserObject.vkno}}" formControlName="id"
+                                   [(ngModel)]="myUserObject.vkno" required>
                             <span>
                               <i class="fa-light fa-clipboard-list-check"></i>
                             </span>
@@ -114,8 +114,8 @@
                         <div class="profile__input-box">
                           <div class="profile__input">
                             <input type="text" name="tel" id="tel" [placeholder]="placeholderType[3]"
-                                   value="{{myObject.telefon}}" formControlName="phone"
-                                   [(ngModel)]="myObject.telefon" required>
+                                   value="{{myUserObject.telefon}}" formControlName="phone"
+                                   [(ngModel)]="myUserObject.telefon" required>
                             <span>
                               <svg width="15" height="18" viewBox="0 0 15 18" fill="none"
                                    xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +139,7 @@
                           <div class="profile__input">
                             <div class="form-group">
                               <select name="vergidairesi" id="vergidairesi" formControlName="vergidairesi"
-                                      [(ngModel)]="myObject.vergi_dairesi">
+                                      [(ngModel)]="myUserObject.vergi_dairesi">
                                 <option *ngFor="let item of vergiDaireleri" [value]="item">
                                   {{ item.il + ' ' + item.ilce + ' ' + item.muhasebe_birimi_kodu + ' ' + item.vergi_dairesi }}
                                 </option>
@@ -148,12 +148,13 @@
                           </div>
                         </div>
                       </div>
+                      <!--
                       <div class="col-xxl-6 col-md-6">
                         <div class="profile__input-box">
-                          <div *ngIf="myObject.tip=='0'">Yönetici</div>
-                          <div *ngIf="myObject.tip=='1'">Bireysel</div>
-                          <div *ngIf="myObject.tip=='2'">Kurumsal</div>
-                          <!-- <div class="profile__input">
+                          <div *ngIf="myUserObject.tip=='0'">Yönetici</div>
+                          <div *ngIf="myUserObject.tip=='1'">Bireysel</div>
+                          <div *ngIf="myUserObject.tip=='2'">Kurumsal</div>
+                          <- <div class="profile__input">
                                 {{<app-nice-select
                                    [options]="genderSelectOptions"
                                    name="Select Gender"
@@ -162,15 +163,15 @@
                                    placeholder="Select Gender"
                                    >
                                </app-nice-select>}}
-                             </div> -->
+                             </div> ->
                         </div>
                       </div>
                       <div class="col-xxl-12">
                         <div class="profile__input-box">
                           <div class="profile__input">
                             <input type="text" name="address" id="address" [placeholder]="placeholderType[4]"
-                                   value="{{myObject.adres}}" formControlName="address"
-                                   [(ngModel)]="myObject.adres" required>
+                                   value="{{myUserObject.adres}}" formControlName="address"
+                                   [(ngModel)]="myUserObject.adres" required>
                             <span>
                               <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
                                    xmlns="http://www.w3.org/2000/svg">
@@ -185,6 +186,7 @@
                           </div>
                         </div>
                       </div>
+                      -->
 
                       <!-- <div class="col-xxl-12">
                           <div class="profile__input-box">
@@ -295,23 +297,23 @@
                     <ul>
                       <li>
                         <label>Kart Sahibi :</label>
-                        <label>{{ myObject.adsoyad }}</label>
+                        <label>{{ myUserObject.adsoyad }}</label>
                       </li>
                       <li>
                         <label>E-Posta :</label>
-                        <label>{{ myObject.email }}</label>
+                        <label>{{ myUserObject.email }}</label>
                       </li>
                       <li>
                         <label>TCKN / VKNO :</label>
-                        <label>{{ myObject.vkno }}</label>
+                        <label>{{ myUserObject.vkno }}</label>
                       </li>
                       <li>
                         <label>Tip :</label>
-                        <label>{{ myObject.tip }}</label>
+                        <label>{{ myUserObject.tip }}</label>
                       </li>
                       <li>
                         <label>Telefon :</label>
-                        <label>{{ myObject.telefon }}</label>
+                        <label>{{ myUserObject.telefon }}</label>
                       </li>
                       <li>
                         <label>Şehir :</label>
@@ -390,22 +392,23 @@
                           (ngSubmit)="updatePaymentInfo()">
                       <label for="ccn">Kart Numarası</label>
                       <input type="number" id="ccn" name="ccn" formControlName="ccn" placeholder="1234 1234 1234 1234"
-                             value="{{myObject.ccn}}" (input)="onNumberChange()"/>
+                             value="{{myUserObject.ccn}}" (input)="onNumberChange()"/>
                       <label for="cardholder">Kart Sahibinin İsmi</label>
                       <input type="text" id="cardholder" name="cardholder" formControlName="cardholder"
-                             placeholder="Kart Sahibinin Adı Soyadı" value="{{myObject.cardholder}}"
+                             placeholder="Kart Sahibinin Adı Soyadı" value="{{myUserObject.cardholder}}"
                              (input)="onCardNameChange()"/>
                       <div class="date-cvv">
                         <div>
                           <label for="validity">Son Kullanma Tarihi</label>
                           <input type="text" id="validity" name="validity" formControlName="validity"
-                                 placeholder="AA/YY" maxlength="5" value="{{myObject.validity}}"
+                                 placeholder="AA/YY" maxlength="5" value="{{this.validity}}"
                                  (input)="validateExpiryDate()"/>
                         </div>
                         <div>
                           <label for="cvv">CVV</label>
                           <input type="number" id="cvv" name="cvv" formControlName="cvv" placeholder="***"
-                                 value="{{myObject.cvv}}" (click)="onCVVclick()" (input)="onCVVChange()"/>
+                                 value="{{this.cvv}}" (click)="onCVVclick()" (input)="onCVVChange()"
+                                 maxlength="4"/>
                         </div>
                       </div>
                       <button type="submit" id="submit-payment-btn" name="submit-payment-btn"
@@ -979,10 +982,10 @@
 
     <h6>ALICI'NIN BİLGİLERİ:</h6>
 
-    <br>Teslim Edilecek Kişi : {{ myObject.adsoyad }}
-    <br>Teslimat Adresi : {{ myObject.adres }}
-    <br>Telefon : {{ myObject.telefon }}
-    <br>E-posta/Kullanıcı Adı : {{ myObject.email }}
+    <br>Teslim Edilecek Kişi : {{ myUserObject.adsoyad }}
+    <br>Teslimat Adresi : {{ myUserObject.adres }}
+    <br>Telefon : {{ myUserObject.telefon }}
+    <br>E-posta/Kullanıcı Adı : {{ myUserObject.email }}
     <br>
     <br>İşbu sözleşme dahilinde gerektiği takdirde Satıcı ve Alıcı tek başına "Taraf", birlikte "Taraflar" olarak
     anılabilecektir.
@@ -1110,8 +1113,8 @@
 
     <h6>2. Teslimat Detayları</h6>
 
-    <br>Teslimat Adresi: {{ myObject.adres }}
-    <br>Teslim Edilecek Kişi: {{ myObject.adsoyad }}
+    <br>Teslimat Adresi: {{ myUserObject.adres }}
+    <br>Teslim Edilecek Kişi: {{ myUserObject.adsoyad }}
     <h6>3. Teslimat Koşulları</h6>
     Sözleşme konusu ürün/ürünler, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) gün içinde Alıcı'nın teslimat
     adresine teslim edilecektir. Teslim süresi, Alıcı'nın teslimat adresinin uzaklığına ve taşıyıcı firmanın hizmet
@@ -1122,8 +1125,8 @@
     <br>Taşıyıcı Firma: Yurtiçi Kargo
     <br>Kargo Bilgisi: Kargo bilgileri otomatik olarak müşteriye gösterilecektir.
     <h6>5. Teslimat Adresi ve Kişi Bilgileri</h6>
-    <br>Teslimat Adresi: {{ myObject.adres }}
-    <br>Teslim Edilecek Kişi: {{ myObject.adsoyad }}
+    <br>Teslimat Adresi: {{ myUserObject.adres }}
+    <br>Teslim Edilecek Kişi: {{ myUserObject.adsoyad }}
     <h6>6. Teslimat Süresi</h6>
     Sözleşme konusu ürün/hizmet, siparişin Satıcı'ya ulaşmasını takip eden 30 (otuz) günlük yasal süreyi aşmamak koşulu
     ile her bir ürün için Alıcı'nın belirtilen teslimat adresine veya gösterdiği adrese 30 günlük süre içinde teslim
