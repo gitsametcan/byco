@@ -42,7 +42,7 @@ namespace bycoAPI.Controllers
         {
             
             PaymentRequestModel prm = new PaymentRequestModel();
-            prm.OrderId = DateTime.Now.ToString()+"byc";
+            prm.OrderId = DateTime.Now.ToString().Replace(" ", "") + "byc";
             prm.CustomerEmailAddress=hp.CustomerEmailAddress;
             prm.CustomerIpAddress=hp.CustomerIpAddress;
             prm.TxnAmount=hp.TxnAmount;
@@ -106,7 +106,7 @@ namespace bycoAPI.Controllers
             new KeyValuePair<string, string>("customeripaddress", paymentRequest.CustomerIpAddress),
             new KeyValuePair<string, string>("companyname", "BYCO"),
             new KeyValuePair<string, string>("lang", "tr"),
-            new KeyValuePair<string, string>("txntimestamp", DateTime.Now.AddHours(+10).ToString()),
+            new KeyValuePair<string, string>("txntimestamp", DateTime.Now.ToString()),
             new KeyValuePair<string, string>("secure3dhash", GetHashData("Byco2024.","10293170",paymentRequest.OrderId,paymentRequest.TxnInstallmentCount,"5369796168426579617a35372e4859414233343537216279",paymentRequest.TxnAmount,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx")),
             new KeyValuePair<string, string>("txnamount", paymentRequest.TxnAmount.ToString()),
             new KeyValuePair<string, string>("txntype", "sales"),

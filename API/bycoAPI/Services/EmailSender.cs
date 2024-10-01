@@ -39,7 +39,7 @@ namespace bycoAPI.Services
                     default:
                         break;
                 }
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                //client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 client.Connect(_emailConfig.Host, _emailConfig.Port, secureSocket);
                 //Remove any OAuth functionality
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
