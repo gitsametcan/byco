@@ -67,7 +67,7 @@ namespace bycoAPI.Controllers
             sb.Append("Teslimat Adresi:" +hp.teslimatAdresi);
             sb.Append("<br><br>");
             sb.Append(bilgiler);
-            ml.Subject=sb.ToString();
+            ml.Content=sb.ToString();
 
             await _emailSender.Send(ml);
 

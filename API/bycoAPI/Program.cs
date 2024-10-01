@@ -23,11 +23,11 @@ namespace bycoAPI
 
             builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    // serverOptions.ListenAnyIP(5001, listenOptions =>
-    // {
-    //     listenOptions.UseHttps("/etc/letsencrypt/live/bycobackend.online-0001/certificate.pfx", "Byco2024.");
-    // });
-    
+    serverOptions.ListenAnyIP(5001, listenOptions =>
+    {
+        listenOptions.UseHttps("/etc/letsencrypt/live/bycobackend.online-0001/certificate.pfx", "Byco2024.");
+    });
+
 });
 
 
@@ -78,11 +78,14 @@ namespace bycoAPI
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 
