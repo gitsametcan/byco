@@ -10,21 +10,14 @@ namespace bycoAPI.Controllers
     [ApiController]
     public class MailController : ControllerBase
     {
-        readonly IMailService _mailService;
         readonly IEmailSender _emailSender;
 
-        public MailController(IMailService mailService, IEmailSender emailSender)
+        public MailController(IEmailSender emailSender)
         {
-            this._mailService = mailService;
             _emailSender = emailSender;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> sendMail()
-        {
-            await _mailService.SendMessageAsync("hyavuz@byco.com.tr", "Deneme Mail", "Bu bir deneme mailidir.");
-            return Ok();
-        }
+        
 
         [HttpPost("iletisim")]
         public async Task<IActionResult>  iletisimMail([FromBody] MailRequest mailRequest)

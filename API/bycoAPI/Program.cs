@@ -17,9 +17,11 @@ namespace bycoAPI
             // Add services to the container.
             builder.Services.AddDbContext<DbContexts>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailSeervice>();
-            builder.Services.AddSingleton(emailConfig);
-            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+
+            // var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailSeervice>();
+            // builder.Services.AddSingleton(emailConfig);
+            // builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             builder.WebHost.ConfigureKestrel(serverOptions =>
 {
@@ -37,6 +39,7 @@ namespace bycoAPI
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddTransient<IAuthService, AuthService>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddTransient<IUserServices, UserService>();
             builder.Services.AddTransient<IOzellikService, OzellikService>();
@@ -48,7 +51,6 @@ namespace bycoAPI
             builder.Services.AddTransient<IKimlikNoService, KimlikNoService>();
             builder.Services.AddTransient<IVergiNumsService, VergiNumsService>();
             builder.Services.AddTransient<ISessionsService, SessionsService>();
-            builder.Services.AddTransient<IMailService, MailService>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -67,6 +69,8 @@ namespace bycoAPI
                     ValidateLifetime = false,
                     ValidateIssuerSigningKey = true
                 };
+
+
             });
             builder.Services.AddAuthorization();
 
