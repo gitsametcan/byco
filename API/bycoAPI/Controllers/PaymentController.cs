@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using Newtonsoft.Json.Schema;
+using Utils;
+using Microsoft.OpenApi.Any;
 
 namespace bycoAPI.Controllers
 {
@@ -34,6 +37,28 @@ namespace bycoAPI.Controllers
             if (string.IsNullOrEmpty(result))
                 return StatusCode(500, "Ödeme işlemi sırasında hata oluştu.");
 
+            return Ok(result);
+        }
+
+
+        [HttpPost("denemeone")]
+        public async Task<IActionResult> denemeone(){
+            int a=0;
+            var result = GetHashData("Byco2024.","10293170","000000222",a,"5369796168426579617a35372e4859414233343537216279",100,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx");
+            return Ok(a);
+        }
+
+        [HttpPost("denemetwo")]
+        public async Task<IActionResult> denemetwo(){
+            int a=0;
+            var result = GetHashData("Byco2024.","10293170","000000222",a,"5369796168426579617a35372e4859414233343537216279",100,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx");
+            return Ok(a);
+        }
+
+        [HttpGet("sifreteridtwo")]
+        public async Task<IActionResult> TryTwo(string provisionPassword, string terminalId, string orderId, int installmentCount, string storeKey, ulong amount, int currencyCode, string successUrl, string type, string errorUrl)
+        {
+            var result = GetHashData(provisionPassword, terminalId, orderId, installmentCount, storeKey, amount,currencyCode,successUrl, type,errorUrl);
             return Ok(result);
         }
 
@@ -70,11 +95,6 @@ namespace bycoAPI.Controllers
             ml.Content=sb.ToString();
 
             await _emailSender.Send(ml);
-
-
-
-
-
 
             var result = await MakePayment(prm);
 
