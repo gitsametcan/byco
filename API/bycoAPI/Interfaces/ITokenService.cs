@@ -4,6 +4,7 @@ namespace bycoAPI.Interfaces
 {
     public interface ITokenService
     {
-        public Task<GenerateTokenResp> GenerateToken(GenerateTokenReq request);
+        public Task<GenerateTokenResponse> GenerateToken(GenerateTokenRequest request);
+        public Task<string> decodeKey(string token);
     }
 }

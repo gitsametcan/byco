@@ -9,19 +9,9 @@ namespace bycoAPI.Models
         {
 
         }
-        public DbSet<AuthRecord> AuthRecord { get; set; } = null!;
-        public DbSet<Adresler> Adresler { get; set; } = null!;
-        public DbSet<Ozellik> Ozellik { get; set; } = null!;
-        public DbSet<Proje> Proje { get; set; } = null!;
         public DbSet<Siparis> Siparis { get; set; } = null!;
-        public DbSet<SiparisSatis> SiparisSatis { get; set; } = null!;
-        public DbSet<Satis> Satis { get; set; } = null!;
         public DbSet<Urun> Urun { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
-        public DbSet<Kategori> Kategori { get; set; } = null!;
-        public DbSet<KimlikNo> KimlikNo { get; set; } = null!;
-        public DbSet<VergiNums> VergiNums { get; set; } = null!;
-        public DbSet<Sessions> Sessions { get; set; } = null!;
-        public DbSet<Discount> Discount { get; set; } = null!;
+        public DbSet<Category> Categories {get;set;} = null!;
     }
 }
