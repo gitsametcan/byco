@@ -1,0 +1,28 @@
+<div class="nav-header">
+  <ul class="main-category-list">
+    <li *ngFor="let category of categories" class="category-item"
+        (mouseover)="showSubMenu(category)" 
+        (mouseleave)="hideSubMenu()">
+      <a [routerLink]="['/shop/shop-list']">{{ category.name }}</a> <!-- Navigates to /shop/shop-list -->
+    </li>
+  </ul>
+</div>
+
+<!-- Subcategory Menu -->
+<div class="sub-category-container" 
+     [class.show]="isSubMenuVisible"
+     (mouseover)="showSubMenu(selectedCategory)"
+     (mouseleave)="hideSubMenu()">
+  <div class="sub-category-list" *ngIf="selectedCategory">
+    <ul>
+      <li *ngFor="let subCategory of selectedCategory.subCategories">
+        <a [routerLink]="['/shop/shop-list']">{{ subCategory.name }}</a> <!-- Navigates to /shop/shop-list -->
+        <ul>
+          <li *ngFor="let thirdLevel of subCategory.thirdLevels">
+            <a [routerLink]="['/shop/shop-list']">{{ thirdLevel.name }}</a> <!-- Navigates to /shop/shop-list -->
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

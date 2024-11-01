@@ -1,0 +1,22 @@
+.header-top-banner {
+    background: linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%); /* Daha koyu mavi-turkuaz arka plan */
+    padding: 15px 0;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    position: static;
+    position: relative; /* Dalga efektini bağlayacağız */
+  }
+  
+  
+  #header-sticky {
+    position: relative; /* Header'ın da düzgün şekilde hizalanmasını sağlıyoruz */
+    z-index: 2;
+  }
+
+  @media (max-width: 768px) {
+    .header-top-banner {
+      display: none; /* Mobilde görünmesini engelliyoruz */
+    }
+  }
+  

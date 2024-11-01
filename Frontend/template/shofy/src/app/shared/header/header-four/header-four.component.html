@@ -1,5 +1,9 @@
 <header>
-    <div id="header-sticky" [ngClass]="['tp-header-area tp-header-style-transparent-black tp-header-transparent tp-header-sticky has-dark-logo tp-header-height',sticky ? 'header-sticky' : '']">
+   <div class="header-top-banner">
+      <span>14:00'a Kadar Verilen Siparişler Aynı Gün Kargoda!</span>
+   </div>
+   
+   <div id="header-sticky" [ngClass]="['tp-header-area tp-header-style-transparent-black tp-header-transparent tp-header-sticky has-dark-logo tp-header-height',sticky ? 'header-sticky' : '']">
        <div class="tp-header-bottom-3 pl-35 pr-35">
           <div class="container-fluid">
              <div class="row align-items-center">
@@ -25,21 +29,18 @@
                 </div>
                 <div class="col-xl-2 col-lg-2 col-6">
                    <div class="tp-header-action d-flex align-items-center justify-content-end ml-50">
-                     <button routerLink="/compare" type="button" class="tp-header-action-btn tp-search-open-btn" style="font-size: 10px;">
-                        <!-- <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M3 10H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                           <path d="M17 10L14 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                           <path d="M17 10L14 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                           <path d="M17 10H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                           <path d="M3 10L6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                           <path d="M3 10L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                       </svg> -->
-                       KARŞILAŞTIR
-                       
-                       
-                       
-                                            
-                     </button>
+                     <div class="tp-header-action-item d-none d-sm-block">
+                        <button routerLink="/compare" type="button" class="tp-header-action-btn tp-search-open-btn" style="font-size: 10px;">
+                           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M3 10H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M17 10L14 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M17 10L14 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M17 10H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M3 10L6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M3 10L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>                     
+                        </button>
+                     </div>
                       <div class="tp-header-action-item d-none d-sm-block">
                          <button (click)="utilsService.handleSearchOpen()" type="button" class="tp-header-action-btn tp-search-open-btn">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +68,6 @@
                             </span>
                          </button>
                       </div> -->
-                      <div class="tp-header-action-item d-none d-sm-block">
                          <button (click)="cartService.handleOpenCartSidebar()" type="button" class="tp-header-action-btn cartmini-open-btn">
                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M3.34706 4.53799L3.85961 10.6239C3.89701 11.0923 4.28036 11.4436 4.74871 11.4436H4.75212H14.0265H14.0282C14.4711 11.4436 14.8493 11.1144 14.9122 10.6774L15.7197 5.11162C15.7384 4.97924 15.7053 4.84687 15.6245 4.73995C15.5446 4.63218 15.4273 4.5626 15.2947 4.54393C15.1171 4.55072 7.74498 4.54054 3.34706 4.53799ZM4.74722 12.7162C3.62777 12.7162 2.68001 11.8438 2.58906 10.728L1.81046 1.4837L0.529505 1.26308C0.181854 1.20198 -0.0501969 0.873587 0.00930333 0.526523C0.0705036 0.17946 0.406255 -0.0462578 0.746256 0.00805037L2.51426 0.313534C2.79901 0.363599 3.01576 0.5995 3.04042 0.888012L3.24017 3.26484C15.3748 3.26993 15.4139 3.27587 15.4726 3.28266C15.946 3.3514 16.3625 3.59833 16.6464 3.97849C16.9303 4.35779 17.0493 4.82535 16.9813 5.29376L16.1747 10.8586C16.0225 11.9177 15.1011 12.7162 14.0301 12.7162H14.0259H4.75402H4.74722Z" fill="currentColor"/>
@@ -81,7 +81,6 @@
                               {{cartService.totalPriceQuantity().quantity}}
                             </span>
                          </button>
-                      </div>
                       <div class="tp-header-action-item d-lg-none">
                          <button (click)="utilsService.handleOpenMobileMenu()" type="button" class="tp-header-action-btn tp-offcanvas-open-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" viewBox="0 0 30 16">

@@ -33,6 +33,7 @@
               "src/.htaccess"
             ],
             "styles": [
+              "node_modules/swiper/swiper-bundle.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -102,6 +103,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/swiper/swiper-bundle.min.css",
               "src/styles.scss"
             ],
             "scripts": []

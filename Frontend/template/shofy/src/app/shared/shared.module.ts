@@ -66,7 +66,7 @@ import { ProductDetailsWrapperComponent } from './components/product-details-com
 import { CountdownTimerComponent } from './components/countdown-timer/countdown-timer.component';
 import { MobileSidebarComponent } from './components/offcanvas/mobile-sidebar/mobile-sidebar.component';
 import { PaginationTwoComponent } from './ui/pagination-two/pagination-two.component';
-
+import { SharedNavComponent } from './components/shared-nav/shared-nav.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +127,8 @@ import { PaginationTwoComponent } from './ui/pagination-two/pagination-two.compo
     ProductDetailsWrapperComponent,
     CountdownTimerComponent,
     MobileSidebarComponent,
-    PaginationTwoComponent
+    PaginationTwoComponent,
+    SharedNavComponent,
   ],
   imports: [
     CommonModule,
@@ -188,6 +189,7 @@ import { PaginationTwoComponent } from './ui/pagination-two/pagination-two.compo
     ProductDetailsWrapperComponent,
     CountdownTimerComponent,
     PaginationTwoComponent,
+    SharedNavComponent,
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,107 @@
+
+<!-- Banner Section -->
+<div class="carousel-container">
+  <button (click)="previousSlide()" class="carousel-nav left">❮</button>
+
+  <div class="carousel-track" [style.transform]="'translateX(-' + activeSlideIndex * 100 + '%)'">
+    <div class="carousel-slide" *ngFor="let slide of slides">
+      <img [src]="slide.image" [alt]="slide.title" class="carousel-image" />
+      <div class="carousel-caption">
+        <h2>{{ slide.title }}</h2>
+        <a [href]="slide.link" target="_blank">
+          <button class="explore-button">Hemen İnceleyin!</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="nextSlide()" class="carousel-nav right">❯</button>
+</div>
+
+
+<!-- Thumbnail Navigation -->
+<div class="thumbnail-container">
+  <div
+    *ngFor="let slide of slides; let i = index"
+    class="thumbnail"
+    [class.active]="i === activeSlideIndex"
+    (click)="setActiveSlide(i)"
+  >
+    <img [src]="slide.image" [alt]="slide.title" />
+  </div>
+</div>
+
+<!-- Fırsat Ürünleri Section -->
+<!-- Fırsat Ürünleri Section -->
+<div class="offers-container">
+  <div class="offers-section">
+    <div class="offers-title">
+      <div class="offers-title-wrapper">
+        <img src="assets/firsat.jpg" alt="Fırsat Ürünleri" class="offers-title-image" />
+        <div class="offers-overlay-text">Fırsat Ürünleri</div>
+      </div>
+      <div class="offers-nav">
+        <button (click)="previousProduct()" class="offers-nav-button">❮</button>
+        <button (click)="nextProduct()" class="offers-nav-button">❯</button>
+      </div>
+    </div>
+
+    <!-- Swiper Carousel -->
+    <swiper-container #swiperEl slides-per-view="3" space-between="20" class="swiper-container">
+      <swiper-slide *ngFor="let item of displayedProducts">
+        <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- featured-categories -->
+<div class="featured-categories">
+  <h2>Öne Çıkan Kategoriler</h2>
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let category of categories">
+      <img [src]="category.image" [alt]="category.title" class="category-image" />
+      <div class="category-overlay">
+        <span class="category-title">{{ category.title }}</span>
+        <a href="{{ category.link }}" class="view-all-link">Tümünü Gör</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sizin İçin Seçtiklerimiz,Çok Satanlar,İndirimli Ürünler section -->
+<div class="tab-container">
+  <div class="tab-header">
+    <span (click)="selectTab('recommended')" [class.active]="activeTab === 'recommended'">Sizin İçin Seçtiklerimiz</span>
+    <span (click)="selectTab('bestSellers')" [class.active]="activeTab === 'bestSellers'">Çok Satanlar</span>
+    <span (click)="selectTab('discounted')" [class.active]="activeTab === 'discounted'">İndirimli Ürünler</span>
+  </div>
+
+  <div class="product-grid">
+    <div *ngFor="let item of displayedProducts" class="product-wrapper">
+      <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
+    </div>
+  </div>
+</div>
+
+
+<!-- Çeşitli Elektrik Ürünleri section -->
+<div class="featured-categories">
+  <h2>Çeşitli Elektrik Ürünleri</h2>
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let product of electricProducts">
+      <img [src]="product.image" [alt]="product.title" class="category-image" />
+      <div class="category-overlay">
+        <span class="category-title">{{ product.title }}</span>
+        <a href="{{ product.link }}" class="view-all-link">Tümünü Gör</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+

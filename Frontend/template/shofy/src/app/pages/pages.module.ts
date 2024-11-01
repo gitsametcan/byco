@@ -20,7 +20,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
-
+import { ShopMainPageComponent } from '../shop/shop-main-page/shop-main-page.component';
 
 
 
@@ -41,7 +41,7 @@ import { SearchComponent } from './search/search.component';
     NotFoundComponent,
     CheckoutComponent,
     ProfileComponent,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
     CommonModule,
