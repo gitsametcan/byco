@@ -8,7 +8,6 @@ namespace bycoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AuthController : ControllerBase
     {
         readonly IAuthService authService;
@@ -19,26 +18,15 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("LoginUser")]
-        [AllowAnonymous]
         public async Task<ActionResult<LoginResp>> LoginUserAsync([FromBody] LoginReq request)
         {
             var result = await authService.LoginUserAsync(request);
+            if (result == null)
+            {
+                return Unauthorized();
+            }
 
-            return result;
-        }
-
-        [HttpGet("TryConnection")]
-        [AllowAnonymous]
-        public async Task<ActionResult<LoginResp>> TryConnection()
-        {
-            
-                LoginResp loginResp = new LoginResp();
-                loginResp.AuthenticateResult = true;
-                loginResp.AuthToken = "deneme";
-                loginResp.AccessTokenExpireDate = DateTime.Now;
-                return loginResp;
-            
-            
+            return Ok(result);
         }
     }
 }

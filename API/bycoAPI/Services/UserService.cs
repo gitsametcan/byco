@@ -4,6 +4,7 @@ using Utils;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.EntityFrameworkCore;
 
 namespace bycoAPI.Services
 {
@@ -20,6 +21,14 @@ namespace bycoAPI.Services
             User user = null;
 
             return Task.FromResult(GetUserFromDb(id));
+        }
+
+        public async Task<User> GetUserByEmail(string userstring)
+        {
+            User user = await _dbContexts.Users.FirstOrDefaultAsync(k => k.email == userstring);
+            if (user == null) { return null; }
+
+            return await Task.FromResult(user);
         }
 
         private User GetUserFromDb(int id)

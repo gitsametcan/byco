@@ -12,13 +12,15 @@ namespace bycoAPI.Controllers
     [Authorize]
     public class UserController : ControllerBase {
         readonly IUserServices userService;
+        readonly ITokenService tokenService;
 
-        public UserController(IUserServices userService)
+        public UserController(IUserServices userService, ITokenService tokenService)
         {
             this.userService = userService;
+            this.tokenService = tokenService;
         }
 
-        [HttpGet("GetUserById/{id}")]
+        [HttpGet("GetUser")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var result = await userService.GetUserAsync(id);

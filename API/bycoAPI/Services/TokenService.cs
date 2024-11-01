@@ -17,7 +17,39 @@ namespace bycoAPI.Services
             this.configuration = configuration;
         }
 
-        public Task<GenerateTokenResp> GenerateToken(GenerateTokenReq request)
+        public async Task<string> decodeKey(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(configuration["AppSettings:Secret"]);
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = configuration["AppSettings:ValidIssuer"],
+                ValidAudience = configuration["AppSettings:ValidAudience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:Secret"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true
+            };
+
+            try
+            {
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                string email = jwtToken.Claims.First(x => x.Type == "email").Value;
+
+                return email;
+            }
+            catch (Exception ex)
+            {
+                // Hata mesajını loglayın veya geri dönün
+                Console.WriteLine($"Token validation failed: {ex.Message}");
+                return null;
+            }
+        }
+
+        public Task<GenerateTokenResponse> GenerateToken(GenerateTokenRequest request)
         {
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["AppSettings:Secret"]));
 
@@ -27,17 +59,17 @@ namespace bycoAPI.Services
                     issuer: configuration["AppSettings:ValidIssuer"],
                     audience: configuration["AppSettings:ValidAudience"],
                     claims: new List<Claim> {
-                    new Claim("userName", request.Username)
+                    new Claim("email", request.email)
                     },
                     notBefore: dateTimeNow,
-                    expires: dateTimeNow.Add(TimeSpan.FromMinutes(500)),
+                    expires: dateTimeNow.Add(TimeSpan.FromDays(23)),
                     signingCredentials: new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
                 );
 
-            return Task.FromResult(new GenerateTokenResp
+            return Task.FromResult(new GenerateTokenResponse
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(jwt),
-                TokenExpireDate = dateTimeNow.Add(TimeSpan.FromMinutes(500))
+                TokenExpirationDate = dateTimeNow.Add(TimeSpan.FromMinutes(500))
             });
         }
     }
