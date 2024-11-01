@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ToastrModule} from 'ngx-toastr';
 import {SharedModule} from './shared/shared.module';
@@ -15,6 +15,8 @@ import {HashUrlRedirectionService} from "./httpservices/hash-url-redirection.ser
 import {Router} from "@angular/router";
 import {HomeModule} from "./home/home.module";
 import {PagesModule} from "./pages/pages.module";
+import { ShopMainPageComponent } from './shop/shop-main-page/shop-main-page.component';
+import { ShopRoutingModule } from './shop/shop-routing.module';
 
 export function initializeApp(hashUrlRedirectionService: HashUrlRedirectionService) {
   if (hashUrlRedirectionService.isHashUrl()) {
@@ -28,7 +30,8 @@ export function initializeApp(hashUrlRedirectionService: HashUrlRedirectionServi
     ShopComponent,
     AddressComponent,
     PaymentErrorOccurredComponent,
-    PaymentSuccessfulComponent
+    PaymentSuccessfulComponent,
+    ShopMainPageComponent,
   ],
   imports: [
     SharedModule,
@@ -46,6 +49,7 @@ export function initializeApp(hashUrlRedirectionService: HashUrlRedirectionServi
       positionClass: 'toast-top-center'
     }),
     ReactiveFormsModule,
+    ShopRoutingModule,
   ],
   exports: [
     ShopComponent,
@@ -59,7 +63,8 @@ export function initializeApp(hashUrlRedirectionService: HashUrlRedirectionServi
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }

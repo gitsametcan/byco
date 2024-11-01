@@ -21,6 +21,8 @@ import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { CompareComponent } from './pages/compare/compare.component';
 import { OrderComponent } from './pages/order/order.component';
 import {LocationStrategy, PathLocationStrategy} from "@angular/common";
+import { ShopAreaComponent } from './shop-area/shop-area.component';
+import { ShopMainPageComponent } from './shop-main-page/shop-main-page.component';
 
 
 
@@ -28,6 +30,16 @@ const routes: Routes = [
   {
     path:'shop',
     component:ShopComponent,
+    children:[
+      {
+        path: '',
+        component: ShopMainPageComponent, // Default route for shop main page
+      },
+      {
+        path: 'shop-list',
+        component: ShopAreaComponent, // Example child route component
+      }
+    ],
     title:'Mağaza'
   },
   {

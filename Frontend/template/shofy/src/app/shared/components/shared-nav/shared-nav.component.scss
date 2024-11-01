@@ -1,0 +1,101 @@
+.nav-header {
+  background: linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%);
+  padding: 18px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.main-category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.main-category-list li {
+  position: relative;
+}
+
+.main-category-list a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background 0.3s ease;
+}
+
+.main-category-list a:hover {
+  background-color: white;
+  color: #0077aa;
+}
+
+.sub-category-container {
+  position: fixed;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9;
+  display: none; /* Başlangıçta gizli */
+}
+
+.sub-category-container.show {
+  display: block; /* Menü gösterilecek */
+}
+
+.sub-category-list {
+  column-count: auto; /* Dynamic columns */
+  column-width: 200px; /* Minimum width for each column */
+  column-gap: 80px;
+  max-height: 485px; /* Maximum height for container */
+  padding-left: 300px;
+  overflow-y: auto; /* Scrollable content if height exceeded */
+}
+
+.sub-category-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  break-inside: avoid; /* Prevent categories from splitting between columns */
+}
+
+.sub-category-list li {
+  margin-bottom: 10px; /* İkinci başlıklar arası boşluk */
+}
+
+.sub-category-list a {
+  text-decoration: none;
+  font-weight: normal;
+}
+
+/* İkinci başlıklar (sub-category başlıkları) */
+.sub-category-list li > a {
+  font-size: 1.2em; /* Daha büyük font boyutu */
+  font-weight: bold; /* Kalın yazı */
+  margin-bottom: 10px; /* Alt başlıkla arada boşluk */
+  color: #0077aa; /* Düz mavi renk */
+}
+
+/* Üçüncü seviyedeki başlıklar (alt başlıklar) */
+.sub-category-list li ul {
+  list-style: none;
+  padding-left: 0; /* İçeriden boşluğu sıfırladık */
+}
+
+.sub-category-list li ul li {
+  font-size: 1em; /* Standart boyut */
+  margin-top: 10px; /* Üst başlıkla arada mesafe */
+  display: block; /* Alt alta gelmesi için block olarak ayarlandı */
+  padding-left: 10px; /* Soldan hafif boşluk bırak */
+}
+
+.sub-category-list li ul li a {
+  color: #000000; /* Üçüncü başlıklar siyah olacak */
+  font-weight: normal; /* Bold olmayacak */
+  display: block; /* Alt alta sıralanacak */
+}

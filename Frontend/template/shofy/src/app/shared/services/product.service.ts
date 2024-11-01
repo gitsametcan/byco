@@ -1,6 +1,6 @@
 import { IProduct } from '@/types/product-type';
 import { Injectable } from '@angular/core';
-import { of,Observable } from 'rxjs';
+import { of, Observable, from } from 'rxjs';
 import  product_data from '@/data/product-data';
 import { map } from 'rxjs/operators';
 import { URL } from './url';
@@ -181,6 +181,22 @@ export class ProductService {
     return this.urunler;
   }
 
+  public getAllProjects(): Observable<IProduct[]> {
+    // If data is already fetched, return it as Observable.
+    if (this.urunler.length > 0) {
+      return of(this.urunler);
+    } else {
+      // Otherwise, fetch data and store it in urunler array.
+      return from(this.sendRequest('Urun/GetAllResponse', 'GET')).pipe(
+        map((response: IProduct[]) => {
+          this.urunler = response; // Cache the response
+          return response;
+        })
+      );
+    }
+  }
+
+
   sendRequest(url: string, method: string, data?:any): Promise<any> {
 
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
@@ -204,3 +220,5 @@ export class ProductService {
   })
   }
 }
+// Removed incorrect from function definition
+
