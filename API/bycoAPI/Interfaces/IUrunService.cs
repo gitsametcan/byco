@@ -7,8 +7,8 @@ namespace bycoAPI.Interfaces
     {
         public Task<Urun> GetUrunByIdAsync(int id);
         public Task<List<Urun>> GetAllUrun();
-        public Task<Result> AddUrun(NewUrunReq req);
-        public Task<Result> UpdateUrun(int urun_id, Urun body);
-        public Task<Result> DeleteUrun(int urun_id);
+        public Task<RequestResponse> AddUrun(NewUrunReq req);
+        public Task<RequestResponse> UpdateUrun(int urun_id, Urun body);
+        public Task<RequestResponse> DeleteUrun(int urun_id);
     }
 }
