@@ -5,10 +5,10 @@ namespace bycoAPI.Interfaces
 {
     public interface IUrunService
     {
-        public Task<Urun> GetUrunByIdAsync(int id);
-        public Task<List<Urun>> GetAllUrun();
-        public Task<RequestResponse> AddUrun(NewUrunReq req);
-        public Task<RequestResponse> UpdateUrun(int urun_id, Urun body);
+        public Task<Product> GetUrunByIdAsync(int id);
+        public Task<List<Product>> GetAllUrun();
+        public Task<RequestResponse> AddUrun(Product urun);
+        public Task<RequestResponse> UpdateUrun(int urun_id, Product urun);
         public Task<RequestResponse> DeleteUrun(int urun_id);
     }
 }
