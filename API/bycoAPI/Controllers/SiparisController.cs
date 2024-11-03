@@ -3,36 +3,98 @@ using Microsoft.AspNetCore.Mvc;
 using bycoAPI.Models;
 using bycoAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using bycoAPI.Services;
 
 namespace bycoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SiparisController : ControllerBase
     {
+        readonly ISiparisService _siparisService;
+
+        readonly ITokenService _tokenService;
+        readonly IUserServices _userService;
+
+        public SiparisController(ISiparisService service, ITokenService tokenService,IUserServices userService)
+        {
+            _siparisService = service;
+            _tokenService = tokenService;
+            _userService = userService;
+        }
+
+        //public Task<RequestResponse> SiparisKargoda(int siparis_id);
+
+        [HttpPost("SiparisKargoda")]
+        public async Task<RequestResponse> SiparisKargoda([FromBody] string siparisno)
+        {
+
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+
+            if (user.tip == 2)
+            {
+                return await _siparisService.SiparisKargoda(siparisno);
+            }
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+        }
+
+
+        [HttpPost("SiparisOdemeTamam")]
+        public async Task<RequestResponse> OdemeTamam([FromBody] string siparisno)
+        {
+
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+
+            if (user.tip == 2)
+            {
+                return await _siparisService.OdemeAlindi(siparisno);
+            }
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+        }
+
+
+        [HttpGet("GetAll")]
+        //[AllowAnonymous]
+        public async Task<List<SiparisOut>> GetSiparisForAdmin()
+        {
+            var result = await _siparisService.GetSiparisForAdmin();
+
+            return result;
+        }
+
+        [HttpGet("GetSiparisByNo/{siparisno}")]
+        //[AllowAnonymous]
+        public async Task<SiparisOut> GetSiparisByNo(string siparisno)
+        {
+            var result = await _siparisService.GetSiparisBySiparisNo(siparisno);
+
+            return result;
+        }
+
+        [HttpGet("GetSiparisForUser")]
+        //[AllowAnonymous]
+        public async Task<List<SiparisOut>> GetSiparisForUser()
+        {
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            var result = await _siparisService.GetSiparisForLasts(email);
+
+            return result;
+        }
+
         
 
-        [HttpGet("SplitTry/{deneme}")]
-        public async Task<List<int>> LoginUserAsync(string deneme)
-        {
-            List<int> sayilar = [];
-
-            var urunAdetCiftleri = deneme.Split('-', StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var cift in urunAdetCiftleri)
-                {
-                    var parts = cift.Split('x');
-                    if (parts.Length == 2
-                        && int.TryParse(parts[0], out int urunId)
-                        && int.TryParse(parts[1], out int adet))
-                    {
-                        // 2. Ürün ID'sine göre veritabanından ürünü getir
-                        sayilar.Add(urunId);
-                        sayilar.Add(adet);
-                    }
-                }
-
-            return sayilar;
-        }
+        
     }
 }

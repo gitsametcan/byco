@@ -23,7 +23,7 @@ namespace bycoAPI.Controllers
 
         [HttpGet("GetById/{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Product>> GetUrunById(int id)
+        public async Task<Product> GetUrunById(int id)
         {
             var result = await _service.GetUrunByIdAsync(id);
 
@@ -32,7 +32,7 @@ namespace bycoAPI.Controllers
 
         [HttpGet("GetAll")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Product>>> GetAll()
+        public async Task<List<Product>> GetAll()
         {
             var result = await _service.GetAllUrun();
 
@@ -40,7 +40,7 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> AddUrun([FromBody] Product product)
+        public async Task<RequestResponse> AddUrun([FromBody] Product product)
         {
 
             string token = Request.Headers["Authorization"];
@@ -51,13 +51,13 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                return Ok(_service.AddUrun(product));
+                return await _service.AddUrun(product);
             }
-            else return Unauthorized();
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
         }
 
         [HttpPut("Update/{urun_id}")]
-        public async Task<ActionResult> UpdateUrun(int urun_id, [FromBody] Product body)
+        public async Task<RequestResponse> UpdateUrun(int urun_id, [FromBody] Product body)
         {
             string token = Request.Headers["Authorization"];
 
@@ -67,13 +67,13 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                return Ok(await _service.UpdateUrun(urun_id, body));
+                return await _service.UpdateUrun(urun_id, body);
             }
-            else return Unauthorized();
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
         }
 
         [HttpDelete("Delete/{urun_id}")]
-        public async Task<ActionResult> DeleteUrun(int urun_id)
+        public async Task<RequestResponse> DeleteUrun(int urun_id)
         {
             string token = Request.Headers["Authorization"];
 
@@ -83,10 +83,10 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                return Ok(await _service.DeleteUrun(urun_id));
+                return await _service.DeleteUrun(urun_id);
                 
             }
-            else return Unauthorized();
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
         }
     }
 }

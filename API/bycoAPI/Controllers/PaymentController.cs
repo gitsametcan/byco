@@ -17,10 +17,12 @@ namespace bycoAPI.Controllers
     {
 
         readonly IEmailSender _emailSender;
+        readonly ISiparisService _siparisService;
 
-        public PaymentController(IEmailSender emailSender)
+        public PaymentController(IEmailSender emailSender, ISiparisService siparisService)
         {
             _emailSender = emailSender;
+            _siparisService = siparisService;
         }
 
 
@@ -41,33 +43,13 @@ namespace bycoAPI.Controllers
         }
 
 
-        [HttpPost("denemeone")]
-        public async Task<IActionResult> denemeone(){
-            int a=0;
-            var result = GetHashData("Byco2024.","10293170","000000222",a,"5369796168426579617a35372e4859414233343537216279",100,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx");
-            return Ok(a);
-        }
-
-        [HttpPost("denemetwo")]
-        public async Task<IActionResult> denemetwo(){
-            int a=0;
-            var result = GetHashData("Byco2024.","10293170","000000222",a,"5369796168426579617a35372e4859414233343537216279",100,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx");
-            return Ok(a);
-        }
-
-        [HttpGet("sifreteridtwo")]
-        public async Task<IActionResult> TryTwo(string provisionPassword, string terminalId, string orderId, int installmentCount, string storeKey, ulong amount, int currencyCode, string successUrl, string type, string errorUrl)
-        {
-            var result = GetHashData(provisionPassword, terminalId, orderId, installmentCount, storeKey, amount,currencyCode,successUrl, type,errorUrl);
-            return Ok(result);
-        }
-
         [HttpPost("SiparisVer")]
         public async Task<IActionResult> SiparisVer([FromBody] HizliSiparis hp)
         {
             
             PaymentRequestModel prm = new PaymentRequestModel();
-            prm.OrderId = DateTime.Now.ToString().Replace(" ", "") + "byc";
+            string orderid=DateTime.Now.ToString().Replace(" ", "") + "byc";
+            prm.OrderId = orderid;
             prm.CustomerEmailAddress=hp.CustomerEmailAddress;
             prm.CustomerIpAddress=hp.CustomerIpAddress;
             prm.TxnAmount=hp.TxnAmount;
@@ -95,6 +77,7 @@ namespace bycoAPI.Controllers
             ml.Content=sb.ToString();
 
             await _emailSender.Send(ml);
+            await _siparisService.SiparisKaydet(hp,orderid);
 
             var result = await MakePayment(prm);
 
@@ -108,7 +91,7 @@ namespace bycoAPI.Controllers
         private async Task<string> MakePayment(PaymentRequestModel paymentRequest)
         {
             var httpClient = new HttpClient();
-            var requestUrl = "https://sanalposprovtest.garantibbva.com.tr/servlet/gt3dengine";
+            var requestUrl = "https://sanalposprov.garanti.com.tr/servlet/gt3dengine";
 
             var content = new FormUrlEncodedContent(new[]
             {

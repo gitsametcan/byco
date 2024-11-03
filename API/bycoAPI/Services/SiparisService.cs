@@ -111,9 +111,9 @@ namespace bycoAPI.Services
             return hizliSiparisler;
         }
 
-        public async Task<RequestResponse> SiparisKargoda(int siparis_id)
+        public async Task<RequestResponse> SiparisKargoda(string siparis_id)
         {
-            Siparis siparis = await _context.Siparis.FindAsync(siparis_id);
+            Siparis siparis = await _context.Siparis.Where(k=>k.siparisno == siparis_id).FirstAsync();
             siparis.durum = "Kargoya verildi";
 
             _context.Siparis.Update(siparis);
@@ -122,9 +122,9 @@ namespace bycoAPI.Services
             return new RequestResponse { StatusCode = 200, ReasonString = "Siparis güncellendi" };
         }
 
-        public async Task<RequestResponse> OdemeAlindi(int siparis_id)
+        public async Task<RequestResponse> OdemeAlindi(string siparis_id)
         {
-            Siparis siparis = await _context.Siparis.FindAsync(siparis_id);
+            Siparis siparis = await _context.Siparis.Where(k=>k.siparisno == siparis_id).FirstAsync();
             siparis.durum = "Odeme Alindi";
 
             _context.Siparis.Update(siparis);

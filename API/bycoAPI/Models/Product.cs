@@ -13,8 +13,8 @@ namespace bycoAPI.Models
         public string kod { get; set; }
         public int stok { get; set; }
         public decimal fiyat { get; set; }
-        public int kategori_id { get; set; }
-        public string img { get; set; }
+        public string kategori { get; set; }
+        public string? img { get; set; }
         public string? amper { get; set; }
         public string? aydinlatmaturu { get; set; }
         public string? cerceve { get; set; }
