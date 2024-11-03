@@ -6,6 +6,7 @@ namespace bycoAPI.Interfaces
     {
         public Task<RequestResponse> Add(Category category);
         public Task<List<Category>> GetCategoryByUrunTuru(string urunturu);
+        public Task<List<Category>> GetAll();
         public Task<RequestResponse> Delete(int id);
     }
 }

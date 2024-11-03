@@ -23,14 +23,14 @@ namespace bycoAPI
             // builder.Services.AddSingleton(emailConfig);
             // builder.Services.AddScoped<IEmailSender, EmailSender>();
 
-            builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps("/etc/letsencrypt/live/bycobackend.online-0001/certificate.pfx", "Byco2024.");
-    });
+//             builder.WebHost.ConfigureKestrel(serverOptions =>
+// {
+//     serverOptions.ListenAnyIP(5001, listenOptions =>
+//     {
+//         listenOptions.UseHttps("/etc/letsencrypt/live/bycobackend.online-0001/certificate.pfx", "Byco2024.");
+//     });
 
-});
+// });
 
 
             builder.Services.AddControllers();
@@ -42,15 +42,7 @@ namespace bycoAPI
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddTransient<IUserServices, UserService>();
-            builder.Services.AddTransient<IOzellikService, OzellikService>();
-            builder.Services.AddTransient<IKategoriService, KategoriService>();
-            builder.Services.AddTransient<IProjectService, ProjectService>();
-            builder.Services.AddTransient<IAdresService, AdresService>();
-            builder.Services.AddTransient<ISatisService, SatisService>();
             builder.Services.AddTransient<IUrunService, UrunService>();
-            builder.Services.AddTransient<IKimlikNoService, KimlikNoService>();
-            builder.Services.AddTransient<IVergiNumsService, VergiNumsService>();
-            builder.Services.AddTransient<ISessionsService, SessionsService>();
 
             builder.Services.AddAuthentication(options =>
             {

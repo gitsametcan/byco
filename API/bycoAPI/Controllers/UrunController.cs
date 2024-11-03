@@ -23,7 +23,7 @@ namespace bycoAPI.Controllers
 
         [HttpGet("GetById/{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Urun>> GetUrunById(int id)
+        public async Task<ActionResult<Product>> GetUrunById(int id)
         {
             var result = await _service.GetUrunByIdAsync(id);
 
@@ -32,7 +32,7 @@ namespace bycoAPI.Controllers
 
         [HttpGet("GetAll")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Urun>>> GetAll()
+        public async Task<ActionResult<List<Product>>> GetAll()
         {
             var result = await _service.GetAllUrun();
 
@@ -40,7 +40,7 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> AddUrun([FromBody] NewUrunReq req)
+        public async Task<ActionResult> AddUrun([FromBody] Product product)
         {
 
             string token = Request.Headers["Authorization"];
@@ -51,19 +51,13 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                var result = await _service.AddUrun(req);
-                if (result.Success)
-                {
-                    return Ok();
-                }
-                return BadRequest();
-
+                return Ok(_service.AddUrun(product));
             }
             else return Unauthorized();
         }
 
         [HttpPut("Update/{urun_id}")]
-        public async Task<ActionResult> UpdateUrun(int urun_id, [FromBody] Urun body)
+        public async Task<ActionResult> UpdateUrun(int urun_id, [FromBody] Product body)
         {
             string token = Request.Headers["Authorization"];
 
@@ -73,12 +67,7 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                var result = await _service.UpdateUrun(urun_id, body);
-                if (result.Success)
-                {
-                    return Ok();
-                }
-                return BadRequest();
+                return Ok(await _service.UpdateUrun(urun_id, body));
             }
             else return Unauthorized();
         }
@@ -94,12 +83,8 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 2)
             {
-                var result = await _service.DeleteUrun(urun_id);
-                if (result.Success)
-                {
-                    return Ok();
-                }
-                return BadRequest();
+                return Ok(await _service.DeleteUrun(urun_id));
+                
             }
             else return Unauthorized();
         }

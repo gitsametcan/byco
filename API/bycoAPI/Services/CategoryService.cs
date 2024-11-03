@@ -1,9 +1,5 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
-using Utils;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -56,6 +52,12 @@ namespace bycoAPI.Services
             response.StatusCode = 200;
             response.ReasonString = " successfully removed!";
             return response;
+        }
+
+        public async Task<List<Category>> GetAll()
+        {
+            List<Category> categories = _dbcontext.Categories.ToList();
+            return categories;
         }
 
         public async Task<List<Category>> GetCategoryByUrunTuru(string urunTuru)

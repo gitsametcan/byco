@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace bycoAPI.Models
 {
     
-    public class Siparis
+    public class SiparisOut
     {
-        [Key]
         public int siparis_id {get; set;}
         public string siparisno {get;set;}
         public string ad {get;set;}
@@ -16,7 +13,7 @@ namespace bycoAPI.Models
         public string teslimatadresi { get; set; }
         public DateTime tarih { get; set; }
         public string? durum {get;set;}
-        public string urunler {get;set;}
+        public List<Product> urunler {get;set;}
         public string fiyat {get;set;}
     }
 }

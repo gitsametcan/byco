@@ -1,58 +1,61 @@
 using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
 
 namespace bycoAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class KategoriController : ControllerBase {
-        readonly IKategoriService _service;
+        readonly ICategoryService _service;
+        readonly IUserServices _userService;
+        readonly ITokenService _tokenService;
 
-        public KategoriController(IKategoriService service) {
+        public KategoriController(ICategoryService service, IUserServices userServices,ITokenService tokenService) {
             _service = service;
+            _userService = userServices;
+            _tokenService = tokenService;
         }
-
-        [HttpGet("GetById/{kategori_id}")]
-        public async Task<KategoriResponse> GetById(int kategori_id) {
-            var result = await _service.GetKategoriByIdAsync(kategori_id);
-            return result;
-        }
+        
+        [AllowAnonymous]
         [HttpGet("GetAll")]
-        public async Task<List<KategoriResponse>> GetAll() {
+        public async Task<List<Category>> GetAll() {
             var result = await _service.GetAll();
             return result;
         }
 
-        [HttpGet("GetAllValueText")]
-        public async Task<List<KategoriResponseValText>> GetAllValueText() {
-            var result = await _service.GetAllValueText();
-            return result;
+
+        [AllowAnonymous]
+        [HttpGet("GetAllValueText/{urunturu}")]
+        public async Task<List<Category>> GetAllValueText(string urunturu) {
+            return await _service.GetCategoryByUrunTuru(urunturu);
         }
 
+
+        [AllowAnonymous]
         [HttpPost("Add")]
-        public async Task<ActionResult> AddKategori([FromBody]Kategori req) {
-            var result = await _service.AddKategori(req);
-            if (result.Success) {
-                return Ok();
-            }
-            return BadRequest();
+        public async Task<ActionResult> AddKategori([FromBody]Category category) {
+            // string token = Request.Headers["Authorization"];
+            // token = token.Substring(7);
+            // string email = await _tokenService.decodeKey(token);
+            // User user = await _userService.GetUserByEmail(email);
+            // if(user.tip == 2) return Ok(await _service.Add(category));
+            // return Unauthorized();
+            return Ok(await _service.Add(category));
         }
-        [HttpPut("Update/{kategori_id}")]
-        public async Task<ActionResult> UpdateKategori(int kategori_id, [FromBody] Kategori body) {
-            var result = await _service.UpdateKategori(kategori_id, body);
-            if (result.Success) {
-                return Ok();
-            }
-            return BadRequest();
-        }
+        
+        [AllowAnonymous]
         [HttpDelete("Delete")]
-        public async Task<ActionResult> DeleteKategori(int kategori_id) {
-            var result = await _service.DeleteKategori(kategori_id);
-            if (result.Success) {
-                return Ok();
-            }
-            return BadRequest();
+        public async Task<ActionResult> DeleteKategori([FromBody]int kategori_id) {
+            // string token = Request.Headers["Authorization"];
+            // token = token.Substring(7);
+            // string email = await _tokenService.decodeKey(token);
+            // User user = await _userService.GetUserByEmail(email);
+            // if(user.tip == 2) return Ok(await _service.Delete(kategori_id));
+            // return Unauthorized();
+            return Ok(await _service.Delete(kategori_id));
         }
 
     }

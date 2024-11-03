@@ -5,16 +5,12 @@ namespace bycoAPI.Interfaces
 {
     public interface IUserServices
     {
-        public Task<User> GetUserAsync(int id);
-        public Task<User> GetUserByEmail(string email);
-
-        public Task<List<User>> GetAll();
+        public Task<User> GetUserAsync(int id);//ok
+        public Task<User> GetUserByEmail(string email);//ok
+        public Task<RequestResponse> UserKaydet(User user);
+        public Task<List<User>> GetUserInfoForAdmin();
         public bool CheckUserExist(LoginReq loginReq);
-        public DataResult<User> UserKaydet(User user);
-        public Task<Result> LogOut(string session_key);
-        public Task<Result> UpdateUser(int user_id, User body);
-        public Task<Result> DeleteUser(int user_id);
-        public Task<Result> SetDiscount(int user_id, int discount_rate);
+        public Task<RequestResponse> UpdateUser(int user_id, User body);
         
     }
 }

@@ -79,7 +79,7 @@ namespace bycoAPI.Controllers
 
             Message ml = new Message(new string[] { "contact@byco.com.tr" });
             ml.Subject ="Satış";
-            string bilgiler = hp.bireysel_kurumsal + "Telefon = " +hp.telefon + " Mail = " +hp.CustomerEmailAddress + " Vergi/TC No:" + hp.tcknvkn;
+            string bilgiler =hp.aliciAdi +"   "+ hp.bireysel_kurumsal + "Telefon = " +hp.telefon + " Mail = " +hp.CustomerEmailAddress + " Vergi/TC No:" + hp.tcknvkn;
             StringBuilder sb = new StringBuilder();
             foreach(OdemeUrun ou in hp.urunler){
                 sb.Append(ou.ad + " " + ou.adet.ToString() + " " + ou.fiyat.ToString());

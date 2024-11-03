@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace bycoAPI.Services
 {
@@ -16,36 +17,31 @@ namespace bycoAPI.Services
         {
             _dbContexts = dbContexts;
         }
-        public Task<User> GetUserAsync(int id)
+        public async Task<User> GetUserAsync(int id)
         {
-            User user = null;
-
-            return Task.FromResult(GetUserFromDb(id));
+            return await _dbContexts.Users.FindAsync(id);
         }
 
         public async Task<User> GetUserByEmail(string userstring)
         {
             User user = await _dbContexts.Users.FirstOrDefaultAsync(k => k.email == userstring);
             if (user == null) { return null; }
-
             return await Task.FromResult(user);
         }
 
-        private User GetUserFromDb(int id)
+        public async Task<RequestResponse> UserKaydet(User user)
         {
+            try{
+                User userdb = await Copy(user, "user_id");
+                await _dbContexts.Users.AddAsync(userdb);
+                await _dbContexts.SaveChangesAsync();
+            return new RequestResponse { StatusCode = 200, ReasonString = "Kullanıcı eklendi" };
 
-            User user = _dbContexts.Users
-            .FirstOrDefault(u => u.user_id == id);
-
-            return user;
-        }
-
-        public DataResult<User> UserKaydet(User user)
-        {
-            _dbContexts.Users.Add(user);
-            _dbContexts.SaveChangesAsync();
-
-            return new DataResult<User>(true, "", user);
+            }
+            catch{
+                return new RequestResponse {StatusCode = 400, ReasonString = "Hata olustu"};
+            }
+            
         }
 
         public bool CheckUserExist(LoginReq loginReq)
@@ -56,94 +52,6 @@ namespace bycoAPI.Services
             && u.password == loginReq.password);
 
             return true;
-        }
-
-        public Task<Result> Register(RegistrationDTO register)
-        {
-            var emailcheck = _dbContexts.Users.SingleOrDefault(t=> t.email == register.email);
-            if (emailcheck is not null) {
-                return Task.FromResult(new Result(false, "Email is in use.")); 
-            }
-            if (register.tip.ToLower() != "bireysel" && register.tip.ToLower() != "kurumsal") {
-                return Task.FromResult(new Result(false, "Type not valid.")); 
-            }
-            User user = new() {
-                ad = register.ad,
-                email = register.email,
-                password = HashString(register.password),
-                soyad = register.soyad,
-                telefon = register.telefon,
-                tip = 2,
-                user_id = 0
-            };
-
-            KimlikNo kn = new() {
-                kimlik_id = 0,
-                user_id = 0,
-                kimlik_no = ""
-            };
-            VergiNums vn = new() {
-                vergi_id = 0,
-                user_id = 0,
-                vergi_no = ""
-            };
-
-            if (register.tip.ToLower() == "bireysel") {
-                kn.kimlik_no = register.vergi_no_kimlik_no;
-                user.tip = 2;
-            }
-            if (register.tip.ToLower() == "kurumsal") {
-                vn.vergi_no = register.vergi_no_kimlik_no;
-                user.tip = 1;
-            }
-
-            _dbContexts.Users.Add(user);
-            _dbContexts.SaveChanges();
-
-            var tempUser = _dbContexts.Users.SingleOrDefault(t=> t.email == register.email);
-            if (tempUser.tip == 2) {
-                kn.user_id = tempUser.user_id;
-                _dbContexts.KimlikNo.Add(kn);
-                _dbContexts.SaveChanges();
-            }
-            if (tempUser.tip == 1) {
-                vn.user_id = tempUser.user_id;
-                _dbContexts.VergiNums.Add(vn);
-                _dbContexts.SaveChanges();
-            }
-            return Task.FromResult(new Result(true));
-        }
-
-        public Task<DataResult<Sessions>> LogIn(LogInDTO login)
-        {
-            var tempUser = _dbContexts.Users.SingleOrDefault(t=> t.email == login.email);
-            if (tempUser is null) {
-                return Task.FromResult(new DataResult<Sessions>(false,null));
-            }
-            string pass = HashString(login.password);
-            if (pass == tempUser.password) {
-                Sessions session = new() {
-                    expiration_date = DateTime.Now.AddDays(1),
-                    session_id = 0,
-                    user_id = tempUser.user_id,
-                    session_key = HashString(DateTime.Now.ToString())
-                };
-                _dbContexts.Sessions.Add(session);
-                _dbContexts.SaveChanges();
-                return Task.FromResult(new DataResult<Sessions>(true, session));
-            }
-            return Task.FromResult(new DataResult<Sessions>(false, null));
-        }
-
-        public Task<Result> LogOut(string session_key)
-        {
-            var tempSession = _dbContexts.Sessions.SingleOrDefault(t=> t.session_key == session_key);
-            if (tempSession is not null) {
-                _dbContexts.Sessions.Remove(tempSession);
-                _dbContexts.SaveChanges();
-                return Task.FromResult(new Result(true, "Session Deleted"));
-            }
-            return Task.FromResult(new Result(false, "Session not found."));
         }
 
         private string HashString(string text) {
@@ -158,152 +66,39 @@ namespace bycoAPI.Services
             return hashString;
         }
 
-        public Task<Result> UpdateUser(int user_id, User body)
+        public async Task<User> Copy(User source, string excludeProperty)
         {
-            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
-            if (temp is null) {
-                return Task.FromResult(new Result(false, "BadRequest"));
-            }
-            temp.tip = body.tip != default ? body.tip : temp.tip;
-            temp.email = body.email != default ? body.email : temp.email;
-            temp.password = body.password != default ? body.password : temp.password;
-            temp.soyad = body.soyad != default ? body.soyad : temp.soyad;
-            temp.ad = body.ad != default ? body.ad : temp.ad;
-            temp.telefon = body.telefon != default ? body.telefon : temp.telefon;
-            temp.user_id = body.user_id != default ? body.user_id : temp.user_id;
-            
-            _dbContexts.SaveChangesAsync();
-            return Task.FromResult(new Result(true, "OK"));
-        }
-
-        public Task<Result> DeleteUser(int user_id)
-        {
-            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
-            if (temp is null) {
-                return Task.FromResult(new Result(false, "BadRequest"));
-            }
-            _dbContexts.Users.Remove(temp);
-            _dbContexts.SaveChanges();
-            return Task.FromResult(new Result(true, "OK"));
-        }
-
-        public Task<List<User>> GetAll()
-        {
-            return Task.FromResult(_dbContexts.Users.ToList());
-        }
-
-        public Task<DataResult<UserResponse>> GetResponseById(int user_id)
-        {
-            var temp = _dbContexts.Users.SingleOrDefault(t=> t.user_id == user_id);
-            if (temp is null) {
-                return Task.FromResult(new DataResult<UserResponse>(false, null));
-            }
-
-            string strAdres = "";
-            var tempAdres = _dbContexts.Adresler.SingleOrDefault(t=> t.user_id == user_id);
-            if (tempAdres is not null) {
-                strAdres = tempAdres.adres;
-            }
-
-            string strDiscount = "0";
-            var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=>t.user_id == user_id);
-            if (tempDiscount is not null) {
-                strDiscount = tempDiscount.discount_rate.ToString();
-            }
-
-            string strVkno = "";
-            if (temp.tip == 1) {
-                var tempKur = _dbContexts.VergiNums.SingleOrDefault(t=> t.user_id == user_id);
-                if (tempKur is not null) {
-                    strVkno = tempKur.vergi_no;
-                }
-            } else if (temp.tip == 2) {
-                var tempBir = _dbContexts.KimlikNo.SingleOrDefault(t=> t.user_id == user_id);
-                if (tempBir is not null) {
-                    strVkno = tempBir.kimlik_no;
-                }
-            }
-
-            UserResponse tur = new() {
-                adres = strAdres,
-                adsoyad = temp.ad + " " + temp.soyad,
-                discount = strDiscount,
-                email = temp.email,
-                telefon = temp.telefon,
-                tip = temp.tip.ToString(),
-                user_id = temp.user_id.ToString(),
-                vkno = strVkno
-            };
-
-            return Task.FromResult(new DataResult<UserResponse>(true, tur));
-        }
-
-        public Task<DataResult<List<UserResponse>>> GetAllResponse()
-        {
-            var userlist = _dbContexts.Users.ToList();
-            List<UserResponse> result = [];
-
-            foreach (var i in userlist)
+            User target = new User();
+            foreach (PropertyInfo property in typeof(User).GetProperties())
             {
-                var temp = i;
-                string strAdres = "";
-                var tempAdres = _dbContexts.Adresler.SingleOrDefault(t=> t.user_id == i.user_id);
-                if (tempAdres is not null) {
-                    strAdres = tempAdres.adres;
+                if (property.Name != excludeProperty && property.CanWrite)
+                {
+                    var value = property.GetValue(source);
+                    property.SetValue(target, value);
                 }
-
-                string strDiscount = "0";
-                var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=>t.user_id == i.user_id);
-                if (tempDiscount is not null) {
-                    strDiscount = tempDiscount.discount_rate.ToString();
-                }
-
-                string strVkno = "";
-                if (temp.tip == 1) {
-                    var tempKur = _dbContexts.VergiNums.SingleOrDefault(t=> t.user_id == i.user_id);
-                    if (tempKur is not null) {
-                        strVkno = tempKur.vergi_no;
-                    }
-                } else if (temp.tip == 2) {
-                    var tempBir = _dbContexts.KimlikNo.SingleOrDefault(t=> t.user_id == i.user_id);
-                    if (tempBir is not null) {
-                        strVkno = tempBir.kimlik_no;
-                    }
-                }
-
-                UserResponse tur = new() {
-                    adres = strAdres,
-                    adsoyad = temp.ad + " " + temp.soyad,
-                    discount = strDiscount,
-                    email = temp.email,
-                    telefon = temp.telefon,
-                    tip = temp.tip.ToString(),
-                    user_id = temp.user_id.ToString(),
-                    vkno = strVkno
-                };
-                result.Add(tur);
             }
-
-            
-            return Task.FromResult(new DataResult<List<UserResponse>>(true, result));
+            //target.password=HashString(target.password);
+            return target;
         }
 
-        public Task<Result> SetDiscount(int user_id, int discount_rate)
+        public async Task<List<User>> GetUserInfoForAdmin()
         {
-            var tempDiscount = _dbContexts.Discount.SingleOrDefault(t=> t.user_id == user_id);
-            if (tempDiscount is null) {
-                Discount t = new() {
-                    discount_id = 0,
-                    discount_rate = discount_rate,
-                    user_id = user_id
-                };
-                _dbContexts.Discount.Add(t);
-                _dbContexts.SaveChanges();
-                return Task.FromResult (new Result(true, "OK"));
+            return await _dbContexts.Users.ToListAsync();
+        }
+
+        public async Task<RequestResponse> UpdateUser(int user_id, User body)
+        {
+            User user = await _dbContexts.Users.FindAsync(user_id);
+            if (user == null)
+            {
+                return new RequestResponse{StatusCode=400,ReasonString="Kullanici bulunamadı!"};
             }
-            tempDiscount.discount_rate = discount_rate;
-            _dbContexts.SaveChanges();
-            return Task.FromResult (new Result(true, "OK"));
+
+            user = await Copy(body,"user_id");
+            
+            _dbContexts.Users.Update(user);
+            await _dbContexts.SaveChangesAsync();
+            return new RequestResponse{StatusCode=200,ReasonString="Kullanici güncellendi"};
         }
     }
 }
