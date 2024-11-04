@@ -40,6 +40,7 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("Add")]
+        [AllowAnonymous]
         public async Task<RequestResponse> AddUrun([FromBody] Product product)
         {
 
@@ -54,6 +55,7 @@ namespace bycoAPI.Controllers
                 return await _service.AddUrun(product);
             }
             else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+            //return await _service.AddUrun(product);
         }
 
         [HttpPut("Update/{urun_id}")]

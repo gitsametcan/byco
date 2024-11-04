@@ -87,7 +87,21 @@ namespace bycoAPI
 
             app.UseHttpsRedirection();
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigins", builder =>
+        {
+            builder.WithOrigins("http://localhost", "https://bycobackend.online")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials(); // Çerezleri ve kimlik doğrulama bilgilerini göndermek için
+        });
+    });
+
+    app.UseCors("AllowSpecificOrigins");
+
+
+            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();
