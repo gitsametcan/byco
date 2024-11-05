@@ -40,7 +40,6 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("Add")]
-        [AllowAnonymous]
         public async Task<RequestResponse> AddUrun([FromBody] Product product)
         {
 
@@ -50,12 +49,11 @@ namespace bycoAPI.Controllers
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 2)
+            if (user.tip == 0)
             {
                 return await _service.AddUrun(product);
             }
             else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
-            //return await _service.AddUrun(product);
         }
 
         [HttpPut("Update/{urun_id}")]
@@ -67,7 +65,7 @@ namespace bycoAPI.Controllers
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 2)
+            if (user.tip == 0)
             {
                 return await _service.UpdateUrun(urun_id, body);
             }
@@ -83,7 +81,7 @@ namespace bycoAPI.Controllers
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 2)
+            if (user.tip == 0)
             {
                 return await _service.DeleteUrun(urun_id);
                 

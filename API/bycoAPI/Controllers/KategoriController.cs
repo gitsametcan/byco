@@ -34,28 +34,28 @@ namespace bycoAPI.Controllers {
         }
 
 
-        [AllowAnonymous]
+        
         [HttpPost("Add")]
         public async Task<ActionResult> AddKategori([FromBody]Category category) {
-            // string token = Request.Headers["Authorization"];
-            // token = token.Substring(7);
-            // string email = await _tokenService.decodeKey(token);
-            // User user = await _userService.GetUserByEmail(email);
-            // if(user.tip == 2) return Ok(await _service.Add(category));
-            // return Unauthorized();
-            return Ok(await _service.Add(category));
+            string token = Request.Headers["Authorization"];
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+            if(user.tip == 0) return Ok(await _service.Add(category));
+            return Unauthorized();
+            //return Ok(await _service.Add(category));
         }
         
-        [AllowAnonymous]
+        
         [HttpDelete("Delete")]
         public async Task<ActionResult> DeleteKategori([FromBody]int kategori_id) {
-            // string token = Request.Headers["Authorization"];
-            // token = token.Substring(7);
-            // string email = await _tokenService.decodeKey(token);
-            // User user = await _userService.GetUserByEmail(email);
-            // if(user.tip == 2) return Ok(await _service.Delete(kategori_id));
-            // return Unauthorized();
-            return Ok(await _service.Delete(kategori_id));
+            string token = Request.Headers["Authorization"];
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+            if(user.tip == 0) return Ok(await _service.Delete(kategori_id));
+            return Unauthorized();
+            //return Ok(await _service.Delete(kategori_id));
         }
 
     }

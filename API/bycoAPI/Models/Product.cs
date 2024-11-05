@@ -44,6 +44,7 @@ namespace bycoAPI.Models
         public string? urunozelligi { get; set; }
         public string? uruntipi { get; set; }
         public string? watt { get; set; }
+        public int? indirim { get; set; }
     }
 
 }

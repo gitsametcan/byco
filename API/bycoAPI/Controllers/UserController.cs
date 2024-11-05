@@ -38,10 +38,38 @@ namespace bycoAPI.Controllers
             return await userService.UserKaydet(user);
         }
 
+        [HttpPut("Update")]
+        public async Task<RequestResponse> UpdateUser([FromBody] User body)
+        {
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await tokenService.decodeKey(token);
+            User user = await userService.GetUserByEmail(email);
+
+            if (user.user_id == body.user_id)
+            {
+                return await userService.UpdateUser(user.user_id, body);
+            }
+            else if(user.tip == 0){
+                return await userService.UpdateUser(body.user_id, body);
+
+            }
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+        }
+
         [HttpGet("GetAll")]
-        [AllowAnonymous]
         public async Task<List<User>> GetAll() {
-            return await userService.GetUserInfoForAdmin();
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await tokenService.decodeKey(token);
+            User user = await userService.GetUserByEmail(email);
+            if(user.tip == 0){
+                return await userService.GetUserInfoForAdmin();
+
+            }
+            else return [];
         }
 
     }

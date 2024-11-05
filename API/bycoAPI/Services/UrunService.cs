@@ -43,11 +43,24 @@ namespace bycoAPI.Services
                 return new RequestResponse{StatusCode=400,ReasonString="Ürün bulunamadı!"};
             }
 
-            urun = await Copy(body,"id");
+            if(urun.id == urun_id){
+                foreach (PropertyInfo property in typeof(Product).GetProperties())
+            {
+                if (property.CanWrite)
+                {
+                    var value = property.GetValue(body);
+                    property.SetValue(urun, value);
+                }
+            }
             
             _context.Products.Update(urun);
             await _context.SaveChangesAsync();
             return new RequestResponse{StatusCode=200,ReasonString="Ürün güncellendi"};
+
+            }
+            else return new RequestResponse{StatusCode=331,ReasonString="Ürün uyuşmuyor!"};
+
+            
         }
 
         public async Task<RequestResponse> DeleteUrun(int urun_id)//ok

@@ -36,7 +36,7 @@ namespace bycoAPI.Controllers
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 2)
+            if (user.tip == 0)
             {
                 return await _siparisService.SiparisKargoda(siparisno);
             }
@@ -54,7 +54,7 @@ namespace bycoAPI.Controllers
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 2)
+            if (user.tip == 0)
             {
                 return await _siparisService.OdemeAlindi(siparisno);
             }

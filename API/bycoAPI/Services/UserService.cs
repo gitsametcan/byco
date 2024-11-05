@@ -31,22 +31,24 @@ namespace bycoAPI.Services
 
         public async Task<RequestResponse> UserKaydet(User user)
         {
-            try{
+            try
+            {
                 User userdb = await Copy(user, "user_id");
                 await _dbContexts.Users.AddAsync(userdb);
                 await _dbContexts.SaveChangesAsync();
-            return new RequestResponse { StatusCode = 200, ReasonString = "Kullanıcı eklendi" };
+                return new RequestResponse { StatusCode = 200, ReasonString = "Kullanıcı eklendi" };
 
             }
-            catch{
-                return new RequestResponse {StatusCode = 400, ReasonString = "Hata olustu"};
+            catch
+            {
+                return new RequestResponse { StatusCode = 400, ReasonString = "Hata olustu" };
             }
-            
+
         }
 
         public bool CheckUserExist(LoginReq loginReq)
         {
-            if(_dbContexts.Users == null) return false;
+            if (_dbContexts.Users == null) return false;
             User user = _dbContexts.Users
             .FirstOrDefault(u => u.email == loginReq.email
             && u.password == loginReq.password);
@@ -54,7 +56,8 @@ namespace bycoAPI.Services
             return true;
         }
 
-        private string HashString(string text) {
+        private string HashString(string text)
+        {
             byte[] bytes = Encoding.UTF8.GetBytes(text);
             SHA256Managed hashstring = new SHA256Managed();
             byte[] hash = hashstring.ComputeHash(bytes);
@@ -91,14 +94,26 @@ namespace bycoAPI.Services
             User user = await _dbContexts.Users.FindAsync(user_id);
             if (user == null)
             {
-                return new RequestResponse{StatusCode=400,ReasonString="Kullanici bulunamadı!"};
+                return new RequestResponse { StatusCode = 400, ReasonString = "Kullanici bulunamadı!" };
             }
 
-            user = await Copy(body,"user_id");
-            
-            _dbContexts.Users.Update(user);
-            await _dbContexts.SaveChangesAsync();
-            return new RequestResponse{StatusCode=200,ReasonString="Kullanici güncellendi"};
+            if (user.indirim == user_id)
+            {
+                foreach (PropertyInfo property in typeof(User).GetProperties())
+                {
+                    if (property.CanWrite)
+                    {
+                        var value = property.GetValue(body);
+                        property.SetValue(user, value);
+                    }
+                }
+
+                _dbContexts.Users.Update(user);
+                await _dbContexts.SaveChangesAsync();
+
+            return new RequestResponse { StatusCode = 200, ReasonString = "Kullanici güncellendi" };
+            }
+            else return new RequestResponse { StatusCode = 331, ReasonString = "Kullanici uyuşmuyor" };
         }
     }
 }
