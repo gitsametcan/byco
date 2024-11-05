@@ -22,7 +22,8 @@ export class ProfileComponent {
   userid: number = -1;
   urunTuru: string = '';
   newCategory: string = '';
-
+  siparisler: any[] = [];
+  selectedSiparisId: number | null = null;
   //benimUrl = this.urlhost.geturl();
 
 
@@ -152,14 +153,17 @@ export class ProfileComponent {
 
 
   myObject = {
-    user_id: "",
-    adsoyad: 'Süleyman Rıfkı',
+    user_id: 0,
+    ad: 'Süleyman',
+    soyad: 'Rıfkı',
     email: 'byco@byco.com.tr',
-    vkno: '12345678910',
-    tip: '1',
-    telefon: '05555555555',
-    adres: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23',
-    discount: '00'
+    password: 'password',
+    telefon: '555555555',
+    tip: 0,
+    tcknvkn: '12345678910',
+    teslimatadresi: 'Evim Caddesi, Okul Sokak, No:23',
+    faturaadresi: 'İşim Caddesi, Üniversite Sokak, No:23',
+    indirim: 5
   };
 
   siparislerimDeneme = [
@@ -182,16 +186,74 @@ export class ProfileComponent {
     { id: "6", ad: 'Binnaz Türker', tip: '1', sipsayi: '0', tutar: '987554', indirim: '65', }
   ];
 
+
+
   ngOnInit(): void {
-    this.getIdFromSession();
-    this.getOrder();
+    this.getUserByToken();
     this.getKategoriListesi(); // Yeni kategori listesini çekme fonksiyonunu çağırın
     this.urunTurleriOptions = this.urunTurleri.map(tur => ({
       value: tur,
       text: tur
     }));
+    this.getOrders();
 
   }
+
+
+  getUserByToken(){
+    this.sendRequestWithHeaders('User/GetUser','GET', {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`
+    })
+    .then(response => {
+      console.log("geetuserbasarili");
+      console.log(response);
+      this.myObject=response;
+    })
+    .catch(err => {
+      console.log("geetuserbasarilidegil");
+      console.error("Error: " + err);
+      //this.router.navigate(['/pages/login']);
+    })
+  }
+
+  sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: header,
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer'
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
+  sendRequestWithHeadersPost(url: string, method: string, data?:any, header?: any): Promise<any> {
+    console.log("requesin içi"+JSON.stringify(data));
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: header,
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
+
+
 
   logout() {
     console.log(this.getCookie("session_key"))
@@ -211,6 +273,40 @@ export class ProfileComponent {
       })
 
   }
+  toggleDetails(siparisId: number) {
+    this.selectedSiparisId = this.selectedSiparisId === siparisId ? null : siparisId;
+  }
+
+  calculateTotal(urunler: any[]): number {
+    return urunler.reduce((total, urun) => total + (urun.fiyat * urun.stok), 0);
+  }
+  // Durumları Türkçe etiketlerle döndürür
+getStatusLabel(durum: string): string {
+  switch (durum) {
+    case 'Kargoya Verildi':
+      return 'Kargoya Verildi';
+    case 'Ödeme Alındı':
+      return 'Ödeme Alındı';
+    case 'Teslim Edildi':
+      return 'Teslim Edildi';
+    default:
+      return 'Bilinmeyen';
+  }
+}
+
+// Duruma göre uygun bir CSS sınıfı döndürür
+getStatusClass(durum: string): string {
+  switch (durum) {
+    case 'Kargoya Verildi':
+      return 'status pending';
+    case 'Ödeme Alındı':
+      return 'status done';
+    case 'Teslim Edildi':
+      return 'status reply';
+    default:
+      return 'status hold';
+  }
+}
 
   getKategoriSecenek() {
     this.sendRequest('Kategori/GetAllValueText', 'GET')
@@ -255,19 +351,20 @@ export class ProfileComponent {
       })
   }
 
-  getOrder() {
-    this.sendRequest('Satis/GetSiparisBilgileri', 'GET')
+  getOrders() {
+    this.sendRequestWithHeaders('Siparis/GetAll', 'GET', {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`
+    })
       .then(response => {
-        console.log(response.data);
-        this.siparislerimDeneme = response.data;
-
-
+        console.log("burdayım be burda");
+        console.log(response);
+        this.siparisler = response;
       })
       .catch(err => {
         console.error("Error: " + err);
-        //this.router.navigate(['/pages/login']);
-      })
+      });
   }
+
 
   getIdFromSession() {
     console.log("sessionkey ===" + this.getCookie("session_key"))
@@ -290,7 +387,7 @@ export class ProfileComponent {
       .then(response => {
         console.log(response.data);
         this.myObject = response.data;
-        if (this.myObject.tip == "0") {
+        if (this.myObject.tip == 0) {
           this.getMusteriler();
         }
 
@@ -398,10 +495,14 @@ export class ProfileComponent {
   }
 
   updateInfo() {
-    this.sendRequest('Adres/SetAdres/' + this.userid, 'POST', this.myObject.adres)
+    console.log(this.myObject);
+    this.sendRequestWithHeadersPost('User/Update', 'PUT', this.myObject,{
+      'Authorization': `Bearer ${this.getCookie("session_key")}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
       .then(response => {
         console.log(response);
-
 
       })
       .catch(err => {

@@ -21,12 +21,12 @@
                   <div class="profile__tab mr-40">
                      <nav>
                         <div class="nav nav-tabs tp-tab-menu flex-column" id="profile-tab" role="tablist">
-                           <button *ngIf="myObject.tip!=='0'" class="nav-link active" id="nav-profile-tab"
+                           <button *ngIf="myObject.tip!=0" class="nav-link active" id="nav-profile-tab"
                               data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab"
                               aria-controls="nav-profile" aria-selected="false"><span><i
-                                    class="fa-regular fa-user-pen"></i></span>Profil</button>
+                                    class="fa-regular fa-user-pen"></i></span>Hoşgeldiniz</button>
 
-                           <button *ngIf="myObject.tip==='0'" class="nav-link active" id="nav-profile-tab"
+                           <button *ngIf="myObject.tip==0" class="nav-link active" id="nav-profile-tab"
                               data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab"
                               aria-controls="nav-profile" aria-selected="false"><span><i
                                     class="fa-regular fa-user-pen"></i></span>Siparişler</button>
@@ -36,25 +36,25 @@
                               aria-selected="false"><span><i class="fa-regular fa-circle-info"></i></span>
                               Bilgilerim</button>
 
-                           <button *ngIf="myObject.tip==='0'" class="nav-link" id="nav-address-tab" data-bs-toggle="tab"
+                           <button *ngIf="myObject.tip==0" class="nav-link" id="nav-address-tab" data-bs-toggle="tab"
                               data-bs-target="#nav-address" type="button" role="tab" aria-controls="nav-address"
                               aria-selected="false"><span><i class="fa-light fa-location-dot"></i></span> Ürün-Kategori
                               Ekle</button>
 
-                           <button *ngIf="myObject.tip==='0'" class="nav-link" id="nav-order-tab" data-bs-toggle="tab"
+                           <button *ngIf="myObject.tip==0" class="nav-link" id="nav-order-tab" data-bs-toggle="tab"
                               data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order"
                               aria-selected="false"><span><i class="fa-light fa-clipboard-list-check"></i></span>
                               Müşteriler</button>
 
-                           <button *ngIf="myObject.tip!=='0'" class="nav-link" id="nav-order-tab" data-bs-toggle="tab"
+                           <button *ngIf="myObject.tip!=0" class="nav-link" id="nav-order-tab" data-bs-toggle="tab"
                               data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order"
                               aria-selected="false"><span><i class="fa-light fa-clipboard-list-check"></i></span>
                               Siparişlerim</button>
 
-                           <button *ngIf="myObject.tip==='0'" class="nav-link" id="nav-notification-tab"
+                           <!-- <button *ngIf="myObject.tip==0" class="nav-link" id="nav-notification-tab"
                               data-bs-toggle="tab" data-bs-target="#nav-notification" type="button" role="tab"
                               aria-controls="nav-notification" aria-selected="false"><span><i
-                                    class="fa-regular fa-bell"></i></span> Proje Ekle</button>
+                                    class="fa-regular fa-bell"></i></span> Proje Ekle</button> -->
 
                            <button class="nav-link" id="nav-password-tab" data-bs-toggle="tab"
                               data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password"
@@ -70,11 +70,12 @@
                         <!-- profile area start -->
                         <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
                            aria-labelledby="nav-profile-tab">
-                           <div *ngIf="myObject.tip!='0'" class="profile__main">
+                           <div *ngIf="myObject.tip!=0" class="profile__main">
                               <div class="profile__main-top pb-80">
                                  <div class="row align-items-center">
                                     <div class="col-md-6">
-                                       <div class="profile__main-inner d-flex flex-wrap align-items-center">
+                                       Bu sayfadan geçmiş siparişlerinizi görebilir, bilgilerinizi güncelleyebilirsiniz. BYCO'yu tercih ettiğiniz için teşekkür ederiz.
+                                       <!-- <div class="profile__main-inner d-flex flex-wrap align-items-center">
                                           <div class="profile__main-thumb">
                                              <img src="/assets/img/users/user-10.jpg" alt="">
                                              <div class="profile__main-thumb-edit">
@@ -87,7 +88,7 @@
                                              <h4 class="profile__main-title">Hoş geldiniz!</h4>
                                              <p> <span>08</span> bildiriminiz var.</p>
                                           </div>
-                                       </div>
+                                       </div> -->
                                     </div>
                                     <div class="col-md-6">
                                        <div class="profile__main-logout text-sm-end">
@@ -96,7 +97,7 @@
                                     </div>
                                  </div>
                               </div>
-                              <div class="profile__main-info">
+                              <!-- <div class="profile__main-info">
                                  <div class="row gx-3">
                                     <div class="col-md-3 col-sm-6">
                                        <div class="profile__main-info-item">
@@ -193,38 +194,51 @@
                                        </div>
                                     </div>
                                  </div>
-                              </div>
+                              </div> -->
                            </div>
 
-                           <div *ngIf="myObject.tip=='0'" class="profile__ticket table-responsive">
+                           <div *ngIf="myObject.tip==0" class="profile__ticket table-responsive">
                               <table class="table">
-                                 <thead>
-                                    <tr>
-                                       <th scope="col">Sipariş Numarası</th>
-                                       <th scope="col">Müşteri</th>
-                                       <th scope="col">Sipariş Tarihi</th>
-                                       <th scope="col">Sipariş Tutarı</th>
-                                       <th scope="col">Durum</th>
-                                       <th scope="col">
-                                          <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
-                                       </th>
-                                    </tr>
-                                 </thead>
-                                 <tbody *ngFor="let item of siparislerimDeneme">
-                                    <tr>
-                                       <th scope="row"> {{item.no}}</th>
-                                       <td data-info="title">{{item.musteri}}</td>
-                                       <td data-info="title">{{item.tarih}}</td>
-                                       <td data-info="title">{{item.tutar}} TL</td>
-                                       <td *ngIf="item.durum=='yolda'" data-info="status pending">Yolda </td>
-                                       <td *ngIf="item.durum=='teslim'" data-info="status done">Teslim Edildi</td>
-                                       <td *ngIf="item.durum=='hata'" data-info="status reply">Sipariş İptal</td>
-                                       <td *ngIf="item.durum=='hazirlaniyor'" data-info="status hold">Siparişiniz
-                                          Hazırlanıyor</td>
-                                    </tr>
-                                 </tbody>
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Sipariş Numarası</th>
+                                    <th scope="col">Müşteri</th>
+                                    <th scope="col">Sipariş Tarihi</th>
+                                    <th scope="col">Sipariş Tutarı</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">
+                                      <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngFor="let siparis of siparisler">
+                                  <tr (click)="toggleDetails(siparis.siparis_id)">
+                                    <th scope="row">{{ siparis.siparisno }}</th>
+                                    <td data-info="title">{{ siparis.ad }}</td>
+                                    <td data-info="title">{{ siparis.tarih | date }}</td>
+                                    <td data-info="title">{{ calculateTotal(siparis.urunler) | currency:'TRY' }}</td>
+                                    <td [attr.data-info]="getStatusClass(siparis.durum)">
+                                      {{ getStatusLabel(siparis.durum) }}
+                                    </td>
+                                  </tr>
+                            
+                                  <!-- Dropdown detay kısmı -->
+                                  <tr *ngIf="selectedSiparisId === siparis.siparis_id">
+                                    <td colspan="6">
+                                      <div class="product-details">
+                                        <div *ngFor="let urun of siparis.urunler" class="product-item">
+                                          <img [src]="urun.img || 'placeholder.jpg'" alt="{{ urun.ad }}" width="50" height="50" />
+                                          <p>Ürün Adı: {{ urun.ad }}</p>
+                                          <p>Stok: {{ urun.stok }}</p>
+                                          <p>Fiyat: {{ urun.fiyat | currency:'TRY' }}</p>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
                               </table>
-                           </div>
+                            </div>
+                            
                         </div>
 
 
@@ -239,11 +253,33 @@
                               <div class="profile__info-content">
                                  <form (ngSubmit)="updateInfo()" #updateInfoForm="ngForm">
                                     <div class="row">
-                                       <div class="col-xxl-6 col-md-6">
+                                       <div class="col-xxl-3 col-md-3">
                                           <div class="profile__input-box">
                                              <div class="profile__input">
-                                                <input type="text" name="adsoyad" id="adsoyad"
-                                                   value="{{myObject.adsoyad}}" [(ngModel)]="myObject.adsoyad" required>
+                                                <input type="text" name="ad" id="ad"
+                                                   value="{{myObject.ad}}" [(ngModel)]="myObject.ad" required>
+                                                <span>
+                                                   <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
+                                                      xmlns="http://www.w3.org/2000/svg">
+                                                      <path
+                                                         d="M9 9C11.2091 9 13 7.20914 13 5C13 2.79086 11.2091 1 9 1C6.79086 1 5 2.79086 5 5C5 7.20914 6.79086 9 9 9Z"
+                                                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                         stroke-linejoin="round" />
+                                                      <path
+                                                         d="M15.5 17.6C15.5 14.504 12.3626 12 8.5 12C4.63737 12 1.5 14.504 1.5 17.6"
+                                                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                         stroke-linejoin="round" />
+                                                   </svg>
+                                                </span>
+                                             </div>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-xxl-3 col-md-3">
+                                          <div class="profile__input-box">
+                                             <div class="profile__input">
+                                                <input type="text" name="soyad" id="soyad"
+                                                   value="{{myObject.soyad}}" [(ngModel)]="myObject.soyad" required>
                                                 <span>
                                                    <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
                                                       xmlns="http://www.w3.org/2000/svg">
@@ -264,8 +300,8 @@
                                        <div class="col-xxl-6 col-md-6">
                                           <div class="profile__input-box">
                                              <div class="profile__input">
-                                                <input type="email" name="mail" id="mail" value="{{myObject.email}}"
-                                                   [(ngModel)]="myObject.email" required>
+                                                <input type="email" name="mail" id="mail" value="{{myObject.email}}" readonly>
+
                                                 <span>
                                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none"
                                                       xmlns="http://www.w3.org/2000/svg">
@@ -285,8 +321,8 @@
                                        <div class="col-xxl-6 col-md-6">
                                           <div class="profile__input-box">
                                              <div class="profile__input">
-                                                <input type="text" name="vkno" id="vkno" value="{{myObject.vkno}}"
-                                                   [(ngModel)]="myObject.vkno" required>
+                                                <input type="text" name="vkno" id="vkno" value="{{myObject.tcknvkn}}"
+                                                   [(ngModel)]="myObject.tcknvkn" required>
                                                 <span>
                                                    <i class="fa-light fa-clipboard-list-check"></i>
                                                 </span>
@@ -319,9 +355,9 @@
                                        </div>
                                        <div class="col-xxl-6 col-md-6">
                                           <div class="profile__input-box">
-                                             <div *ngIf="myObject.tip=='0'">Yönetici</div>
-                                             <div *ngIf="myObject.tip=='1'">Bireysel</div>
-                                             <div *ngIf="myObject.tip=='2'">Kurumsal</div>
+                                             <div *ngIf="myObject.tip==0">Yönetici</div>
+                                             <div *ngIf="myObject.tip==1">Bireysel</div>
+                                             <div *ngIf="myObject.tip==2">Kurumsal</div>
                                              <!-- <div class="profile__input">
                                            {{<app-nice-select
                                               [options]="genderSelectOptions"
@@ -337,8 +373,8 @@
                                        <div class="col-xxl-12">
                                           <div class="profile__input-box">
                                              <div class="profile__input">
-                                                <input type="text" name="adress" id="adress" value="{{myObject.adres}}"
-                                                   [(ngModel)]="myObject.adres" required>
+                                                <input type="text" name="teslimatadresi" id="teslimatadresi" value="{{myObject.teslimatadresi}}"
+                                                   [(ngModel)]="myObject.teslimatadresi" required>
                                                 <span>
                                                    <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
                                                       xmlns="http://www.w3.org/2000/svg">
@@ -352,7 +388,27 @@
                                                 </span>
                                              </div>
                                           </div>
+                                          <div class="profile__input-box">
+                                             <div class="profile__input">
+                                                <input type="text" name="faturaadresi" id="faturaadresi" value="{{myObject.faturaadresi}}"
+                                                   [(ngModel)]="myObject.faturaadresi" required>
+                                                <span>
+                                                   <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
+                                                      xmlns="http://www.w3.org/2000/svg">
+                                                      <path
+                                                         d="M7.99377 10.1461C9.39262 10.1461 10.5266 9.0283 10.5266 7.64946C10.5266 6.27061 9.39262 5.15283 7.99377 5.15283C6.59493 5.15283 5.46094 6.27061 5.46094 7.64946C5.46094 9.0283 6.59493 10.1461 7.99377 10.1461Z"
+                                                         stroke="currentColor" stroke-width="1.5" />
+                                                      <path
+                                                         d="M1.19707 6.1933C2.79633 -0.736432 13.2118 -0.72843 14.803 6.2013C15.7365 10.2663 13.1712 13.7072 10.9225 15.8357C9.29079 17.3881 6.70924 17.3881 5.06939 15.8357C2.8288 13.7072 0.263493 10.2583 1.19707 6.1933Z"
+                                                         stroke="currentColor" stroke-width="1.5" />
+                                                   </svg>
+                                                </span>
+                                             </div>
+                                          </div>
+
+                                          
                                        </div>
+                                       
 
                                        <!-- <div class="col-xxl-12">
                                      <div class="profile__input-box">
@@ -436,7 +492,7 @@
 
                         <!-- profile password start -->
                         <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
-                           <div *ngIf="myObject.tip=='0'" class="profile__address">
+                           <div *ngIf="myObject.tip==0" class="profile__address">
                               <form (ngSubmit)="addCategory()" #addCategoryForm="ngForm">
                                  <div class="row">
                                     <!-- Dropdown for Ürün Türü -->
@@ -601,7 +657,7 @@
                               </div>
 
                            </div>
-                           <div *ngIf="myObject.tip!='0'" class="profile__address">
+                           <div *ngIf="myObject.tip!=0" class="profile__address">
                               <div class="row">
                                  <div class="col-md-6">
                                     <div class="profile__address-item d-sm-flex align-items-start">
@@ -678,58 +734,46 @@
 
                         <!-- profile ticket start -->
                         <div class="tab-pane fade" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
-                           <div *ngIf="myObject.tip!='0'" class="profile__ticket table-responsive">
+                           <div *ngIf="myObject.tip!=0" class="profile__ticket table-responsive">
                               <table class="table">
                                  <thead>
-                                    <tr>
-                                       <th scope="col">Sipariş Numarası</th>
-                                       <th scope="col">Sipariş Tarihi</th>
-                                       <th scope="col">Sipariş Tutarı</th>
-                                       <th scope="col">Durum</th>
-                                       <th scope="col"> </th>
-                                    </tr>
+                                   <tr>
+                                     <th scope="col">Sipariş Numarası</th>
+                                     <th scope="col">Müşteri</th>
+                                     <th scope="col">Sipariş Tarihi</th>
+                                     <th scope="col">Sipariş Tutarı</th>
+                                     <th scope="col">Durum</th>
+                                     <th scope="col">
+                                       <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
+                                     </th>
+                                   </tr>
                                  </thead>
-                                 <tbody *ngFor="let item of siparislerimDeneme">
-                                    <tr *ngIf="myObject.adsoyad===item.musteri">
-                                       <th scope="row"> {{item.no}}</th>
-                                       <td data-info="title">{{item.tarih}}</td>
-                                       <td data-info="title">{{item.tutar}} TL</td>
-                                       <td *ngIf="item.durum=='yolda'" data-info="status pending">Yolda </td>
-                                       <td *ngIf="item.durum=='teslim'" data-info="status done">Teslim Edildi</td>
-                                       <td *ngIf="item.durum=='hata'" data-info="status reply">Sipariş İptal</td>
-                                       <td *ngIf="item.durum=='hazirlaniyor'" data-info="status hold">Siparişiniz
-                                          Hazırlanıyor</td>
-                                       <td><a href="pages/contact" class="tp-logout-btn">İletişime Geç</a></td>
-                                    </tr>
+                                 <tbody *ngFor="let siparis of siparisler">
+                                   <tr (click)="toggleDetails(siparis.siparis_id)">
+                                     <th scope="row">{{ siparis.siparisno }}</th>
+                                     <td data-info="title">{{ siparis.ad }}</td>
+                                     <td data-info="title">{{ siparis.tarih | date }}</td>
+                                     <td data-info="title">{{ siparis.fiyat | currency:'TRY' }}</td>
+                                     <td [attr.data-info]="getStatusClass(siparis.durum)">
+                                       {{ getStatusLabel(siparis.durum) }}
+                                     </td>
+                                   </tr>
+                             
+                                   <!-- Dropdown detay kısmı -->
+                                   <tr *ngIf="selectedSiparisId === siparis.siparis_id">
+                                     <td colspan="6">
+                                       <div class="product-details">
+                                         <div *ngFor="let urun of siparis.urunler" class="product-item">
+                                           <img [src]="urun.img || 'placeholder.jpg'" alt="{{ urun.ad }}" width="50" height="50" />
+                                           <p>Ürün Adı: {{ urun.ad }}</p>
+                                           <p>Stok: {{ urun.stok }}</p>
+                                           <p>Fiyat: {{ urun.fiyat | currency:'TRY' }}</p>
+                                         </div>
+                                       </div>
+                                     </td>
+                                   </tr>
                                  </tbody>
-                              </table>
-                           </div>
-                           <div *ngIf="myObject.tip=='0'" class="profile__ticket table-responsive">
-                              <table class="table">
-                                 <thead>
-                                    <tr>
-                                       <th scope="col">Müşteri Adı</th>
-                                       <th scope="col">Müşteri Tipi</th>
-                                       <th scope="col">Sipariş Sayısı</th>
-                                       <th scope="col">Toplam Harcama</th>
-                                       <th scope="col">İndirim Miktari(%)</th>
-                                       <th scope="col">İndirim Güncelle</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody *ngFor="let item of musterilerDeneme; let i = index">
-                                    <tr>
-                                       <th scope="row"> {{item.ad}}</th>
-                                       <td *ngIf="item.tip=='1'" data-info="status pending">Bireysel </td>
-                                       <td *ngIf="item.tip=='2'" data-info="status done">Kurumsal </td>
-                                       <td data-info="title">{{item.sipsayi}}</td>
-                                       <td data-info="title">{{item.tutar}} TL</td>
-                                       <td data-info="title"><input [id]="'indirimyeni' + i" type="text"
-                                             placeholder="{{item.indirim}}" [(ngModel)]="indirimyeni[i]" required></td>
-                                       <td><button type="submit" class="tp-btn"
-                                             (click)="updateDiscount(item.id,i)">Güncelle</button></td>
-                                    </tr>
-                                 </tbody>
-                              </table>
+                               </table>
                            </div>
                         </div>
                         <!-- profile ticket end -->

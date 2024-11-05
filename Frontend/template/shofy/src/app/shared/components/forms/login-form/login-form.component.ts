@@ -49,9 +49,11 @@ export class LoginFormComponent {
 
   giris(email:string,password:string){
     //console.log(email +"    "+password);
-    this.sendRequest('Auth/LoginUser','POST', {email: email, password: password})
+    console.log("ha buradayım");
+    this.sendLocalRequest('Auth/LoginUser','POST', {email: email, password: password})
     .then(response => {
       console.log(response);
+
       this.setCookie("session_key",response.authToken,30)
       //document.cookie = "session_key=" + response.session_key + ";";
       this.router.navigate(['/pages/profile']);
@@ -93,7 +95,27 @@ export class LoginFormComponent {
       return response.json();
   })
   }
-
+  sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      });
+  }
   get email() { return this.loginForm.get('email') }
   get password() { return this.loginForm.get('password') }
 }
