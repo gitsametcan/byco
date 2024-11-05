@@ -52,6 +52,7 @@ namespace bycoAPI.Services
 
                         if (product != null)
                         {
+                            product.stok = adet;
                             // Ürün bulunduysa listeye ekle
                             hp.urunler.Add(product);
                         }

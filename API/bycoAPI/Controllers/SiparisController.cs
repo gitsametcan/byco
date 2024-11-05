@@ -63,7 +63,7 @@ namespace bycoAPI.Controllers
 
 
         [HttpGet("GetAll")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<List<SiparisOut>> GetSiparisForAdmin()
         {
             var result = await _siparisService.GetSiparisForAdmin();
