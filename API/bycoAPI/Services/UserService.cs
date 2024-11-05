@@ -111,5 +111,25 @@ namespace bycoAPI.Services
 
             return new RequestResponse { StatusCode = 200, ReasonString = "Kullanici güncellendi" };
         }
+
+        public async Task<RequestResponse> UpdatePassword(string password, int id)
+        {
+            try
+            {
+                User user = await _dbContexts.Users.FindAsync(id);
+                user.password = HashString(password);
+                _dbContexts.Update(user);
+                await _dbContexts.SaveChangesAsync();
+                return new RequestResponse { StatusCode = 200, ReasonString = "Success" };
+
+            }
+            catch
+            {
+                return new RequestResponse { StatusCode = 331, ReasonString = "An Error Occured" };
+
+            }
+
+
+        }
     }
 }

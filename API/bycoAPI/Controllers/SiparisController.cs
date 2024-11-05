@@ -63,7 +63,6 @@ namespace bycoAPI.Controllers
 
 
         [HttpGet("GetAll")]
-        [AllowAnonymous]
         public async Task<List<SiparisOut>> GetSiparisForAdmin()
         {
             string token = Request.Headers["Authorization"];
