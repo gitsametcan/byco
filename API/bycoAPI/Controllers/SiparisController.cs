@@ -66,9 +66,14 @@ namespace bycoAPI.Controllers
         [AllowAnonymous]
         public async Task<List<SiparisOut>> GetSiparisForAdmin()
         {
-            var result = await _siparisService.GetSiparisForAdmin();
+            string token = Request.Headers["Authorization"];
 
-            return result;
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+
+            if (user.tip == 0) return await _siparisService.GetSiparisForAdmin();
+            else return await _siparisService.GetSiparisForLasts(email);
         }
 
         [HttpGet("GetSiparisByNo/{siparisno}")]
@@ -80,18 +85,18 @@ namespace bycoAPI.Controllers
             return result;
         }
 
-        [HttpGet("GetSiparisForUser")]
-        //[AllowAnonymous]
-        public async Task<List<SiparisOut>> GetSiparisForUser()
-        {
-            string token = Request.Headers["Authorization"];
+        // [HttpGet("GetSiparisForUser")]
+        // [AllowAnonymous]
+        // public async Task<List<SiparisOut>> GetSiparisForUser()
+        // {
+        //     string token = Request.Headers["Authorization"];
 
-            token = token.Substring(7);
-            string email = await _tokenService.decodeKey(token);
-            var result = await _siparisService.GetSiparisForLasts(email);
+        //     token = token.Substring(7);
+        //     string email = await _tokenService.decodeKey(token);
+        //     var result = await _siparisService.GetSiparisForLasts(email);
 
-            return result;
-        }
+        //     return result;
+        // }
 
         
 
