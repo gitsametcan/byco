@@ -72,7 +72,16 @@ namespace bycoAPI
             {
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
             });
-
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigins", builder =>
+            //    {
+            //        builder.WithOrigins("http://localhost", "https://bycobackend.online")
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod()
+            //            .AllowCredentials(); // Çerezleri ve kimlik doğrulama bilgilerini göndermek için
+            //    });
+            //});
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -87,21 +96,12 @@ namespace bycoAPI
 
             app.UseHttpsRedirection();
 
-            builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowSpecificOrigins", builder =>
-        {
-            builder.WithOrigins("http://localhost", "https://bycobackend.online")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials(); // Çerezleri ve kimlik doğrulama bilgilerini göndermek için
-        });
-    });
+            
 
-    app.UseCors("AllowSpecificOrigins");
+            //app.UseCors("AllowSpecificOrigins");
 
 
-            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();

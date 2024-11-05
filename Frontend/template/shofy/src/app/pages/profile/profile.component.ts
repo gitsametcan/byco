@@ -20,11 +20,16 @@ export class ProfileComponent {
   infoUpdated: boolean = false;
   passwordMismatch: boolean = false;
   userid:number = -1;
-
+  urunTuru: string = '';
+  newCategory: string = '';
+  
   //benimUrl = this.urlhost.geturl();
 
 
   constructor(private router: Router, private toastrService: ToastrService) { }
+  
+  public kategoriSec: { value: string; text: string }[] = []; // Türü { value: string; text: string }[] olarak belirledik
+  public urunTurleriOptions: { value: string; text: string }[] = [];
 
 
   public genderSelectOptions = [
@@ -33,11 +38,18 @@ export class ProfileComponent {
     { value: 'others', text: 'Others' },
   ];
 
-  public kategoriSec = [
-    { value: 'elektrik', text: 'Elektrik' },
-    { value: 'kablo', text: 'Kablo' },
-    { value: 'diger', text: 'diger' },
-  ];
+  public urunTurleri: string[] = [
+    'Aydınlatma',
+    'Anahtar Priz',
+    'Enerji Kabloları',
+    'Zayıf Akım Kabloları',
+    'Şalt Malzemeler',
+    'Elektrik Tesisat Ürünleri',
+    'Grup Priz/Fiş',
+    'Diafon/Güvenlik',
+    'Ses/Görüntü',
+    'Fan/Aspiratör'
+];
 
   urundeneme = {
     ad: '',
@@ -94,7 +106,11 @@ export class ProfileComponent {
   ngOnInit():void{
     this.getIdFromSession();
     this.getOrder();
-    this.getKategoriSecenek();
+    this.getKategoriListesi(); // Yeni kategori listesini çekme fonksiyonunu çağırın
+    this.urunTurleriOptions = this.urunTurleri.map(tur => ({
+      value: tur,
+      text: tur
+    }));
     
   }
 
@@ -130,6 +146,20 @@ export class ProfileComponent {
       //this.router.navigate(['/pages/login']);
     })
 
+  }
+  getKategoriListesi() {
+    this.sendLocalRequest('Kategori/GetAll', 'GET')
+        .then((response: any) => {
+            // Gelen veriyi formatlayarak dropdown için kullanıma uygun hale getirin
+            this.kategoriSec = response.map((item: any) => ({
+                value: item.id.toString(), // `id`'yi string olarak dönüştürdük
+                text: `${item.urunturu} - ${item.ad}`
+            }));
+        })
+        .catch(err => {
+            console.error("Error fetching categories: ", err);
+            this.toastrService.error('Kategoriler alınırken bir hata oluştu.', 'Hata');
+        });
   }
 
   getMusteriler(){
@@ -216,6 +246,27 @@ export class ProfileComponent {
       return response.json();
   })
   }
+  sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
+    return fetch(`https://localhost:7096/api/${url}`, {
+        method: method,
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json();
+    });
+}
 
   getCookie(name:string) {
     var nameEQ = name + "=";
@@ -241,7 +292,9 @@ export class ProfileComponent {
   changeHandler(selectedOption: { value: string; text: string }) {
     this.urundeneme.kategori = selectedOption.value;
   }
-
+  urunTuruChangeHandler(selectedOption: { value: string; text: string }) {
+    this.urunTuru = selectedOption.value;
+  }
   updatePassword() {
     console.log('yeni =' + this.newPassword +', eski =' + this.confirmPassword);
     if (this.newPassword === this.confirmPassword && this.confirmPassword.length>7) {
@@ -278,13 +331,30 @@ export class ProfileComponent {
     })
   }
 
-  addCategory(){
-    let kategori = {
-        kategori_id: 0,
-        parent_id : -1,
-        ad: this.newCategoy}
-    console.log("yeni kategori" + this.newCategoy);
+  addCategory() {
+    const kategori = {
+        id: 0,
+        ad: this.newCategory,
+        urunturu: this.urunTuru
+    };
+
+    this.sendLocalRequest('Kategori/Add', 'POST', kategori)
+        .then(response => {
+            console.log('Kategori eklendi:', response);
+            this.toastrService.success('Kategori başarıyla eklendi.', 'Başarılı');
+
+            // Yeni Kategori ve Ürün Türü inputlarını sıfırla
+            this.newCategory = '';
+            this.urunTuru = ''; // Ürün Türü seçimini sıfırla
+        })
+        .catch(err => {
+            console.error("Error adding category: ", err);
+            this.toastrService.error('Kategori eklenirken bir hata oluştu.', 'Hata');
+        });
   }
+
+
+
 
   addUrun(){
     console.log(this.urundeneme);

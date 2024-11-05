@@ -1,0 +1,29 @@
+.tp-profile-input-box {
+    .tp-contact-input {
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        app-nice-select, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="18px" height="18px"><path d="M7 10l5 5 5-5H7z"/></svg>');
+            background-position: right 10px center;
+            background-repeat: no-repeat;
+        }
+
+        select:focus, app-nice-select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    }
+}

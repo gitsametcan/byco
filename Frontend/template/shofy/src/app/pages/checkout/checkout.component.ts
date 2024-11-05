@@ -310,7 +310,7 @@ export class CheckoutComponent {
   }
 
   sendRequest(url: string, method: string, data?: any): Promise<any> {
-    console.log("requesin içi" + JSON.stringify(data));
+    console.log("Request Data:", JSON.stringify(data, null, 2));
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
@@ -324,13 +324,16 @@ export class CheckoutComponent {
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     })
-      .then(response => {
+      .then(async response => {
         if (!response.ok) {
-          throw new Error(response.statusText);
+          const errorText = await response.text();
+          console.error("Error Text:", errorText);
+          throw new Error(`Status: ${response.status}, Message: ${errorText}`);
         }
         return response.json();
-      })
+      });
   }
+  
 
   odemeYap() {
 
@@ -342,12 +345,7 @@ export class CheckoutComponent {
       //return;
     }
 
-    let expMonth = "";
-    let expYear = "";
-
-      let parts = this.myUserObject.validity.split("/");
-      expMonth = parts[0];
-      expYear = parts[1];
+    let [expMonth, expYear] = this.myUserObject.validity.split("/");
 
 
     // List<Entity>
@@ -395,130 +393,53 @@ export class CheckoutComponent {
     console.log("validityDateYear : " + expYear);
     console.log("cvv : " + this.myUserObject.cvv);
 
-
-
-    //console.log("validity : " + this.validity?.value);
-    //console.log("billingaddress : " + this.billingaddress?.value);
-    //console.log("select : " + this.select?.value);
-    //console.log("selectstate : " + this.selectstate?.value);
-    //console.log("zip : " + this.zip?.value);
-
-
-    /*
-    *    // POST isteği için gerekli ödeme bilgileri
-    const paymentData = {
-      mode: 'TEST',
-      apiversion: '512',
-      secure3Dsecuritylevel: '3D_PAY',
-      terminalProvUserId: 'PROVAUT',
-      terminalUserId: 'SANALUSER',
-      terminalMerchantId: '7000679',
-      terminalId: '30691297',
-      orderId: 'trytrytrytry',
-      successUrl: 'http://localhost:80/pages/payment-successful',
-      errorUrl: 'http://localhost:80/pages/payment-error-occurred',
-      customerEmailAddress: 'eticaret@garanti.com.tr',
-      customerIpAddress: '192.168.0.1',
-      companyName: 'GARANTI TEST',
-      lang: 'tr',
-      txnTimestamp: '',
-      secure3DHash: "string",
-      txnAmount: 100,
-      txnType: 'sales',
-      txnCurrencyCode: '949',
-      txnInstallmentCount: 0,
-      cardHolderName: 'Test User',
-      cardNumber: '5406697543211173',
-      cardExpireDateMonth: '04',
-      cardExpireDateYear: '27',
-      cardCvv2: '423'
-    };
-
-    // POST isteği atan kısım
-    fetch('http://localhost:80/api/PaymentController1/process', { // .NET API'yi burada çağırıyoruz
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(paymentData)
-    })
-      .then(response => response.text()) // HTML yanıtını alıyoruz
-      .then(htmlContent => {
-        // Yeni bir sekme açıp gelen HTML içeriğini gösteriyoruz
-        const newWindow = window.open();
-        if (newWindow) {
-          newWindow.document.write(htmlContent);
-          newWindow.document.close();
-        } else {
-          console.error('Failed to open new window');
-        }
-      })
-      .catch(error => {
-        console.error('Hata:', error);
-      });
-*/
-
     // POST isteği için gerekli ödeme bilgileri
     const paymentData = {
-
-      customerEmailAddress: this.myUserObject.email.toString(),
-      txnAmount: totalPrice,
-      txnType: 'sales',
-      txnCurrencyCode: '949',
-      txnInstallmentCount: 0,
-      cardHolderName: this.cardholder?.value.toString(),
-      cardNumber: this.ccn?.value.toString(),
+      aliciAdi: this.myUserObject.adsoyad,
+      tcknvkn: this.myUserObject.vkno,
+      telefon: this.myUserObject.telefon,
+      bireysel_kurumsal: this.myUserObject.tip,
+      teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value} ${this.shippingAddressForm.get('shippingzip')?.value}`,
+      faturaAdresi: `${this.billingAddressForm.get('billingaddress')?.value} ${this.billingAddressForm.get('zip')?.value}`,
+      urunler: this.cartService.getCartProducts().map(product => ({
+        ad: product.description,
+        fiyat: Math.round(product.price * 100), // Convert to integer in cents (8.8 TL -> 880 kuruş)
+        adet: product.orderQuantity
+      })),
+      customerEmailAddress: this.myUserObject.email,
+      customerIpAddress: '',
+      txnAmount: 100, // Total in cents as well
+      cardHolderName: this.cardholder?.value,
+      cardNumber: String(this.ccn?.value),
       cardExpireDateMonth: expMonth,
       cardExpireDateYear: expYear,
-      cardCvv2: this.cvv?.value.toString()
+      cardCvv2: String(this.cvv?.value)
     };
+    
+    console.log("Payment Data:", JSON.stringify(paymentData, null, 2));
+    console.log("Billing Address:", this.billingAddressForm.value);
+    console.log("Shipping Address:", this.shippingAddressForm.value);
 
-    this.sendRequest('{api}+paymentcontroller1/siparisver', 'POST', paymentData)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.error("Error: " + err);
-      })
+    this.sendRequest('Payment/SiparisVer', 'POST', paymentData)
+  .then(response => {
+    // Assume the response contains the HTML as a string
+    const htmlContent = response; // Adjust this if needed, based on your actual response data
 
+    // Create a Blob from the HTML content
+    const blob = new Blob([htmlContent], { type: 'text/html' });
 
-    /*
-        // POST isteği atan kısım
-        fetch('https://bycobackend.online:5001/api/paymentcontroller1/siparisver', { // .NET API'yi burada çağırıyoruz
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(paymentData)
-        })
-          .then(response => response.text()) // HTML yanıtını alıyoruz
-          .then(htmlContent => {
-            // Yeni bir sekme açıp gelen HTML içeriğini gösteriyoruz
-            const newWindow = window.open();
-            if (newWindow) {
-              newWindow.document.write(htmlContent);
-              newWindow.document.close();
-            } else {
-              console.error('Failed to open new window');
-            }
-          })
-          .catch(error => {
-            console.error('Hata:', error);
-          });*/
+    // Create a URL for the Blob
+    const url = URL.createObjectURL(blob);
 
-    /*setTimeout(
-      () => {
-        this.router.navigate(['/pages/payment-successful']).then(r => console.log(r));
-      },
-      1000
-    );
-    // wait for 5 seconds and then redirect to payment error page
-    setTimeout(
-      () => {
-        this.router.navigate(['/pages/payment-error-occurred']).then(r => console.log(r));
-      },
-      10000
-    );*/
+    // Open the URL in a new tab
+    const newWindow = window.open(url, '_blank');
+
+    // Optional: Clean up the URL after the tab is opened
+    newWindow?.addEventListener('load', () => URL.revokeObjectURL(url));
+  })
+  .catch(err => {
+    console.error("Error:", err);
+  });
 
   }
 

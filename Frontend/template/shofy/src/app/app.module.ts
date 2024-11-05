@@ -32,6 +32,7 @@ export function initializeApp(hashUrlRedirectionService: HashUrlRedirectionServi
     PaymentErrorOccurredComponent,
     PaymentSuccessfulComponent,
     ShopMainPageComponent,
+    
   ],
   imports: [
     SharedModule,

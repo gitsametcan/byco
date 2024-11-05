@@ -322,24 +322,42 @@
                    <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
                       <div *ngIf="myObject.tip=='0'" class="profile__address">
                         <form (ngSubmit)="addCategory()" #addCategoryForm="ngForm">
-                            <div class="row">
-                               <div class="col-xxl-12">
-                                  <div class="tp-profile-input-box">
-                                     <div class="tp-contact-input">
-                                        <input name="newCategoy" id="newCategoy" type="text" [(ngModel)]="newCategoy" required>
-                                     </div>
-                                     <div class="tp-profile-input-title">
-                                        <label for="oldPassword">Yeni Kategori</label>
-                                     </div>
-                                  </div>
-                               </div>
+                           <div class="row">
+                               <!-- Dropdown for Ürün Türü -->
                                <div class="col-xxl-6 col-md-6">
-                                  <div class="profile__btn">
-                                     <button type="submit" class="tp-btn" [disabled]="addCategoryForm.invalid">Kategori Ekle</button>
-                                  </div>
+                                   <div class="profile__input-box">
+                                       <div class="profile__input">
+                                           <label for="urunTuru">Ürün Türü</label>
+                                           <app-nice-select
+                                               [options]="urunTurleriOptions"
+                                               name="urunTuru"
+                                               [defaultCurrent]="0"
+                                               (onChange)="urunTuruChangeHandler($event)"
+                                               placeholder="Ürün Türü Seçin">
+                                           </app-nice-select>
+                                       </div>
+                                   </div>
                                </div>
-                            </div>
-                         </form>
+                       
+                               <!-- Input for Yeni Kategori -->
+                               <div class="col-xxl-6 col-md-6">
+                                   <div class="profile__input-box">
+                                       <div class="profile__input">
+                                           <label for="newCategory">Yeni Kategori</label>
+                                           <input name="newCategory" id="newCategory" type="text" [(ngModel)]="newCategory" required>
+                                       </div>
+                                   </div>
+                               </div>
+                               
+                               <div class="col-xxl-6 col-md-6">
+                                   <div class="profile__btn">
+                                       <button type="submit" class="tp-btn" [disabled]="addCategoryForm.invalid">Kategori Ekle</button>
+                                   </div>
+                               </div>
+                           </div>
+                       </form>
+                       
+                       
                          <div style="margin-top: 30px;"></div>
                          <h3 class="profile__info-title">Ürün Ekle</h3>
                          <div class="profile__info-content">
@@ -386,20 +404,20 @@
                                        </div>
                                     </div>
                                  </div>
-                                  <div class="col-xxl-6 col-md-6">
-                                     <div class="profile__input-box">
+                                 <div class="col-xxl-6 col-md-6">
+                                    <div class="profile__input-box">
                                         <div class="profile__input">
-                                           <app-nice-select
-                                              [options]="kategoriSec"
-                                              name="Select Kategori"
-                                              [defaultCurrent]="0"
-                                              (onChange)="changeHandler($event)"
-                                              placeholder="Select Kategori"
-                                              >
-                                          </app-nice-select>
+                                            <app-nice-select
+                                                [options]="kategoriSec"
+                                                name="Select Kategori"
+                                                [defaultCurrent]="0"
+                                                (onChange)="changeHandler($event)"
+                                                placeholder="Select Kategori">
+                                            </app-nice-select>
                                         </div> 
-                                     </div>
-                                  </div>
+                                    </div>
+                                </div>
+                                
                                   <div class="col-xxl-12">
                                      <div class="profile__btn">
                                         <button type="submit" class="tp-btn" [disabled]="addUrunForm.invalid">Ürün Ekle</button>

@@ -19,7 +19,7 @@ export class PaymentErrorOccurredComponent {
     this.intervalId = setInterval(() => {
       if (this.remainingTime <= 0) {
         clearInterval(this.intervalId);
-        this.router.navigate(['/pages/shop']).then(r => console.log(r));
+        this.router.navigate(['/pages/cart']).then(r => console.log(r));
       }
       this.remainingTime--;
     }, 1000);
