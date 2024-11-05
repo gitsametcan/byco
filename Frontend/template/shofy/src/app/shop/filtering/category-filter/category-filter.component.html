@@ -1,24 +1,17 @@
 <div class="tp-shop-widget-content">
   <div class="tp-shop-widget-categories">
     <ul>
-      <li *ngFor="let category of categoryData">
+      <li *ngFor="let subCategory of filteredSubCategories">
         <a
-          (click)="handleCategoryRoute(category.parent)"
+          (click)="handleCategoryRoute(subCategory.ad)"
           [ngClass]="{
             'cursor-pointer': true,
             active:
-              activeQuery ===
-              category.parent
-                .toLowerCase()
-                .replace('&', '')
-                .split(' ')
-                .join('-')
+              activeQuery === subCategory.ad.toLowerCase().replace('&', '').split(' ').join('-')
           }"
         >
-          {{ category.parent }}
-          <span>{{ category.products.length }}</span>
+          {{ subCategory.ad }}
+          <span>1</span> <!-- Placeholder for count; adjust as necessary -->
         </a>
-      </li>
-    </ul>
-  </div>
-</div>
+  
+        

@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
-import category_data from '@/data/category-data';
-import { ICategory } from '@/types/category-type';
 import { ProductService } from 'src/app/shared/services/product.service';
 
 @Component({
@@ -10,8 +8,9 @@ import { ProductService } from 'src/app/shared/services/product.service';
   templateUrl: './category-filter.component.html',
   styleUrls: ['./category-filter.component.scss'],
 })
-export class CategoryFilterComponent {
-  public categoryData: ICategory[] = category_data;
+export class CategoryFilterComponent implements OnInit {
+  public categoryData: any[] = []; // Categories fetched from backend
+  public filteredSubCategories: any[] = []; // Filtered subcategories based on selected main category
   activeQuery: string = '';
 
   constructor(
@@ -22,19 +21,40 @@ export class CategoryFilterComponent {
   ) {}
 
   ngOnInit(): void {
+    this.fetchCategories(); // Fetch categories from backend
     this.route.queryParams.subscribe((queryParams) => {
       this.activeQuery = queryParams['category'];
+      this.filterSubCategories(); // Filter subcategories based on selected main category
     });
+  } 
+
+  fetchCategories(): void {
+    fetch('https://localhost:7096/api/Kategori/GetAll')
+      .then(response => response.json())
+      .then(data => {
+        this.categoryData = data;
+        this.filterSubCategories(); // Filter subcategories after categories are fetched
+      })
+      .catch(err => console.error('Error fetching categories:', err));
+  }
+
+  filterSubCategories(): void {
+    // Filter subcategories based on the selected main category in `urunturu`
+    this.filteredSubCategories = this.categoryData.filter(
+      (category) =>
+        category.urunturu.toLowerCase().replace('&', '').split(' ').join('-') ===
+        this.activeQuery
+    );
   }
 
   handleCategoryRoute(value: string): void {
     const newCategory = value.toLowerCase().replace('&', '').split(' ').join('-');
-
+    
     // Define the query parameters as an object
     const queryParams: Params = {
       category: newCategory,
     };
-
+  
     this.router
       .navigate([], {
         relativeTo: this.route,
@@ -43,8 +63,10 @@ export class CategoryFilterComponent {
         skipLocationChange: false,
       })
       .finally(() => {
+        this.activeQuery = newCategory; // Update activeQuery with the new selected category
+        this.filterSubCategories(); // Filter the subcategories based on the new selection
         this.viewScroller.setOffset([120, 120]);
-        this.viewScroller.scrollToAnchor('products'); // Anchore Link
+        this.viewScroller.scrollToAnchor('products'); // Scroll to products section
       });
   }
 }

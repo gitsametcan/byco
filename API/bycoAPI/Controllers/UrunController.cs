@@ -40,20 +40,22 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPost("Add")]
+        [AllowAnonymous]
         public async Task<RequestResponse> AddUrun([FromBody] Product product)
         {
 
-            string token = Request.Headers["Authorization"];
+            //string token = Request.Headers["Authorization"];
 
-            token = token.Substring(7);
-            string email = await _tokenService.decodeKey(token);
-            User user = await _userService.GetUserByEmail(email);
+            //token = token.Substring(7);
+            //string email = await _tokenService.decodeKey(token);
+            //User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 0)
-            {
-                return await _service.AddUrun(product);
-            }
-            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+            //if (user.tip == 0)
+            //{
+            //    return await _service.AddUrun(product);
+            //}
+            //else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+            return await _service.AddUrun(product);
         }
 
         [HttpPut("Update/{urun_id}")]

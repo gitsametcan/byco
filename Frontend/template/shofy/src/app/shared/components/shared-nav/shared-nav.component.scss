@@ -1,17 +1,24 @@
+
 .nav-header {
   background: linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%);
-  padding: 18px;
+  padding: 14px;
   text-align: center;
-  position: relative;
+  position: sticky;
+  top: 62px; /* Üstteki sticky barın yüksekliği kadar ayarlayın */
   z-index: 10;
 }
+.sticky-padding {
+  margin-top: 160px; /* Üstteki sticky bar yüksekliğine göre ayarlayın */
+}
+
 
 .main-category-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center; /* Ortaladı */
+  gap: 15px; /* Kategoriler arasında mesafe ekledik */
 }
 
 .main-category-list li {
@@ -21,8 +28,9 @@
 .main-category-list a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
-  padding: 10px 20px;
+  font-weight: 600; /* Yazı kalınlığını azalttık */
+  font-size: 0.9em; /* Yazı boyutunu küçülttük */
+  padding: 8px 15px; /* İç boşlukları azaltarak daha kompakt hale getirdik */
   transition: background 0.3s ease;
 }
 
@@ -33,7 +41,7 @@
 
 .sub-category-container {
   position: fixed;
-  top: 180px;
+  top: 170px; /* Başlangıç değeri */
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
@@ -42,7 +50,15 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 9;
   display: none; /* Başlangıçta gizli */
+  transition: top 0.3s ease; /* Yumuşak geçiş için */
 }
+
+.sub-category-container.sticky-mode {
+  top: 110px; /* Scroll pozisyonu yukarıdayken küçülen top değeri */
+}
+
+
+
 
 .sub-category-container.show {
   display: block; /* Menü gösterilecek */

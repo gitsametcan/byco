@@ -84,7 +84,7 @@ export class ProfileComponent {
     prizSayisi: '',
 
     renk: '',
-    renkSicakligi: '',
+    renkSicakligiKelvin: '',
     sigortaSayisi: '',
     tip: '',
 
@@ -133,7 +133,7 @@ export class ProfileComponent {
     prizSayisi: '',
 
     renk: '',
-    renkSicakligi: '',
+    renkSicakligiKelvin: '',
     sigortaSayisi: '',
     tip: '',
 
@@ -369,7 +369,7 @@ export class ProfileComponent {
   }
 
   changeHandler(selectedOption: { value: string; text: string }) {
-    this.urundeneme.kategori = selectedOption.value;
+    this.urundeneme.kategori = this.kategoriSec[Number(selectedOption.value) - 1].text;
   }
   urunTuruChangeHandler(selectedOption: { value: string; text: string }) {
     this.urunTuru = selectedOption.value;
@@ -443,50 +443,51 @@ export class ProfileComponent {
       aciklama: this.urundeneme.aciklama,
       img: this.urundeneme.img,
       fiyat: Number(this.urundeneme.fiyat),
-    kategori: '',
-    kod: this.urundeneme.kod,
+      kategori: this.urundeneme.kategori,
+      kod: this.urundeneme.kod,
 
-    amper: this.urundeneme.amper,
-    aydinlatmaTuru: this.urundeneme.aydinlatmaTuru,
-    cerceve: this.urundeneme.cerceve,
-    damarSayisi: this.urundeneme.damarSayisi,
+      amper: this.urundeneme.amper,
+      aydinlatmaTuru: this.urundeneme.aydinlatmaTuru,
+      cerceve: this.urundeneme.cerceve,
+      damarSayisi: this.urundeneme.damarSayisi,
 
-    disKilifRengi: this.urundeneme.disKilifRengi,
-    duy: this.urundeneme.duy,
-    isikRengi: this.urundeneme.isikRengi,
-    kabloTipi: this.urundeneme.kabloTipi,
+      disKilifRengi: this.urundeneme.disKilifRengi,
+      duy: this.urundeneme.duy,
+      isikRengi: this.urundeneme.isikRengi,
+      kabloTipi: this.urundeneme.kabloTipi,
 
-    kabloUzunlugu: this.urundeneme.kabloUzunlugu,
-    kanalBoyutu: this.urundeneme.kanalBoyutu,
-    kanalOzelligi: this.urundeneme.kanalOzelligi,
-    kanalRengi: this.urundeneme.kanalRengi,
+      kabloUzunlugu: this.urundeneme.kabloUzunlugu,
+      kanalBoyutu: this.urundeneme.kanalBoyutu,
+      kanalOzelligi: this.urundeneme.kanalOzelligi,
+      kanalRengi: this.urundeneme.kanalRengi,
 
-    kasaRengi: this.urundeneme.kasaRengi,
-    kesit: this.urundeneme.kesit,
-    kesmeKapasitesi: this.urundeneme.kesmeKapasitesi,
-    kullanimYeri: this.urundeneme.kullanimYeri,
+      kasaRengi: this.urundeneme.kasaRengi,
+      kesit: this.urundeneme.kesit,
+      kesmeKapasitesi: this.urundeneme.kesmeKapasitesi,
+      kullanimYeri: this.urundeneme.kullanimYeri,
 
-    kutup: this.urundeneme.kutup,
-    marka: this.urundeneme.marka,
-    model: this.urundeneme.model,
-    prizSayisi: this.urundeneme.prizSayisi,
+      kutup: this.urundeneme.kutup,
+      marka: this.urundeneme.marka,
+      model: this.urundeneme.model,
+      prizSayisi: this.urundeneme.prizSayisi,
 
-    renk: this.urundeneme.renk,
-    renkSicakligi: this.urundeneme.renkSicakligi,
-    sigortaSayisi: this.urundeneme.sigortaSayisi,
-    tip: this.urundeneme.tip,
+      renk: this.urundeneme.renk,
+      renkSicakligiKelvin: this.urundeneme.renkSicakligiKelvin,
+      sigortaSayisi: this.urundeneme.sigortaSayisi,
+      tip: this.urundeneme.tip,
 
-    tur: this.urundeneme.tur,
-    urun: this.urundeneme.urun,
-    urunOzelligi: this.urundeneme.urunOzelligi,
-    urunTipi: this.urundeneme.urunTipi,
+      tur: this.urundeneme.tur,
+      urun: this.urundeneme.urun,
+      urunOzelligi: this.urundeneme.urunOzelligi,
+      urunTipi: this.urundeneme.urunTipi,
 
-    watt: this.urundeneme.watt,
-    indirim: Number(this.urundeneme.indirim)
+      watt: this.urundeneme.watt,
+      indirim: Number(this.urundeneme.indirim)
 
     }
+    console.log("bue");
     console.log(this.gonderilecekUrun);
-    this.sendRequest('Urun/Add', 'POST', this.gonderilecekUrun)
+    this.sendLocalRequest('Urun/Add', 'POST', this.gonderilecekUrun)
       .then(response => {
         console.log(response.status);
       })
