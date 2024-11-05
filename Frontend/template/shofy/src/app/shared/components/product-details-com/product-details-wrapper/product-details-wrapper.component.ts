@@ -36,34 +36,38 @@ export class ProductDetailsWrapperComponent {
   }
 
   myObject = {
-    user_id: "",
-    adsoyad: 'Süleyman Rıfkı',
+    user_id: 0,
+    ad: 'Süleyman',
+    soyad: 'Rıfkı',
     email: 'byco@byco.com.tr',
-    vkno: '12345678910',
-    tip: '5',
-    telefon: '05555555555',
-    adres: 'Byco Mahallesi, Byco sokak, Byco Apartmanı, No:23',
-    discount : '00'
+    password: 'password',
+    telefon: '555555555',
+    tip: 0,
+    tcknvkn: '12345678910',
+    teslimatadresi: 'Evim Caddesi, Okul Sokak, No:23',
+    faturaadresi: 'İşim Caddesi, Üniversite Sokak, No:23',
+    indirim: 5
   };
 
   ngOnInit() {
-    this.getIdFromSession();
+    //this.getIdFromSession();
+    this.getUserByToken();
   }
 
-  getIdFromSession(){
-    console.log("sessionkey ===" + this.getCookie("session_key"))
-    this.sendRequest('Sessions/Validate/'+ this.getCookie("session_key"),'GET')
-    .then(response => {
-      console.log(response);
-      this.userid=response;
-      this.getUserById();
+  // getIdFromSession(){
+  //   console.log("sessionkey ===" + this.getCookie("session_key"))
+  //   this.sendRequest('Sessions/Validate/'+ this.getCookie("session_key"),'GET')
+  //   .then(response => {
+  //     console.log(response);
+  //     this.userid=response;
+  //     this.getUserById();
       
-    })
-    .catch(err => {
-      console.error("Error: " + err);
-    })
+  //   })
+  //   .catch(err => {
+  //     console.error("Error: " + err);
+  //   })
 
-  }
+  // }
 
 
   getCookie(name:string) {
@@ -77,17 +81,14 @@ export class ProductDetailsWrapperComponent {
     return null;
   }
 
-  sendRequest(url: string, method: string, data?:any): Promise<any> {
+  sendRequest(url: string, method: string, data?:any, header?: any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
+      headers: header,
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(data), 
@@ -100,8 +101,30 @@ export class ProductDetailsWrapperComponent {
   })
   }
 
-  getUserById(){
-    this.sendRequest('User/GetResponseById/'+ this.userid,'GET')
+  sendRequestWithHeaders(url: string, method: string, data?:any, header?: any): Promise<any> {
+    console.log("requesin içi"+JSON.stringify(data));
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: header,
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+      return response.json();
+  })
+  }
+
+  getUserByToken(){
+    this.sendRequestWithHeaders('User/GetResponseById/'+ this.userid,'GET', {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`
+    })
     .then(response => {
       console.log(response.data);
       this.myObject=response.data;

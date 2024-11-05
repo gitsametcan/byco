@@ -39,6 +39,7 @@ namespace bycoAPI.Controllers
         }
 
         [HttpPut("Update")]
+        [AllowAnonymous]
         public async Task<RequestResponse> UpdateUser([FromBody] User body)
         {
             string token = Request.Headers["Authorization"];
@@ -49,10 +50,10 @@ namespace bycoAPI.Controllers
 
             if (user.user_id == body.user_id)
             {
-                return await userService.UpdateUser(user.user_id, body);
+                return await userService.UpdateUser(body);
             }
             else if(user.tip == 0){
-                return await userService.UpdateUser(body.user_id, body);
+                return await userService.UpdateUser(body);
 
             }
             else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};

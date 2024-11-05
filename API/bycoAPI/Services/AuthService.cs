@@ -1,5 +1,7 @@
 ﻿using bycoAPI.Interfaces;
 using bycoAPI.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace bycoAPI.Services
 {
@@ -43,10 +45,23 @@ namespace bycoAPI.Services
 
         public async Task<User> Login(string username, string password)
         {
-            User user = _dbContexts.Users.FirstOrDefault(u=>u.email== username && u.password==password);
+            User user = _dbContexts.Users.FirstOrDefault(u=>u.email== username && u.password==HashString(password));
             if (user == null) {return null;}
 
             return user;
+        }
+
+        private string HashString(string text)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            SHA256Managed hashstring = new SHA256Managed();
+            byte[] hash = hashstring.ComputeHash(bytes);
+            string hashString = string.Empty;
+            foreach (byte x in hash)
+            {
+                hashString += String.Format("{0:x2}", x);
+            }
+            return hashString;
         }
     }
 }

@@ -49,10 +49,10 @@ export class LoginFormComponent {
 
   giris(email:string,password:string){
     //console.log(email +"    "+password);
-    this.sendRequest('User/LogIn','POST', {email: email, password: password})
+    this.sendRequest('Auth/LoginUser','POST', {email: email, password: password})
     .then(response => {
       console.log(response);
-      this.setCookie("session_key",response.session_key,1)
+      this.setCookie("session_key",response.authToken,30)
       //document.cookie = "session_key=" + response.session_key + ";";
       this.router.navigate(['/pages/profile']);
     })

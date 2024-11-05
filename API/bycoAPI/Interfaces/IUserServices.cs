@@ -10,7 +10,7 @@ namespace bycoAPI.Interfaces
         public Task<RequestResponse> UserKaydet(User user);
         public Task<List<User>> GetUserInfoForAdmin();
         public bool CheckUserExist(LoginReq loginReq);
-        public Task<RequestResponse> UpdateUser(int user_id, User body);
+        public Task<RequestResponse> UpdateUser(User body);
         
     }
 }

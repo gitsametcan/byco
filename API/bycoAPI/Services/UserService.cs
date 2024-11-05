@@ -80,7 +80,7 @@ namespace bycoAPI.Services
                     property.SetValue(target, value);
                 }
             }
-            //target.password=HashString(target.password);
+            target.password = HashString(target.password);
             return target;
         }
 
@@ -89,31 +89,27 @@ namespace bycoAPI.Services
             return await _dbContexts.Users.ToListAsync();
         }
 
-        public async Task<RequestResponse> UpdateUser(int user_id, User body)
+        public async Task<RequestResponse> UpdateUser(User body)
         {
-            User user = await _dbContexts.Users.FindAsync(user_id);
+            User user = await _dbContexts.Users.FindAsync(body.user_id);
             if (user == null)
             {
                 return new RequestResponse { StatusCode = 400, ReasonString = "Kullanici bulunamadı!" };
             }
 
-            if (user.indirim == user_id)
+            foreach (PropertyInfo property in typeof(User).GetProperties())
             {
-                foreach (PropertyInfo property in typeof(User).GetProperties())
+                if (property.CanWrite)
                 {
-                    if (property.CanWrite)
-                    {
-                        var value = property.GetValue(body);
-                        property.SetValue(user, value);
-                    }
+                    var value = property.GetValue(body);
+                    property.SetValue(user, value);
                 }
+            }
 
-                _dbContexts.Users.Update(user);
-                await _dbContexts.SaveChangesAsync();
+            _dbContexts.Users.Update(user);
+            await _dbContexts.SaveChangesAsync();
 
             return new RequestResponse { StatusCode = 200, ReasonString = "Kullanici güncellendi" };
-            }
-            else return new RequestResponse { StatusCode = 331, ReasonString = "Kullanici uyuşmuyor" };
         }
     }
 }
