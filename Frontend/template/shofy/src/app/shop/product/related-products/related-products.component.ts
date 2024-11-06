@@ -10,7 +10,7 @@ import { Scrollbar } from 'swiper/modules';
   styleUrls: ['./related-products.component.scss']
 })
 export class RelatedProductsComponent {
-  @Input() productId!: string;
+  @Input() productId!: number;
   @Input() category!: string;
   public related_products: IProduct[] = []; // Replace with your product interface
 

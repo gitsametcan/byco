@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import feature_data, { IFeature } from '@/data/feature-data';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductService } from '@/shared/services/product.service';
-import { IProduct } from '@/types/product-type';
 
 @Component({
   selector: 'app-beauty',
@@ -37,16 +36,9 @@ export class BeautyComponent {
   ]
 
   // best sell products
-  public products: IProduct[] = [];
   public feature_items:IFeature[] = feature_data;
 
   constructor(private sanitizer: DomSanitizer,public productService:ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.products = products.filter((p) => p.productType === "beauty")
-      .slice()
-      .sort((a, b) => (b.sellCount ?? 0) - (a.sellCount ?? 0))
-      .slice(0, 8);
-    });
   }
 
   sanitizeHtml(html: string): SafeHtml {

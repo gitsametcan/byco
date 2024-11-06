@@ -21,14 +21,10 @@ export class PriceFilterComponent {
   public collapse: boolean = true;
   public isBrowser: boolean = false;
 
-  public price: { minPrice: number; maxPrice: number } = {
-    minPrice: 0,
-    maxPrice: this.productService.maxPrice,
-  };
+  
 
   options: Options = {
     floor: 0,
-    ceil: this.productService.maxPrice,
     hidePointerLabels: true,
   };
 
@@ -46,18 +42,13 @@ export class PriceFilterComponent {
 
   ngOnInit(): void {}
 
-  // Range Changed
-  appliedFilter(event: any) {
-    this.price = { minPrice: event.value, maxPrice: event.highValue };
-    this.priceFilter.emit(this.price);
-  }
+ 
 
   // handle price filtering
   handlePriceRoute () {
     this.router
       .navigate([], {
         relativeTo: this.route,
-        queryParams: this.price,
         queryParamsHandling: 'merge', // preserve the existing query params in the route
         skipLocationChange: false, // do trigger navigation
       })

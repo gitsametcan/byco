@@ -6,11 +6,7 @@
       <!--sidebar if not true shop_right_side and not true shop_no_side start-->
       <div *ngIf="!shop_right_side && !shop_no_side" class="col-xl-3 col-lg-4">
         <div class="tp-shop-sidebar mr-10">
-          <!--price filter -->
-          <div class="tp-shop-widget mb-35">
-            <h3 class="tp-shop-widget-title no-border">Fiyat Aralığı</h3>
-            <app-price-filter [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)"></app-price-filter>
-          </div>
+          
           <!-- status -->
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Ürün Durumu</h3>
@@ -137,11 +133,7 @@
       <!--sidebar if shop_right_side true and not shop_no_side true start-->
       <div *ngIf="shop_right_side && !shop_no_side" class="col-xl-3 col-lg-4">
         <div class="tp-shop-sidebar tp-shop-sidebar-right mr-10">
-          <!--price filter -->
-          <div class="tp-shop-widget mb-35">
-            <h3 class="tp-shop-widget-title no-border">Price Filter</h3>
-            <app-price-filter [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)"></app-price-filter>
-          </div>
+          
           <!-- status -->
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Product Status</h3>

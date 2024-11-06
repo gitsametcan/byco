@@ -13,12 +13,7 @@ export class FashionAllProductsComponent {
 
   public allProducts:IProduct[] = [];
 
-  constructor(private cdr: ChangeDetectorRef,public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.allProducts = products.filter((p) => p.productType === 'fashion');
-      this.filteredProducts = this.getFilteredProducts();
-    });
-  }
+  constructor(private cdr: ChangeDetectorRef,public productService: ProductService) {}
 
   handleActiveTab(tab: string): void {
     this.activeTab = tab;
@@ -33,7 +28,7 @@ export class FashionAllProductsComponent {
       return this.allProducts;
     } else {
       return this.allProducts.filter(
-        (p) => p.category.name.toLowerCase() === this.activeTab.toLowerCase()
+        (p) => p.kategori.toLowerCase() === this.activeTab.toLowerCase()
       );
     }
   }

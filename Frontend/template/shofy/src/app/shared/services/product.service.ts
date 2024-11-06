@@ -29,7 +29,7 @@ export class ProductService {
   }
 
   // Get Products By id
-  public getProductById(id: string): Observable<IProduct | undefined> {
+  public getProductById(id: number): Observable<IProduct | undefined> {
     return this.products.pipe(map(items => {
       const product = items.find(p => p.id === id);
       if(product){
@@ -39,22 +39,22 @@ export class ProductService {
     }));
   }
    // Get related Products
-   public getRelatedProducts(productId: string,category:string): Observable<IProduct[]> {
+   public getRelatedProducts(productId: number,category:string): Observable<IProduct[]> {
     return this.products.pipe(map(items => {
       return items.filter(
         (p) =>
-          p.category.name.toLowerCase() === category.toLowerCase() &&
+          p.kategori.toLowerCase() === category.toLowerCase() &&
           p.id !== productId
       )
     }));
   }
   // Get max price
-  public get maxPrice(): number {
-    const max_price = all_products.reduce((max, product) => {
-      return product.price > max ? product.price : max;
-    }, 0);
-    return 250;
-  }
+//   public get maxPrice(): number {
+//     const max_price = all_products.reduce((max, product) => {
+//       return product.price > max ? product.price : max;
+//     }, 0);
+//     return 250;
+//   }
 // shop filterSelect
   public filterSelect = [
     { value: 'asc', text: 'Varsayılan Sıralama' },
@@ -63,14 +63,14 @@ export class ProductService {
     { value: 'on-sale', text: 'İndirimde' },
   ];
 
-    // Get Product Filter
+    //Get Product Filter
     public filterProducts(filter: any= []): Observable<IProduct[]> {
       return this.products.pipe(map(product =>
         product.filter((item: IProduct) => {
           if (!filter.length) return true
           const Tags = filter.some((prev: any) => {
-            if (item.tags) {
-              if (item.tags.includes(prev)) {
+            if (item.kategori) {
+              if (item.kategori.includes(prev)) {
                 return prev;
               }
             }
@@ -94,21 +94,21 @@ export class ProductService {
         return 0;
       })
     } else if (payload === 'on-sale') {
-      return products.filter((p) => p.discount > 0)
+      return products.filter((p) => p.indirim > 0)
     } else if (payload === 'low') {
       return products.sort((a, b) => {
-        if (a.price < b.price) {
+        if (a.fiyat < b.fiyat) {
           return -1;
-        } else if (a.price > b.price) {
+        } else if (a.fiyat > b.fiyat) {
           return 1;
         }
         return 0;
       })
     } else if (payload === 'high') {
       return products.sort((a, b) => {
-        if (a.price > b.price) {
+        if (a.fiyat > b.fiyat) {
           return -1;
-        } else if (a.price < b.price) {
+        } else if (a.fiyat < b.fiyat) {
           return 1;
         }
         return 0;

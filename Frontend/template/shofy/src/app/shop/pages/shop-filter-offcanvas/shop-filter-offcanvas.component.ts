@@ -13,7 +13,6 @@ export class ShopFilterOffcanvasComponent {
 
   public products: IProduct[] = [];
   public minPrice: number = 0;
-  public maxPrice: number = this.productService.maxPrice;
   public niceSelectOptions = this.productService.filterSelect;
   public brands: string[] = [];
   public category: string | null = null;
@@ -54,7 +53,6 @@ export class ShopFilterOffcanvasComponent {
     this.route.queryParams.subscribe((params) => {
       console.log('params', params);
       this.minPrice = params['minPrice'] ? params['minPrice'] : this.minPrice;
-      this.maxPrice = params['maxPrice'] ? params['maxPrice'] : this.maxPrice;
       this.brand = params['brand']
         ? params['brand'].toLowerCase().split(' ').join('-') : null;
 
@@ -75,29 +73,26 @@ export class ShopFilterOffcanvasComponent {
         // Category Filter
         if (this.category){
           this.products = this.products.filter(
-            (p) => p.parent.toLowerCase().split(' ').join('-') === this.category
+            (p) => p.kategori.toLowerCase().split(' ').join('-') === this.category
           );
         }
         // status Filter
         if (this.status) {
           if (this.status === 'on-sale') {
-            this.products = this.products.filter((p) => p.discount > 0);
+            this.products = this.products.filter((p) => p.indirim > 0);
           } else if (this.status === 'in-stock') {
-            this.products = this.products.filter((p) => p.status === 'in-stock');
+            this.products = this.products.filter((p) => p.durum === 'in-stock');
           }
           else if (this.status === 'out-of-stock') {
-            this.products = this.products.filter((p) => p.status === 'out-of-stock' || p.quantity === 0);
+            this.products = this.products.filter((p) => p.durum === 'out-of-stock' || p.stok === 0);
           }
         }
         // brand filtering
         if (this.brand) {
-          this.products = this.products.filter((p) => p.brand.name.toLowerCase() === this.brand);
+          this.products = this.products.filter((p) => p.marka.toLowerCase() === this.brand);
         }
 
-        // Price Filter
-        this.products = this.products.filter(
-          (p) => p.price >= Number(this.minPrice) && p.price <= Number(this.maxPrice)
-        );
+        
         // Paginate Products
         this.paginate = this.productService.getPager(this.products.length,Number(+this.pageNo),this.pageSize);
         this.products = this.products.slice(this.paginate.startIndex,this.paginate.endIndex + 1);
@@ -142,7 +137,6 @@ export class ShopFilterOffcanvasComponent {
 
   handleResetFilter () {
     this.minPrice = 0;
-    this.maxPrice = this.productService.maxPrice;
     this.productService.filter_offcanvas = !this.productService.filter_offcanvas;
     this.router.navigate(['/shop/shop-filter-offcanvas']);
   }

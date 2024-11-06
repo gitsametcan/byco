@@ -21,16 +21,6 @@ export class JewelryComponent {
     private sanitizer: DomSanitizer,
     public productService: ProductService
   ) {
-    this.productService.products.subscribe((products) => {
-      this.jewelryPopularItem = products
-        .filter((p) => p.productType === 'jewelry')
-        .slice(0, 6);
-      this.jewelryTopSellsItems = products
-        .filter((p) => p.productType === 'jewelry')
-        .slice()
-        .sort((a, b) => b.sellCount - a.sellCount)
-        .slice(0, 6);
-    });
   }
   sanitizeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);

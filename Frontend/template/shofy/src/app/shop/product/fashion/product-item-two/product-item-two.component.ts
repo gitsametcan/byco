@@ -44,6 +44,6 @@ export class ProductItemTwoComponent {
     return this.compareService.getCompareProducts().some((prd: IProduct) => prd.id === item.id);
   }
   productStatus(product: IProduct): boolean {
-    return product.status === 'out-of-stock' || product.quantity === 0;
+    return product.durum === 'out-of-stock' || product.stok === 0;
   }
 }

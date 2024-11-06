@@ -17,11 +17,7 @@ export class JewelryAllProductsComponent {
 
   public allProducts: IProduct[] = [];
 
-  constructor(private renderer: Renderer2, public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.allProducts = products.filter(p => p.productType === 'jewelry');
-    });
-  }
+  constructor(private renderer: Renderer2, public productService: ProductService) { }
 
   handleActiveMarker(event: Event, tab: string): void {
     this.active_tab = tab;
@@ -35,13 +31,6 @@ export class JewelryAllProductsComponent {
   get filteredProducts(): IProduct[] {
     switch (this.active_tab) {
       case 'All Collection':
-        return this.allProducts.slice(0, 8);
-      case 'Bracelets':
-        return this.allProducts.filter(p => p.category.name === 'Bracelets');
-      case 'Necklaces':
-        return this.allProducts.filter(p => p.category.name === 'Necklaces');
-      case 'Earrings':
-        return this.allProducts.filter(p => p.category.name === 'Earrings');
       default:
         return [];
     }

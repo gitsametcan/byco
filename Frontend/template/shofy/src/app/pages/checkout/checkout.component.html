@@ -437,12 +437,12 @@
 
                       <!-- item list -->
                       <li *ngFor="let item of cartService.getCartProducts()" class="tp-order-info-list-desc">
-                        <p>{{ item.title }} <span> x {{ item.orderQuantity }}</span></p>
-                        <span *ngIf="item.discount > 0; else noDiscount">
-                          {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
+                        <p>{{ item.ad }} <span> x {{ item.orderQuantity }}</span></p>
+                        <span *ngIf="item.indirim > 0; else noDiscount">
+                          {{ (item.fiyat - (item.fiyat * item.indirim / 100)).toFixed(2) }} TL
                         </span>
                         <ng-template #noDiscount>
-                          <span>{{ item.price.toFixed(2) }} TL</span>
+                          <span>{{ item.fiyat.toFixed(2) }} TL</span>
                         </ng-template>
                       </li>
 
@@ -1077,15 +1077,15 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of cartService.getCartProducts()">
-        <td>{{ item.title }}</td>
-        <td>{{ item.description }}</td>
+        <td>{{ item.ad }}</td>
+        <td>{{ item.aciklama }}</td>
         <td>x {{ item.orderQuantity }}</td>
         <td>
-          <ng-container *ngIf="item.discount > 0; else noDiscount">
-            {{ (item.price - (item.price * item.discount / 100)).toFixed(2) }} TL
+          <ng-container *ngIf="item.indirim > 0; else noDiscount">
+            {{ (item.fiyat- (item.fiyat * item.indirim / 100)).toFixed(2) }} TL
           </ng-container>
           <ng-template #noDiscount>
-            {{ item.price.toFixed(2) }} TL
+            {{ item.fiyat.toFixed(2) }} TL
           </ng-template>
         </td>
       </tr>

@@ -351,8 +351,8 @@ export class CheckoutComponent {
     // List<Entity>
     const newCartProducts = this.cartService.getCartProducts().map(product => {
       return {
-        name: product.description,
-        price: product.price,
+        name: product.aciklama,
+        price: product.fiyat,
         orderQuantity: product.orderQuantity
       }
     });
@@ -375,7 +375,7 @@ export class CheckoutComponent {
     console.log("cart: " + this.cartService.getCartProducts());
     // ÜRünleri basıyor
     this.cartService.getCartProducts().forEach(product => {
-      console.log("product: " + product.title + " " + product.price + " " + product.orderQuantity);
+      console.log("product: " + product.ad + " " + product.fiyat + " " + product.orderQuantity);
     });
 
     console.log("email : " + this.myUserObject.email);
@@ -402,8 +402,8 @@ export class CheckoutComponent {
       teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value} ${this.shippingAddressForm.get('shippingzip')?.value}`,
       faturaAdresi: `${this.billingAddressForm.get('billingaddress')?.value} ${this.billingAddressForm.get('zip')?.value}`,
       urunler: this.cartService.getCartProducts().map(product => ({
-        ad: product.description,
-        fiyat: Math.round(product.price * 100), // Convert to integer in cents (8.8 TL -> 880 kuruş)
+        ad: product.aciklama,
+        fiyat: Math.round(product.fiyat * 100), // Convert to integer in cents (8.8 TL -> 880 kuruş)
         adet: product.orderQuantity
       })),
       customerEmailAddress: this.myUserObject.email,

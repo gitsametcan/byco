@@ -18,13 +18,5 @@ export class ElectronicSmProductsComponent {
   // featured_products
   public selling_products:IProduct[] = [];
 
-    constructor(public productService: ProductService) {
-      this.productService.products.subscribe((products) => {
-        const electronic_products = products.filter((p) => p.productType === 'electronics')
-        this.electronic_prd = electronic_products;
-        this.discount_products = electronic_products.filter((p) => p.discount > 0).slice(0, 3);
-        this.featured_products = electronic_products.filter((p) => p.featured).slice(0, 3);
-        this.selling_products = electronic_products.slice().sort((a, b) => b.sellCount - a.sellCount).slice(0, 3);
-      });
-    }
+    constructor(public productService: ProductService) {}
 }

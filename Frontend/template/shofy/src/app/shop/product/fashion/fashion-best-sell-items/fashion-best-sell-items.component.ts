@@ -11,12 +11,5 @@ export class FashionBestSellItemsComponent {
 
     public products:IProduct[] = [];
 
-    constructor(public productService: ProductService) {
-      this.productService.products.subscribe((products) => {
-        this.products = products.filter((p) => p.productType === "fashion")
-        .slice()
-        .sort((a, b) => b.sellCount - a.sellCount)
-        .slice(0, 4);
-      });
-    }
+    constructor(public productService: ProductService) {}
 }

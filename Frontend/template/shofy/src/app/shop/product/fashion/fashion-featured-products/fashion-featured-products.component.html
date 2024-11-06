@@ -23,17 +23,17 @@
                        <div class="tp-featured-thumb include-bg" [style.backgroundImage]="'url(' + item.img + ')'"></div>
                        <div class="tp-featured-content">
                           <h3 class="tp-featured-title">
-                             <a [routerLink]="['/shop/shop-details', item.id]">{{item.title}}</a>
+                             <a [routerLink]="['/shop/shop-details', item.id]">{{item.ad}}</a>
                           </h3>
                           <div class="tp-featured-price-wrapper">
-                             <ng-container *ngIf="item.discount > 0; else noDiscount">
-                              <span class="tp-featured-price old-price">${{ item.price }}</span>
+                             <ng-container *ngIf="item.indirim > 0; else noDiscount">
+                              <span class="tp-featured-price old-price">${{ item.fiyat }}</span>
                               <span class="tp-featured-price new-price">
-                                ${{ (item.price - (item.price * item.discount / 100)).toFixed(2) }}
+                                ${{ (item.fiyat - (item.fiyat * item.indirim / 100)).toFixed(2) }}
                               </span>
                             </ng-container>
                             <ng-template #noDiscount>
-                              <span class="tp-featured-price new-price">${{ item.price.toFixed(2) }}</span>
+                              <span class="tp-featured-price new-price">${{ item.fiyat.toFixed(2) }}</span>
                             </ng-template>
                           </div>
                           <div class="tp-product-rating-icon tp-product-rating-icon-2">

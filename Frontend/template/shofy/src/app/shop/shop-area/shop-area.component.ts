@@ -18,7 +18,6 @@ export class ShopAreaComponent {
 
   public products: IProduct[] = [];
   public minPrice: number = 0;
-  public maxPrice: number = this.productService.maxPrice;
   public niceSelectOptions = this.productService.filterSelect;
   public brands: string[] = [];
   public tags: string[] = [];
@@ -53,7 +52,6 @@ export class ShopAreaComponent {
     this.route.queryParams.subscribe((params) => {
       // console.log('params', params);
       this.minPrice = params['minPrice'] ? params['minPrice'] : this.minPrice;
-      this.maxPrice = params['maxPrice'] ? params['maxPrice'] : this.maxPrice;
       this.brand = params['brand']
         ? params['brand'].toLowerCase().split(' ').join('-') : null;
 
@@ -68,48 +66,40 @@ export class ShopAreaComponent {
 
       //console.log('products', this.productService.urunler);
 
-      this.maxPrice = this.productService.urunler.reduce((max, product) => {
-        return product.price > max ? product.price : max;
-      } , 0);
-      //this.productService.maxPrice = this.maxPrice;
-      console.log('maxPrice', this.maxPrice);
-
       // Get Filtered Products..
       this.productService.filterProducts().subscribe((response) => {
         // Sorting Filter
         this.products = this.productService.sortProducts(response, this.sortBy);
         // Category Filter
-        if (this.category){
-          this.products = this.products.filter(
-            (p) => p.parent.toLowerCase().split(' ').join('-') === this.category
-          );
-        }
-        if (this.subcategory){
-          this.products = this.products.filter(
-            (p) => p.children.toLowerCase().replace("&", "").split(" ").join("-") ===
-              this.subcategory
-          );
-        }
+        if (this.category) {
+            this.products = this.products.filter(
+              (p) => (p.parent?.toLowerCase() ?? '').split(' ').join('-') === this.category
+            );
+          }
+          
+          if (this.subcategory) {
+            this.products = this.products.filter(
+              (p) => (p.children?.toLowerCase() ?? '').replace("&", "").split(" ").join("-") === this.subcategory
+            );
+          }
         // status Filter
         if (this.status) {
           if (this.status === 'i̇ndirimde') {
-            this.products = this.products.filter((p) => p.discount > 0);
+            this.products = this.products.filter((p) => p.indirim > 0);
           } else if (this.status === 'stokta') {
-            this.products = this.products.filter((p) => p.status === 'stokta');
+            this.products = this.products.filter((p) => p.durum === 'stokta');
           }
           else if (this.status === 'tükendi') {
-            this.products = this.products.filter((p) => p.status === 'tükendi' || p.quantity === 0);
+            this.products = this.products.filter((p) => p.durum === 'tükendi' || p.stok === 0);
           }
         }
         // brand filtering
         if (this.brand) {
-          this.products = this.products.filter((p) => p.brand.name.toLowerCase() === this.brand);
+          this.products = this.products.filter((p) => p.marka.toLowerCase() === this.brand);
         }
 
         // Price Filter
-        this.products = this.products.filter(
-          (p) => p.price >= Number(this.minPrice) && p.price <= Number(this.maxPrice)
-        );
+        
         // Paginate Products
         this.paginate = this.productService.getPager(this.products.length,Number(+this.pageNo),this.pageSize);
         this.products = this.products.slice(this.paginate.startIndex,this.paginate.endIndex + 1);
@@ -178,7 +168,6 @@ export class ShopAreaComponent {
 
   handleResetFilter () {
     this.minPrice = 0;
-    this.maxPrice = this.productService.maxPrice;
     this.pageNo = 1;
     this.router.navigate(['shop']);
   }

@@ -27,11 +27,7 @@ export class BlogDetailsComponent {
 
   public swiper: any;
 
-  constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute, private url:URL) {
-    this.productService.products.subscribe((products) => {
-      this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
-    });
-  }
+  constructor(public cartService: CartService, public productService: ProductService, private route: ActivatedRoute, private url:URL) {}
   paramEqulizer(gelen: any): void {
     this.getParam = gelen;
     console.log(this.getParam);

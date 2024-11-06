@@ -13,12 +13,7 @@ export class FashionFeaturedProductsComponent {
 
   public fashion_prd:IProduct[] = [];
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.fashion_prd = products.filter((p) => p.productType === "fashion")
-      .filter((p) => p.featured);
-    });
-  }
+  constructor(public productService: ProductService) { }
 
   ngOnInit(): void {
     new Swiper('.tp-featured-slider-active', {

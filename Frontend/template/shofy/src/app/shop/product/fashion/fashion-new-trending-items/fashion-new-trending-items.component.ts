@@ -16,11 +16,7 @@ export class FashionNewTrendingItemsComponent implements AfterViewInit{
 
   tamamlananProje=false;
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.product_items = products.filter((p) => p.productType === 'fashion').slice(-4);
-    });
-  }
+  constructor(public productService: ProductService) { }
 
   smooth = 0;
 

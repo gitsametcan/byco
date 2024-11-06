@@ -24,7 +24,7 @@ export class DynamicProductDetailsComponent implements OnInit {
       switchMap(params => {
         const productId = params.get('id');
         if (productId) {
-          return this.productService.getProductById(productId);
+          return this.productService.getProductById(Number(productId));
         }
         return of<IProduct | null>(null); // Emit null if there's no productId
       })

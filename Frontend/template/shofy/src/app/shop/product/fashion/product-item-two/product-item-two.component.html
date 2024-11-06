@@ -56,10 +56,17 @@
   </div>
   <div class="tp-product-content-2 pt-15">
      <div class="tp-product-tag-2">
+<<<<<<< Updated upstream
         <a [routerLink]="['/shop/shop-details', product.id]">{{product.title}}</a>
      </div>
      <h3 class="tp-product-title-2">
       <a [routerLink]="['/shop/shop-details', product.id]" style="font-size: 12px;">{{product.category.name}}</a>
+=======
+        <a [routerLink]="['/shop/shop-details', product.id]">{{product.kategori}}</a>
+     </div>
+     <h3 class="tp-product-title-2">
+        <a [routerLink]="['/shop/shop-details', product.id]" style="font-size: 12px;">{{product.ad}}</a>
+>>>>>>> Stashed changes
      </h3>
      <!-- <div class="tp-product-rating-icon tp-product-rating-icon-2">
         <span><i class="fa-solid fa-star"></i></span>
@@ -70,13 +77,13 @@
      </div> -->
      <div class="tp-product-price-wrapper-2">
         <ng-container *ngIf="1 > 0; else noDiscount">
-          <span class="tp-product-price-2 old-price">{{ product.price*1.1 | number:'1.2-2' }} TL</span>
+          <span class="tp-product-price-2 old-price">{{ product.fiyat*1.1 | number:'1.2-2' }} TL</span>
           <span class="tp-product-price-2 new-price">
-            {{ (product.price - (product.price * product.discount / 100)).toFixed(2) }} TL
+            {{ (product.fiyat - (product.fiyat * product.indirim / 100)).toFixed(2) }} TL
           </span>
         </ng-container>
         <ng-template #noDiscount>
-          <span class="tp-product-price-2 new-price">{{ product.price.toFixed(2) }} TL</span>
+          <span class="tp-product-price-2 new-price">{{ product.fiyat.toFixed(2) }} TL</span>
         </ng-template>
      </div>
   </div>

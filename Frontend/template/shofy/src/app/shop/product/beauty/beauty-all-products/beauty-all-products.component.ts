@@ -15,11 +15,7 @@ export class BeautyAllProductsComponent {
   tabs: string[] = ['All Collection', 'Trending', 'Beauty', 'Cosmetics'];
   allProducts:IProduct[] = [];
 
-  constructor(private renderer: Renderer2,public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.allProducts = products.filter(p => p.productType === 'beauty');
-    });
-  }
+  constructor(private renderer: Renderer2,public productService: ProductService) { }
 
   handleActiveMarker(event: Event, tab: string): void {
     this.active_tab = tab;
@@ -36,10 +32,6 @@ export class BeautyAllProductsComponent {
         return this.allProducts.slice(0, 8);
       case 'Trending':
         return this.allProducts.slice(-4);
-      case 'Beauty':
-        return this.allProducts.filter(p => p.category.name === 'Discover Skincare');
-      case 'Cosmetics':
-        return this.allProducts.filter(p => p.category.name === 'Awesome Lip Care');
       default:
         return [];
     }

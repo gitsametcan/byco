@@ -11,9 +11,6 @@ export class ProductDetailsWithVideoComponent {
   public product!: IProduct;
 
   constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.product = products.find(p => p.videoId)!;
-    });
   }
 
 }

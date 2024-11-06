@@ -23,18 +23,18 @@
           </div>
           <div class="cartmini__content">
             <h5 class="cartmini__title">
-              <a [routerLink]="['/shop/shop-details', item.id]">{{ item.title }}</a>
+              <a [routerLink]="['/shop/shop-details', item.id]">{{ item.ad }}</a>
             </h5>
             <div class="cartmini__price-wrapper">
-              <span *ngIf="item.discount > 0 && item.orderQuantity" class="cartmini__price">
+              <span *ngIf="item.indirim > 0 && item.orderQuantity" class="cartmini__price">
                 {{
                   (
-                    (item.price - (item.price * item.discount) / 100) * item.orderQuantity
+                    (item.fiyat - (item.fiyat * item.indirim) / 100) * item.orderQuantity
                   ).toFixed(2)
                 }}
               </span>
-              <span *ngIf="!item.discount && item.orderQuantity" class="cartmini__price">
-                {{ (item.price * item.orderQuantity).toFixed(2) }} TL
+              <span *ngIf="!item.indirim && item.orderQuantity" class="cartmini__price">
+                {{ (item.fiyat * item.orderQuantity).toFixed(2) }} TL
               </span>
               <span class="cartmini__quantity">{{ ' ' }}x{{ item.orderQuantity }}</span>
             </div>

@@ -13,10 +13,5 @@ export class ElectronicGadgetProductsComponent {
   // product gadget items
   public product_gadget:IProduct[] = [];
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.electronic_prd = products.filter((p) => p.productType === 'electronics');
-      this.product_gadget = products.filter((p) => p.productType === 'electronics').slice(0,6);
-    });
-  }
+  constructor(public productService: ProductService) {}
 }

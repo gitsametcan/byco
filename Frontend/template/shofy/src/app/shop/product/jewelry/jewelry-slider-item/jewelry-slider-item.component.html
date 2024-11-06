@@ -45,10 +45,10 @@
   </div>
   <div class="tp-category-content-4">
      <h3 class="tp-category-title-4">
-        <a [routerLink]="['/shop/shop-details', product.id]">{{product.title}}</a>
+        <a [routerLink]="['/shop/shop-details', product.id]">{{product.ad}}</a>
      </h3>
      <div class="tp-category-price-wrapper-4">
-        <span class="tp-category-price-4">${{product.price.toFixed(2)}}</span>
+        <span class="tp-category-price-4">${{product.fiyat.toFixed(2)}}</span>
         <div class="tp-category-add-to-cart">
            <button *ngIf="!isItemInCart(product)" (click)="addToCart(product)" class="tp-category-add-to-cart-4">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

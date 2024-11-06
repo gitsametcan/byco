@@ -11,9 +11,5 @@ export class ProductDetailsWithCountdownComponent {
 
   public product!: IProduct;
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.product = products.find(p => p.offerDate?.endDate)!;
-    });
-  }
+  constructor(public productService: ProductService) {}
 }

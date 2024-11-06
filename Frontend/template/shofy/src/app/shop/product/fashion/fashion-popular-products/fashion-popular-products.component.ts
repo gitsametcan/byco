@@ -37,11 +37,7 @@ export class FashionPopularProductsComponent {
   public projeDevam: Iproje[] = [];
   public projeBiten: Iproje[] = [];
 
-  constructor(public cartService: CartService, public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.popular_prd = products.filter((p) => p.productType === "fashion").slice(0, 8);
-    });
-  }
+  constructor(public cartService: CartService, public productService: ProductService) {}
 
 
   ngOnInit(): void {

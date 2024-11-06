@@ -16,14 +16,7 @@ export class ElectronicOfferProductsComponent {
   // product offer
   public offer_products:IProduct[] = []
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.electronic_prd = products.filter((p) => p.productType === 'electronics');
-      this.offer_products = products.filter((p) => p.productType === 'electronics').filter(
-        (p) => p.productType === 'electronics' && p.offerDate
-      );
-    });
-  }
+  constructor(public productService: ProductService) {}
 
   ngOnInit(): void {
     new Swiper('.tp-product-offer-slider-active', {

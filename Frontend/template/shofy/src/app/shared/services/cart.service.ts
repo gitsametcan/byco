@@ -25,8 +25,8 @@ export class CartService {
   // add_cart_product
   addCartProduct(payload: IProduct) {
     const isExist = state.cart_products.some((i: IProduct) => i.id === payload.id);
-    if (payload.status === 'tükendi' || payload.quantity === 0) {
-      this.toastrService.error(`Tükendi ${payload.title}`);
+    if (payload.durum === 'tükendi' || payload.stok === 0) {
+      this.toastrService.error(`Tükendi ${payload.ad}`);
     }
     
     else if (!isExist) {
@@ -35,18 +35,18 @@ export class CartService {
         orderQuantity: 1, //this.orderQuantity olursa doğru ekler
       };
       state.cart_products.push(newItem);
-      this.toastrService.success(`${payload.title} sepete eklendi`);
+      this.toastrService.success(`${payload.ad} sepete eklendi`);
     } else {
       state.cart_products.map((item: IProduct) => {
         if (item.id === payload.id) {
           if (typeof item.orderQuantity !== "undefined") {
-            if (item.quantity >= item.orderQuantity + this.orderQuantity) {
-              console.log("item.quantity" + item.quantity + "item.orderQuantity" + item.orderQuantity + "this.orderQuantity" + this.orderQuantity); 
+            if (item.stok >= item.orderQuantity + this.orderQuantity) {
+              console.log("item.quantity" + item.stok + "item.orderQuantity" + item.orderQuantity + "this.orderQuantity" + this.orderQuantity); 
               item.orderQuantity =
                 this.orderQuantity !== 1
                   ? this.orderQuantity + item.orderQuantity
                   : item.orderQuantity + 1;
-              this.toastrService.success(`${this.orderQuantity} ${item.title} sepete eklendi`);
+              this.toastrService.success(`${this.orderQuantity} ${item.ad} sepete eklendi`);
             } else {
               this.toastrService.success(`No more quantity available for this product!`);
               this.orderQuantity = 1;
@@ -63,15 +63,15 @@ export class CartService {
   public totalPriceQuantity() {
     return state.cart_products.reduce(
       (cartTotal: { total: number; quantity: number }, cartItem: IProduct) => {
-        const { price, orderQuantity, discount } = cartItem;
+        const { fiyat, orderQuantity, indirim } = cartItem;
         if (typeof orderQuantity !== "undefined") {
-          if (discount && discount > 0) {
+          if (indirim && indirim > 0) {
             // Calculate the item total with discount
-            const itemTotal = (price - (price * discount) / 100) * orderQuantity;
+            const itemTotal = (fiyat - (fiyat * indirim) / 100) * orderQuantity;
             cartTotal.total += itemTotal;
           } else {
             // Calculate the item total without discount
-            const itemTotal = price * orderQuantity;
+            const itemTotal = fiyat * orderQuantity;
             cartTotal.total += itemTotal;
           }
           cartTotal.quantity += orderQuantity;
@@ -106,7 +106,7 @@ export class CartService {
         if (typeof item.orderQuantity !== "undefined") {
           if (item.orderQuantity > 1) {
             item.orderQuantity = item.orderQuantity - 1;
-            this.toastrService.info(`Decrement Quantity For ${item.title}`);
+            this.toastrService.info(`Decrement Quantity For ${item.ad}`);
           }
         }
       }
@@ -120,7 +120,7 @@ export class CartService {
     state.cart_products = state.cart_products.filter(
       (p: IProduct) => p.id !== payload.id
     );
-    this.toastrService.error(`${payload.title} sepetten çıkarıldı`);
+    this.toastrService.error(`${payload.ad} sepetten çıkarıldı`);
     localStorage.setItem("cart_products", JSON.stringify(state.cart_products));
   };
 

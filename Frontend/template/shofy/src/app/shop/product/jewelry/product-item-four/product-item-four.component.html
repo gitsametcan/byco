@@ -85,22 +85,22 @@
   </div>
   <div class="tp-product-content-4">
     <h3 class="tp-product-title-4">
-      <a [routerLink]="['/shop/shop-details', product.id]">{{product.title}}</a>
+      <a [routerLink]="['/shop/shop-details', product.id]">{{product.ad}}</a>
     </h3>
     <div class="tp-product-info-4">
-      <p>{{product.category.name}}</p>
+      <p>{{product.kategori}}</p>
     </div>
 
     <div class="tp-product-price-inner-4">
       <div class="tp-product-price-wrapper-4">
-        <ng-container *ngIf="product.discount > 0; else noDiscount">
+        <ng-container *ngIf="product.indirim > 0; else noDiscount">
           <span class="tp-product-price-4 new-price">
-            ${{ (product.price - (product.price * product.discount / 100)).toFixed(2) }}
+            ${{ (product.fiyat - (product.fiyat * product.indirim / 100)).toFixed(2) }}
           </span>
-          <span class="tp-product-price-4 old-price">${{ product.price }}</span>
+          <span class="tp-product-price-4 old-price">${{ product.fiyat }}</span>
         </ng-container>
         <ng-template #noDiscount>
-          {{" "}}<span class="tp-product-price-4 new-price">${{ product.price.toFixed(2) }}</span>
+          {{" "}}<span class="tp-product-price-4 new-price">${{ product.fiyat.toFixed(2) }}</span>
         </ng-template>
       </div>
       <div class="tp-product-price-add-to-cart">

@@ -49,9 +49,9 @@ export class SearchComponent {
         switch (this.sortBy) {
           case 'ascending':
             this.products = this.products.sort((a, b) => {
-              if (a.title < b.title) {
+              if (a.ad < b.ad) {
                 return -1;
-              } else if (a.title > b.title) {
+              } else if (a.ad > b.ad) {
                 return 1;
               }
               return 0;
@@ -60,13 +60,13 @@ export class SearchComponent {
 
           case 'low-to-high':
             this.products = this.products.sort(
-              (a, b) => Number(a.price) - Number(b.price)
+              (a, b) => Number(a.fiyat) - Number(b.fiyat)
             );
             break;
 
           case 'high-to-low':
             this.products = this.products.sort(
-              (a, b) => Number(b.price) - Number(a.price)
+              (a, b) => Number(b.fiyat) - Number(a.fiyat)
             );
             break;
 
@@ -75,7 +75,7 @@ export class SearchComponent {
             break;
 
           case 'on-sale':
-            this.products = this.products.filter((p) => p.discount > 0);
+            this.products = this.products.filter((p) => p.indirim > 0);
             break;
 
           default:
@@ -85,14 +85,14 @@ export class SearchComponent {
 
         if (this.searchText && !this.productType) {
           this.products = productData.filter((prd) =>
-            prd.title.toLowerCase().includes(this.searchText.toLowerCase())
+            prd.ad.toLowerCase().includes(this.searchText.toLowerCase())
           );
         }
 
         if (this.productType && !this.searchText) {
           this.products = productData.filter(
             (prd) =>
-              prd.productType.toLowerCase() === this.productType.toLowerCase()
+              prd.kategori.toLowerCase() === this.productType.toLowerCase()
           );
         }
 
@@ -100,10 +100,10 @@ export class SearchComponent {
           this.products = productData
             .filter(
               (prd) =>
-                prd.productType.toLowerCase() === this.productType.toLowerCase()
+                prd.kabloTipi.toLowerCase() === this.productType.toLowerCase()
             )
             .filter((p) =>
-              p.title.toLowerCase().includes(this.searchText.toLowerCase())
+              p.ad.toLowerCase().includes(this.searchText.toLowerCase())
             );
         }
       });

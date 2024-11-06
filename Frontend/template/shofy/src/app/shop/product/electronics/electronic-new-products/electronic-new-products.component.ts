@@ -14,12 +14,7 @@ export class ElectronicNewProductsComponent {
   public electronic_prd:IProduct[] = [];
   public new_arrival_product:IProduct[] = [];
 
-  constructor(public productService: ProductService) {
-    this.productService.products.subscribe((products) => {
-      this.electronic_prd = products.filter((p) => p.productType === 'electronics');
-      this.new_arrival_product = products.filter((p) => p.productType === 'electronics').slice(-5);
-    });
-  }
+  constructor(public productService: ProductService) {}
 
   ngOnInit(): void {
     new Swiper('.tp-product-arrival-active', {

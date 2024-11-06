@@ -27,13 +27,13 @@ export class ProductDetailsWrapperComponent {
     public cartService: CartService
   ) {}
 
-  handleIsColorVariant(product: IProduct) {
-    if (product.imageURLs.some((item) => item?.color && item?.color?.name)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+//   handleIsColorVariant(product: IProduct) {
+//     if (product.img.some((item) => item?.color && item?.color?.name)) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
 
   myObject = {
     user_id: 0,

@@ -19,9 +19,9 @@
                   <div class="row">
                     <div class="col-lg-12">
                         <div class="tp-product-details-desc-content pt-25">
-                          <span>{{product.category.name}}</span>
-                          <h3 class="tp-product-details-desc-title">{{product.title}}</h3>
-                          <p>{{ product.description }}</p>
+                          <span>{{product.kategori}}</span>
+                          <h3 class="tp-product-details-desc-title">{{product.ad}}</h3>
+                          <p>{{ product.aciklama }}</p>
                         </div>
                     </div>
                   </div>
@@ -37,9 +37,9 @@
               <div class="col-xl-10">
                  <table>
                    <tbody>
-                      <tr *ngFor="let info of product.additionalInformation">
-                          <td>{{info.key}}</td>
-                          <td>{{info.value}}</td>
+                      <tr *ngFor="let info of product.aciklama">
+                          <!-- <td>{{info.key}}</td>
+                          <td>{{info.value}}</td> -->
                       </tr>
                       <!-- <tr *ngFor="let info of product.additionalInformation">
                         <td>{{info.key}}</td>
@@ -62,14 +62,14 @@
                           <div class="tp-product-details-review-summery-value">
                              <span>4.5</span>
                           </div>
-                          <div class="tp-product-details-review-summery-rating d-flex align-items-center">
+                          <!-- <div class="tp-product-details-review-summery-rating d-flex align-items-center">
                              <span><i class="fa-solid fa-star"></i></span>
                              <span><i class="fa-solid fa-star"></i></span>
                              <span><i class="fa-solid fa-star"></i></span>
                              <span><i class="fa-solid fa-star"></i></span>
                              <span><i class="fa-solid fa-star"></i></span>
                              <p>({{product.reviews?.length}} Reviews)</p>
-                          </div>
+                          </div> -->
                        </div>
                        <div class="tp-product-details-review-rating-list">
                           <app-product-details-rating-item [star]="5" width="82" />
@@ -82,7 +82,7 @@
 
                     <div class="tp-product-details-review-list pr-110">
                       <h3 class="tp-product-details-review-title">Rating & Review</h3>
-                      <ng-container *ngIf="product.reviews && product.reviews.length > 0; else noReviews">
+                      <!-- <ng-container *ngIf="product.reviews && product.reviews.length > 0; else noReviews">
                         <div *ngFor="let item of product.reviews; let i = index" class="tp-product-details-review-avater d-flex align-items-start">
                           <div class="tp-product-details-review-avater-thumb">
                             <a href="#">
@@ -104,7 +104,7 @@
                             </div>
                           </div>
                         </div>
-                      </ng-container>
+                      </ng-container> -->
                       <ng-template #noReviews>
                         <h5>No Reviews Found</h5>
                       </ng-template>
