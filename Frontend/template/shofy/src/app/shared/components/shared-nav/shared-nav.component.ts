@@ -136,18 +136,17 @@ export class SharedNavComponent implements OnInit, OnDestroy {
     clearTimeout(this.hideTimeout);
     this.isSubMenuVisible = true;
     this.selectedCategory = category;
-    this.navigateWithCategory(category.name); // Yeni kategoriye yönlendirme
   }
 
   hideSubMenu() {
     this.hideTimeout = setTimeout(() => {
       this.isSubMenuVisible = false;
       this.selectedCategory = null;
-    }, 300);
+    }, 100);
   }
 
   navigateWithCategory(categoryName: string) {
-    const queryParams: Params = { category: categoryName.toLowerCase().replace('&', '').split(' ').join('-') };
+    const queryParams: Params = { category: categoryName }; // replace kullanılmadı, olduğu gibi gönderiyoruz
     
     this.router.navigate([], {
       relativeTo: this.route,
@@ -156,7 +155,7 @@ export class SharedNavComponent implements OnInit, OnDestroy {
       skipLocationChange: false,
     });
   }
-
+  
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
     return fetch(`https://localhost:7096/api/${url}`, {
       method: method,

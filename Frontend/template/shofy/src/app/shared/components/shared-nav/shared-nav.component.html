@@ -3,7 +3,8 @@
     <li *ngFor="let category of categories" class="category-item"
         (mouseover)="showSubMenu(category)" 
         (mouseleave)="hideSubMenu()">
-      <a [routerLink]="['/shop/shop-list']">{{ category.name }}</a>
+      <!-- Ana kategoriye tıklanınca URL değişiyor -->
+      <a (click)="navigateWithCategory(category.name)">{{ category.name }}</a>
     </li>
   </ul>
 </div>
@@ -17,10 +18,12 @@
   <div class="sub-category-list">
     <ul>
       <li *ngFor="let subCategory of selectedCategory.subCategories">
-        <a [routerLink]="['/shop/shop-list']">{{ subCategory.name }}</a>
+        <!-- Alt kategoriye tıklanınca URL değişiyor -->
+        <a (click)="navigateWithCategory(subCategory.name)">{{ subCategory.name }}</a>
         <ul>
           <li *ngFor="let thirdLevel of subCategory.thirdLevels">
-            <a [routerLink]="['/shop/shop-list']">{{ thirdLevel.name }}</a>
+            <!-- Üçüncü seviyeye tıklanınca URL değişiyor -->
+            <a (click)="navigateWithCategory(thirdLevel.name)">{{ thirdLevel.name }}</a>
           </li>
         </ul>
       </li>
