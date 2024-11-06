@@ -196,7 +196,10 @@ export class ProductService {
     }
   }
   getProductsByCategory(category: string): Promise<IProduct[]> {
-    const url = `Urun/GetProductByCategory/${category}`;
+    // Kategori isminde "/" varsa sadece öncesini al
+    const processedCategory = category.split('/')[0];
+  
+    const url = `Urun/GetProductByCategory/${processedCategory}`;
     return this.sendLocalRequest(url, 'GET').then((products: any[]) => {
       // API yanıtındaki 'ad' alanını 'title' olarak eşle ve 'kategori' bilgisini category.name olarak düzenle
       return products.map(product => ({
@@ -209,6 +212,7 @@ export class ProductService {
       }));
     });
   }
+  
   
   
   
