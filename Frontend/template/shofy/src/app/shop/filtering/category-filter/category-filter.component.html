@@ -1,5 +1,11 @@
 <div class="tp-shop-widget-content">
   <div class="tp-shop-widget-categories">
+    
+    <!-- Back button to return to main category, visible only in subcategory view -->
+    <button *ngIf="isSubCategoryView" (click)="goBackToMainCategory()">
+      ← Geri Dön
+    </button>
+
     <ul>
       <li *ngFor="let subCategory of filteredSubCategories">
         <a
@@ -11,7 +17,9 @@
           }"
         >
           {{ subCategory.ad }}
-          <span>1</span> <!-- Placeholder for count; adjust as necessary -->
+          <span>{{ subCategory.productCount }}</span>
         </a>
-  
-        
+      </li>
+    </ul>
+  </div>
+</div>
