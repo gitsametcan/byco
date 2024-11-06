@@ -14,6 +14,7 @@ export interface IProduct {
   title: string;
   slug: string;
   unit: string;
+
   imageURLs: {
     color?: {
       name: string;

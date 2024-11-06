@@ -73,8 +73,10 @@
                            <div *ngIf="myObject.tip!=0" class="profile__main">
                               <div class="profile__main-top pb-80">
                                  <div class="row align-items-center">
-                                    <div class="col-md-6">
-                                       Bu sayfadan geçmiş siparişlerinizi görebilir, bilgilerinizi güncelleyebilirsiniz. BYCO'yu tercih ettiğiniz için teşekkür ederiz.
+                                    <div class="col-md-6 order-info">
+                                       <h3>Hoşgeldiniz</h3>
+                                       <p>Bu sayfadan geçmiş siparişlerinizi görebilir, bilgilerinizi güncelleyebilirsiniz.</p>
+                                       <p>BYCO'yu tercih ettiğiniz için teşekkür ederiz.</p>                                       
                                        <!-- <div class="profile__main-inner d-flex flex-wrap align-items-center">
                                           <div class="profile__main-thumb">
                                              <img src="/assets/img/users/user-10.jpg" alt="">
@@ -216,7 +218,7 @@
                                     <th scope="row">{{ siparis.siparisno }}</th>
                                     <td data-info="title">{{ siparis.ad }}</td>
                                     <td data-info="title">{{ siparis.tarih | date }}</td>
-                                    <td data-info="title">{{ calculateTotal(siparis.urunler) | currency:'TRY' }}</td>
+                                    <td data-info="title">{{ siparis.fiyat | currency:'TRY' }}</td>
                                     <td [attr.data-info]="getStatusClass(siparis.durum)">
                                       {{ getStatusLabel(siparis.durum) }}
                                     </td>
@@ -439,17 +441,6 @@
                            <div class="profile__password">
                               <form (ngSubmit)="updatePassword()" #updatePasswordForm="ngForm">
                                  <div class="row">
-                                    <div class="col-xxl-12">
-                                       <div class="tp-profile-input-box">
-                                          <div class="tp-contact-input">
-                                             <input name="oldPassword" id="oldPassword" type="password"
-                                                [(ngModel)]="oldPassword" required>
-                                          </div>
-                                          <div class="tp-profile-input-title">
-                                             <label for="oldPassword">Mevcut Şifre</label>
-                                          </div>
-                                       </div>
-                                    </div>
                                     <div class="col-xxl-6 col-md-6">
                                        <div class="tp-profile-input-box">
                                           <div class="tp-profile-input">

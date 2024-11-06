@@ -170,7 +170,7 @@ export class ProductService {
 
   GetAllProjects():IProduct[]{
 
-    this.sendRequest('Urun/GetAllResponse','GET')
+    this.sendLocalRequest('Urun/GetAll','GET')
     .then(response => {
         this.urunler = response;
     })
@@ -187,7 +187,7 @@ export class ProductService {
       return of(this.urunler);
     } else {
       // Otherwise, fetch data and store it in urunler array.
-      return from(this.sendRequest('Urun/GetAllResponse', 'GET')).pipe(
+      return from(this.sendLocalRequest('Urun/GetAll', 'GET')).pipe(
         map((response: IProduct[]) => {
           this.urunler = response; // Cache the response
           return response;
@@ -195,7 +195,52 @@ export class ProductService {
       );
     }
   }
-
+  getProductsByCategory(category: string): Promise<IProduct[]> {
+    const url = `Urun/GetProductByCategory/${category}`;
+    return this.sendLocalRequest(url, 'GET').then((products: any[]) => {
+      // API yanıtındaki 'ad' alanını 'title' olarak eşle ve 'kategori' bilgisini category.name olarak düzenle
+      return products.map(product => ({
+        ...product,
+        title: product.ad, // 'ad' alanını 'title' olarak eşle
+        category: { name: product.kategori }, // 'kategori' bilgisini category.name olarak düzenle
+        price: product.fiyat, // 'fiyat' alanını price olarak eşle
+        discount: product.indirim || 0, // 'indirim' alanını discount olarak eşle
+        img: product.img // 'img' alanını img olarak eşle
+      }));
+    });
+  }
+  
+  
+  
+  sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
+    console.log("İstek URL'si:", `https://localhost:7096/api/${url}`);
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: data ? JSON.stringify(data) : null,
+    })
+      .then(response => {
+        if (!response.ok) {
+          console.error("API isteği başarısız:", response.statusText);
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .catch(error => {
+        console.error("API çağrısında hata:", error);
+        throw error;
+      });
+  }
+  
+  
 
   sendRequest(url: string, method: string, data?:any): Promise<any> {
 

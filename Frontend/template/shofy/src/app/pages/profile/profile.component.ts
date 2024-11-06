@@ -189,6 +189,10 @@ export class ProfileComponent {
 
 
   ngOnInit(): void {
+    const token = this.getCookie("session_key");
+    if (!token) {
+        this.router.navigate(['/pages/login']); // Token yoksa login sayfasına yönlendir
+    }
     this.getUserByToken();
     this.getKategoriListesi(); // Yeni kategori listesini çekme fonksiyonunu çağırın
     this.urunTurleriOptions = this.urunTurleri.map(tur => ({
@@ -256,23 +260,14 @@ export class ProfileComponent {
 
 
   logout() {
-    console.log(this.getCookie("session_key"))
-    this.sendRequest('User/LogOut/' + this.getCookie("session_key"), 'GET')
-      .then(response => {
-        this.setCookie("", "", 0);
+    // Çerezdeki tokeni silme
+    this.setCookie("session_key", "", -1); // Çerezin geçerlilik süresini sıfır yaparak siliyoruz.
 
-        this.router.navigate(['/pages/login']);
-        this.ngOnInit();
+    // Kullanıcıyı login sayfasına yönlendir
+    this.router.navigate(['/pages/login']);
+    console.log("Çıkış yapıldı ve token silindi.");
+}
 
-
-      })
-      .catch(err => {
-        console.error("Error: " + err);
-
-        this.router.navigate(['/pages/login']);
-      })
-
-  }
   toggleDetails(siparisId: number) {
     this.selectedSiparisId = this.selectedSiparisId === siparisId ? null : siparisId;
   }
@@ -474,7 +469,21 @@ getStatusClass(durum: string): string {
   updatePassword() {
     console.log('yeni =' + this.newPassword + ', eski =' + this.confirmPassword);
     if (this.newPassword === this.confirmPassword && this.confirmPassword.length > 7) {
+      
       // Şifre güncelleme işlemi burada gerçekleştirilir
+      this.sendRequestWithHeadersPost('User/UpdatePassword', 'PUT', this.confirmPassword,{
+        'Authorization': `Bearer ${this.getCookie("session_key")}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+        .then(response => {
+          console.log(response);
+  
+        })
+        .catch(err => {
+          console.error("Error: " + err);
+          //this.router.navigate(['/pages/login']);
+        })
       console.log('yeni =' + this.newPassword + ', eski =' + this.confirmPassword);
       console.log('Şifre güncellendi.');
       this.passwordUpdated = true;

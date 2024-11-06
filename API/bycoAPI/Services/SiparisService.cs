@@ -114,9 +114,9 @@ namespace bycoAPI.Services
             return hizliSiparisler;
         }
 
-        public async Task<RequestResponse> SiparisKargoda(string siparis_id, string kargono)
+        public async Task<RequestResponse> SiparisKargoda(int siparis_id, string kargono)
         {
-            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == siparis_id).FirstAsync();
+            Siparis siparis = await _context.Siparis.Where(k => k.siparis_id == siparis_id).FirstAsync();
             siparis.durum = "Kargoya verildi";
 
             try
@@ -129,9 +129,9 @@ namespace bycoAPI.Services
                 await _emailService.Send(ml);
 
             }
-            catch
+            catch (Exception e)
             {
-                return new RequestResponse { StatusCode = 331, ReasonString = "Hata oluştu" };
+                return new RequestResponse { StatusCode = 331, ReasonString = e.Message };
                 
 
             }

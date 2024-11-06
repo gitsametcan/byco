@@ -118,8 +118,33 @@ export class ShopAreaComponent {
   }
   ngOnInit() {
     this.activeTab = this.listStyle ? 'list' : 'grid';
+    this.route.queryParams.subscribe(params => {
+      this.category = params['category'];
+      if (this.category) {
+        this.fetchProductsByCategory(this.category);
+      }
+    });
   }
-
+  fetchProductsByCategory(category: string) {
+    console.log("Gönderilen Kategori:", category);  // Kontrol için kategori yazdır
+  
+    this.productService.getProductsByCategory(category).then(
+      (response: IProduct[]) => {
+        this.products = response;
+        console.log('API Yanıtı:', response);  // Yanıtı konsolda göster
+        if (this.products.length === 0) {
+          console.warn("API'den ürün gelmedi.");
+        }
+      },
+      error => {
+        console.error('Ürünler çekilirken hata oluştu:', error);
+      }
+    );
+  }
+  
+  
+  
+  
   // Append filter value to Url
   updateFilter(tags: any) {
     tags.page = null; // Reset Pagination

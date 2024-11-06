@@ -28,7 +28,7 @@ namespace bycoAPI.Controllers
 
         [HttpPost("SiparisKargoda/{kargono}")]
         [AllowAnonymous]
-        public async Task<RequestResponse> SiparisKargoda([FromBody] string siparisno,string kargono)
+        public async Task<RequestResponse> SiparisKargoda([FromBody] int siparisno,string kargono)
         {
 
             // string token = Request.Headers["Authorization"];

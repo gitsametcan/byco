@@ -48,25 +48,25 @@ export class CategoryFilterComponent implements OnInit {
   }
 
   handleCategoryRoute(value: string): void {
-    const newCategory = value.toLowerCase().replace('&', '').split(' ').join('-');
-    
-    // Define the query parameters as an object
-    const queryParams: Params = {
-      category: newCategory,
-    };
+    const originalCategory = value; // Orijinal kategori adını olduğu gibi kullan
+  
+    console.log("Yeni Seçilen Kategori (Orijinal Format):", originalCategory); // Kontrol amaçlı
   
     this.router
       .navigate([], {
         relativeTo: this.route,
-        queryParams, // Pass the queryParams object here
+        queryParams: { category: originalCategory },
         queryParamsHandling: 'merge',
         skipLocationChange: false,
       })
       .finally(() => {
-        this.activeQuery = newCategory; // Update activeQuery with the new selected category
-        this.filterSubCategories(); // Filter the subcategories based on the new selection
+        this.activeQuery = originalCategory; // Yeni kategoriyi güncelle
+        this.filterSubCategories(); // Yeni seçime göre alt kategorileri filtrele
         this.viewScroller.setOffset([120, 120]);
-        this.viewScroller.scrollToAnchor('products'); // Scroll to products section
+        this.viewScroller.scrollToAnchor('products'); // Ürünler bölümüne kaydır
       });
   }
+  
+  
+  
 }
