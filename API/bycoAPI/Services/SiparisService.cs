@@ -11,10 +11,12 @@ namespace bycoAPI.Services
     public class SiparisService : ISiparisService
     {
         private readonly DbContexts _context;
+        private readonly IEmailSender _emailService;
 
-        public SiparisService(DbContexts context)
+        public SiparisService(DbContexts context, IEmailSender emailSender)
         {
             _context = context;
+            _emailService = emailSender;
 
         }
 
@@ -112,20 +114,36 @@ namespace bycoAPI.Services
             return hizliSiparisler;
         }
 
-        public async Task<RequestResponse> SiparisKargoda(string siparis_id)
+        public async Task<RequestResponse> SiparisKargoda(string siparis_id, string kargono)
         {
-            Siparis siparis = await _context.Siparis.Where(k=>k.siparisno == siparis_id).FirstAsync();
+            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == siparis_id).FirstAsync();
             siparis.durum = "Kargoya verildi";
 
-            _context.Siparis.Update(siparis);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Siparis.Update(siparis);
+                await _context.SaveChangesAsync();
+                Message ml = new Message(new string[]{siparis.mail});
+                ml.Subject = "Sipariş Kargoda";
+                ml.Content = siparis.siparisno + " sipariş numaralı siparişiniz kargoya verilmiştir. X kargo web sitesinden " +kargono+" kargo numarası ile kargonuzun durumunu kontrol edebilirsiniz.";
+                await _emailService.Send(ml);
+
+            }
+            catch
+            {
+                return new RequestResponse { StatusCode = 331, ReasonString = "Hata oluştu" };
+                
+
+            }
+
+
 
             return new RequestResponse { StatusCode = 200, ReasonString = "Siparis güncellendi" };
         }
 
         public async Task<RequestResponse> OdemeAlindi(string siparis_id)
         {
-            Siparis siparis = await _context.Siparis.Where(k=>k.siparisno == siparis_id).FirstAsync();
+            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == siparis_id).FirstAsync();
             siparis.durum = "Odeme Alindi";
 
             _context.Siparis.Update(siparis);
