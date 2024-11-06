@@ -34,9 +34,14 @@ namespace bycoAPI.Controllers
         [AllowAnonymous]
         public async Task<List<Product>> GetAll()
         {
-            var result = await _service.GetAllUrun();
+            return await _service.GetAllUrun();
+        }
 
-            return result;
+        [HttpGet("GetProductByCategory/{category}")]
+        [AllowAnonymous]
+        public async Task<List<Product>> GetProductByCategory(string category)
+        {
+            return await _service.GetProductsByCategory(category);
         }
 
         [HttpPost("Add")]
@@ -44,18 +49,17 @@ namespace bycoAPI.Controllers
         public async Task<RequestResponse> AddUrun([FromBody] Product product)
         {
 
-            //string token = Request.Headers["Authorization"];
+            string token = Request.Headers["Authorization"];
 
-            //token = token.Substring(7);
-            //string email = await _tokenService.decodeKey(token);
-            //User user = await _userService.GetUserByEmail(email);
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
 
-            //if (user.tip == 0)
-            //{
-            //    return await _service.AddUrun(product);
-            //}
-            //else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
-            return await _service.AddUrun(product);
+            if (user.tip == 0)
+            {
+               return await _service.AddUrun(product);
+            }
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
         }
 
         [HttpPut("Update/{urun_id}")]

@@ -95,5 +95,10 @@ namespace bycoAPI.Services
             }
             return target;
         }
+
+        public async Task<List<Product>> GetProductsByCategory(string category)
+        {
+            return await _context.Products.Where(p => p.kategori.Contains(category)).ToListAsync();
+        }
     }
 }

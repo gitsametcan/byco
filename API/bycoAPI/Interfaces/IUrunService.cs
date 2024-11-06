@@ -7,6 +7,7 @@ namespace bycoAPI.Interfaces
     {
         public Task<Product> GetUrunByIdAsync(int id);
         public Task<List<Product>> GetAllUrun();
+        public Task<List<Product>> GetProductsByCategory(string category);
         public Task<RequestResponse> AddUrun(Product urun);
         public Task<RequestResponse> UpdateUrun(int urun_id, Product urun);
         public Task<RequestResponse> DeleteUrun(int urun_id);
