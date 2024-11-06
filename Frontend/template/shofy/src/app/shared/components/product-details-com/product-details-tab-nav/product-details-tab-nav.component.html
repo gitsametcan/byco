@@ -37,128 +37,128 @@
               <div class="col-xl-10">
                  <table>
                    <tbody>
-                    <table border="1">
-                        <tr>
+                    <table style="border: 1;">
+                        <tr *ngIf="product.aydinlatmaTuru != ''">
                             <th>Özellik Adı</th>
                             <th>Değer</th>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.amper != ''">
                             <td>Amper</td>
                             <td>{{ product.amper }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.aydinlatmaTuru != ''">
                             <td>Aydınlatma Türü</td>
                             <td>{{ product.aydinlatmaTuru }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.cerceve != ''">
                             <td>Çerçeve</td>
                             <td>{{ product.cerceve }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.damarSayisi != ''">
                             <td>Damar Sayısı</td>
                             <td>{{ product.damarSayisi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.disKilifRengi != ''">
                             <td>Dış Kılıf Rengi</td>
                             <td>{{ product.disKilifRengi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.duy != ''">
                             <td>Duy</td>
                             <td>{{ product.duy }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.isikRengi != ''">
                             <td>Işık Rengi</td>
                             <td>{{ product.isikRengi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kabloTipi != ''">
                             <td>Kablo Tipi</td>
                             <td>{{ product.kabloTipi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kabloUzunlugu != ''">
                             <td>Kablo Uzunluğu</td>
                             <td>{{ product.kabloUzunlugu }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kanalBoyutu != ''">
                             <td>Kanal Boyutu</td>
                             <td>{{ product.kanalBoyutu }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kanalOzelligi != ''">
                             <td>Kanal Özelliği</td>
                             <td>{{ product.kanalOzelligi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kanalRengi != ''">
                             <td>Kanal Rengi</td>
                             <td>{{ product.kanalRengi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kasaRengi != ''">
                             <td>Kaşa Rengi</td>
                             <td>{{ product.kasaRengi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kesit != ''">
                             <td>Kesit</td>
                             <td>{{ product.kesit }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kesmeKapasitesi != ''">
                             <td>Kesme Kapasitesi</td>
                             <td>{{ product.kesmeKapasitesi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kullanimYeri != ''">
                             <td>Kullanım Yeri</td>
                             <td>{{ product.kullanimYeri }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.kutup != ''">
                             <td>Kutup</td>
                             <td>{{ product.kutup }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.marka != ''">
                             <td>Marka</td>
                             <td>{{ product.marka }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.model != ''">
                             <td>Model</td>
                             <td>{{ product.model }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.prizSayisi != ''">
                             <td>Priz Sayısı</td>
                             <td>{{ product.prizSayisi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.renk != ''">
                             <td>Renk</td>
                             <td>{{ product.renk }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.renkSicakligiKelvin != ''">
                             <td>Renk Sıcaklığı (Kelvin)</td>
                             <td>{{ product.renkSicakligiKelvin }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.sigortaSayisi != ''">
                             <td>Sigorta Sayısı</td>
                             <td>{{ product.sigortaSayisi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.tip != ''">
                             <td>Tip</td>
                             <td>{{ product.tip }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.tur != ''">
                             <td>Tür</td>
                             <td>{{ product.tur }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.urun != ''">
                             <td>Ürün</td>
                             <td>{{ product.urun }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.urunOzelligi != ''">
                             <td>Ürün Özelliği</td>
                             <td>{{ product.urunOzelligi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.urunTipi != ''">
                             <td>Ürün Tipi</td>
                             <td>{{ product.urunTipi }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.watt != ''">
                             <td>Watt</td>
                             <td>{{ product.watt }}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="product.indirim != 0">
                             <td>İndirim</td>
                             <td>{{ product.indirim }}</td>
                         </tr>
