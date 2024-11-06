@@ -100,7 +100,7 @@ export class SearchComponent {
           this.products = productData
             .filter(
               (prd) =>
-                prd.kabloTipi.toLowerCase() === this.productType.toLowerCase()
+                prd.kategori.toLowerCase() === this.productType.toLowerCase()
             )
             .filter((p) =>
               p.ad.toLowerCase().includes(this.searchText.toLowerCase())

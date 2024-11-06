@@ -38,7 +38,7 @@
                  <table>
                    <tbody>
                     <table style="border: 1;">
-                        <tr *ngIf="product.aydinlatmaTuru != ''">
+                        <tr>
                             <th>Özellik Adı</th>
                             <th>Değer</th>
                         </tr>
@@ -46,65 +46,65 @@
                             <td>Amper</td>
                             <td>{{ product.amper }}</td>
                         </tr>
-                        <tr *ngIf="product.aydinlatmaTuru != ''">
+                        <tr *ngIf="product.aydinlatmaturu != ''">
                             <td>Aydınlatma Türü</td>
-                            <td>{{ product.aydinlatmaTuru }}</td>
+                            <td>{{ product.aydinlatmaturu }}</td>
                         </tr>
                         <tr *ngIf="product.cerceve != ''">
                             <td>Çerçeve</td>
                             <td>{{ product.cerceve }}</td>
                         </tr>
-                        <tr *ngIf="product.damarSayisi != ''">
+                        <tr *ngIf="product.damarsayisi != ''">
                             <td>Damar Sayısı</td>
-                            <td>{{ product.damarSayisi }}</td>
+                            <td>{{ product.damarsayisi }}</td>
                         </tr>
-                        <tr *ngIf="product.disKilifRengi != ''">
+                        <tr *ngIf="product.disKilifrengi != ''">
                             <td>Dış Kılıf Rengi</td>
-                            <td>{{ product.disKilifRengi }}</td>
+                            <td>{{ product.disKilifrengi }}</td>
                         </tr>
                         <tr *ngIf="product.duy != ''">
                             <td>Duy</td>
                             <td>{{ product.duy }}</td>
                         </tr>
-                        <tr *ngIf="product.isikRengi != ''">
+                        <tr *ngIf="product.isikrengi != ''">
                             <td>Işık Rengi</td>
-                            <td>{{ product.isikRengi }}</td>
+                            <td>{{ product.isikrengi }}</td>
                         </tr>
-                        <tr *ngIf="product.kabloTipi != ''">
+                        <tr *ngIf="product.kablotipi != ''">
                             <td>Kablo Tipi</td>
-                            <td>{{ product.kabloTipi }}</td>
+                            <td>{{ product.kablotipi }}</td>
                         </tr>
-                        <tr *ngIf="product.kabloUzunlugu != ''">
+                        <tr *ngIf="product.kablouzunlugu != ''">
                             <td>Kablo Uzunluğu</td>
-                            <td>{{ product.kabloUzunlugu }}</td>
+                            <td>{{ product.kablouzunlugu }}</td>
                         </tr>
-                        <tr *ngIf="product.kanalBoyutu != ''">
+                        <tr *ngIf="product.kanalboyutu != ''">
                             <td>Kanal Boyutu</td>
-                            <td>{{ product.kanalBoyutu }}</td>
+                            <td>{{ product.kanalboyutu }}</td>
                         </tr>
-                        <tr *ngIf="product.kanalOzelligi != ''">
+                        <tr *ngIf="product.kanalozelligi != ''">
                             <td>Kanal Özelliği</td>
-                            <td>{{ product.kanalOzelligi }}</td>
+                            <td>{{ product.kanalozelligi }}</td>
                         </tr>
-                        <tr *ngIf="product.kanalRengi != ''">
+                        <tr *ngIf="product.kanalrengi != ''">
                             <td>Kanal Rengi</td>
-                            <td>{{ product.kanalRengi }}</td>
+                            <td>{{ product.kanalrengi }}</td>
                         </tr>
-                        <tr *ngIf="product.kasaRengi != ''">
+                        <tr *ngIf="product.kasarengi != ''">
                             <td>Kaşa Rengi</td>
-                            <td>{{ product.kasaRengi }}</td>
+                            <td>{{ product.kasarengi }}</td>
                         </tr>
                         <tr *ngIf="product.kesit != ''">
                             <td>Kesit</td>
                             <td>{{ product.kesit }}</td>
                         </tr>
-                        <tr *ngIf="product.kesmeKapasitesi != ''">
+                        <tr *ngIf="product.kesmekapasitesi != ''">
                             <td>Kesme Kapasitesi</td>
-                            <td>{{ product.kesmeKapasitesi }}</td>
+                            <td>{{ product.kesmekapasitesi }}</td>
                         </tr>
-                        <tr *ngIf="product.kullanimYeri != ''">
+                        <tr *ngIf="product.kullanimyeri != ''">
                             <td>Kullanım Yeri</td>
-                            <td>{{ product.kullanimYeri }}</td>
+                            <td>{{ product.kullanimyeri }}</td>
                         </tr>
                         <tr *ngIf="product.kutup != ''">
                             <td>Kutup</td>
@@ -118,21 +118,21 @@
                             <td>Model</td>
                             <td>{{ product.model }}</td>
                         </tr>
-                        <tr *ngIf="product.prizSayisi != ''">
+                        <tr *ngIf="product.prizsayisi != ''">
                             <td>Priz Sayısı</td>
-                            <td>{{ product.prizSayisi }}</td>
+                            <td>{{ product.prizsayisi }}</td>
                         </tr>
                         <tr *ngIf="product.renk != ''">
                             <td>Renk</td>
                             <td>{{ product.renk }}</td>
                         </tr>
-                        <tr *ngIf="product.renkSicakligiKelvin != ''">
+                        <tr *ngIf="product.renksicakligikelvin != ''">
                             <td>Renk Sıcaklığı (Kelvin)</td>
-                            <td>{{ product.renkSicakligiKelvin }}</td>
+                            <td>{{ product.renksicakligikelvin }}</td>
                         </tr>
-                        <tr *ngIf="product.sigortaSayisi != ''">
+                        <tr *ngIf="product.sigortasayisi != ''">
                             <td>Sigorta Sayısı</td>
-                            <td>{{ product.sigortaSayisi }}</td>
+                            <td>{{ product.sigortasayisi }}</td>
                         </tr>
                         <tr *ngIf="product.tip != ''">
                             <td>Tip</td>
@@ -146,13 +146,13 @@
                             <td>Ürün</td>
                             <td>{{ product.urun }}</td>
                         </tr>
-                        <tr *ngIf="product.urunOzelligi != ''">
+                        <tr *ngIf="product.urunozelligi != ''">
                             <td>Ürün Özelliği</td>
-                            <td>{{ product.urunOzelligi }}</td>
+                            <td>{{ product.urunozelligi }}</td>
                         </tr>
-                        <tr *ngIf="product.urunTipi != ''">
+                        <tr *ngIf="product.uruntipi != ''">
                             <td>Ürün Tipi</td>
-                            <td>{{ product.urunTipi }}</td>
+                            <td>{{ product.uruntipi }}</td>
                         </tr>
                         <tr *ngIf="product.watt != ''">
                             <td>Watt</td>
