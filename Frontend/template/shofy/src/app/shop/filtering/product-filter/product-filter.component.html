@@ -3,7 +3,8 @@
     <div class="filter-category" *ngIf="filterKey.value.length > 0">
       <div class="filter-header" (click)="toggleFilter(filterKey.key)">
         <h4>{{ formatTitle(filterKey.key) }}</h4>
-        <span [ngClass]="{'arrow-up': isFilterOpen[filterKey.key], 'arrow-down': !isFilterOpen[filterKey.key]}"></span>
+        <span class="toggle-icon" [ngClass]="{'open': isFilterOpen[filterKey.key]}"></span>
+        <div class="underline" *ngIf="isFilterOpen[filterKey.key]"></div>
       </div>
       <div *ngIf="isFilterOpen[filterKey.key]" class="filter-body">
         <input
