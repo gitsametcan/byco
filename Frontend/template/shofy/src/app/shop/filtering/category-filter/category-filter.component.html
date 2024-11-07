@@ -1,12 +1,11 @@
 <div class="tp-shop-widget-content">
   <div class="tp-shop-widget-categories">
-    
-    <!-- Back button to return to main category, visible only in subcategory view -->
-    <button *ngIf="isSubCategoryView" (click)="goBackToMainCategory()">
-      ← Geri Dön
-    </button>
-
     <ul>
+      <!-- Sadece ad seviyesindeysek Geri Dön tuşu görünsün -->
+      <div *ngIf="isSubCategoryView" class="back-button" (click)="goBackToMainCategory()">
+        ← Geri Dön
+      </div>
+
       <li *ngFor="let subCategory of filteredSubCategories">
         <a
           (click)="handleCategoryRoute(subCategory.ad)"
@@ -17,7 +16,7 @@
           }"
         >
           {{ subCategory.ad }}
-          <span>{{ subCategory.productCount }}</span>
+          <span>{{ subCategory.productCount}}</span>
         </a>
       </li>
     </ul>

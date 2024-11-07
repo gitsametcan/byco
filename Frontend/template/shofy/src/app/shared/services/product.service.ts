@@ -23,11 +23,44 @@ export class ProductService {
   constructor() { }
 
   activeImg: string | undefined;
+  public getOptionCount(key: string, value: string): number {
+    return this.urunler.filter(product => product[key] === value).length;
+}
 
   handleImageActive(img: string) {
     this.activeImg = img;
   }
-
+  public async getFilterOptions(): Promise<{ [key: string]: string[] }> {
+    // Eğer ürünler zaten yüklüyse kullan, yoksa API'den çek
+    const products = this.urunler.length > 0 ? this.urunler : await this.getAllProjects().toPromise() || [];
+  
+    // Filtre seçeneklerini saklamak için bir nesne oluşturuyoruz
+    const filterOptions: { [key: string]: Set<string> } = {};
+  
+    // Her bir ürünün özelliklerine göre filtre seçeneklerini ayarla
+    products.forEach(product => {
+      Object.keys(product).forEach(key => {
+        // `id`, `ad`, `kategori`, `fiyat` gibi temel alanları atla
+        if (key !== 'id' && key !== 'ad' && key !== 'kategori' && key !== 'fiyat' && key !== 'stok') {
+          if (!filterOptions[key]) {
+            filterOptions[key] = new Set<string>(); // Yeni bir Set oluştur
+          }
+          if (product[key]) {
+            filterOptions[key].add(product[key].toString()); // Set'e ekle
+          }
+        }
+      });
+    });
+  
+    // Set'leri diziye çevir ve döndür
+    const filterOptionsArray: { [key: string]: string[] } = {};
+    Object.keys(filterOptions).forEach(key => {
+      filterOptionsArray[key] = Array.from(filterOptions[key]);
+    });
+  
+    return filterOptionsArray;
+  }
+  
   // Get Products By id
   public getProductById(id: number): Observable<IProduct | undefined> {
     return this.products.pipe(map(items => {
@@ -79,6 +112,16 @@ export class ProductService {
         })
       ));
     }
+    // In ProductService
+  public filterProductsByFeature(selectedFilters: { [key: string]: string[] }): IProduct[] {
+    return this.urunler.filter(product => {
+        return Object.keys(selectedFilters).every(key => {
+            if (selectedFilters[key].length === 0) return true; // No filter applied for this feature
+            return selectedFilters[key].includes(product[key]);
+        });
+    });
+  }
+
 
 
       // Sorting Filter

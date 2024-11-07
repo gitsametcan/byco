@@ -36,6 +36,8 @@ import { TopRatedProductsComponent } from './product/widget/top-rated-products/t
 import { PriceFilterComponent } from './filtering/price-filter/price-filter.component';
 import { StatusFilterComponent } from './filtering/status-filter/status-filter.component';
 import { CategoryFilterComponent } from './filtering/category-filter/category-filter.component';
+import { ProductFilterComponent } from './filtering/product-filter/product-filter.component';
+
 import { BrandFilterComponent } from './filtering/brand-filter/brand-filter.component';
 import { ResetFilterRouteComponent } from './filtering/reset-filter-route/reset-filter-route.component';
 import { ProductListItemComponent } from './product/widget/product-list-item/product-list-item.component';
@@ -86,6 +88,7 @@ import { OrderComponent } from './pages/order/order.component';
     PriceFilterComponent,
     StatusFilterComponent,
     CategoryFilterComponent,
+    ProductFilterComponent,
     TopRatedProductsComponent,
     BrandFilterComponent,
     ResetFilterRouteComponent,
@@ -142,6 +145,7 @@ import { OrderComponent } from './pages/order/order.component';
     PriceFilterComponent,
     StatusFilterComponent,
     CategoryFilterComponent,
+    ProductFilterComponent,
     TopRatedProductsComponent,
     BrandFilterComponent,
     ResetFilterRouteComponent,

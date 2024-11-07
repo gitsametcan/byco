@@ -8,6 +8,9 @@ type IReview = {
 }
 
 export interface IProduct{
+
+    [key: string]: any; // Dinamik anahtarlar için index signature
+
     id:number,
     ad: string,
     kategori: string,

@@ -9,8 +9,8 @@ import { ProductService } from 'src/app/shared/services/product.service';
   styleUrls: ['./category-filter.component.scss'],
 })
 export class CategoryFilterComponent implements OnInit {
-  public categoryData: any[] = []; // Categories fetched from backend
-  public filteredSubCategories: any[] = []; // Filtered subcategories based on selected main category
+  public categoryData: any[] = []; // Kategoriler
+  public filteredSubCategories: any[] = []; // Filtrelenmiş alt kategoriler
   activeQuery: string = '';
   isSubCategoryView: boolean = false;
 
@@ -22,10 +22,10 @@ export class CategoryFilterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchCategories(); // Fetch categories from backend
+    this.fetchCategories(); // Kategorileri backend'den al
     this.route.queryParams.subscribe((queryParams) => {
       this.activeQuery = queryParams['category'];
-      this.filterSubCategories(); // Filter subcategories based on selected main category
+      this.filterSubCategories(); // Seçilen ana kategoriye göre alt kategorileri filtrele
     });
   } 
 
@@ -34,69 +34,77 @@ export class CategoryFilterComponent implements OnInit {
       .then(response => response.json())
       .then(data => {
         this.categoryData = data;
-        console.log('Fetched Categories:', this.categoryData); // Kategori verisini konsola yazdır
-        this.filterSubCategories(); // Filter subcategories after categories are fetched
+        this.filterSubCategories(); // Kategoriler geldikten sonra alt kategorileri filtrele
       })
       .catch(err => console.error('Error fetching categories:', err));
   }
   
 
   async filterSubCategories(): Promise<void> {
-    const filtered = this.categoryData.filter(
-      (category) => category.urunturu === this.activeQuery
-    );
-  
-    // Add product counts to each subcategory
-    for (let subCategory of filtered) {
-      const products = await this.productService.getProductsByCategory(subCategory.ad);
-      subCategory.productCount = products.length;
+    if (this.categoryData.some(category => category.urunturu === this.activeQuery)) {
+        // `urunturu` seviyesindeyiz, bu `urunturu`'ya ait tüm `ad`'ları göster
+        this.filteredSubCategories = this.categoryData.filter(
+            (category) => category.urunturu === this.activeQuery
+        );
+
+        // Alt kategorilere ürün sayısını ekle
+        for (let subCategory of this.filteredSubCategories) {
+            const products = await this.productService.getProductsByCategory(subCategory.ad);
+            subCategory.productCount = products.length;
+        }
+
+        this.isSubCategoryView = false;
+    } else {
+        // `ad` seviyesindeyiz, alt kategoriler için `isSubCategoryView`'u `true` yap
+        this.filteredSubCategories = this.categoryData.filter(
+            (category) => category.ad === this.activeQuery
+        );
+
+        // `ad` seviyesindeki kategorinin ürün sayısını ekle
+        for (let subCategory of this.filteredSubCategories) {
+            const products = await this.productService.getProductsByCategory(subCategory.ad);
+            subCategory.productCount = products.length;
+        }
+
+        this.isSubCategoryView = true;
     }
-  
-    this.filteredSubCategories = filtered;
-  
-    // Set `isSubCategoryView` to true only if there are filtered subcategories
-    this.isSubCategoryView = this.filteredSubCategories.length > 0;
-    console.log("Filtered Subcategories with Counts:", this.filteredSubCategories);
-  }
-  
-  
-  
+}
+
+
   
 
   handleCategoryRoute(value: string): void {
-    const originalCategory = value;
-  
-    this.router
-      .navigate([], {
+    this.isSubCategoryView = true; // Alt kategoriye girildiğini belirt
+    this.router.navigate([], {
         relativeTo: this.route,
-        queryParams: { category: originalCategory },
+        queryParams: { category: value },
         queryParamsHandling: 'merge',
         skipLocationChange: false,
-      })
-      .finally(() => {
-        this.activeQuery = originalCategory;
-        this.isSubCategoryView = true; // Mark as subcategory view
-  
-        this.filterSubCategories();
-        this.viewScroller.setOffset([120, 120]);
-        this.viewScroller.scrollToAnchor('products');
-      });
-  }
-  
-  goBackToMainCategory(): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { category: null },
-      queryParamsHandling: 'merge',
-      skipLocationChange: false,
     }).finally(() => {
-      this.activeQuery = '';
-      this.isSubCategoryView = false; // Ensure view resets to main category
-      this.filterSubCategories();
+        this.activeQuery = value;
+        this.filterSubCategories(); // Alt kategorileri filtrele
     });
   }
-  
-  
-  
-  
+
+  goBackToMainCategory(): void {
+    if (this.activeQuery) {
+        // activeQuery'den urunturu seviyesini ayarla
+        const mainCategory = this.categoryData.find(category => category.ad === this.activeQuery)?.urunturu;
+        
+        if (mainCategory) {
+            this.activeQuery = mainCategory;
+            this.isSubCategoryView = false;
+            this.filterSubCategories(); // urunturu seviyesine uygun alt kategorileri göster
+
+            // URL'de güncelleme yap
+            this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: { category: mainCategory },
+                queryParamsHandling: 'merge',
+                skipLocationChange: false,
+            });
+        }
+    }
+}
+
 }

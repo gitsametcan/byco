@@ -30,6 +30,7 @@ export class ShopAreaComponent {
   public paginate: any = {}; // Pagination use only
   public sortBy: string = 'asc'; // Sorting Order
   public mobileSidebar: boolean = false;
+  public filteredProducts: IProduct[] = [];
 
 
   activeTab: string = this.listStyle ? 'list' : 'grid';
@@ -41,7 +42,11 @@ export class ShopAreaComponent {
   changeFilterSelect(selectedOption: { value: string, text: string }) {
     this.sortByFilter(selectedOption.value)
   }
-
+  
+  onFilterApplied(selectedFilters: { [key: string]: string[] }): void {
+    // Call ProductService's filtering function to get products based on selected filters
+    this.filteredProducts = this.productService.filterProductsByFeature(selectedFilters);
+  }
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -114,6 +119,8 @@ export class ShopAreaComponent {
         this.fetchProductsByCategory(this.category);
       }
     });
+    this.filteredProducts = [...this.products]; // Default to all products initially
+
   }
   fetchProductsByCategory(category: string) {
     console.log("Gönderilen Kategori:", category);  // Kontrol için kategori yazdır
