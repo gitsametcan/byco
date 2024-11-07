@@ -30,7 +30,7 @@
   <!-- price -->
   <div class="tp-product-details-price-wrapper mb-20">
     <div *ngIf="product.indirim > 0">
-      <span class="tp-product-details-price old-price">${{ product.fiyat }}</span>
+      <span class="tp-product-details-price old-price">{{ product.fiyat }}₺</span>
       <span class="tp-product-details-price new-price">
         {{ ((product.fiyat || 0) - ((product.fiyat || 0) * (product.indirim || 0)) / 100).toFixed(2) }} TL
       </span>

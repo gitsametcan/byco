@@ -46,7 +46,7 @@
                 <td *ngFor="let item of compareService.getCompareProducts()">
                   <div class="tp-compare-price" *ngIf="item.discount > 0">
                     <span>{{ item.price.toFixed(2) }}₺</span>
-                    <span class="old-price">${{ ((item.price - (item.price * item.discount) / 100)).toFixed(2) }}</span>
+                    <span class="old-price">{{ ((item.price - (item.price * item.discount) / 100)).toFixed(2) }}₺</span>
                   </div>
                   <div class="tp-compare-price" *ngIf="item.discount <= 0">
                     <span>{{ item.price.toFixed(2) }}₺</span>

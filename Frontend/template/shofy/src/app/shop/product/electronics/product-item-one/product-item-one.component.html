@@ -85,11 +85,11 @@
       <ng-container *ngIf="product.indirim > 0; else noDiscount">
         <span class="tp-product-price old-price">${{ product.fiyat }}</span>
         <span class="tp-product-price new-price">
-          ${{ (product.fiyat - (product.fiyat * product.indirim / 100)).toFixed(2) }}
+          {{ (product.fiyat - (product.fiyat * product.indirim / 100)).toFixed(2) }}₺
         </span>
       </ng-container>
       <ng-template #noDiscount>
-        <span class="tp-product-price new-price">${{ product.fiyat.toFixed(2) }}</span>
+        <span class="tp-product-price new-price">{{ product.fiyat.toFixed(2) }}₺</span>
       </ng-template>
     </div>
 

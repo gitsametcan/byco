@@ -35,7 +35,7 @@
 <!-- Fırsat Ürünleri Section -->
 <div class="offers-container">
   <div class="offers-section">
-    <div class="offers-title">
+    <div class="offers-title col-3">
       <div class="offers-title-wrapper">
         <img src="assets/firsat.jpg" alt="Fırsat Ürünleri" class="offers-title-image" />
         <div class="offers-overlay-text">Fırsat Ürünleri</div>
@@ -49,7 +49,7 @@
     <!-- Swiper Carousel -->
     <swiper-container #swiperEl slides-per-view="3" space-between="20" class="swiper-container">
       <swiper-slide *ngFor="let item of displayedProducts">
-        <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
+        <app-product-item-two [product]="item" [spacing]="true" class="col-3"></app-product-item-two>
       </swiper-slide>
     </swiper-container>
   </div>
