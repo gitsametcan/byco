@@ -27,7 +27,7 @@ namespace bycoAPI.Services
 
             User user = await Login(request.email, request.password);
 
-            if (user.email!=null)
+            if (user!=null)
             {
                 var generatedTokenInformation = await _tokenService.GenerateToken(new GenerateTokenRequest { email = request.email });
 
