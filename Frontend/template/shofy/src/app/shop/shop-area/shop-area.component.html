@@ -15,13 +15,18 @@
           <!-- categories -->
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Kategoriler</h3>
-            <app-category-filter></app-category-filter> 
+            <app-category-filter (categorySelected)="onCategorySelected($event)"></app-category-filter>
           </div>
 
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Özellikler</h3>
-            <app-product-filter (filterApplied)="onFilterApplied($event)"></app-product-filter>
+            <app-product-filter
+              [selectedCategory]="selectedCategory"
+              [categoryFilteredProducts]="filteredProducts"
+              (filterApplied)="onFilterApplied($event)"
+            ></app-product-filter>          
           </div>
+          
 
           <!-- product rating -->
           <!-- <div class="tp-shop-widget mb-50">
@@ -101,20 +106,19 @@
           <div class="tp-shop-items-wrapper tp-shop-item-primary">
 
             <!-- if no item in product  -->
-            <div *ngIf="products.length === 0" class="cartmini__empty text-center">
+            <div *ngIf="filteredProducts.length === 0" class="cartmini__empty text-center">
               <img src="/assets/img/product/cartmini/empty-cart.png" alt="empty-cart-img" />
               <h4>Baktığınız kriterlerde ürün bulamadık!!!</h4>
               <p>Lütfen filtreleri yenileyin</p>
               <a routerLink="/shop" class="tp-btn">Alışverişe Devam Et</a>
             </div>
-
-            <div *ngIf="activeTab === 'grid'">
-              <div class="row infinite-container">
-                  <div *ngFor="let item of filteredProducts" class="col-xl-3 col-md-4 col-sm-6 infinite-item">
-                      <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
-                  </div>
-              </div>
-          </div>
+          
+            <div *ngIf="filteredProducts.length > 0" class="row infinite-container">
+                <div *ngFor="let item of filteredProducts" class="col-xl-3 col-md-4 col-sm-6 infinite-item">
+                    <app-product-item-two [product]="item" [spacing]="true"></app-product-item-two>
+                </div>
+            </div>
+            
           
 
             <div *ngIf="activeTab === 'list'">

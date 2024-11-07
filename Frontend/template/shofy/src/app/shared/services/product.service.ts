@@ -113,14 +113,15 @@ export class ProductService {
       ));
     }
     // In ProductService
-  public filterProductsByFeature(selectedFilters: { [key: string]: string[] }): IProduct[] {
-    return this.urunler.filter(product => {
-        return Object.keys(selectedFilters).every(key => {
-            if (selectedFilters[key].length === 0) return true; // No filter applied for this feature
-            return selectedFilters[key].includes(product[key]);
-        });
-    });
+    public filterProductsByFeature(products: IProduct[], selectedFilters: { [key: string]: string[] }): IProduct[] {
+      return products.filter(product => {
+          return Object.keys(selectedFilters).every(key => {
+              if (selectedFilters[key].length === 0) return true; // Bu özellik için filtre yoksa tüm ürünleri döndür
+              return selectedFilters[key].includes(product[key]?.toString());
+          });
+      });
   }
+  
 
 
 
@@ -238,23 +239,24 @@ export class ProductService {
       );
     }
   }
-  getProductsByCategory(category: string): Promise<IProduct[]> {
-    // Kategori isminde "/" varsa sadece öncesini al
+  public getProductsByCategory(category: string): Promise<IProduct[]> {
+    console.log("Seçilen Kategori:", category); // Kategoriyi loglayın
     const processedCategory = category.split('/')[0];
   
     const url = `Urun/GetProductByCategory/${processedCategory}`;
     return this.sendLocalRequest(url, 'GET').then((products: any[]) => {
-      // API yanıtındaki 'ad' alanını 'title' olarak eşle ve 'kategori' bilgisini category.name olarak düzenle
-      return products.map(product => ({
-        ...product,
-        title: product.ad, // 'ad' alanını 'title' olarak eşle
-        category: { name: product.kategori }, // 'kategori' bilgisini category.name olarak düzenle
-        price: product.fiyat, // 'fiyat' alanını price olarak eşle
-        discount: product.indirim || 0, // 'indirim' alanını discount olarak eşle
-        img: product.img // 'img' alanını img olarak eşle
-      }));
+        console.log("API'den Dönen Kategori Ürünleri:", products); // API yanıtını loglayın
+        return products.map(product => ({
+            ...product,
+            title: product.ad,
+            category: { name: product.kategori },
+            price: product.fiyat,
+            discount: product.indirim || 0,
+            img: product.img
+        }));
     });
-  }
+}
+
   
   
   

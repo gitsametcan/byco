@@ -9,6 +9,8 @@ import { IProduct } from '@/types/product-type';
   templateUrl: './shop-area.component.html',
   styleUrls: ['./shop-area.component.scss']
 })
+
+
 export class ShopAreaComponent {
   @Input() listStyle: boolean = false;
   @Input() full_width: boolean = false;
@@ -31,6 +33,8 @@ export class ShopAreaComponent {
   public sortBy: string = 'asc'; // Sorting Order
   public mobileSidebar: boolean = false;
   public filteredProducts: IProduct[] = [];
+  productFilterOptions: { [key: string]: Set<string> } = {};
+  selectedCategory: string = '';
 
 
   activeTab: string = this.listStyle ? 'list' : 'grid';
@@ -42,11 +46,27 @@ export class ShopAreaComponent {
   changeFilterSelect(selectedOption: { value: string, text: string }) {
     this.sortByFilter(selectedOption.value)
   }
-  
-  onFilterApplied(selectedFilters: { [key: string]: string[] }): void {
-    // Call ProductService's filtering function to get products based on selected filters
-    this.filteredProducts = this.productService.filterProductsByFeature(selectedFilters);
+  onCategorySelected(category: string) {
+    this.selectedCategory = category;
+    this.onFilterApplied({}); // Filtreyi güncelle
   }
+  onFilterApplied(selectedFilters: { [key: string]: string[] }): void {
+    if (this.selectedCategory) {
+      this.productService.getProductsByCategory(this.selectedCategory).then((categoryFilteredProducts) => {
+          this.filteredProducts = this.productService.filterProductsByFeature(categoryFilteredProducts, selectedFilters);
+          
+          // Mevcut özellikleri belirlemek için getAvailableFeatures fonksiyonunu çağırıyoruz
+          const availableFeatures = this.getAvailableFeatures(categoryFilteredProducts);
+
+          this.productFilterOptions = this.getAvailableFeatures(categoryFilteredProducts);
+      }).catch(error => {
+          console.error("Kategoriye göre ürünleri getirirken hata oluştu:", error);
+          this.filteredProducts = []; // Hata durumunda boş bir liste döndür
+      });
+    }
+  }
+  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -114,14 +134,37 @@ export class ShopAreaComponent {
   ngOnInit() {
     this.activeTab = this.listStyle ? 'list' : 'grid';
     this.route.queryParams.subscribe(params => {
-      this.category = params['category'];
-      if (this.category) {
-        this.fetchProductsByCategory(this.category);
+      const category = params['category'];
+      if (category) {
+        this.selectedCategory = category;
+        this.onFilterApplied({}); // Kategoriyi seçince filtreyi uygula
       }
     });
     this.filteredProducts = [...this.products]; // Default to all products initially
-
   }
+  
+  getAvailableFeatures(categoryFilteredProducts: IProduct[]): { [key: string]: Set<string> } {
+    const availableFeatures: { [key: string]: Set<string> } = {};
+  
+    categoryFilteredProducts.forEach(product => {
+      Object.keys(product).forEach(key => {
+        if (key !== 'id' && key !== 'ad' && key !== 'kategori' && key !== 'fiyat' && key !== 'stok') {
+          if (!availableFeatures[key]) {
+            availableFeatures[key] = new Set<string>();
+          }
+          if (product[key]) {
+            availableFeatures[key].add(product[key].toString());
+          }
+        }
+      });
+    });
+  
+    return availableFeatures;
+  }
+  
+  
+
+
   fetchProductsByCategory(category: string) {
     console.log("Gönderilen Kategori:", category);  // Kontrol için kategori yazdır
   

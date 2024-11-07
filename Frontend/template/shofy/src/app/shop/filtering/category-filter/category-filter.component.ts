@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { ProductService } from 'src/app/shared/services/product.service';
@@ -13,6 +13,7 @@ export class CategoryFilterComponent implements OnInit {
   public filteredSubCategories: any[] = []; // Filtrelenmiş alt kategoriler
   activeQuery: string = '';
   isSubCategoryView: boolean = false;
+  @Output() categorySelected = new EventEmitter<string>();
 
   constructor(
     private route: ActivatedRoute,
@@ -74,6 +75,8 @@ export class CategoryFilterComponent implements OnInit {
   
 
   handleCategoryRoute(value: string): void {
+    this.categorySelected.emit(value); // Seçilen kategoriyi ilet
+
     this.isSubCategoryView = true; // Alt kategoriye girildiğini belirt
     this.router.navigate([], {
         relativeTo: this.route,

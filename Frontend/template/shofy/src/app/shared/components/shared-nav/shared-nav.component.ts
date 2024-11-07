@@ -146,15 +146,15 @@ export class SharedNavComponent implements OnInit, OnDestroy {
   }
 
   navigateWithCategory(categoryName: string) {
-    const queryParams: Params = { category: categoryName }; // replace kullanılmadı, olduğu gibi gönderiyoruz
-    
-    this.router.navigate([], {
-      relativeTo: this.route,
+    const queryParams: Params = { category: categoryName };
+  
+    this.router.navigate(['/shop/shop-list'], {
       queryParams,
       queryParamsHandling: 'merge',
       skipLocationChange: false,
     });
   }
+  
   
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
     return fetch(`https://localhost:7096/api/${url}`, {
