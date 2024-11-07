@@ -360,7 +360,7 @@ export class CheckoutComponent {
     const concatShippingAddress = this.shippingAddressForm.get('shippingaddress')?.value + " " + this.shippingAddressForm.get('shippingzip')?.value;
 
     const shippingCost = 100;
-    const totalPrice = (this.cartService.totalPriceQuantity().total + shippingCost) * 100;
+    const totalPrice = Math.round((this.cartService.totalPriceQuantity().total + shippingCost) * 100);
 
     console.log("adsoyad : " + this.myUserObject.adsoyad);
     console.log("vkno : " + this.myUserObject.vkno);
