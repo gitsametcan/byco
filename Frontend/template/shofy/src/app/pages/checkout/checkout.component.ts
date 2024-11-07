@@ -402,6 +402,7 @@ export class CheckoutComponent {
       teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value} ${this.shippingAddressForm.get('shippingzip')?.value}`,
       faturaAdresi: `${this.billingAddressForm.get('billingaddress')?.value} ${this.billingAddressForm.get('zip')?.value}`,
       urunler: this.cartService.getCartProducts().map(product => ({
+        id: product.id,
         ad: product.aciklama,
         fiyat: Math.round(product.fiyat * 100), // Convert to integer in cents (8.8 TL -> 880 kuruş)
         adet: product.orderQuantity
