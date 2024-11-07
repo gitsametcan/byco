@@ -30,7 +30,7 @@ export class CheckoutComponent {
   isTermAccepted = false;
 
   infoUpdated: boolean = false;
-  shipCost: number = 0;
+  shipCost: number = 100; // Kargo ücreti varsayılan olarak 100 TL
   couponCode: string = '';
   payment_name: string = '';
   userid: number = -1;
@@ -359,7 +359,7 @@ export class CheckoutComponent {
     const concatAddress = this.billingAddressForm.get('billingaddress')?.value + " " + this.billingAddressForm.get('zip')?.value;
     const concatShippingAddress = this.shippingAddressForm.get('shippingaddress')?.value + " " + this.shippingAddressForm.get('shippingzip')?.value;
 
-    const shippingCost = 120;
+    const shippingCost = 100;
     const totalPrice = (this.cartService.totalPriceQuantity().total + shippingCost) * 100;
 
     console.log("adsoyad : " + this.myUserObject.adsoyad);
@@ -408,7 +408,7 @@ export class CheckoutComponent {
       })),
       customerEmailAddress: this.myUserObject.email,
       customerIpAddress: '',
-      txnAmount: 100, // Total in cents as well
+      txnAmount: totalPrice, // Total in cents as well
       cardHolderName: this.cardholder?.value,
       cardNumber: String(this.ccn?.value),
       cardExpireDateMonth: expMonth,

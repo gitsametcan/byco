@@ -19,11 +19,12 @@ export class MobileSidebarComponent {
   public isActiveMenu:string = '';
   public isToggleActive:string = '';
 
-  filterCategories () {
+  filterCategories() {
     return category_data.filter(
-      (c) => c.productType.toLowerCase() === this.product_type.toLowerCase()
+      (c) => c.productType?.toLowerCase() === this.product_type?.toLowerCase()
     );
   }
+  
 
   constructor(public utilsService:UtilsService) {}
 

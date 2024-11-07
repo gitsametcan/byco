@@ -470,12 +470,15 @@
                           </span> -->
                         </div>
                       </li>
-
+                      <li>
+                        <span>Kargo Ücreti</span>
+                        <span>{{ shipCost }} TL</span>
+                      </li>
                       <!-- total -->
                       <li class="tp-order-info-list-total">
                         <span>Toplam</span>
                         <span>
-                          {{ (cartService.totalPriceQuantity().total - discount).toFixed(2) }} TL
+                          {{ (cartService.totalPriceQuantity().total - discount + shipCost).toFixed(2) }} TL
                         </span>
                       </li>
 

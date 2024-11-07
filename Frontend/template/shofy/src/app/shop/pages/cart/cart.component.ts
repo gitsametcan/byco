@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class CartComponent {
 
   couponCode: string = '';
-  shipCost: number = 0;
+  shipCost: number = 100; // Kargo ücreti varsayılan olarak 100 TL
 
   constructor (public cartService:CartService) {}
 

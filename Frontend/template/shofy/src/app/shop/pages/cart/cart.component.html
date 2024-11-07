@@ -106,7 +106,7 @@
             <div class="tp-cart-checkout-shipping-option-wrapper">
               <div class="tp-cart-checkout-shipping-option">
                 <input id="flat_rate" type="radio" name="shipping">
-                <label (click)="handleShippingCost(20)" for="flat_rate">Kargo Ücreti: <span>120.00 TL</span></label>
+                <div for="flat_rate">Kargo Ücreti: <span>{{ shipCost }} TL</span></div>
               </div>
               <!-- <div class="tp-cart-checkout-shipping-option">
                 <input id="local_pickup" type="radio" name="shipping">
