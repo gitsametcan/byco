@@ -46,28 +46,29 @@ export class CheckoutComponent {
   placeholderType: string[] = this.personalPlaceholders;
 
   currentStep: number = 0;
-  titles: string[] = ['Kişisel Bilgilerim', 'Adres Bilgilerim', 'Ödeme Bilgilerim'];
+  titles: string[] = ['Kişisel ve Adres Bilgilerim', 'Ödeme Bilgilerim'];
   title: string = this.titles[0];
   subtitle: string = this.titles[0];
-  nextButtonText: string = 'Sonraki Adım';
+  nextButtonText: string = 'Ödeme Bilgilerini Tamamla';
   previousButtonText: string = 'Önceki Adım';
-
 
   myUserObject = {
     user_id: "",
-    adsoyad: '',
+    ad: '',
+    soyad: '',
     email: '',
+    tcknvkn: '',
     vkno: '',
     vergi_dairesi: '',
     tip: '1',
     telefon: '',
     adres: '',
-    discount: '00',
+    indirim: 0,
     ccn: '',
     cardholder: '',
     validity: '',
     cvv: '',
-    billingaddress: '',
+    faturaadresi: '',
     select: '',
     selectstate: '',
     zip: '',
@@ -83,7 +84,30 @@ export class CheckoutComponent {
 
   showPolicyModal: boolean = false;
   showPaymentModal: boolean = false;
-
+  
+  get fullName(): string {
+    // Eğer ad ve soyad ikisi de boşsa boş bir string döndür
+    if (!this.myUserObject.ad && !this.myUserObject.soyad) {
+      return '';
+    }
+    return `${this.myUserObject.ad} ${this.myUserObject.soyad}`.trim();
+  }
+  
+  set fullName(value: string) {
+    // Girilen değerdeki baştaki ve sondaki boşlukları temizle
+    const trimmedValue = value.trim();
+    
+    if (trimmedValue) {
+      const [ad, ...soyadParts] = trimmedValue.split(' ');
+      this.myUserObject.ad = ad || '';
+      this.myUserObject.soyad = soyadParts.join(' ') || '';
+    } else {
+      // Eğer tamamen boş bir string girildiyse, ad ve soyadı boş yap
+      this.myUserObject.ad = '';
+      this.myUserObject.soyad = '';
+    }
+  }
+  
   togglePolicyModal(): void {
     this.showPolicyModal = !this.showPolicyModal;
   }
@@ -194,7 +218,7 @@ export class CheckoutComponent {
       usePolicy: new FormControl(null, Validators.requiredTrue),
     })
     this.urunler = this.cartService.getCartProducts();
-    this.getIdFromSession();
+    this.getUserById();
 
     this.objCities = cities_data;
 
@@ -260,40 +284,30 @@ export class CheckoutComponent {
 
   }
 
-  getIdFromSession() {
-    console.log("sessionkey ===" + this.getCookie("session_key"))
-    this.sendRequest('Sessions/Validate/' + this.getCookie("session_key"), 'GET')
-      .then(response => {
-        console.log(response);
-        this.userid = response;
-        this.getUserById();
-
-      })
-      .catch(err => {
-        console.error("Error: " + err);
-      })
-
-  }
+  
 
   getUserById() {
-    this.sendRequest('User/GetResponseById/' + this.userid, 'GET')
+    this.sendRequestWithHeaders('User/GetUser', 'GET', {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`
+    })
       .then(response => {
-        console.log(response.data);
-        this.myUserObject = response.data;
+        console.log("Response Data:", response); // Tüm yanıtı burada görün
+  
+        // Yanıtın `data` yerine doğrudan kullanılmasını kontrol edin
+        this.myUserObject = response; // Eğer `data` yoksa `response` nesnesini kullanın
         this.isUserLogin = true;
         this.calculateDisc();
-
-
       })
       .catch(err => {
         console.error("Error: " + err);
         //this.router.navigate(['/pages/login']);
-      })
+      });
   }
+  
 
   calculateDisc() {
 
-    let sayi = Number(this.myUserObject.discount)
+    let sayi = Number(this.myUserObject.indirim)
     this.discount = (this.cartService.totalPriceQuantity().total * sayi) / 100;
   }
 
@@ -334,10 +348,68 @@ export class CheckoutComponent {
       });
   }
   
-
+  sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
+    console.log("Request Data:", JSON.stringify(data, null, 2));
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+      .then(async response => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Error Text:", errorText);
+          throw new Error(`Status: ${response.status}, Message: ${errorText}`);
+        }
+        return response.json();
+      });
+  }
+  sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
+    return fetch(`https://localhost:7096/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: header,
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer'
+    })
+    .then(response => {
+      console.log("Full Response:", response);
+  
+      if (!response.ok) {
+        return response.text().then(text => {
+          throw new Error(`Error: ${response.status} - ${response.statusText} - ${text}`);
+        });
+      }
+      
+      return response.clone().json() // Klonlayarak `json` dönüşümü yapıyoruz
+        .then(data => {
+          console.log("Response JSON Data:", data);
+          return data;
+        })
+        .catch(error => {
+          console.error("JSON Parsing Error:", error);
+          throw new Error("Yanıt JSON formatında değil");
+        });
+    })
+    .catch(error => {
+      console.error("Fetch Error:", error);
+      throw error;
+    });
+  }
+  
   odemeYap() {
 
-    if (this.currentStep != 2)
+    if (this.currentStep != 1)
       return;
 
     if (this.checkoutForm.invalid || this.paymentForm.invalid || this.billingAddressForm.invalid || this.shippingAddressForm.invalid) {
@@ -362,7 +434,7 @@ export class CheckoutComponent {
     const shippingCost = 100;
     const totalPrice = Math.round((this.cartService.totalPriceQuantity().total + shippingCost) * 100);
 
-    console.log("adsoyad : " + this.myUserObject.adsoyad);
+    console.log("ad : " + this.myUserObject.ad);
     console.log("vkno : " + this.myUserObject.vkno);
     console.log("telefon : " + this.myUserObject.telefon);
     console.log("bireysel_kurumsal : " + this.myUserObject.tip);
@@ -392,15 +464,15 @@ export class CheckoutComponent {
     console.log("validityDateMonth : " + expMonth);
     console.log("validityDateYear : " + expYear);
     console.log("cvv : " + this.myUserObject.cvv);
-
+    const adsoyad= this.myUserObject.ad + "" + this.myUserObject.soyad
     // POST isteği için gerekli ödeme bilgileri
     const paymentData = {
-      aliciAdi: this.myUserObject.adsoyad,
-      tcknvkn: this.myUserObject.vkno,
+      aliciAdi: adsoyad,
+      tcknvkn: this.myUserObject.tcknvkn,
       telefon: this.myUserObject.telefon,
-      bireysel_kurumsal: this.myUserObject.tip,
-      teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value} ${this.shippingAddressForm.get('shippingzip')?.value}`,
-      faturaAdresi: `${this.billingAddressForm.get('billingaddress')?.value} ${this.billingAddressForm.get('zip')?.value}`,
+      bireysel_kurumsal: this.myUserObject.tip.toString(),
+      teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value}}`,
+      faturaAdresi: `${this.billingAddressForm.get('billingaddress')?.value}}`,
       urunler: this.cartService.getCartProducts().map(product => ({
         id: product.id,
         ad: product.aciklama,
@@ -409,7 +481,7 @@ export class CheckoutComponent {
       })),
       customerEmailAddress: this.myUserObject.email,
       customerIpAddress: '',
-      txnAmount: 100, // Total in cents as well
+      txnAmount: totalPrice, // Total in cents as well
       cardHolderName: this.cardholder?.value,
       cardNumber: String(this.ccn?.value),
       cardExpireDateMonth: expMonth,
@@ -421,7 +493,7 @@ export class CheckoutComponent {
     console.log("Billing Address:", this.billingAddressForm.value);
     console.log("Shipping Address:", this.shippingAddressForm.value);
 
-    this.sendRequest('Payment/SiparisVer', 'POST', paymentData)
+    this.sendLocalRequest('Payment/SiparisVer', 'POST', paymentData)
   .then(response => {
     // Assume the response contains the HTML as a string
     const htmlContent = response; // Adjust this if needed, based on your actual response data
@@ -445,48 +517,45 @@ export class CheckoutComponent {
   }
 
   previousStep() {
-    if (this.currentStep == 0) {
-      this.currentStep = 0;
-    } else {
-      this.currentStep = this.currentStep - 1;
-    }
-    this.nextButtonText = 'Sonraki Adım';
-    this.title = this.titles[this.currentStep];
-    this.subtitle = this.titles[this.currentStep];
+    this.currentStep = 0;
+    this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
+    this.title = this.titles[0];
+    this.subtitle = this.titles[0];
   }
-
+  
   nextStep() {
-
     try {
       this.checkInputValidity();
+  
+      // Ödeme modalini her durumda aç
+      this.togglePaymentModal();
+  
+      // İlk adımdaysa, nextStep'e geçiş yapmak için currentStep artırılır
+      if (this.currentStep === 0) {
+        this.togglePaymentModal();
+        this.currentStep++;
+      }
+  
       this.updateUI();
-
     } catch (error) {
       console.error("An error occurred in nextStep:", error);
-      // Handle the error or report it to the user here
       return;
     }
-
   }
-
+  
   updateUI() {
-    if (this.currentStep < 2) {
-      this.currentStep = this.currentStep + 1;
-      this.nextButtonText = 'Sonraki Adım';
-      if (this.currentStep == 2) {
-        this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
-      }
-    } else if (this.currentStep == 2) {
-      this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
-      this.togglePaymentModal();
+    if (this.currentStep > 0) {
+      this.nextButtonText = 'Ödemeyi Onayla';
+      this.title = 'Ödeme Bilgilerim';
+      this.subtitle = 'Lütfen ödeme bilgilerinizi girin';
     } else {
-      this.nextButtonText = 'Sonraki Adım';
-      this.currentStep = 0;
+      this.currentStep = 0; // Sayfa yenilendiğinde başa döner
+      this.nextButtonText = 'Ödeme Bilgilerini Tamamla';
+      this.title = 'Kişisel ve Adres Bilgilerim';
+      this.subtitle = 'Lütfen kişisel ve adres bilgilerinizi girin';
     }
-    this.title = this.titles[this.currentStep];
-    this.subtitle = this.titles[this.currentStep];
-  }
-
+  } 
+  
   checkInputValidity() {
     if (this.checkoutForm.invalid) {
       //this.toastrService.error('Lütfen tüm alanları doldurunuz.', 'Hata');
@@ -495,7 +564,7 @@ export class CheckoutComponent {
         this.toastrService.error('Lütfen kullanım koşullarını kabul edin.', 'Hata');
       }
       throw new Error("Form is invalid");
-    } else if (this.currentStep == 1 &&
+    } else if (this.currentStep == 0 &&
       (this.shippingAddressForm.invalid || this.billingAddressForm.invalid && !this.isBillingAddressSame)) {
       console.log(this.shippingAddressForm);
       console.log(this.billingAddressForm);

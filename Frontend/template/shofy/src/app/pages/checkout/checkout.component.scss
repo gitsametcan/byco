@@ -41,3 +41,10 @@
 .tp-checkout-btn-wrapper #prevBtn:hover {
   background-color: #ddd;
 }
+.white-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+  margin-top: 20px; /* Üstten boşluk bırak */
+}
