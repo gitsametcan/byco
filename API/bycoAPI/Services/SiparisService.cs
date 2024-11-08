@@ -163,6 +163,10 @@ namespace bycoAPI.Services
             siparis.telefon = hp.telefon;
             siparis.tarih = DateTime.Now;
             siparis.durum = "Ödemeye gönderildi";
+            SiarpisAra sa = new SiarpisAra();
+            sa.aramano = hp.gecicino;
+            sa.siparisno = siparisno;
+
             StringBuilder sb = new StringBuilder();
 
             foreach (OdemeUrun ou in hp.urunler)
@@ -177,6 +181,7 @@ namespace bycoAPI.Services
             {
                 Siparis siparisdb = await Copy(siparis, "siparis_id");
                 await _context.Siparis.AddAsync(siparisdb);
+                await _context.SiparisAra.AddAsync(sa);
                 await _context.SaveChangesAsync();
                 return new RequestResponse { StatusCode = 200, ReasonString = "Kullanıcı eklendi" };
 
@@ -204,7 +209,8 @@ namespace bycoAPI.Services
 
         public async Task<SiparisOut> GetSiparisBySiparisNo(string orderid)
         {
-            Siparis s = await _context.Siparis.Where(s => s.siparisno == orderid).FirstOrDefaultAsync();
+            SiarpisAra sa = await _context.SiparisAra.Where(sa => sa.aramano == orderid).FirstOrDefaultAsync();
+            Siparis s = await _context.Siparis.Where(s => s.siparisno == sa.siparisno).FirstOrDefaultAsync();
 
 
             SiparisOut hp = new SiparisOut();

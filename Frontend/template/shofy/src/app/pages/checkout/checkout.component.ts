@@ -469,6 +469,7 @@ export class CheckoutComponent {
     const paymentData = {
       aliciAdi: adsoyad,
       tcknvkn: this.myUserObject.tcknvkn,
+      gecicino: this.generatId(),
       telefon: this.myUserObject.telefon,
       bireysel_kurumsal: this.myUserObject.tip.toString(),
       teslimatAdresi: `${this.shippingAddressForm.get('shippingaddress')?.value}}`,
@@ -493,6 +494,8 @@ export class CheckoutComponent {
     console.log("Billing Address:", this.billingAddressForm.value);
     console.log("Shipping Address:", this.shippingAddressForm.value);
 
+    
+
     this.sendLocalRequest('Payment/SiparisVer', 'POST', paymentData)
   .then(response => {
     // Assume the response contains the HTML as a string
@@ -514,6 +517,25 @@ export class CheckoutComponent {
     console.error("Error:", err);
   });
 
+  }
+
+  generatId():string{
+    let siparisnoLocal:string = Date.now().toString();
+    this.setCookie("sonsiparisno",siparisnoLocal,30);
+
+    return siparisnoLocal;
+
+
+  };
+
+  setCookie(name: string, value: string, days: number) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
 
   previousStep() {

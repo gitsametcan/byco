@@ -11,6 +11,7 @@ namespace bycoAPI.Models
         public string bireysel_kurumsal {get;set;}
         public string? teslimatAdresi { get; set; }
         public string? faturaAdresi{get;set;}
+        public string? gecicino { get; set; }
         public List<OdemeUrun> urunler {get;set;}
         public string? CustomerEmailAddress { get; set; }
         public string? CustomerIpAddress { get; set; }

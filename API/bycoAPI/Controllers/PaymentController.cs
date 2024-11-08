@@ -48,7 +48,7 @@ namespace bycoAPI.Controllers
         {
             
             PaymentRequestModel prm = new PaymentRequestModel();
-            string orderid=DateTime.Now.ToString().Replace(" ", "") + "byc";
+            string orderid=DateTime.Now.ToString().Replace(" ", "").Replace("/","").Replace(":","") + "byc";
             prm.OrderId = orderid;
             prm.CustomerEmailAddress=hp.CustomerEmailAddress;
             prm.CustomerIpAddress=hp.CustomerIpAddress;
@@ -72,6 +72,8 @@ namespace bycoAPI.Controllers
             sb.Append("Fatura Adresi:" +hp.faturaAdresi);
             sb.Append("<br><br>");
             sb.Append("Teslimat Adresi:" +hp.teslimatAdresi);
+            sb.Append("<br><br>");
+            sb.Append("Müşteri için sorgulama numarası:" + hp.gecicino);
             sb.Append("<br><br>");
             sb.Append(bilgiler);
             ml.Content=sb.ToString();
@@ -103,14 +105,14 @@ namespace bycoAPI.Controllers
             new KeyValuePair<string, string>("terminalmerchantid", "2563015"),
             new KeyValuePair<string, string>("terminalid", "10293170"),
             new KeyValuePair<string, string>("orderid", paymentRequest.OrderId),
-            new KeyValuePair<string, string>("successurl", "https://garantibbvapos.com.tr/destek/postback.aspx"),
-            new KeyValuePair<string, string>("errorurl", "https://garantibbvapos.com.tr/destek/postback.aspx"),
+            new KeyValuePair<string, string>("successurl", "https://4usdemo.online/payment-successful"),
+            new KeyValuePair<string, string>("errorurl", "https://4usdemo.online/payment-error-occurred"),
             new KeyValuePair<string, string>("customeremailaddress", paymentRequest.CustomerEmailAddress),
             new KeyValuePair<string, string>("customeripaddress", paymentRequest.CustomerIpAddress),
             new KeyValuePair<string, string>("companyname", "BYCO"),
             new KeyValuePair<string, string>("lang", "tr"),
             new KeyValuePair<string, string>("txntimestamp", DateTime.Now.ToString()),
-            new KeyValuePair<string, string>("secure3dhash", GetHashData("Byco2024.","10293170",paymentRequest.OrderId,paymentRequest.TxnInstallmentCount,"5369796168426579617a35372e4859414233343537216279",paymentRequest.TxnAmount,949,"https://garantibbvapos.com.tr/destek/postback.aspx","sales","https://garantibbvapos.com.tr/destek/postback.aspx")),
+            new KeyValuePair<string, string>("secure3dhash", GetHashData("Byco2024.","10293170",paymentRequest.OrderId,paymentRequest.TxnInstallmentCount,"5369796168426579617a35372e4859414233343537216279",paymentRequest.TxnAmount,949,"https://4usdemo.online/payment-successful","sales","https://4usdemo.online/payment-error-occurred")),
             new KeyValuePair<string, string>("txnamount", paymentRequest.TxnAmount.ToString()),
             new KeyValuePair<string, string>("txntype", "sales"),
             new KeyValuePair<string, string>("txncurrencycode", 949.ToString()),
