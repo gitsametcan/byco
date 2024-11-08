@@ -67,7 +67,7 @@ namespace bycoAPI.Controllers
                 sb.Append(ou.ad + " " + ou.adet.ToString() + " " + ou.fiyat.ToString());
                 sb.Append("<br><br>");
             }
-            sb.Append("Toplam Fiyat" + hp.TxnAmount);
+            sb.Append("Toplam Fiyat" + hp.TxnAmount/100);
             sb.Append("<br><br>");
             sb.Append("Fatura Adresi:" +hp.faturaAdresi);
             sb.Append("<br><br>");
