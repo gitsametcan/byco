@@ -78,7 +78,7 @@ namespace bycoAPI.Controllers
             sb.Append(bilgiler);
             ml.Content=sb.ToString();
 
-            //await _emailSender.Send(ml);
+            await _emailSender.Send(ml);
             await _siparisService.SiparisKaydet(hp,orderid);
 
             var result = await MakePayment(prm);
