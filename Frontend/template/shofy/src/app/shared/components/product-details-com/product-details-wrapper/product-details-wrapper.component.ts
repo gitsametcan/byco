@@ -101,8 +101,7 @@ export class ProductDetailsWrapperComponent {
   })
   }
 
-  sendRequestWithHeaders(url: string, method: string, data?:any, header?: any): Promise<any> {
-    console.log("requesin içi"+JSON.stringify(data));
+  sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
@@ -110,8 +109,7 @@ export class ProductDetailsWrapperComponent {
       credentials: 'same-origin',
       headers: header,
       redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data), 
+      referrerPolicy: 'no-referrer'
   })
   .then(response => {
     if (!response.ok) {
@@ -122,19 +120,21 @@ export class ProductDetailsWrapperComponent {
   }
 
   getUserByToken(){
-    this.sendRequestWithHeaders('User/GetResponseById/'+ this.userid,'GET', {
+    this.sendRequestWithHeaders('User/GetUser','GET', {
       'Authorization': `Bearer ${this.getCookie("session_key")}`
     })
     .then(response => {
-      console.log(response.data);
-      this.myObject=response.data;
+      console.log("geetuserbasarili");
+      console.log(response);
+      this.myObject=response;
     })
     .catch(err => {
+      console.log("geetuserbasarilidegil");
       console.error("Error: " + err);
       //this.router.navigate(['/pages/login']);
     })
   }
-
+  
   urunuSil(product:IProduct){
     this.sendRequest('Urun/Delete/'+ product.id,'DELETE')
     .then(response => {

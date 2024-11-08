@@ -74,17 +74,32 @@ export class RegisterFormComponent {
         );
     }
     else if(this.userType!="null") this.isShowTypeMessage=true;
+    const requestBody = {
+      ad: name,
+      soyad: surname,
+      email: email,
+      password: password,
+      telefon: tel,
+      tip: this.userType,
+      vergi_no_kimlik_no: vkno
+  };
+  console.log('Request Body:', requestBody);
+  
   }
 
   updateAccountType(type: 'individual' | 'corporate') {
     if (type === 'individual') {
-      this.userType = "bireysel";
-      console.log(this.userType);
+      this.userType = "1"; // Bireysel için 1
     } else {
-      this.userType = "kurumsal";
-      console.log(this.userType);
+      this.userType = "2"; // Kurumsal için 2
     }
+  
+    // Form üzerindeki 'type' kontrolünü güncelle
+    this.registerForm.patchValue({ type: this.userType });
+    console.log(this.userType);
   }
+  
+  
 
   gec(){
     this.router.navigate(['/pages/login']);
@@ -92,19 +107,24 @@ export class RegisterFormComponent {
 
   onSubmit() {
     this.formSubmitted = true;
-    if(this.userType!="null"){
+    
+    // Kullanıcı tipi seçilmediyse uyarı göster
+    if (this.userType === "null") {
       this.isShowTypeMessage = true;
-
+    } else {
+      this.isShowTypeMessage = false;
     }
-    else if (this.registerForm.valid) {
+    
+    if (this.registerForm.valid && this.userType !== "null") {
       console.log('register-form-value', this.registerForm.value);
       this.toastrService.success(`Message sent successfully`);
-
-      // Reset the form
+  
+      // Formu sıfırlama
       this.registerForm.reset();
       this.formSubmitted = false; // Reset formSubmitted to false
     }
   }
+  
 
   get name() { return this.registerForm.get('name') }
   get surname() { return this.registerForm.get('surname') }
