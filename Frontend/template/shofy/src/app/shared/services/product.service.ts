@@ -262,8 +262,8 @@ export class ProductService {
   
   
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
-    console.log("İstek URL'si:", `https://localhost:7096/api/${url}`);
-    return fetch(`https://localhost:7096/api/${url}`, {
+    console.log("İstek URL'si:", `https://bycobackend.online:5001/api/${url}`);
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

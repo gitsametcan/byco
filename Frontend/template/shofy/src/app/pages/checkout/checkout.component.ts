@@ -350,7 +350,7 @@ export class CheckoutComponent {
   
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
     console.log("Request Data:", JSON.stringify(data, null, 2));
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
@@ -373,7 +373,7 @@ export class CheckoutComponent {
       });
   }
   sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',

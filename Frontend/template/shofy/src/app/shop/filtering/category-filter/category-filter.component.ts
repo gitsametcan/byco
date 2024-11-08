@@ -31,7 +31,7 @@ export class CategoryFilterComponent implements OnInit {
   } 
 
   fetchCategories(): void {
-    fetch('https://localhost:7096/api/Kategori/GetAll')
+    fetch('https://bycobackend.online:5001/api/Kategori/GetAll')
       .then(response => response.json())
       .then(data => {
         this.categoryData = data;

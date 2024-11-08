@@ -221,7 +221,7 @@ export class ProfileComponent {
   }
 
   sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
@@ -239,7 +239,7 @@ export class ProfileComponent {
   }
   sendRequestWithHeadersPost(url: string, method: string, data?:any, header?: any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
@@ -418,7 +418,7 @@ getStatusClass(durum: string): string {
       })
   }
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
