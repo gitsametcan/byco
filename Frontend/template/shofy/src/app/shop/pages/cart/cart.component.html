@@ -123,7 +123,17 @@
             <span>{{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}} TL</span>
           </div>
           <div class="tp-cart-checkout-proceed">
-            <a routerLink="/pages/checkout" class="tp-cart-checkout-btn w-100">Alışverişi Tamamla</a>
+            <a (click)="checkTokenAndRedirect()" class="tp-cart-checkout-btn w-100">Alışverişi Tamamla</a>
+          </div>
+          <div *ngIf="showPopup" class="popup-overlay">
+            <div class="popup-content">
+              <h3>Devam Etmek İçin Seçenekler</h3>
+              <p>Alışverişinizi tamamlamak için üyelik bilgilerinizi kullanabilirsiniz ya da üye olmadan devam edebilirsiniz.</p>
+              <div class="popup-buttons">
+                <button (click)="redirectToLogin()" class="popup-button login-button">Üye Ol</button>
+                <button (click)="continueWithoutAccount()" class="popup-button guest-button">Üye Olmadan Devam Et</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
