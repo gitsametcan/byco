@@ -409,7 +409,7 @@ export class CheckoutComponent {
       })),
       customerEmailAddress: this.myUserObject.email,
       customerIpAddress: '',
-      txnAmount: totalPrice, // Total in cents as well
+      txnAmount: 100, // Total in cents as well
       cardHolderName: this.cardholder?.value,
       cardNumber: String(this.ccn?.value),
       cardExpireDateMonth: expMonth,
