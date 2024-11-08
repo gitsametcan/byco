@@ -48,7 +48,7 @@ namespace bycoAPI.Controllers
         {
             
             PaymentRequestModel prm = new PaymentRequestModel();
-            string orderid=DateTime.Now.ToString().Replace(" ", "").Replace("/","").Replace(":","") + "byc";
+            string orderid=DateTime.Now.ToString().Replace(" ", "").Replace("/","").Replace(":","").Replace(".", "") + "byc";
             prm.OrderId = orderid;
             prm.CustomerEmailAddress=hp.CustomerEmailAddress;
             prm.CustomerIpAddress=hp.CustomerIpAddress;
@@ -78,7 +78,7 @@ namespace bycoAPI.Controllers
             sb.Append(bilgiler);
             ml.Content=sb.ToString();
 
-            await _emailSender.Send(ml);
+            //await _emailSender.Send(ml);
             await _siparisService.SiparisKaydet(hp,orderid);
 
             var result = await MakePayment(prm);

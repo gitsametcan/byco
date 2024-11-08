@@ -181,6 +181,7 @@ namespace bycoAPI.Services
             {
                 Siparis siparisdb = await Copy(siparis, "siparis_id");
                 await _context.Siparis.AddAsync(siparisdb);
+                await _context.SaveChangesAsync();
                 await _context.SiparisAra.AddAsync(sa);
                 await _context.SaveChangesAsync();
                 return new RequestResponse { StatusCode = 200, ReasonString = "Kullanıcı eklendi" };

@@ -16,7 +16,9 @@ export class PaymentSuccessfulComponent {
   
     ngOnInit() {
       this.orderId = this.getCookie("sonsiparisno")!;
+      console.log(this.orderId);
     }
+
 
     getCookie(name: string) {
         var nameEQ = name + "=";
