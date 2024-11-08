@@ -25,10 +25,7 @@
           <div class="col-xl-7 col-lg-7">
             <div class="tp-checkout-verify">
               <div class="tp-checkout-verify-item">
-                <p class="tp-checkout-verify-reveal">Müşteri Girişi
-                  <button (click)="handleOpenLogin()" type="button" class="tp-checkout-login-form-reveal-btn">Giriş Yap
-                  </button>
-                </p>
+                
                 <div *ngIf="isOpenLogin" id="tpReturnCustomerLoginForm" class="tp-return-customer">
                   <app-login-form></app-login-form>
                 </div>
@@ -126,57 +123,40 @@
                   <!-- Adres Alanı -->
                   <div class="tp-checkout-address-area white-box">
                     <form [formGroup]="shippingAddressForm">
+                      <!-- Visible Shipping Address Field -->
                       <div class="form-group">
                         <label for="shippingaddress">Kargo Adresi</label>
                         <input type="text" id="shippingaddress" name="shippingaddress" formControlName="shippingaddress" maxlength="100" required>
                       </div>
-                      <div class="form-group">
-                        <label for="shippingselect">Şehir</label>
-                        <select name="shippingselect" id="shippingselect" formControlName="shippingselect" (change)="assignShippingDistricts($event)">
-                          <option *ngFor="let city of objCities" [ngValue]="city.value">{{ city.text }}</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="shippingselectstate">İlçe</label>
-                        <select name="shippingselectstate" id="shippingselectstate" formControlName="shippingselectstate" (change)="shippingDistrictChangeHandler($event)">
-                          <option [value]="cities_data[selectedShippingCity].districts[selectedShippingDistrict].value">{{ cities_data[selectedShippingCity].districts[selectedShippingDistrict].text }}</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="shippingzip">ZIP/Posta Kodu</label>
-                        <input type="number" name="shippingzip" id="shippingzip" formControlName="shippingzip" placeholder="34848" maxlength="5">
-                      </div>
+                  
+                      <!-- Hidden Static Fields for Shipping (City, District, ZIP) -->
+                      <input type="hidden" formControlName="shippingselect" value="Istanbul">
+                      <input type="hidden" formControlName="shippingselectstate" value="Kadıköy">
+                      <input type="hidden" formControlName="shippingzip" value="34848">
+                  
+                      <!-- Checkbox to Copy Shipping Address to Billing -->
                       <div class="billing-checkbox" style="margin-top: 1vh;">
                         <input type="checkbox" id="billingCheckbox" name="billingCheckbox" formControlName="billingCheckbox" (change)="onBillingCheckboxClick()">
                         <label for="billingCheckbox">Fatura adresi ile Kargo aynı</label>
                       </div>
                     </form>
-                
+                  
                     <form [formGroup]="billingAddressForm" *ngIf="!isBillingAddressSame">
                       <div class="billing-address">
+                        <!-- Visible Billing Address Field -->
                         <div class="form-group">
                           <label for="billingaddress">Fatura Adresi</label>
                           <input type="text" id="billingaddress" name="billingaddress" formControlName="billingaddress" maxlength="100" required>
                         </div>
-                        <div class="form-group">
-                          <label for="select">Şehir</label>
-                          <select name="select" id="select" formControlName="select" (input)="assignBillingDistricts($event)">
-                            <option *ngFor="let city of objCities" [ngValue]="city.value">{{ city.text }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="selectstate">İlçe</label>
-                          <select name="selectstate" id="selectstate" formControlName="selectstate" (change)="billingDistrictChangeHandler($event)">
-                            <option [value]="cities_data[selectedBillingCity].districts[selectedBillingDistrict].value">{{ cities_data[selectedBillingCity].districts[selectedBillingDistrict].text }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="zip">ZIP/Posta Kodu</label>
-                          <input type="number" name="zip" id="zip" formControlName="zip" placeholder="34848" maxlength="5">
-                        </div>
+                  
+                        <!-- Hidden Static Fields for Billing (City, District, ZIP) -->
+                        <input type="hidden" formControlName="select" value="Ankara">
+                        <input type="hidden" formControlName="selectstate" value="Çankaya">
+                        <input type="hidden" formControlName="zip" value="06500">
                       </div>
                     </form>
                   </div>
+                  
                 </div>
     
 

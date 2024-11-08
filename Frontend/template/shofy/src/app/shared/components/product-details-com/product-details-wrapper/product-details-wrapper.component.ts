@@ -119,21 +119,28 @@ export class ProductDetailsWrapperComponent {
   })
   }
 
-  getUserByToken(){
-    this.sendRequestWithHeaders('User/GetUser','GET', {
-      'Authorization': `Bearer ${this.getCookie("session_key")}`
+  getUserByToken() {
+    const token = this.getCookie("session_key");
+    if (!token) {
+        // Kullanıcı giriş yapmamışsa tip değerini 3 olarak ata
+        this.myObject.tip = 3;
+        return;
+    }
+
+    // Giriş yapılmışsa kullanıcı verilerini al
+    this.sendRequestWithHeaders('User/GetUser', 'GET', {
+        'Authorization': `Bearer ${token}`
     })
     .then(response => {
-      console.log("geetuserbasarili");
-      console.log(response);
-      this.myObject=response;
+        console.log("getUser başarılı");
+        this.myObject = response;
     })
     .catch(err => {
-      console.log("geetuserbasarilidegil");
-      console.error("Error: " + err);
-      //this.router.navigate(['/pages/login']);
-    })
-  }
+        console.error("getUser başarısız:", err);
+        this.myObject.tip = 3; // Hata durumunda da tip değerini 3 olarak ata
+    });
+}
+
   
   urunuSil(product:IProduct){
     this.sendRequest('Urun/Delete/'+ product.id,'DELETE')

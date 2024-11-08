@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CartService} from '@/shared/services/cart.service';
 import {ToastrService} from 'ngx-toastr';
 import {IProduct} from '@/types/product-type';
@@ -63,6 +63,7 @@ export class CheckoutComponent {
     tip: '1',
     telefon: '',
     adres: '',
+    teslimatadresi: '',
     indirim: 0,
     ccn: '',
     cardholder: '',
@@ -79,7 +80,7 @@ export class CheckoutComponent {
   protected selectedBillingDistrict: number = 0;
   protected customerType: number = 0;
 
-  constructor(public cartService: CartService, private toastrService: ToastrService, private router: Router) {
+  constructor(public cartService: CartService, private toastrService: ToastrService, private router: Router, private formBuilder: FormBuilder) {
   }
 
   showPolicyModal: boolean = false;
@@ -229,20 +230,22 @@ export class CheckoutComponent {
       cvv: new FormControl(null, [Validators.required, ]),
     })
 
-    this.billingAddressForm = new FormGroup({
-      billingaddress: new FormControl(null, Validators.required),
-      select: new FormControl(null, Validators.required),
-      selectstate: new FormControl(null, Validators.required),
-      zip: new FormControl(null, Validators.maxLength(5)),
-    })
+    this.shippingAddressForm = this.formBuilder.group({
+      shippingaddress: ['', Validators.required],  // Visible input field
+      shippingselect: 'Istanbul',  // Hidden static field, no validators
+      shippingselectstate: 'Kadıköy',  // Hidden static field, no validators
+      shippingzip: '34848',  // Hidden static field, no validators
+      billingCheckbox: [false]
+    });
 
-    this.shippingAddressForm = new FormGroup({
-      billingCheckbox: new FormControl(null, Validators.required),
-      shippingaddress: new FormControl(null, Validators.required),
-      shippingselect: new FormControl(null, Validators.required),
-      shippingselectstate: new FormControl(null, Validators.required),
-      shippingzip: new FormControl(null, Validators.maxLength(5)),
-    })
+    // Initialize billingAddressForm with static values for hidden fields
+    this.billingAddressForm = this.formBuilder.group({
+      billingaddress: ['', Validators.required],  // Visible input field
+      select: 'Ankara',  // Hidden static field, no validators
+      selectstate: 'Çankaya',  // Hidden static field, no validators
+      zip: '06500'  // Hidden static field, no validators
+    });
+    
   }
 
   updateInfo() {
@@ -350,7 +353,7 @@ export class CheckoutComponent {
   
   sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
     console.log("Request Data:", JSON.stringify(data, null, 2));
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
