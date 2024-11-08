@@ -431,8 +431,8 @@ export class CheckoutComponent {
     const concatAddress = this.billingAddressForm.get('billingaddress')?.value + " " + this.billingAddressForm.get('zip')?.value;
     const concatShippingAddress = this.shippingAddressForm.get('shippingaddress')?.value + " " + this.shippingAddressForm.get('shippingzip')?.value;
 
-    const shippingCost = 100;
-    const totalPrice = Math.round((this.cartService.totalPriceQuantity().total) * 100);
+    const shippingCost = 1;
+    const totalPrice = Math.round((this.cartService.totalPriceQuantity().total + shippingCost) * 100);
 
     console.log("ad : " + this.myUserObject.ad);
     console.log("vkno : " + this.myUserObject.vkno);
@@ -480,7 +480,7 @@ export class CheckoutComponent {
         adet: product.orderQuantity
       })),
       customerEmailAddress: this.myUserObject.email,
-      customerIpAddress: '',
+      customerIpAddress: '190.268.0',
       txnAmount: totalPrice, // Total in cents as well
       cardHolderName: this.cardholder?.value,
       cardNumber: String(this.ccn?.value),
