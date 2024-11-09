@@ -78,6 +78,23 @@ namespace bycoAPI.Controllers
             else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
         }
 
+        [HttpPut("UpdateWithEntityName")]
+        public async Task<RequestResponse> Update([FromBody] UpdateModel um)
+        {
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+
+            if (user.tip == 0)
+            {
+                return await _service.Update(um);
+            }
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+            //return await _service.Update(um);
+        }
+
         [HttpDelete("Delete/{urun_id}")]
         public async Task<RequestResponse> DeleteUrun(int urun_id)
         {
