@@ -51,7 +51,7 @@
         <span *ngIf="(tel?.hasError('required') && tel?.touched) || (tel?.hasError('email') && tel?.dirty) || (formSubmitted && !tel?.value)" class="text-danger">
           Kayıt için telefon numaranız gereklidir.
         </span>
-      </div>
+    </div>
 
       <!-- Password Input -->
     <div class="tp-login-input-box">
@@ -124,19 +124,41 @@
       Kullanıcı tipi seçilmelidir.
     </span>
   </div>
-  
+    <!-- Teslimat Adresi -->
 
+  <div class="tp-login-input-box">
+    <div class="tp-login-input">
+      <input id="teslimatadresi" type="text" placeholder="Teslimat Adresi" formControlName="teslimatadresi">
+    </div>
+    <div class="tp-login-input-title">
+      <label for="teslimatadresi">Teslimat Adresi</label>
+    </div>
+    <span *ngIf="teslimatadresi?.hasError('required') && (teslimatadresi?.touched || formSubmitted)" class="text-danger">
+      Bu alana teslimat adresinizi yazın.  
+    </span>
+  </div>
+    <!-- Fatura Adresi -->
 
-
+  <div class="tp-login-input-box">
+    <div class="tp-login-input">
+      <input id="faturaadresi" type="text" placeholder="Fatura Adresi" formControlName="faturaadresi">
+    </div>
+    <div class="tp-login-input-title">
+      <label for="faturaadresi">Fatura Adresi</label>
+    </div>
+    <span *ngIf="faturaadresi?.hasError('required') && (faturaadresi?.touched || formSubmitted)" class="text-danger">
+      Bu alana fatura adresinizi yazın.  
+    </span>
+  </div>
   <!-- VKNO Input -->
   <div class="tp-login-input-box">
     <div class="tp-login-input">
-      <input id="vkno" type="text" placeholder="Kimlik No / Vergi No" formControlName="vkno">
+      <input id="tcknvkn" type="text" placeholder="Kimlik No / Vergi No" formControlName="tcknvkn">
     </div>
     <div class="tp-login-input-title">
-      <label for="vkno">Kimlik No / Vergi No</label>
+      <label for="tcknvkn">Kimlik No / Vergi No</label>
     </div>
-    <span *ngIf="vkno?.hasError('required') && (vkno?.touched || formSubmitted)" class="text-danger">
+    <span *ngIf="tcknvkn?.hasError('required') && (tcknvkn?.touched || formSubmitted)" class="text-danger">
       Bu alana bireysel için kimlik numaranızı, kurumsal için vergi numaranızı yazın.  
     </span>
   </div>
@@ -152,7 +174,7 @@
 
   <!-- Submit Button -->
   <div class="tp-login-bottom">
-    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,tel?.value, password?.value, vkno?.value)">Kaydol</button>
+    <button type="submit" class="tp-login-btn w-100" (click)="kaydol(name?.value,surname?.value,email?.value,tel?.value, password?.value, tcknvkn?.value, teslimatadresi?.value, faturaadresi?.value)">Kaydol</button>
   </div>
 </form>
 <button type="submit"  (click)="gec()">Kayıtlı Mısın, Giriş Yap</button>

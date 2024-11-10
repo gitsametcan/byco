@@ -220,6 +220,7 @@ export class CheckoutComponent {
     })
     this.urunler = this.cartService.getCartProducts();
     this.getUserById();
+    this.fetchShippingCost();  // Call this function to set the shipping cost
 
     this.objCities = cities_data;
 
@@ -287,6 +288,21 @@ export class CheckoutComponent {
 
   }
 
+  fetchShippingCost() {
+    this.sendLocalRequest('Urun/GetById/16', 'GET')
+      .then(response => {
+        // Assuming `fiyat` is the price from the product data
+        if (response && response.fiyat != null) {
+          this.shipCost = response.fiyat;
+          console.log('Shipping cost set to:', this.shipCost);
+        } else {
+          console.error('Failed to fetch shipping cost: invalid response format');
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching shipping cost:', err);
+      });
+  }
   
 
   getUserById() {
@@ -300,6 +316,8 @@ export class CheckoutComponent {
         this.myUserObject = response; // Eğer `data` yoksa `response` nesnesini kullanın
         this.isUserLogin = true;
         this.calculateDisc();
+        this.shippingAddressForm.get('shippingaddress')?.setValue(this.myUserObject.teslimatadresi);
+        this.billingAddressForm.get('billingaddress')?.setValue(this.myUserObject.faturaadresi);
       })
       .catch(err => {
         console.error("Error: " + err);
@@ -434,8 +452,7 @@ export class CheckoutComponent {
     const concatAddress = this.billingAddressForm.get('billingaddress')?.value + " " + this.billingAddressForm.get('zip')?.value;
     const concatShippingAddress = this.shippingAddressForm.get('shippingaddress')?.value + " " + this.shippingAddressForm.get('shippingzip')?.value;
 
-    const shippingCost = 1;
-    const totalPrice = Math.round((this.cartService.totalPriceQuantity().total + shippingCost) * 100);
+    const totalPrice = Math.round((this.cartService.totalPriceQuantity().total + this.shipCost) * 100);
 
     console.log("ad : " + this.myUserObject.ad);
     console.log("vkno : " + this.myUserObject.vkno);
@@ -457,7 +474,7 @@ export class CheckoutComponent {
     // TODO IP?
 
     console.log("price: " + this.cartService.totalPriceQuantity().total);
-    console.log("shippingCost: " + shippingCost);
+    console.log("shippingCost: " + this.shipCost);
     console.log("totalPrice: " + totalPrice);
 
     //console.log("discount : " + this.myUserObject.discount);

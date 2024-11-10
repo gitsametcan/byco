@@ -16,7 +16,9 @@ export class CartComponent {
   constructor (public cartService:CartService
     , private router: Router
   ) {}
-
+  ngOnInit() {
+    this.fetchShippingCost();
+  }
   handleCouponSubmit() {
     console.log(this.couponCode);
     // Add coupon code handling logic here
@@ -83,5 +85,44 @@ export class CartComponent {
       if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+  }
+  fetchShippingCost() {
+    this.sendLocalRequest('Urun/GetById/16', 'GET')
+      .then(response => {
+        // Assuming `fiyat` is the price from the product data
+        if (response && response.fiyat != null) {
+          this.shipCost = response.fiyat;
+          console.log('Shipping cost set to:', this.shipCost);
+        } else {
+          console.error('Failed to fetch shipping cost: invalid response format');
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching shipping cost:', err);
+      });
+  }
+  sendLocalRequest(url: string, method: string, data?: any): Promise<any> {
+    console.log("Request Data:", JSON.stringify(data, null, 2));
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+      .then(async response => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Error Text:", errorText);
+          throw new Error(`Status: ${response.status}, Message: ${errorText}`);
+        }
+        return response.json();
+      });
   }
 }

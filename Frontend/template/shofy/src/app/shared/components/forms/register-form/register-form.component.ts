@@ -34,14 +34,17 @@ export class RegisterFormComponent {
       tel:new FormControl(null,[Validators.required]),
       password:new FormControl(null,[Validators.required,Validators.minLength(6)]),
       type: new FormControl(null,Validators.compose([Validators.pattern("bireysel"), Validators.pattern("kurumsal")])),
-      vkno: new FormControl(null,[Validators.required,Validators.minLength(6)]),
+      tcknvkn: new FormControl(null,[Validators.required,Validators.minLength(6)]),
+      teslimatadresi: new FormControl(null,[Validators.required]),
+      faturaadresi: new FormControl(null,[Validators.required]),
     })
   }
 
-  kaydol(name:string,surname:string,email:string, tel:string, password:string, vkno:string){
+  kaydol(name:string,surname:string,email:string, tel:string, password:string, tcknvkn:string, teslimatadresi:string, faturaadresi:string){
     if(this.userType!="null") console.log("null");
-    if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"){
+    if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"&&teslimatadresi.length>0&&faturaadresi.length>0){
         console.log(name +" " + surname + " " +email + " "+password+"  tip:"+this.userType)
+        console.log("tcknvkn:"+tcknvkn+" teslimatadresi:"+teslimatadresi+" faturaadresi:"+faturaadresi);
         fetch(`https://bycobackend.online:5001/api/User/RegisterUser`, {
             method: 'POST',
             mode: 'cors',
@@ -61,7 +64,9 @@ export class RegisterFormComponent {
                 password: password, 
                 telefon: tel,
                 tip: this.userType, 
-                vergi_no_kimlik_no: vkno
+                tcknvkn: tcknvkn,
+                faturaadresi: faturaadresi,
+                teslimatadresi: teslimatadresi
               }
             ), 
           }
@@ -81,7 +86,9 @@ export class RegisterFormComponent {
       password: password,
       telefon: tel,
       tip: this.userType,
-      vergi_no_kimlik_no: vkno
+      tcknvkn: tcknvkn,
+      faturaadresi: faturaadresi,
+      teslimatadresi: teslimatadresi
   };
   console.log('Request Body:', requestBody);
   
@@ -131,5 +138,7 @@ export class RegisterFormComponent {
   get email() { return this.registerForm.get('email') }
   get tel() {return this.registerForm.get('tel')}
   get password() { return this.registerForm.get('password') }
-  get vkno() { return this.registerForm.get('vkno') }
+  get tcknvkn() { return this.registerForm.get('tcknvkn') }
+  get teslimatadresi() { return this.registerForm.get('teslimatadresi') }
+  get faturaadresi() { return this.registerForm.get('faturaadresi') }
 }

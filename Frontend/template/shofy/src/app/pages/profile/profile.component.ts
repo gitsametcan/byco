@@ -335,21 +335,27 @@ export class ProfileComponent {
       });
   }
   getUserByToken(){
-    this.sendRequestWithHeaders('User/GetUser','GET', {
+    this.sendRequestWithHeaders('User/GetUser', 'GET', {
       'Authorization': `Bearer ${this.getCookie("session_key")}`
     })
     .then(response => {
-      console.log("geetuserbasarili");
-      console.log(response);
-      this.myObject=response;
+      console.log("Response from API:", response);  // API'den gelen tam yanıtı göster
+      this.myObject = response;
+  
+      // API yanıtında tcknvkn alanının var olup olmadığını kontrol edin
+      if (response.tcknvkn) {
+        this.myObject.tcknvkn = response.tcknvkn;
+      } else {
+        console.warn("API yanıtında tcknvkn alanı yok veya boş.");
+      }
     })
     .catch(err => {
-      console.log("geetuserbasarilidegil");
+      console.log("User bilgileri alınamadı.");
       console.error("Error: " + err);
       //this.router.navigate(['/pages/login']);
     })
   }
-
+  
   sendRequestWithHeaders(url: string, method: string, header?: any): Promise<any> {
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
@@ -369,7 +375,7 @@ export class ProfileComponent {
   }
   sendRequestWithHeadersPost(url: string, method: string, data?:any, header?: any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`https://localhost:7096/api/${url}`, {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
