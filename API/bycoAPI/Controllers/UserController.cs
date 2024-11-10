@@ -20,6 +20,13 @@ namespace bycoAPI.Controllers
             this.tokenService = tokenService;
         }
 
+        [HttpPost("SifremiUnuttum")]
+        [AllowAnonymous]
+        public async Task<RequestResponse> RegisterUser([FromBody] string mail)
+        {
+            return await userService.ForgotPassword(mail);
+        }
+
         [HttpGet("GetUser")]
         public async Task<User> GetUser()
         {

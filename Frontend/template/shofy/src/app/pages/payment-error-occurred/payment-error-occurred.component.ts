@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class PaymentErrorOccurredComponent {
 
-  protected remainingTime = 5;
+  protected remainingTime = 30;
   private intervalId: any;
 
   constructor(private router: Router) {

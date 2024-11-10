@@ -52,8 +52,6 @@ namespace bycoAPI.Controllers
         [AllowAnonymous]
         public async Task<RequestResponse> OdemeTamam([FromBody] string siparisno)
         {
-
-            
                 return await _siparisService.OdemeAlindi(siparisno);
         }
 

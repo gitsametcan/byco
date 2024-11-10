@@ -147,8 +147,7 @@ namespace bycoAPI.Services
             Siparis siparis = await _context.Siparis.Where(k => k.siparisno == sa.siparisno).FirstAsync();
             siparis.durum = "Odeme Alindi";
 
-            Message ml = new Message(new string[] { "contact@byco.com.tr","cansamet1223@gmail.com","emirerenyusuf@gmail.com" });
-            //Message ml = new Message(new string[] {"contact@byco.com.tr", siparis.mail});
+            Message ml = new Message(new string[] {"info@byco.com.tr", siparis.mail});
             ml.Subject ="Satış";
             string bilgiler ="Kullanıcı bilgileri:  "+ siparis.ad + "  Telefon = " +siparis.telefon + " Mail = " +siparis.mail ;
             StringBuilder sb = new StringBuilder();

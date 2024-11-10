@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Router} from "@angular/router";
+import { CartService } from '@/shared/services/cart.service';
 
 @Component({
   selector: 'app-payment-successful',
@@ -10,12 +11,15 @@ export class PaymentSuccessfulComponent {
 
     
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private router: Router,public cartService : CartService) {}
 
     orderId: string = '';
+    protected remainingTime = 60;
+    private intervalId: any;
   
     ngOnInit() {
-      this.orderId = this.getCookie("sonsiparisno")!;
+      this.SendMessage();
+      this.countDown();
     }
 
     getCookie(name: string) {
@@ -28,8 +32,54 @@ export class PaymentSuccessfulComponent {
         }
         return null;
       }
+
+      countDown() {
+        this.intervalId = setInterval(() => {
+          if (this.remainingTime <= 0) {
+            clearInterval(this.intervalId);
+            this.router.navigate(['/pages/shop']).then(r => console.log(r));
+          }
+          this.remainingTime--;
+        }, 1000);
+      }
   
-    fetchOrderDetails(orderId: string) {
-      // API çağrısı ile sipariş detaylarını getir
+    
+    SendMessage(){
+      this.sendRequest('Siparis/SiparisOdemeTamam','POST',{
+          "siparis": this.getCookie("siparisno")!,
+      })
+      .then(response => {
+        this.cartService.clear_cart();
+        console.log(response);
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+      })
+  
+  
+  
+    }
+
+    sendRequest(url: string, method: string, data?: any): Promise<any> {
+
+      return fetch(`https://bycobackend.online:5001/api/${url}`, {
+        method: method,
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
     }
 }

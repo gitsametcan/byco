@@ -13,9 +13,11 @@ namespace bycoAPI.Services
     {
 
         private readonly DbContexts _dbContexts;
-        public UserService(DbContexts dbContexts)
+        private readonly IEmailSender _emailSender;
+        public UserService(DbContexts dbContexts,IEmailSender emailSender)
         {
             _dbContexts = dbContexts;
+            _emailSender = emailSender;
         }
         public async Task<User> GetUserAsync(int id)
         {
@@ -130,6 +132,42 @@ namespace bycoAPI.Services
             }
 
 
+        }
+
+        public async Task<RequestResponse> ForgotPassword(string mail)
+        {
+            User user = await _dbContexts.Users.FirstOrDefaultAsync(k => k.email == mail);
+            if (user != null)
+            {
+                return new RequestResponse { StatusCode = 400, ReasonString = "Kullanici bulunamadı!" };
+            }
+            Random random = new Random((int)DateTime.Now.Ticks);
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            //throw new NotImplementedException();
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < 12; i++)
+            {
+                result.Append(chars[random.Next(chars.Length)]);
+            }
+            string newpassword = random.ToString();
+            try{
+                user.password = HashString(newpassword);
+                _dbContexts.Update(user);
+                await _dbContexts.SaveChangesAsync();
+            }
+            catch{
+                return new RequestResponse { StatusCode = 400, ReasonString = "Şifre güncellenemedi" };
+            }
+
+            Message ml = new Message(new string[] { user.email});
+            ml.Subject ="Yeni Şifre";
+            StringBuilder sb = new StringBuilder();
+
+            ml.Content= "Yeni şifreniz "+newpassword+" olarak belirlendi. Lütfen profil sayfanızdan en kısa zamanda şifrenizi hatırlayablieceğiniz bir şifre ile değiştiriniz!!";
+
+            await _emailSender.Send(ml);
+
+            return new RequestResponse { StatusCode = 200, ReasonString = "Şifre güncellendi" };
         }
     }
 }
