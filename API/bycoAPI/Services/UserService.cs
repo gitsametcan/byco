@@ -149,7 +149,7 @@ namespace bycoAPI.Services
             {
                 result.Append(chars[random.Next(chars.Length)]);
             }
-            string newpassword = random.ToString();
+            string newpassword = result.ToString();
             try{
                 user.password = HashString(newpassword);
                 _dbContexts.Update(user);
