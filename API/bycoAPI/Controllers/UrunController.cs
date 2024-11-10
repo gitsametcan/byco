@@ -95,8 +95,8 @@ namespace bycoAPI.Controllers
             //return await _service.Update(um);
         }
 
-        [HttpDelete("Delete/{urun_id}")]
-        public async Task<RequestResponse> DeleteUrun(int urun_id)
+        [HttpDelete("Delete/{barkod}")]
+        public async Task<RequestResponse> DeleteUrun(string barkod)
         {
             string token = Request.Headers["Authorization"];
 
@@ -106,7 +106,7 @@ namespace bycoAPI.Controllers
 
             if (user.tip == 0)
             {
-                return await _service.DeleteUrun(urun_id);
+                return await _service.DeleteUrun(barkod);
                 
             }
             else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};

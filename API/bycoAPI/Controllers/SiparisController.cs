@@ -65,16 +65,18 @@ namespace bycoAPI.Controllers
 
 
         [HttpGet("GetAll")]
+        [AllowAnonymous]
         public async Task<List<SiparisOut>> GetSiparisForAdmin()
         {
-            string token = Request.Headers["Authorization"];
+            // string token = Request.Headers["Authorization"];
 
-            token = token.Substring(7);
-            string email = await _tokenService.decodeKey(token);
-            User user = await _userService.GetUserByEmail(email);
+            // token = token.Substring(7);
+            // string email = await _tokenService.decodeKey(token);
+            // User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 0) return await _siparisService.GetSiparisForAdmin();
-            else return await _siparisService.GetSiparisForLasts(email);
+            // if (user.tip == 0) return await _siparisService.GetSiparisForAdmin();
+            // else return await _siparisService.GetSiparisForLasts(email);
+            return await _siparisService.GetSiparisForAdmin();
         }
 
         [HttpGet("GetSiparisByNo/{siparisno}")]

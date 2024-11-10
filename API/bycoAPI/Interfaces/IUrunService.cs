@@ -11,6 +11,6 @@ namespace bycoAPI.Interfaces
         public Task<RequestResponse> AddUrun(Product urun);
         public Task<RequestResponse> UpdateUrun(int urun_id, Product urun);
         public Task<RequestResponse> Update(UpdateModel updateModel);
-        public Task<RequestResponse> DeleteUrun(int urun_id);
+        public Task<RequestResponse> DeleteUrun(string barkod);
     }
 }

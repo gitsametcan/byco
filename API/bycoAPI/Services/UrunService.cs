@@ -27,6 +27,13 @@ namespace bycoAPI.Services
 
         public async Task<RequestResponse> AddUrun(Product urun)
         {
+            if(urun.urun == "" || urun.urun==null)
+            return new RequestResponse { StatusCode = 400, ReasonString = "Barkod özelliği boş bırakılamaz" };
+
+
+            if(await _context.Products.Where(p => p.urun == urun.urun).FirstOrDefaultAsync()!=null)
+            return new RequestResponse { StatusCode = 400, ReasonString = "Barkodu aynı olan başka ürün var" };
+            
             Product urundb = await Copy(urun, "id");
             await _context.Products.AddAsync(urundb);
             await _context.SaveChangesAsync();
@@ -116,10 +123,10 @@ namespace bycoAPI.Services
             // return response;
         }
 
-        public async Task<RequestResponse> DeleteUrun(int urun_id)//ok
+        public async Task<RequestResponse> DeleteUrun(string barkod)//ok
         {
             RequestResponse response = new RequestResponse();
-            Product urun = await _context.Products.FindAsync(urun_id);
+            Product urun = await _context.Products.Where(p => p.urun == barkod).FirstOrDefaultAsync();
             if (urun == null)
             {
                 response.StatusCode = 400;
