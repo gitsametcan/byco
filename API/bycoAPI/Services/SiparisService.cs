@@ -143,8 +143,50 @@ namespace bycoAPI.Services
 
         public async Task<RequestResponse> OdemeAlindi(string siparis_id)
         {
-            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == siparis_id).FirstAsync();
+            SiarpisAra sa = await _context.SiparisAra.Where(s=>s.aramano==siparis_id).FirstOrDefaultAsync();
+            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == sa.siparisno).FirstAsync();
             siparis.durum = "Odeme Alindi";
+
+            Message ml = new Message(new string[] { "contact@byco.com.tr","cansamet1223@gmail.com","emirerenyusuf@gmail.com" });
+            //Message ml = new Message(new string[] {"contact@byco.com.tr", siparis.mail});
+            ml.Subject ="Satış";
+            string bilgiler ="Kullanıcı bilgileri:  "+ siparis.ad + "  Telefon = " +siparis.telefon + " Mail = " +siparis.mail ;
+            StringBuilder sb = new StringBuilder();
+
+            var urunAdetCiftleri = siparis.urunler.Split('-', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var cift in urunAdetCiftleri)
+            {
+                var parts = cift.Split('x');
+                if (parts.Length == 2
+                    && int.TryParse(parts[0], out int urunId)
+                    && int.TryParse(parts[1], out int adet))
+                {
+                    // 2. Ürün ID'sine göre veritabanından ürünü getir
+                    Product product = await _context.Products.FindAsync(urunId);
+
+                    if (product != null)
+                    {
+                        sb.Append(adet.ToString()+" adet  " + product.ad +" ("+product.urun+")");
+                        sb.Append("<br><br>");
+                    }
+                }
+            }
+
+            
+
+            sb.Append("Toplam Fiyat" + siparis.fiyat);
+            sb.Append("<br><br>");
+            sb.Append("Fatura Adresi:" +siparis.faturaadresi);
+            sb.Append("<br><br>");
+            sb.Append("Teslimat Adresi:" +siparis.teslimatadresi);
+            sb.Append("<br><br>");
+            sb.Append("Sipariş numarası:" + siparis.siparisno);
+            sb.Append("<br><br>");
+            sb.Append(bilgiler);
+            ml.Content=sb.ToString();
+
+            await _emailService.Send(ml);
 
             _context.Siparis.Update(siparis);
             await _context.SaveChangesAsync();
