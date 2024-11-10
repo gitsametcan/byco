@@ -186,8 +186,55 @@ export class ProfileComponent {
     { id: "6", ad: 'Binnaz Türker', tip: '1', sipsayi: '0', tutar: '987554', indirim: '65', }
   ];
 
+  showDeletePopup: boolean = false;
+  barkod: string = "";  
+  entity: string = '';
+  deger: string = '';
+  updateMessage: string | null = null;
+  isSuccess: boolean = false;
 
-
+  entityOptions = [
+    { value: 'ad', text: 'Ad' },
+    { value: 'aciklama', text: 'Açıklama' },
+    { value: 'kod', text: 'Kod' },
+    { value: 'stok', text: 'Stok' },
+    { value: 'fiyat', text: 'Fiyat' },
+    { value: 'kategori', text: 'Kategori' },
+    { value: 'img', text: 'Görsel' },
+    { value: 'amper', text: 'Amper' },
+    { value: 'aydinlatmaturu', text: 'Aydınlatma Türü' },
+    { value: 'cerceve', text: 'Çerçeve' },
+    { value: 'damarsayisi', text: 'Damar Sayısı' },
+    { value: 'disKilifrengi', text: 'Dış Kılıf Rengi' },
+    { value: 'duy', text: 'Duy' },
+    { value: 'isikrengi', text: 'Işık Rengi' },
+    { value: 'kablotipi', text: 'Kablo Tipi' },
+    { value: 'kablouzunlugu', text: 'Kablo Uzunluğu' },
+    { value: 'kanalboyutu', text: 'Kanal Boyutu' },
+    { value: 'kanalozelligi', text: 'Kanal Özelliği' },
+    { value: 'kanalrengi', text: 'Kanal Rengi' },
+    { value: 'kasarengi', text: 'Kasa Rengi' },
+    { value: 'kesit', text: 'Kesit' },
+    { value: 'kesmekapasitesi', text: 'Kesme Kapasitesi' },
+    { value: 'kullanimyeri', text: 'Kullanım Yeri' },
+    { value: 'kutup', text: 'Kutup' },
+    { value: 'marka', text: 'Marka' },
+    { value: 'model', text: 'Model' },
+    { value: 'prizsayisi', text: 'Priz Sayısı' },
+    { value: 'renk', text: 'Renk' },
+    { value: 'renksicakligikelvin', text: 'Renk Sıcaklığı (Kelvin)' },
+    { value: 'sigortasayisi', text: 'Sigorta Sayısı' },
+    { value: 'tip', text: 'Tip' },
+    { value: 'tur', text: 'Tür' },
+    { value: 'urunozelligi', text: 'Ürün Özelliği' },
+    { value: 'uruntipi', text: 'Ürün Tipi' },
+    { value: 'watt', text: 'Watt' },
+    { value: 'indirim', text: 'İndirim (%)' }
+  ];
+  selectedEntity = this.entityOptions[0].value;
+  onEntityChange(selectedValue: string) {
+    this.selectedEntity = selectedValue;
+  }
   ngOnInit(): void {
     const token = this.getCookie("session_key");
     if (!token) {
@@ -199,11 +246,94 @@ export class ProfileComponent {
       value: tur,
       text: tur
     }));
+    // Ürün türü seçeneklerini ayarla
+  this.urunTurleriOptions = this.urunTurleri.map(tur => ({
+    value: tur,
+    text: tur
+  }));
+
+  // İlk ürünü başlangıç değeri olarak ata
+  if (this.urunTurleriOptions.length > 0) {
+    this.urunTuru = this.urunTurleriOptions[0].value;
+  }
     this.getOrders();
 
   }
+  updateProduct() {
+    if (!this.barkod) {
+      console.error("Barkod boş bırakılamaz");
+      return;
+    }
 
+    const payload = {
+      barkod: this.barkod,
+      entity: this.selectedEntity,
+      deger: this.deger || '' // Eğer deger boş bırakılmışsa, boş bir string gönderir
+    };
 
+    this.sendRequestWithHeadersPost('Urun/UpdateWithEntityName', 'PUT', payload, {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+      .then(response => {
+        console.log("Güncelleme başarılı:", response);
+        this.isSuccess = true;
+        this.updateMessage = "Ürün başarıyla güncellendi.";
+        this.hideMessageAfterDelay();
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+        this.isSuccess = false;
+        this.updateMessage = "Ürün güncellenirken bir hata oluştu.";
+        this.hideMessageAfterDelay();
+      });
+  }
+
+  hideMessageAfterDelay() {
+    setTimeout(() => {
+      this.updateMessage = null;
+    }, 3000); // 3 saniye sonra mesajı gizle
+  }
+  confirmDelete() {
+    // Eğer barkod alanı boşsa popup açılmasın ve uyarı mesajı gösterilsin
+    if (!this.barkod || this.barkod.trim() === "") {
+      this.updateMessage = "Lütfen önce bir barkod girin.";
+      this.isSuccess = false;
+      this.hideMessageAfterDelay();
+      return; // Popup açılmadan fonksiyondan çık
+    }
+  
+    // Barkod girildiyse popup açılır
+    const userConfirmed = confirm(`${this.barkod} numaralı ürünü silmek üzeresiniz. Emin misiniz?`);
+    if (userConfirmed) {
+      this.deleteProduct();
+    }
+  }
+  
+  cancelDelete() {
+    this.showDeletePopup = false;
+  }
+  
+  deleteProduct() {
+    // Popup'ı kapatalım
+    this.showDeletePopup = false;
+  
+    // API isteğini gönderelim
+    this.sendRequestWithHeadersPost(`Urun/Delete/${this.barkod}`, 'DELETE', null, {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+      .then(response => {
+        alert(`${this.barkod} numaralı ürün başarıyla silindi.`);
+        console.log(response);
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+        alert('Ürün silinirken bir hata oluştu.');
+      });
+  }
   getUserByToken(){
     this.sendRequestWithHeaders('User/GetUser','GET', {
       'Authorization': `Bearer ${this.getCookie("session_key")}`
@@ -239,7 +369,7 @@ export class ProfileComponent {
   }
   sendRequestWithHeadersPost(url: string, method: string, data?:any, header?: any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
-    return fetch(`https://bycobackend.online:5001/api/${url}`, {
+    return fetch(`https://localhost:7096/api/${url}`, {
       method: method,
       mode: 'cors',
       cache: 'no-cache',
@@ -466,6 +596,10 @@ getStatusClass(durum: string): string {
   urunTuruChangeHandler(selectedOption: { value: string; text: string }) {
     this.urunTuru = selectedOption.value;
   }
+  entityChangeHandler(selectedEntity: any) {
+    this.entity = selectedEntity; // Seçilen entity değerini modelde güncelle
+  }
+  
   updatePassword() {
     console.log('yeni =' + this.newPassword + ', eski =' + this.confirmPassword);
     if (this.newPassword === this.confirmPassword && this.confirmPassword.length > 7) {
@@ -521,27 +655,34 @@ getStatusClass(durum: string): string {
   }
 
   addCategory() {
+    if (!this.urunTuru) {
+      this.toastrService.error('Ürün Türü seçilmedi.', 'Hata');
+      return;
+    }
+  
     const kategori = {
       id: 0,
       ad: this.newCategory,
       urunturu: this.urunTuru
     };
-
-    this.sendLocalRequest('Kategori/Add', 'POST', kategori)
+  
+    this.sendRequestWithHeadersPost('Kategori/Add', 'POST', kategori, {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
       .then(response => {
         console.log('Kategori eklendi:', response);
         this.toastrService.success('Kategori başarıyla eklendi.', 'Başarılı');
-
-        // Yeni Kategori ve Ürün Türü inputlarını sıfırla
         this.newCategory = '';
-        this.urunTuru = ''; // Ürün Türü seçimini sıfırla
+        this.urunTuru = '';
       })
       .catch(err => {
         console.error("Error adding category: ", err);
         this.toastrService.error('Kategori eklenirken bir hata oluştu.', 'Hata');
       });
   }
-
+  
 
 
 

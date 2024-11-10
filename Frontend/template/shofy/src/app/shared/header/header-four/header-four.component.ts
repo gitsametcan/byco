@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { CartService } from '@/shared/services/cart.service';
 import { WishlistService } from '@/shared/services/wishlist.service';
 import { UtilsService } from '@/shared/services/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-four',
@@ -9,11 +10,13 @@ import { UtilsService } from '@/shared/services/utils.service';
   styleUrls: ['./header-four.component.scss']
 })
 export class HeaderFourComponent {
+  public searchText: string = ''; // Arama metni
 
     constructor(
         public cartService: CartService,
         public wishlistService: WishlistService,
         public utilsService: UtilsService,
+        public router: Router
       ) {}
     
       sticky : boolean = false;
@@ -23,6 +26,12 @@ export class HeaderFourComponent {
         }
         else{
           this.sticky = false
+        }
+      }
+      handleSearchSubmit() {
+        if (this.searchText) {
+          // Arama sorgusu ile belirli bir sayfaya yönlendir
+          this.router.navigate(['/pages/search'], { queryParams: { searchText: this.searchText } });
         }
       }
 }

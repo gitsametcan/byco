@@ -484,6 +484,82 @@
                         <!-- profile password start -->
                         <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
                            <div *ngIf="myObject.tip==0" class="profile__address">
+                              <div style="margin-top: 30px;"></div>
+                                 <h3 class="profile__info-title">Ürün Güncelle</h3>
+                              
+                              <div class="update-product-form">
+                                 <form (ngSubmit)="updateProduct()" #updateProductForm="ngForm">
+                                   <div class="row">
+                                     <!-- Barkod Input -->
+                                     <div class="col-xxl-4 col-md-4">
+                                       <div class="profile__input-box">
+                                         <div class="profile__input">
+                                           <label for="barkod">Barkod</label>
+                                           <input
+                                             type="text"
+                                             name="barkod"
+                                             id="barkod"
+                                             [(ngModel)]="barkod"
+                                             required
+                                             placeholder="Barkod giriniz"
+                                           />
+                                         </div>
+                                       </div>
+                                     </div>
+                               
+                                     <!-- Entity Dropdown with app-nice-select -->
+                                     <div class="col-xxl-4 col-md-4">
+                                       <div class="profile__input-box">
+                                         <div class="profile__input">
+                                           <label for="entity">Entity</label>
+                                           <app-nice-select
+                                             [options]="entityOptions"
+                                             name="entity"
+                                             [(ngModel)]="selectedEntity"
+                                             (onChange)="selectedEntity = $event.value"
+                                             [defaultCurrent]="0"
+                                             placeholder="Entity Seçiniz"
+                                             >
+                                           </app-nice-select>
+                                         </div>
+                                       </div>
+                                     </div>
+                               
+                                     <!-- Değer Input (Opsiyonel) -->
+                                     <div class="col-xxl-4 col-md-4">
+                                       <div class="profile__input-box">
+                                         <div class="profile__input">
+                                           <label for="deger">Değer (Opsiyonel)</label>
+                                           <input
+                                             type="text"
+                                             name="deger"
+                                             id="deger"
+                                             [(ngModel)]="deger"
+                                             placeholder="Değer giriniz"
+                                           />
+                                         </div>
+                                       </div>
+                                     </div>
+                               
+                                     <!-- Submit Button -->
+                                     <div class="row mt-3">
+                                       <!-- Güncelle ve Sil Butonları -->
+                                       <div class="col-xxl-4 col-md-4">
+                                         <button type="button" class="tp-btn tp-btn-black update-btn" (click)="updateProduct()">Güncelle</button>
+                                         <button type="button" class="tp-btn tp-btn-black delete-btn" (click)="confirmDelete()">Sil</button>
+                                       </div>
+                                       <!-- Bildirim Alanı -->
+                                       <div *ngIf="updateMessage" class="notification" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
+                                          {{ updateMessage }}
+                                       </div>
+                                     </div>
+                                     
+                                     
+                                   </div>
+                                 </form>
+                               </div>
+                               <div style="margin-top: 30px;"></div>
+                                 <h3 class="profile__info-title">Kategori Ekle</h3>
                               <form (ngSubmit)="addCategory()" #addCategoryForm="ngForm">
                                  <div class="row">
                                     <!-- Dropdown for Ürün Türü -->
@@ -521,7 +597,7 @@
 
 
                               <div style="margin-top: 30px;"></div>
-                              <h3 class="profile__info-title">Ürün Ekle</h3>
+                                 <h3 class="profile__info-title">Ürün Ekle</h3>
                               <div class="profile__info-content">
                                  <form (ngSubmit)="addUrun()" #addUrunForm="ngForm">
                                     <div class="row">
@@ -646,7 +722,15 @@
                                     </div>
                                  </form>
                               </div>
-
+                              <div *ngIf="showDeletePopup" class="delete-popup">
+                                 <div class="popup-content">
+                                   <p>{{ barkod }} numaralı ürünü silmek üzeresiniz. Emin misiniz?</p>
+                                    <button class="tp-btn tp-btn-black update-btn" (click)="deleteProduct()">Evet, sil</button>
+                                    <button class="tp-btn tp-btn-black update-btn" (click)="cancelDelete()">İptal</button>
+                                 </div>
+                              </div>
+                              
+ 
                            </div>
                            <div *ngIf="myObject.tip!=0" class="profile__address">
                               <div class="row">

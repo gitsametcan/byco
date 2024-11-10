@@ -544,7 +544,7 @@ app-product-item-two {
 
 .tab-header .active {
   font-weight: bold;
-  border-bottom: 2px solid #ff5722;
+  border-bottom: 2px solid #0077aa;
 }
 
 .product-grid {
@@ -561,4 +561,49 @@ app-product-item-two {
 // Çeşitli Elektrik Ürünleri section
 .featured-categories {
   margin-top: 40px;
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 10px 20px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.search-input-wrapper input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px;
+  color: #333;
+}
+
+.search-action-btn {
+  background: none;
+  color: #0077aa; /* Turuncu renk */
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0 10px;
 }

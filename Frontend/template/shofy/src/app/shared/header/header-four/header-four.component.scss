@@ -19,4 +19,71 @@
       display: none; /* Mobilde görünmesini engelliyoruz */
     }
   }
-  
+  .tp-header-bottom-3 .row {
+    display: flex;
+    align-items: center; /* Tüm içeriklerin dikey ortalanmasını sağla */
+}
+
+/* Main Menu */
+.main-menu.menu-style-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Yüksekliği hizalamak için */
+}
+
+.tp-main-menu-content a {
+    font-size: 13px; /* Küçük font boyutu */
+    padding: 0 5px; /* Sağ ve sol boşlukları azaltma */
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 0px 15px;
+  max-width: 550px; /* Arama alanı genişliğini ayarla */
+  width: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+/* Search Button and Input Size */
+.search-input-wrapper input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 5px;
+    color: #333;
+}
+
+.search-action-btn {
+    font-size: 14px;
+    padding: 0 10px;
+    color: #0077aa;
+    font-weight: bold;
+}
+.tp-main-menu-content {
+  transform: scale(0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal; /* Varsayılan line-height’i sıfırla */
+}
+
+/* Menü Linklerinin Yüksekliğini ve Boşluklarını Ayarlayın */
+.tp-main-menu-content a {
+  font-size: 13px; /* Küçük font boyutu */
+  padding: 0 8px; /* Başlıklar arasındaki boşlukları azaltma */
+  line-height: 1; /* Dikey hizalamayı düzeltmek için */
+  height: 100%; /* Linklerin tam yükseklik kaplaması için */
+}

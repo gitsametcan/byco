@@ -1,6 +1,7 @@
 import { ProductService } from '@/shared/services/product.service';
 import { IProduct } from '@/types/product-type';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import Swiper from 'swiper';
 
 
@@ -20,12 +21,14 @@ interface Slide {
 })
 export class ShopMainPageComponent {
   products: IProduct[] = []; // Array to hold products for "Fırsat Ürünleri"
+  featuredProducts: IProduct[] = []; // Array to hold products for "Öne Çıkanlar"
   displayedProducts: IProduct[] = []; // Array to display up to 10 products
   activeProductIndex: number = 0; // Track the active product index
   isDragging = false;
   startX = 0;
   scrollLeft = 0;
-  
+  public searchText: string = ''; // Arama metni
+
   @ViewChild('swiperEl') swiperEl!: ElementRef & { swiper: Swiper };
 
   ngAfterViewInit() {
@@ -45,14 +48,14 @@ export class ShopMainPageComponent {
   
 
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,private router: Router) {}
 
   ngOnInit() {
     this.productService.getAllProjects().subscribe((data: IProduct[]) => {
       this.allProducts = data;
       this.updateDisplayedProducts();
+      this.displayFeaturedProducts();
     });
-    this.startAutoSlide();
 
   }
 
@@ -61,7 +64,17 @@ export class ShopMainPageComponent {
     this.updateDisplayedProducts();
   }
 
-  
+  handleSearchSubmit() {
+    if (this.searchText) {
+      // Arama sorgusu ile belirli bir sayfaya yönlendir
+      this.router.navigate(['/pages/search'], { queryParams: { searchText: this.searchText } });
+    }
+  }
+
+  // Arama kutusunu kapatma işlevi
+  closeSearch() {
+    this.searchText = ''; // Arama kutusunu temizle
+  }
 
   loadProducts() {
     this.productService.products.subscribe((data: IProduct[]) => {
@@ -89,21 +102,12 @@ export class ShopMainPageComponent {
   //Banner section
   activeSlideIndex: number = 0;
   intervalId: any;
-  slides: Slide[] = [
-    { image: 'assets/image1.jpg', title: 'Güç Kabloları', link: 'https://example.com/guc-kablolari' },
-    { image: 'assets/image2.jpg', title: 'Nexans Kablo Stoklarda!', link: 'https://example.com/nexans-kablo' },
-    { image: 'assets/image3.jpg', title: 'Zayıf Akım Kablo Çeşitleri', link: 'https://example.com/kablo-cesitleri' },
-    // Add more slides as needed
-  ];
+  
   ngOnDestroy() {
     this.clearAutoSlide();
   }
 
-  startAutoSlide() {
-    this.intervalId = setInterval(() => {
-      this.nextSlide();
-    }, 5000); // Change slide every 5 seconds
-  }
+
 
   clearAutoSlide() {
     if (this.intervalId) {
@@ -117,29 +121,22 @@ export class ShopMainPageComponent {
     {
       image: 'assets/zayif-akim-kablolar.jpg',
       title: 'Zayıf Akım Kablolar',
-      link: '/kategori/zayif-akim'
+      link: '/shop/shop-list?category=Zayıf%20Akım%20Kabloları'
     },
     {
       image: 'assets/enerji-kablolari.jpg',
       title: 'Enerji Kabloları',
-      link: '/kategori/enerji'
+      link: '/shop/shop-list?category=Enerji%20Kabloları'
     },
     {
       image: 'assets/ray-spotlar.jpg',
-      title: 'Ray Spotlar',
-      link: '/kategori/ray-spotlar'
+      title: 'Aydınlatma',
+      link: '/shop/shop-list?category=Aydınlatma'
     }
   ];
   
   // Method to navigate to the next slide
-  nextSlide() {
-    this.activeSlideIndex = (this.activeSlideIndex + 1) % this.slides.length;
-  }
-
-  // Method to navigate to the previous slide
-  previousSlide() {
-    this.activeSlideIndex = (this.activeSlideIndex - 1 + this.slides.length) % this.slides.length;
-  }
+  
 
   // Method to set the active slide when clicking a thumbnail
   setActiveSlide(index: number) {
@@ -149,7 +146,9 @@ export class ShopMainPageComponent {
   activeTab: string = 'recommended';
   allProducts: IProduct[] = [];
 
-
+displayFeaturedProducts() {
+  this.featuredProducts = this.allProducts.slice(0, 10); // İlk 10 ürünü al
+}
 
 updateDisplayedProducts() {
   if (this.allProducts.length === 0) {
@@ -171,7 +170,7 @@ updateDisplayedProducts() {
  // Çeşitli Elektrik Ürünleri section 
   electricProducts = [
     { image: 'assets/serit-led.jpg', title: 'Şerit Led', link: '/urunler/serit-led' },
-    { image: 'assets/salt-malzemeler.jpg', title: 'Şalt Malzemeler', link: '/urunler/salt-malzemeler' },
+    { image: 'assets/salt-malzemeler.jpg', title: 'Şalt Malzemeler', link: '/shop/shop-list?category=Şalt%20Malzemeler' },
     // Diğer ürünleri burada ekleyin
   ];
 
