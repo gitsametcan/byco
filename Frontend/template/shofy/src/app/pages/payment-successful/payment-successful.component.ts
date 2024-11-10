@@ -46,7 +46,7 @@ export class PaymentSuccessfulComponent {
     
     SendMessage(){
       this.sendRequest('Siparis/SiparisOdemeTamam','POST',{
-          "siparis": this.getCookie("siparisno")!,
+          "siparisno": this.getCookie("siparisno")!,
       })
       .then(response => {
         this.cartService.clear_cart();
