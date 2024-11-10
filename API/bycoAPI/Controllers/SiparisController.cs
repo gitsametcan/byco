@@ -46,41 +46,35 @@ namespace bycoAPI.Controllers
         }
 
 
+
+
         [HttpPost("SiparisOdemeTamam")]
+        [AllowAnonymous]
         public async Task<RequestResponse> OdemeTamam([FromBody] string siparisno)
         {
 
+            
+                return await _siparisService.OdemeAlindi(siparisno);
+        }
+
+
+        [HttpGet("GetAll")]
+        //[AllowAnonymous]
+        public async Task<List<SiparisOut>> GetSiparisForAdmin()
+        {
             string token = Request.Headers["Authorization"];
 
             token = token.Substring(7);
             string email = await _tokenService.decodeKey(token);
             User user = await _userService.GetUserByEmail(email);
 
-            if (user.tip == 0)
-            {
-                return await _siparisService.OdemeAlindi(siparisno);
-            }
-            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
-        }
-
-
-        [HttpGet("GetAll")]
-        [AllowAnonymous]
-        public async Task<List<SiparisOut>> GetSiparisForAdmin()
-        {
-            // string token = Request.Headers["Authorization"];
-
-            // token = token.Substring(7);
-            // string email = await _tokenService.decodeKey(token);
-            // User user = await _userService.GetUserByEmail(email);
-
-            // if (user.tip == 0) return await _siparisService.GetSiparisForAdmin();
-            // else return await _siparisService.GetSiparisForLasts(email);
-            return await _siparisService.GetSiparisForAdmin();
+            if (user.tip == 0) return await _siparisService.GetSiparisForAdmin();
+            else return await _siparisService.GetSiparisForLasts(email);
+            //return await _siparisService.GetSiparisForAdmin();
         }
 
         [HttpGet("GetSiparisByNo/{siparisno}")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<SiparisOut> GetSiparisByNo(string siparisno)
         {
             var result = await _siparisService.GetSiparisBySiparisNo(siparisno);
