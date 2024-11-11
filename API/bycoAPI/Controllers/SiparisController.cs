@@ -50,9 +50,9 @@ namespace bycoAPI.Controllers
 
         [HttpPost("SiparisOdemeTamam")]
         [AllowAnonymous]
-        public async Task<RequestResponse> OdemeTamam([FromBody] string siparisno)
+        public async Task<RequestResponse> OdemeTamam([FromBody] SiparisOnay siparisno)
         {
-                return await _siparisService.OdemeAlindi(siparisno);
+                return await _siparisService.OdemeAlindi(siparisno.siparisno);
         }
 
 
