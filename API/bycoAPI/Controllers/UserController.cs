@@ -22,9 +22,9 @@ namespace bycoAPI.Controllers
 
         [HttpPost("SifremiUnuttum")]
         [AllowAnonymous]
-        public async Task<RequestResponse> RegisterUser([FromBody] string mail)
+        public async Task<RequestResponse> RegisterUser([FromBody] ForgotPass mail)
         {
-            return await userService.ForgotPassword(mail);
+            return await userService.ForgotPassword(mail.mail);
         }
 
         [HttpGet("GetUser")]
