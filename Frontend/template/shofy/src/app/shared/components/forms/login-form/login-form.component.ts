@@ -39,7 +39,6 @@ export class LoginFormComponent {
     if (this.loginForm.valid) {
       console.log('login-form-value', this.loginForm.value);
 
-      this.toastrService.success(`Message sent successfully`);
 
       // Reset the form
       this.loginForm.reset();
@@ -47,21 +46,25 @@ export class LoginFormComponent {
     }
   }
 
-  giris(email:string,password:string){
-    //console.log(email +"    "+password);
-    console.log("ha buradayım");
-    this.sendLocalRequest('Auth/LoginUser','POST', {email: email, password: password})
-    .then(response => {
-      console.log(response);
-
-      this.setCookie("session_key",response.authToken,30)
-      //document.cookie = "session_key=" + response.session_key + ";";
-      this.router.navigate(['/pages/profile']);
-    })
-    .catch(err => {
-      console.error("Error: " + err);
-    })
+  giris(email: string, password: string) {
+    console.log("Giriş denemesi başlatıldı");
+    this.sendLocalRequest('Auth/LoginUser', 'POST', { email: email, password: password })
+      .then(response => {
+        console.log(response);
+  
+        if (response.authToken) {
+          this.setCookie("session_key", response.authToken, 30);
+          this.router.navigate(['/pages/profile']);
+        } else {
+          this.toastrService.error("Kullanıcı adı veya şifreniz yanlış");
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        this.toastrService.error("Kullanıcı adı veya şifreniz yanlış");
+      });
   }
+  
 
   setCookie(name:string,value:string,days:number) {
     var expires = "";
