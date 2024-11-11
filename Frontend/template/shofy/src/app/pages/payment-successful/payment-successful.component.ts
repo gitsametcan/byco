@@ -44,42 +44,58 @@ export class PaymentSuccessfulComponent {
       }
   
     
-    SendMessage(){
-      this.sendRequest('Siparis/SiparisOdemeTamam','POST',{
-          "siparisno": this.getCookie("sonsiparisno"),
-      })
-      .then(response => {
-        this.cartService.clear_cart();
-        console.log(response);
-      })
-      .catch(err => {
-        console.error("Error: " + err);
-      })
-  
-  
-  
-    }
+      SendMessage() {
+        const siparisno = this.getCookie("sonsiparisno");
+        console.log("Sipariş No:", siparisno);
+        
+        if (!siparisno) {
+          console.error("sonsiparisno is missing from cookies");
+          return;
+        }
+      
+        this.sendRequest('Siparis/SiparisOdemeTamam', 'POST', siparisno)
+          .then(response => {
+            this.cartService.clear_cart();
+            console.log(response);
+          })
+          .catch(err => {
+            console.error("Error:", err);
+          });
+      }
+      
+      
 
-    sendRequest(url: string, method: string, data?: any): Promise<any> {
-
-      return fetch(`https://bycobackend.online:5001/api/${url}`, {
-        method: method,
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
+      sendRequest(url: string, method: string, data?: any): Promise<any> {
+        console.log("Request URL:", `https://bycobackend.online:5001/api/${url}`);
+        console.log("Request Method:", method);
+        console.log("Request Headers:", {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(data),
-      })
-        .then(response => {
+        });
+        console.log("Request Data:", data);  // JSON.stringify yerine doğrudan data kullanıyoruz
+        
+        return fetch(`https://bycobackend.online:5001/api/${url}`, {
+          method: method,
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: data  // JSON.stringify yerine doğrudan data kullanıyoruz
+        })
+        .then(async response => {
           if (!response.ok) {
-            throw new Error(response.statusText);
+            const errorText = await response.text();
+            console.error("Error Response Text:", errorText);
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
           }
           return response.json();
-        })
-    }
+        });
+      }
+      
+      
 }
