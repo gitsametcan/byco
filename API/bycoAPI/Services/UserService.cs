@@ -137,7 +137,7 @@ namespace bycoAPI.Services
         public async Task<RequestResponse> ForgotPassword(string mail)
         {
             User user = await _dbContexts.Users.FirstOrDefaultAsync(k => k.email == mail);
-            if (user != null)
+            if (user == null)
             {
                 return new RequestResponse { StatusCode = 400, ReasonString = "Kullanici bulunamadı!" };
             }
