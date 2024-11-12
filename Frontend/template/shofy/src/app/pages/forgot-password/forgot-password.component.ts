@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,26 +11,79 @@ export class ForgotPasswordComponent {
 
   public forgotForm!: FormGroup;
   public formSubmitted = false;
+  public showConfirmation = false; // Popup görünürlüğü için değişken
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService, private renderer: Renderer2) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this.forgotForm = new FormGroup({
-      email:new FormControl(null,[Validators.required,Validators.email])
-    })
+      email: new FormControl(null, [Validators.required, Validators.email])
+    });
   }
 
-  onSubmit() {
+  openConfirmationPopup() {
+    this.showConfirmation = true; // Popup’ı açar
+    this.renderer.addClass(document.body, 'modal-open');
+
+  }
+
+  closeConfirmationPopup() {
+    this.showConfirmation = false; // Popup’ı kapatır
+    this.renderer.removeClass(document.body, 'modal-open');
+
+  }
+
+  confirmResetPassword() {
     this.formSubmitted = true;
+    
     if (this.forgotForm.valid) {
-      console.log('forgot-form-value', this.forgotForm.value);
-      this.toastrService.success(`Message sent successfully`);
+      this.showConfirmation = false; // İşlem sonrası popup’ı kapatır
 
-      // Reset the form
-      this.forgotForm.reset();
-      this.formSubmitted = false; // Reset formSubmitted to false
+      const emailData = { mail: this.forgotForm.value.email };
+      console.log('Sending email data to API:', emailData);
+
+      this.sendRequest('User/SifremiUnuttum', 'POST', emailData)
+        .then(response => {
+          console.log('API response:', response);
+          if (response.statusCode === 200) {
+            this.toastrService.success('Şifre sıfırlama e-postası gönderildi');
+            this.forgotForm.reset();
+            this.formSubmitted = false;
+          } else {
+            this.toastrService.error(response.reasonString || 'İstek başarısız oldu');
+          }
+        })
+        .catch(error => {
+          console.error('API error:', error);
+          this.toastrService.error('İstek başarısız oldu');
+        });
     }
+    this.closeConfirmationPopup();
+
   }
 
-  get email() { return this.forgotForm.get('email') }
+  sendRequest(url: string, method: string, data?: any): Promise<any> {
+    return fetch(`https://bycobackend.online:5001/api/${url}`, {
+      method: method,
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+      console.log('Raw response:', response);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    });
+  }
+
+  get email() { return this.forgotForm.get('email'); }
 }
