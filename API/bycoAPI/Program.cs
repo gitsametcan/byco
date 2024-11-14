@@ -14,14 +14,10 @@ namespace bycoAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+
             builder.Services.AddDbContext<DbContexts>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-            // var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailSeervice>();
-            // builder.Services.AddSingleton(emailConfig);
-            // builder.Services.AddScoped<IEmailSender, EmailSender>();
 
            builder.WebHost.ConfigureKestrel(serverOptions =>
 {
@@ -34,7 +30,6 @@ namespace bycoAPI
 
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -72,33 +67,13 @@ namespace bycoAPI
             {
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
             });
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowSpecificOrigins", builder =>
-            //    {
-            //        builder.WithOrigins("http://localhost", "https://bycobackend.online")
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod()
-            //            .AllowCredentials(); // Çerezleri ve kimlik doğrulama bilgilerini göndermek için
-            //    });
-            //});
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
 
             app.UseSwagger();
             app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
-
-            
-
-            //app.UseCors("AllowSpecificOrigins");
 
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
