@@ -1,5 +1,5 @@
 <!-- header start -->
-<app-header-four></app-header-four>
+<app-header-three></app-header-three>
 <!-- header end -->
 <app-shared-nav></app-shared-nav>
 
@@ -25,7 +25,7 @@
                   <div class="tp-compare-thumb m-auto">
                     <img [src]="item.img" alt="product">
                     <h4 class="tp-compare-product-title">
-                      <a [routerLink]="['/shop/shop-details', item.id]">{{ item.title }}</a>
+                      <a [routerLink]="['/shop/shop-details', item.id]">{{ item.ad }}</a>
                     </h4>
                   </div>
                 </td>
@@ -35,20 +35,267 @@
                 <th>Açıklama</th>
                 <td *ngFor="let item of compareService.getCompareProducts()">
                   <div class="tp-compare-desc">
-                    <p>{{ item.description.substring(0, 150) }}</p>
+                    <p>{{ item.aciklama.substring(0, 150) }}</p>
+                  </div>
+                </td>
+              </tr>
+
+
+
+              <tr>
+                <th>Fiyat</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-price" *ngIf="item.indirim > 0">
+                    <span>{{ item.fiyat.toFixed(2) }}₺</span>
+                    <span class="old-price">{{ ((item.fiyat - (item.fiyat * item.indirim) / 100)).toFixed(2) }}₺</span>
+                  </div>
+                  <div class="tp-compare-price" *ngIf="item.indirim <= 0">
+                    <span>{{ item.fiyat.toFixed(2) }}₺</span>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <th>Amper</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.amper }}</p>
                   </div>
                 </td>
               </tr>
 
               <tr>
-                <th>Fiyat</th>
+                <th>Aydınlatma Türü</th>
                 <td *ngFor="let item of compareService.getCompareProducts()">
-                  <div class="tp-compare-price" *ngIf="item.discount > 0">
-                    <span>{{ item.price.toFixed(2) }}₺</span>
-                    <span class="old-price">{{ ((item.price - (item.price * item.discount) / 100)).toFixed(2) }}₺</span>
+                  <div class="tp-compare-desc">
+                    <p>{{ item.aydinlatmaturu }}</p>
                   </div>
-                  <div class="tp-compare-price" *ngIf="item.discount <= 0">
-                    <span>{{ item.price.toFixed(2) }}₺</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Çerçeve</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.cerceve }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Damar Sayısı</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.damarsayisi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Dış Kılıf Rengi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.disKilifrengi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Duy</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.duy }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Işık Rengi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.isikrengi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kablo Tipi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kablotipi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <th>Kablo Uzunluğu</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kablouzunlugu }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kanal Boyutu</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kanalboyutu }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kanal Özellği</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kanalozelligi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kanal Rengi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kanalrengi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kasa Rengi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kasarengi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kesit</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kesit }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kesme Kapasitesi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kesmekapasitesi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Kutup</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.kutup }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Marka</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.marka }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Model</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.model }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Priz Sayısı</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.prizsayisi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Renk</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.renk }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Renk Sıcaklığı (Kelvin)</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.renksicakligikelvin }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Sigorta Sayısı</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.sigortasayisi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Tip</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.tip }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Tür</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.tur }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Ürün Özelliği</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.urunozelligi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Ürün Tipi</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.uruntipi }}</p>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>Watt</th>
+                <td *ngFor="let item of compareService.getCompareProducts()">
+                  <div class="tp-compare-desc">
+                    <p>{{ item.watt }}</p>
                   </div>
                 </td>
               </tr>
@@ -62,18 +309,6 @@
                 </td>
               </tr>
 
-              <!-- <tr>
-                <th>Rating</th>
-                <td *ngFor="let item of compareService.getCompareProducts()">
-                  <div class="tp-compare-rating">
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                  </div>
-                </td>
-              </tr> -->
 
               <tr>
                 <th>Kaldır</th>
