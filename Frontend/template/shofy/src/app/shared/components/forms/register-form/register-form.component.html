@@ -4,7 +4,7 @@
     <!-- Name Input -->
     <div class="tp-login-input-box">
       <div class="tp-login-input">
-        <input id="name" type="text" placeholder="İsminiz" formControlName="name">
+        <input id="name" type="text" placeholder="İsminiz" formControlName="name" (input)="onInput($event)">
       </div>
       <div class="tp-login-input-title">
         <label for="name">İsminiz</label>
@@ -17,7 +17,7 @@
     <!-- Surname Input -->
     <div class="tp-login-input-box">
       <div class="tp-login-input">
-        <input id="surname" type="text" placeholder="Soyisminiz" formControlName="surname">
+        <input id="surname" type="text" placeholder="Soyisminiz" formControlName="surname" (input)="onInput($event)">
       </div>
       <div class="tp-login-input-title">
         <label for="surname">Soyisminiz</label>

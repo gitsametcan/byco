@@ -40,6 +40,16 @@ export class RegisterFormComponent {
     })
   }
 
+  onInput(event: any): void {
+    const pattern = /^[a-zA-ZğüşöçıİĞÜŞÖÇ\s]*$/; // Sadece harf ve boşluk
+    const inputChar = event.target.value;
+
+    if (!pattern.test(inputChar)) {
+      event.target.value = inputChar.replace(/[^a-zA-ZğüşöçıİĞÜŞÖÇ\s]/g, ''); // Geçersiz karakterleri sil
+    }
+  }
+
+
   kaydol(name:string,surname:string,email:string, tel:string, password:string, tcknvkn:string, teslimatadresi:string, faturaadresi:string){
     if(this.userType!="null") console.log("null");
     if(name.length>0&&surname.length>0&&email.length>0&&password.length>=6&&this.userType!="null"&&teslimatadresi.length>0&&faturaadresi.length>0){

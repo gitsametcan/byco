@@ -60,6 +60,7 @@
                               data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password"
                               aria-selected="false"><span><i class="fa-regular fa-lock"></i></span> Şifre
                               Güncelle</button>
+                              <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
                         </div>
                      </nav>
                   </div>
@@ -208,9 +209,6 @@
                                     <th scope="col">Sipariş Tarihi</th>
                                     <th scope="col">Sipariş Tutarı</th>
                                     <th scope="col">Durum</th>
-                                    <th scope="col">
-                                      <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
-                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody *ngFor="let siparis of siparisler">
@@ -818,9 +816,6 @@
                                      <th scope="col">Sipariş Tarihi</th>
                                      <th scope="col">Sipariş Tutarı</th>
                                      <th scope="col">Durum</th>
-                                     <th scope="col">
-                                       <button type="submit" class="tp-btn" (click)="logout()">Çıkış</button>
-                                     </th>
                                    </tr>
                                  </thead>
                                  <tbody *ngFor="let siparis of siparisler">
