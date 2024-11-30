@@ -8,10 +8,10 @@
         <div class="tp-shop-sidebar mr-10">
           
           <!-- status -->
-          <div class="tp-shop-widget mb-50">
+          <!-- <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Ürün Durumu</h3>
             <app-status-filter></app-status-filter>
-          </div>
+          </div> -->
           <!-- categories -->
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Kategoriler</h3>
@@ -52,7 +52,7 @@
                 <div class="tp-shop-top-left d-flex align-items-center ">
                   <div class="tp-shop-top-tab tp-tab">
                     <ul class="nav nav-tabs">
-                      <li class="nav-item" role="presentation">
+                      <!-- <li class="nav-item" role="presentation">
                         <button [ngClass]="{'nav-link': true, 'active': activeTab === 'grid'}"
                           (click)="handleActiveTab('grid')">
                           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -71,8 +71,8 @@
                               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                           </svg>
                         </button>
-                      </li>
-                      <li class="nav-item" role="presentation">
+                      </li> -->
+                      <!-- <li class="nav-item" role="presentation">
                         <button [ngClass]="{'nav-link': true, 'active': activeTab === 'list'}"
                           (click)="handleActiveTab('list')">
                           <svg width="16" height="15" viewBox="0 0 16 15" fill="none"
@@ -85,22 +85,22 @@
                               stroke-linejoin="round" />
                           </svg>
                         </button>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
-                  <div class="tp-shop-top-result">
+                  <!-- <div class="tp-shop-top-result">
                     <p>Gösterilen {{ paginate.totalItems }} taneden {{ products.length }} tanesi</p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
-              <div class="col-xl-6">
+              <!-- <div class="col-xl-6">
                 <div class="tp-shop-top-right d-sm-flex align-items-center justify-content-xl-end">
                   <div class="tp-shop-top-select">
                     <app-nice-select [options]="niceSelectOptions" name="Varsayılan Sıralama" [defaultCurrent]="0"
                       (onChange)="changeFilterSelect($event)" placeholder="Varsayılan Sıralama"></app-nice-select>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="tp-shop-items-wrapper tp-shop-item-primary">

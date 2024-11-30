@@ -38,7 +38,7 @@
     <span *ngIf="product.indirim <= 0" class="tp-product-details-price new-price">
       {{ (product.fiyat || 0).toFixed(2) }} TL
     </span>
-    <div *ngIf="myObject?.tip===0" class="tp-product-details-add-to-cart mb-15 w-100">
+    <div *ngIf="myObject?.tip===4" class="tp-product-details-add-to-cart mb-15 w-100">
         <input type="text" [(ngModel)]="yeniFiyat" placeholder="Yeni Fiyatı buraya yazdıktan sonra butona basınız"/>
         <button (click)="fiyatGuncelle()" class="tp-product-details-add-to-cart-btn w-100">Fiyat Güncelle</button>
      </div>
@@ -64,12 +64,12 @@
              </span>
           </div>
        </div>
-       <div *ngIf="myObject?.tip!==0 && myObject?.tip != null" class="tp-product-details-add-to-cart mb-15 w-100">
+       <div class="tp-product-details-add-to-cart mb-15 w-100">
           <button (click)="cartService.addCartProduct(product)" class="tp-product-details-add-to-cart-btn w-100">Sepete Ekle</button>
        </div>
        
        
-       <div *ngIf="myObject?.tip==0" class="tp-product-details-add-to-cart mb-15 w-100">
+       <div *ngIf="myObject?.tip==5" class="tp-product-details-add-to-cart mb-15 w-100">
         <button (click)="urunuSil(product)" class="tp-product-details-add-to-cart-btn w-100">Ürünü Sil</button>
      </div>
     </div>

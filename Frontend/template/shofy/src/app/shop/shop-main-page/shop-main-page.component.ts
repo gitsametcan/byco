@@ -52,7 +52,7 @@ export class ShopMainPageComponent {
 
   ngOnInit() {
     this.productService.getAllProjects().subscribe((data: IProduct[]) => {
-      this.allProducts = data;
+      this.allProducts = data.filter(product => product.ad !== 'Kargo');
       this.updateDisplayedProducts();
       this.displayFeaturedProducts();
     });
@@ -147,29 +147,32 @@ export class ShopMainPageComponent {
   allProducts: IProduct[] = [];
 
 displayFeaturedProducts() {
-  this.featuredProducts = this.allProducts.slice(0, 10); // İlk 10 ürünü al
+  this.featuredProducts = this.allProducts.filter(product => product.ad !== 'Kargo').slice(0, 10); // İlk 10 ürünü al
 }
 
 updateDisplayedProducts() {
   if (this.allProducts.length === 0) {
       return; // Ürünler henüz yüklenmediyse çık
   }
+
+  const filteredProducts = this.allProducts.filter(product => product.ad !== 'Kargo');
+
   switch (this.activeTab) {
     case 'recommended':
-      this.displayedProducts = this.allProducts.slice(0, 10); // İlk 10 ürünü al
+      this.displayedProducts = filteredProducts.slice(0, 10); // İlk 10 ürünü al
       break;
     case 'bestSellers':
-      this.displayedProducts = this.allProducts.slice(10, 20); // Çok satanlar listesi
+      this.displayedProducts = filteredProducts.slice(10, 20); // Çok satanlar listesi
       break;
     case 'discounted':
-      this.displayedProducts = this.allProducts.slice(20, 30); // İndirimli ürünler listesi
+      this.displayedProducts = filteredProducts.slice(20, 30); // İndirimli ürünler listesi
       break;
   }
 }
 
  // Çeşitli Elektrik Ürünleri section 
   electricProducts = [
-    { image: 'assets/serit-led.jpg', title: 'Şerit Led', link: '/urunler/serit-led' },
+    { image: 'assets/serit-led.jpg', title: 'Şerit Led', link: '/shop/shop-list?category=Şerit%20Led' },
     { image: 'assets/salt-malzemeler.jpg', title: 'Şalt Malzemeler', link: '/shop/shop-list?category=Şalt%20Malzemeler' },
     // Diğer ürünleri burada ekleyin
   ];

@@ -42,6 +42,10 @@
                             <th>Özellik Adı</th>
                             <th>Değer</th>
                         </tr>
+                        <tr *ngIf="product.urun != ''">
+                          <td>Barkod</td>
+                          <td>{{ product.urun }}</td>
+                      </tr>
                         <tr *ngIf="product.amper != ''">
                             <td>Amper</td>
                             <td>{{ product.amper }}</td>
@@ -141,10 +145,6 @@
                         <tr *ngIf="product.tur != ''">
                             <td>Tür</td>
                             <td>{{ product.tur }}</td>
-                        </tr>
-                        <tr *ngIf="product.urun != ''">
-                            <td>Ürün</td>
-                            <td>{{ product.urun }}</td>
                         </tr>
                         <tr *ngIf="product.urunozelligi != ''">
                             <td>Ürün Özelliği</td>

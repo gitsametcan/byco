@@ -25,39 +25,46 @@ export class CartService {
   // add_cart_product
   addCartProduct(payload: IProduct) {
     const isExist = state.cart_products.some((i: IProduct) => i.id === payload.id);
+  
     if (payload.durum === 'tükendi' || payload.stok === 0) {
       this.toastrService.error(`Tükendi ${payload.ad}`);
+      return; // Eğer stok yoksa işlemi durdur
     }
-    
-    else if (!isExist) {
+  
+    if (!isExist) {
       const newItem = {
         ...payload,
-        orderQuantity: 1, //this.orderQuantity olursa doğru ekler
+        orderQuantity: this.orderQuantity, // Kullanıcı tarafından belirlenen miktar
       };
+  
       state.cart_products.push(newItem);
-      this.toastrService.success(`${payload.ad} sepete eklendi`);
+      this.toastrService.success(`${this.orderQuantity} ${payload.ad} sepete eklendi`);
     } else {
-      state.cart_products.map((item: IProduct) => {
+      state.cart_products = state.cart_products.map((item: IProduct) => {
         if (item.id === payload.id) {
-          if (typeof item.orderQuantity !== "undefined") {
-            if (item.stok >= item.orderQuantity + this.orderQuantity) {
-              console.log("item.quantity" + item.stok + "item.orderQuantity" + item.orderQuantity + "this.orderQuantity" + this.orderQuantity); 
-              item.orderQuantity =
-                this.orderQuantity !== 1
-                  ? this.orderQuantity + item.orderQuantity
-                  : item.orderQuantity + 1;
-              this.toastrService.success(`${this.orderQuantity} ${item.ad} sepete eklendi`);
-            } else {
-              this.toastrService.success(`No more quantity available for this product!`);
-              this.orderQuantity = 1;
-            }
+          // Varsayılan değerle item.orderQuantity'yi kontrol et
+          const currentQuantity = item.orderQuantity || 0;
+          const totalQuantity = currentQuantity + this.orderQuantity;
+  
+          if (payload.stok >= totalQuantity) {
+            item.orderQuantity = totalQuantity; // Yeni miktarı güncelle
+            this.toastrService.success(`${this.orderQuantity} ${item.ad} sepete eklendi`);
+          } else {
+            this.toastrService.error(`${payload.ad} için yeterli stok yok!`);
           }
         }
-        return { ...item };
+        return item;
       });
     }
+  
+    // Sepet bilgisini kaydet
     localStorage.setItem("cart_products", JSON.stringify(state.cart_products));
-  };
+  
+    // `orderQuantity` değerini sıfırla
+    this.orderQuantity = 1;
+  }
+  
+  
 
 // total price quantity
   public totalPriceQuantity() {
@@ -88,15 +95,11 @@ export class CartService {
 
   // quantity increment
   increment() {
-    return this.orderQuantity = this.orderQuantity + 1;
+    return this.orderQuantity += 1;
   }
-
-  // quantity decrement
+  
   decrement() {
-    return this.orderQuantity =
-      this.orderQuantity > 1
-        ? this.orderQuantity - 1
-        : this.orderQuantity = 1;
+    return this.orderQuantity = this.orderQuantity > 1 ? this.orderQuantity - 1 : 1;
   }
 
   // quantityDecrement

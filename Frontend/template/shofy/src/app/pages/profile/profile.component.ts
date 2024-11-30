@@ -455,18 +455,19 @@ getStatusClass(durum: string): string {
   }
   getKategoriListesi() {
     this.sendLocalRequest('Kategori/GetAll', 'GET')
-      .then((response: any) => {
-        // Gelen veriyi formatlayarak dropdown için kullanıma uygun hale getirin
-        this.kategoriSec = response.map((item: any) => ({
-          value: item.id.toString(), // `id`'yi string olarak dönüştürdük
-          text: `${item.urunturu} - ${item.ad}`
-        }));
-      })
-      .catch(err => {
-        console.error("Error fetching categories: ", err);
-        this.toastrService.error('Kategoriler alınırken bir hata oluştu.', 'Hata');
-      });
-  }
+        .then((response: any) => {
+            console.log("Gelen Kategori Listesi:", response); // Gelen veriyi kontrol edin
+            this.kategoriSec = response.map((item: any) => ({
+                value: item.id.toString(),
+                text: `${item.urunturu} - ${item.ad}`
+            }));
+        })
+        .catch(err => {
+            console.error("Kategoriler alınırken hata oluştu:", err);
+        });
+}
+
+
 
   getMusteriler() {
     this.sendRequest('Satis/GetMusteriBilgileri', 'GET')
@@ -597,8 +598,16 @@ getStatusClass(durum: string): string {
   }
 
   changeHandler(selectedOption: { value: string; text: string }) {
-    this.urundeneme.kategori = this.kategoriSec[Number(selectedOption.value) - 1].text;
-  }
+    console.log("Seçilen Kategori:", selectedOption); // Hangi kategori seçildiğini kontrol edin
+    const selectedCategory = this.kategoriSec.find(item => item.value === selectedOption.value);
+    if (selectedCategory) {
+        this.urundeneme.kategori = selectedCategory.text; // Kategori doğru atandı
+    } else {
+        console.error("Kategori bulunamadı!");
+    }
+}
+
+
   urunTuruChangeHandler(selectedOption: { value: string; text: string }) {
     this.urunTuru = selectedOption.value;
   }
@@ -744,14 +753,25 @@ getStatusClass(durum: string): string {
     }
     console.log("bue");
     console.log(this.gonderilecekUrun);
-    this.sendLocalRequest('Urun/Add', 'POST', this.gonderilecekUrun)
+    this.sendRequestWithHeadersPost('Urun/Add', 'POST', this.gonderilecekUrun, {
+      'Authorization': `Bearer ${this.getCookie("session_key")}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
       .then(response => {
-        console.log(response.status);
+        console.log('Ürün eklendi:', response);
+        if(response.statusCode == 200){
+          this.toastrService.success('Ürün başarıyla eklendi.', 'Başarılı');
+        } else {
+          this.toastrService.error(response.reasonString, 'Hata');
+
+        }
+        this.newCategory = '';
+        this.urunTuru = '';
       })
       .catch(err => {
-        console.error("Error: " + err);
-      })
-
-    this.toastrService.success('Ürün başarıyla eklendi.', 'Başarılı');
+        console.error("Error adding product: ", err);
+        this.toastrService.error('Ürün eklenirken bir hata oluştu.', 'Hata');
+      });
   }
 }
