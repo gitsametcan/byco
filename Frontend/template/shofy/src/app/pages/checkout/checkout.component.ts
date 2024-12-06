@@ -37,6 +37,10 @@ export class CheckoutComponent {
   discount: number = 0;
   objCities: ICity[] = [];
 
+  searchTerm: string = ''; // Kullanıcının arama inputu
+  filteredVergiDaireleri: any[] = []; // Filtrelenmiş vergi daireleri
+  showDropdown: boolean = false; // Dropdown aç/kapa kontrolü
+  
   paymentInfoUpdated: boolean = false;
 
   personalPlaceholders: string[] = ['Adınız Soyadınız', 'E-posta Adresiniz', 'TC Kimlik Numaranız', 'Telefon Numaranız',
@@ -143,6 +147,33 @@ export class CheckoutComponent {
     });
   }
 
+
+  // Dropdown'u gizle
+hideDropdown(): void {
+  // Küçük bir gecikme ekleyerek kullanıcı seçim yaparken dropdown'ı kapatıyoruz
+  setTimeout(() => {
+    this.showDropdown = false;
+  }, 200);
+}
+
+  filterVergiDaireleri() {
+    console.log('Arama terimi:', this.searchTerm); // Kullanıcının girdiği değeri kontrol edin
+    const term = this.searchTerm.toLowerCase(); // Küçük harfe çevir
+    this.filteredVergiDaireleri = this.vergiDaireleri.filter(item =>
+      (item.il + ' ' + item.ilce + ' ' + item.muhasebe_birimi_kodu + ' ' + item.vergi_dairesi)
+        .toLowerCase()
+        .includes(term)
+    );
+    console.log('Filtrelenen sonuçlar:', this.filteredVergiDaireleri); // Sonuçları konsolda kontrol edin
+  }
+  
+  selectVergiDairesi(item: any) {
+    this.myUserObject.vergi_dairesi = item.vergi_dairesi; // Seçimi atar
+    this.searchTerm = item.il + ' ' + item.ilce + ' ' + item.vergi_dairesi; // Input'a seçilen değeri yaz
+    this.filteredVergiDaireleri = []; // Dropdown'u gizle
+  }
+  
+  
   public countrySelectOptions = [
     {value: 'select-country', text: 'Select Country'},
     {value: 'avrupa', text: 'Avrupa'},
@@ -223,6 +254,8 @@ export class CheckoutComponent {
     this.fetchShippingCost();  // Call this function to set the shipping cost
 
     this.objCities = cities_data;
+    
+    this.filteredVergiDaireleri = this.vergiDaireleri;
 
     this.paymentForm = new FormGroup({
       ccn: new FormControl(null, [Validators.required]),

@@ -106,12 +106,38 @@
                         <div class="col-xxl-12" *ngIf="customerType == 1">
                           <div class="profile__input-box">
                             <div class="profile__input">
-                              <select name="vergidairesi" id="vergidairesi" formControlName="vergidairesi" [(ngModel)]="myUserObject.vergi_dairesi">
-                                <option *ngFor="let item of vergiDaireleri" [value]="item">{{ item.il + ' ' + item.ilce + ' ' + item.muhasebe_birimi_kodu + ' ' + item.vergi_dairesi }}</option>
-                              </select>
+                              <!-- Arama Kutusu -->
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Vergi Dairesi Ara"
+                                [(ngModel)]="searchTerm"
+                                [ngModelOptions]="{standalone: true}"
+                                (input)="filterVergiDaireleri()"
+                                (focus)="showDropdown = true"
+                                (blur)="hideDropdown()"
+                              />
+                        
+                              <!-- Dropdown Menü -->
+                              <div
+                                class="dropdown"
+                                *ngIf="showDropdown && filteredVergiDaireleri.length > 0"
+                              >
+                                <ul class="dropdown-menu show" style="display: block; position: absolute;">
+                                  <li
+                                    *ngFor="let item of filteredVergiDaireleri"
+                                    (click)="selectVergiDairesi(item)"
+                                    class="dropdown-item"
+                                  >
+                                    {{ item.il + ' ' + item.ilce + ' ' + item.muhasebe_birimi_kodu + ' ' + item.vergi_dairesi }}
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </div>
+                        
+                        
                       </div>
                     </form>
                 

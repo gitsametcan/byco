@@ -84,10 +84,37 @@ export class SearchComponent {
         }
 
         if (this.searchText && !this.productType) {
-          this.products = productData.filter((prd) =>
-            prd.ad.toLowerCase().includes(this.searchText.toLowerCase())
+          const searchTerms = this.searchText.toLowerCase().split(' '); // searchText'i boşluklara göre böl
+          const lastTerm = searchTerms[searchTerms.length - 1]; // Son kelimeyi al
+        
+          // Önce son yazılan kelimeyi kontrol et
+          let matchedProducts = productData.filter((prd) =>
+            prd.ad.toLowerCase().includes(lastTerm) ||
+            prd.kategori?.toLowerCase().includes(lastTerm) ||
+            prd.model?.toLowerCase().includes(lastTerm) ||
+            prd.marka?.toLowerCase().includes(lastTerm) ||
+            prd.tip?.toLowerCase().includes(lastTerm) ||
+            prd.kod?.toLowerCase().includes(lastTerm)
           );
+        
+          // Eğer son kelimeye göre eşleşme bulunamazsa, tüm kelimelere bak
+          if (matchedProducts.length === 0) {
+            matchedProducts = productData.filter((prd) =>
+              searchTerms.some(
+                (term) =>
+                  prd.ad.toLowerCase().includes(term) ||
+                  prd.kategori?.toLowerCase().includes(term) ||
+                  prd.model?.toLowerCase().includes(term) ||
+                  prd.marka?.toLowerCase().includes(term) ||
+                  prd.tip?.toLowerCase().includes(term) ||
+                  prd.kod?.toLowerCase().includes(term)
+              )
+            );
+          }
+        
+          this.products = matchedProducts; // Eşleşen ürünleri ata
         }
+        
 
         if (this.productType && !this.searchText) {
           this.products = productData.filter(

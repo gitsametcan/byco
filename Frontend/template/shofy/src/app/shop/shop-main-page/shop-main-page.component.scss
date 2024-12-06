@@ -183,6 +183,9 @@
   border-radius: 5px;
 }
 
+
+
+/* Genel Stil */
 .offers-container {
   display: flex;
   justify-content: center;
@@ -211,7 +214,6 @@
   width: 100%;
 }
 
-
 .offers-title-wrapper {
   position: relative;
   text-align: center;
@@ -219,16 +221,16 @@
 }
 
 .offers-title-image {
+  object-fit: contain;
   width: 100%;
   height: auto;
-  max-height: 150px; // Görsellerin çok büyük olmaması için maksimum yükseklik
+  max-height: 250px;
   border-radius: 8px;
-  object-fit: cover;
 }
 
 .offers-overlay-text {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -236,7 +238,7 @@
   font-weight: bold;
   white-space: nowrap;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-} 
+}
 
 .offers-nav {
   display: flex;
@@ -250,9 +252,72 @@
   color: #fff;
   font-size: 1.5em;
   cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 2px 4px;
+  border-radius: 2%;
 }
+
+/* Mobil Görünüm */
+@media (max-width: 768px) {
+  /* Mobilde "Fırsat Ürünleri" kutusunu gizle */
+  .offers-title {
+    display: none;
+  }
+
+  .offers-container {
+    justify-content: flex-start; /* Mobilde sola hizala */
+    padding: 10px;
+  }
+
+  .offers-section {
+    display: flex;
+    flex-wrap: nowrap; /* Yan yana görünüm için */
+    gap: 10px;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%; /* Each slide takes 50% of the width */
+    box-sizing: border-box;
+  }
+
+  .swiper-slide img {
+    max-width: 90%; /* Prevent the image from exceeding the container width */
+    max-height: 150px; /* Adjust as needed for height consistency */
+    object-fit: contain; /* Ensures the image doesn't overflow */
+    border-radius: 5px; /* Optional: for rounded corners */
+  }
+
+  .swiper-container {
+    padding: 0 10px; /* Add padding to create spacing around the container */
+  }
+
+  .product-wrapper {
+    text-align: center; /* Ürün içeriğini ortala */
+    margin: 0 auto; /* Mobilde düzgün hizala */
+    width: auto; /* Ürünü kapsayıcı boyuta göre ayarla */
+  }
+
+  app-product-item-two {
+    width: 100%; /* İçeriğin genişliğini tam yap */
+    height: auto;
+  }
+
+  
+
+  .offers-title-wrapper {
+    text-align: center;
+  }
+
+    
+
+  .offers-overlay-text {
+    font-size: 1.2em;
+  }
+}
+
+
 
 .product-card {
   width: 220px; /* Fixed width for consistency */
@@ -263,6 +328,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+
 
 .product-image-container {
   position: relative;
@@ -352,13 +418,17 @@
   border-radius: 10px;
 }
 
-app-product-item-two {
-  flex: 0 0 250px; /* Set a fixed width for each product item */
-  scroll-snap-align: start; /* Snap each item into view */
-  position: relative;
-  padding-bottom: 20px;
+.app-product-item-two {
+  width: 100%;
+  max-width: 250px; /* Ensure a consistent width for product items */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for better visuals */
+  padding: 10px;
+  box-sizing: border-box;
 }
-
 .product-title {
   font-size: 14px; /* Adjust font size if needed */
   margin-top: 10px;
@@ -387,7 +457,7 @@ app-product-item-two {
 }
 .swiper-container {
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .swiper-wrapper {
@@ -395,8 +465,12 @@ app-product-item-two {
 }
 
 .swiper-slide {
-  width: auto;
-  flex-shrink: 0;
+  display: flex; /* Align content within each slide */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px; /* Add some padding to prevent overlap */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 

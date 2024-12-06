@@ -1,32 +1,73 @@
 <div class="nav-header">
-  <ul class="main-category-list">
-    <li *ngFor="let category of categories" class="col-12 col-md-auto col-sm-auto" 
-        (mouseover)="showSubMenu(category)" 
-        (mouseleave)="hideSubMenu()">
-      <!-- Ana kategoriye tıklanınca URL değişiyor -->
-      <a (click)="navigateWithCategory(category.name)">{{ category.name }}</a>
-    </li>
-  </ul>
-</div>
-
-<!-- Subcategory Menu -->
-<div class="sub-category-container" 
-     [class.show]="isSubMenuVisible"
-     *ngIf="selectedCategory"
-     (mouseover)="showSubMenu(selectedCategory)"
-     (mouseleave)="hideSubMenu()">
-  <div class="sub-category-list">
-    <ul>
-      <li *ngFor="let subCategory of selectedCategory.subCategories">
-        <!-- Alt kategoriye tıklanınca URL değişiyor -->
-        <a (click)="navigateWithCategory(subCategory.name)">{{ subCategory.name }}</a>
-        <ul>
-          <li *ngFor="let thirdLevel of subCategory.thirdLevels">
-            <!-- Üçüncü seviyeye tıklanınca URL değişiyor -->
-            <a (click)="navigateWithCategory(thirdLevel.name)">{{ thirdLevel.name }}</a>
-          </li>
-        </ul>
+  <!-- Masaüstü Görünüm -->
+  <div *ngIf="!isMobile">
+    <ul class="main-category-list">
+      <li
+        *ngFor="let category of categories"
+        (mouseover)="showSubMenu(category)"
+        (mouseleave)="hideSubMenu()"
+      >
+        <a (click)="navigateWithCategory(category.name)">{{ category.name }}</a>
       </li>
     </ul>
+
+    <!-- Masaüstü Alt Menü -->
+    <div
+      class="sub-category-container"
+      [class.show]="isSubMenuVisible"
+      *ngIf="selectedCategory"
+      (mouseover)="showSubMenu(selectedCategory)"
+      (mouseleave)="hideSubMenu()"
+    >
+      <div class="sub-category-list">
+        <ul>
+          <li *ngFor="let subCategory of selectedCategory.subCategories">
+            <a (click)="navigateWithCategory(subCategory.name)">{{ subCategory.name }}</a>
+            <ul>
+              <li *ngFor="let thirdLevel of subCategory.thirdLevels">
+                <a (click)="navigateWithCategory(thirdLevel.name)">{{ thirdLevel.name }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div *ngIf="isMobile">
+    <!-- Hamburger İkonu -->
+    <button class="hamburger-btn" (click)="toggleSideMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  
+    <!-- Mobil Side Menü -->
+    <div class="overlay" [class.active]="isSideMenuOpen" (click)="toggleSideMenu()"></div>
+      <div class="side-menu" [class.open]="isSideMenuOpen">
+        <div class="side-menu-header">
+          <img src="/assets/img/logo.png" alt="Logo" class="side-menu-logo" />
+          <button class="close-btn" (click)="toggleSideMenu()">X</button>
+        </div>
+        <ul class="category-list">
+          <li
+            *ngFor="let category of categories"
+            (click)="toggleSubcategories(category)"
+            [ngClass]="{ 'active-category': selectedCategory === category }"
+          >
+            <span class="category-name">{{ category.name }}</span>
+            <ul *ngIf="category.open" class="subcategory-list">
+              <li *ngFor="let subCategory of category.subCategories">
+                <span class="subcategory-name">{{ subCategory.name }}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+  
+    <!-- Overlay -->
+    <div class="overlay" [class.active]="isSideMenuOpen" (click)="toggleSideMenu()"></div>
+  </div>
+  
 </div>

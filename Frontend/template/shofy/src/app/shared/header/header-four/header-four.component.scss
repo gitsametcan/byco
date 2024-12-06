@@ -44,6 +44,7 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+  z-index: 1100;
 }
 
 .search-input-wrapper {
@@ -51,12 +52,15 @@
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 20px;
-  padding: 0px 15px;
-  max-width: 550px; /* Arama alanı genişliğini ayarla */
+  padding: 5px 15px; /* Padding'i biraz artırdık */
+  max-width: 550px; /* Arama alanı genişliğini sabit tut */
   width: 100%;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   background-color: white;
+  position: relative; /* Dropdown'u doğru şekilde hizalamak için */
+  z-index: 1100; /* Arama kutusunu üstte tut */
 }
+
 /* Search Button and Input Size */
 .search-input-wrapper input {
     flex: 1;
@@ -87,4 +91,24 @@
   padding: 0 8px; /* Başlıklar arasındaki boşlukları azaltma */
   line-height: 1; /* Dikey hizalamayı düzeltmek için */
   height: 100%; /* Linklerin tam yükseklik kaplaması için */
+}
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1100; /* Yüksek bir z-index ile görünümü garanti altına al */
+  position: absolute;
+}
+
+.dropdown-item {
+  padding: 10px;
+  z-index: 1100;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  z-index: 1100;
 }

@@ -1,6 +1,6 @@
 import { IProduct } from '@/types/product-type';
 import { Injectable } from '@angular/core';
-import { of, Observable, from } from 'rxjs';
+import { of, Observable, from, BehaviorSubject } from 'rxjs';
 import  product_data from '@/data/product-data';
 import { map } from 'rxjs/operators';
 import { URL } from './url';
@@ -14,19 +14,38 @@ export class ProductService {
     //benimUrl = this.urlhost.geturl();
     public urunler: IProduct[] = [];
   public filter_offcanvas: boolean = false;
+  private productsSubject = new BehaviorSubject<IProduct[]>([]); // BehaviorSubject ile ürünleri sakla
+  public products$ = this.productsSubject.asObservable(); // Observable olarak sun
 
   // Get Products
   public get products(): Observable<IProduct[]> {
     return of(this.GetAllProjects());
   }
 
-  constructor() { }
+  constructor() { 
+    this.loadProducts(); // Servis oluşturulurken ürünleri yükle
+  }
 
   activeImg: string | undefined;
   public getOptionCount(key: string, value: string): number {
     return this.urunler.filter(product => product[key] === value).length;
-}
-
+  }
+  
+  private loadProducts(): void {
+    this.sendLocalRequest('Urun/GetAll', 'GET')
+      .then((response: IProduct[]) => {
+        console.log('Ürünler Yüklendi:', response);
+        this.productsSubject.next(response); // Ürünleri BehaviorSubject'e aktar
+      })
+      .catch((err) => {
+        console.error('Ürünleri yüklerken hata oluştu:', err);
+      });
+  }
+    // Observable olarak ürünleri alma
+    public getProducts(): Observable<IProduct[]> {
+      return this.products$;
+    }
+  
   handleImageActive(img: string) {
     this.activeImg = img;
   }

@@ -119,23 +119,32 @@ export class ShopMainPageComponent {
   }
   categories = [
     {
-      image: 'assets/zayif-akim-kablolar.jpg',
+      image: 'assets/cables.jpeg',
       title: 'Zayıf Akım Kablolar',
       link: '/shop/shop-list?category=Zayıf%20Akım%20Kabloları'
     },
     {
-      image: 'assets/enerji-kablolari.jpg',
+      image: 'assets/power-cables.jpeg',
       title: 'Enerji Kabloları',
       link: '/shop/shop-list?category=Enerji%20Kabloları'
     },
     {
-      image: 'assets/ray-spotlar.jpg',
+      image: 'assets/lighting.jpeg',
       title: 'Aydınlatma',
       link: '/shop/shop-list?category=Aydınlatma'
     }
   ];
   
-  // Method to navigate to the next slide
+  breakpointsConfig = {
+    768: { // Masaüstü
+      slidesPerView: 3,
+    },
+    0: { // Mobil
+      slidesPerView: 2,
+      spaceBetween: 10, // Ürünler arası boşluk
+
+    }
+  };
   
 
   // Method to set the active slide when clicking a thumbnail
@@ -152,7 +161,7 @@ displayFeaturedProducts() {
 
 updateDisplayedProducts() {
   if (this.allProducts.length === 0) {
-      return; // Ürünler henüz yüklenmediyse çık
+    return; // Ürünler henüz yüklenmediyse çık
   }
 
   const filteredProducts = this.allProducts.filter(product => product.ad !== 'Kargo');
@@ -165,15 +174,21 @@ updateDisplayedProducts() {
       this.displayedProducts = filteredProducts.slice(10, 20); // Çok satanlar listesi
       break;
     case 'discounted':
-      this.displayedProducts = filteredProducts.slice(20, 30); // İndirimli ürünler listesi
+      // 20. üründen sonraki indirimli ürünleri filtrele ve ilk 10 tanesini al
+      this.displayedProducts = filteredProducts
+        .slice(20) // 20. üründen sonraki ürünleri al
+        .filter(product => product.indirim > 0) // İndirimli ürünler
+        .slice(0, 10); // İlk 10 tanesi
       break;
   }
 }
 
+
+
  // Çeşitli Elektrik Ürünleri section 
   electricProducts = [
-    { image: 'assets/serit-led.jpg', title: 'Şerit Led', link: '/shop/shop-list?category=Şerit%20Led' },
-    { image: 'assets/salt-malzemeler.jpg', title: 'Şalt Malzemeler', link: '/shop/shop-list?category=Şalt%20Malzemeler' },
+    { image: 'assets/led.jpeg', title: 'Şerit Led', link: '/shop/shop-list?category=Şerit%20Led' },
+    { image: 'assets/switchgear.jpeg', title: 'Şalt Malzemeler', link: '/shop/shop-list?category=Şalt%20Malzemeler' },
     // Diğer ürünleri burada ekleyin
   ];
 

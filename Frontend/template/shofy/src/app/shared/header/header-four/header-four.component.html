@@ -69,17 +69,42 @@
                </div>
                <div class="col-xl-5 col-lg-5 d-none d-lg-block">
                   <div class="search-container">
-                     <div class="search-input-wrapper">
-                        <button class="search-icon-btn">
-                           <i class="flaticon-search-1"></i>
-                        </button>
-                        <input type="text" placeholder="Aradığınız ürünün adını yazınız..." [(ngModel)]="searchText"
-                           name="searchText" />
-                        <button class="search-action-btn" (click)="handleSearchSubmit()">ARA</button>
-                     </div>
+                     <div class="search-input-wrapper" style="position: relative;">
+                       <!-- Arama Kutusu -->
+                       <button class="search-icon-btn">
+                         <i class="flaticon-search-1"></i>
+                       </button>
+                       <input
+                         type="text"
+                         placeholder="Ürün adını veya kategorisini yazınız..."
+                         [(ngModel)]="searchText"
+                         [ngModelOptions]="{ standalone: true }"
+                         (focus)="showDropdown = true"
+                         (blur)="hideDropdown()" 
+                         name="searchText"
+                       />
+                       <button class="search-action-btn" (click)="handleSearchSubmit()">ARA</button>
+                   
+                       <!-- Dropdown -->
+                       <div
+                         class="dropdown"
+                         *ngIf="showDropdown && filteredProducts.length > 0"
+                         style="position: absolute; top: 100%; left: 0; right: 0; z-index: 1050;"
+                       >
+                         <ul class="dropdown-menu show" style="max-height: 200px; overflow-y: auto;">
+                           <li
+                             *ngFor="let product of filteredProducts"
+                             (click)="selectProduct(product)"
+                             class="dropdown-item"
+                           >
+                             {{ product.ad }} - {{ product.kategori }}
+                           </li>
+                         </ul>
+                       </div>
+                     </div>   
                   </div>
-
                </div>
+                
 
                <div class="col-xl-2 col-lg-1 col-6">
                   <div class="tp-header-action d-flex align-items-center justify-content-end ml-50">

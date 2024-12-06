@@ -1,12 +1,19 @@
+.main-category-list li a,
+.sub-category-list ul li a,
+.subcategory-list .subcategory-name,
+.category-list .category-name {
+  cursor: pointer; /* Mouse ikonu pointer olarak değişir */
+}
 
 .nav-header {
   background: linear-gradient(to right, #4fb8d3 0%, #1e81b0 100%);
   padding: 14px;
   text-align: center;
   position: sticky;
-  top: 62px; /* Üstteki sticky barın yüksekliği kadar ayarlayın */
-  z-index: 10;
+  top: 62px; /* Adjust as needed */
+  z-index: 100; /* Ensure this is lower than the dropdown */
 }
+
 .sticky-padding {
   margin-top: 160px; /* Üstteki sticky bar yüksekliğine göre ayarlayın */
 }
@@ -38,6 +45,150 @@
   color: #0077aa;
 }
 
+/* Mobil görünüm */
+@media (max-width: 768px) {
+  /* Ana Kategoriler */
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.category-list li {
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; /* Ana başlıkları kalın yap */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.category-list .category-name {
+  display: block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 18px; /* Ana başlık boyutu */
+}
+
+.category-list li:hover .category-name {
+  background-color: #1e81b0; /* Hover arka plan rengi */
+  color: white; /* Hover yazı rengi */
+}
+
+.active-category .category-name {
+  background-color: #0077aa; /* Seçili kategori arka plan rengi */
+  color: white; /* Seçili kategori yazı rengi */
+}
+
+.category-list li:not(.active-category) .category-name {
+  background-color: white; /* Seçili olmayan kategori arka planı */
+  color: #333; /* Seçili olmayan kategori yazı rengi */
+}
+
+
+/* Alt Kategoriler */
+.subcategory-list {
+  list-style: none;
+  padding: 10px 15px;
+  margin: 10px 0 0;
+  border-left: 2px solid #0077aa; /* Seçili kategoriye bağlı olduğunu göstermek için */
+}
+
+.subcategory-list .subcategory-name {
+  font-size: 16px; /* Alt kategori boyutu */
+  font-weight: 400; /* Alt kategori yazı kalınlığı */
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.subcategory-list .subcategory-name:hover {
+  color: #0077aa; /* Hover efekti */
+  font-weight: 500; /* Hover sırasında yazı kalınlığı */
+}
+
+  .main-category-list {
+    display: none; /* Mobilde ana kategori gizlenir */
+  }
+
+  .hamburger-btn {
+    position: absolute;
+    top: 50%; /* Dikey olarak ortalamak için */
+    right: 10px; /* Sağdan boşluk */
+    transform: translateY(-50%); /* Dikey merkezleme */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px; /* Buton genişliği */
+    height: 20px; /* Buton yüksekliği */
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  .hamburger-btn span {
+    width: 100%;
+    height: 3px; /* Çizgi kalınlığı */
+    background-color: white;
+    border-radius: 5px;
+  }
+  /* Body kilitleme */
+  body.side-menu-open {
+    overflow: hidden; /* Kaydırmayı devre dışı bırakır */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  .side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100%;
+    background-color: white;
+    transition: right 0.3s ease;
+    z-index: 1001;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-y: auto; /* Side menu içinde dikey kaydırma */
+
+  }
+  
+
+  .side-menu.open {
+    right: 0;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none; /* Başlangıçta görünmez */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .overlay.active {
+    display: block; /* Side menü açıldığında görünür */
+    opacity: 1;
+  }
+  
+}
+
+/* Masaüstü görünüm */
+@media (min-width: 768px) {
+  .hamburger-btn {
+    display: none; /* Masaüstünde hamburger butonu görünmesin */
+  }
+
+  .side-menu {
+    display: none; /* Masaüstünde side menü kullanılmasın */
+  }
+}
+
+//Sub kategori
 .sub-category-container {
   position: fixed;
   top: 170px; /* Başlangıç değeri */

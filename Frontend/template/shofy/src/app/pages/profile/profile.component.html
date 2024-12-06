@@ -199,45 +199,81 @@
                                  </div>
                               </div> -->
                            </div>
-
-                           <div *ngIf="myObject.tip==0" class="profile__ticket table-responsive">
+                           <div class="search-bar">
+                              <input 
+                                type="text" 
+                                placeholder="Aramak için yazın..." 
+                                [(ngModel)]="searchText" 
+                                (input)="filterSiparisler()" />
+                            </div>   
+                            <div *ngIf="myObject.tip==0" class="profile__ticket table-responsive">
                               <table class="table">
                                 <thead>
                                   <tr>
-                                    <th scope="col">Sipariş Numarası</th>
-                                    <th scope="col">Müşteri</th>
-                                    <th scope="col">Sipariş Tarihi</th>
-                                    <th scope="col">Sipariş Tutarı</th>
-                                    <th scope="col">Durum</th>
+                                    <th scope="col" (click)="sortData('siparisno')">
+                                      <span>Sipariş Numarası</span>
+                                      <span class="sort-icon">{{ getSortIcon('siparisno') }}</span>
+                                    </th>
+                                    <th scope="col" (click)="sortData('ad')">
+                                      <span>Müşteri</span>
+                                      <span class="sort-icon">{{ getSortIcon('ad') }}</span>
+                                    </th>
+                                    <th scope="col" (click)="sortData('tarih')">
+                                      <span>Sipariş Tarihi</span>
+                                      <span class="sort-icon">{{ getSortIcon('tarih') }}</span>
+                                    </th>
+                                    <th scope="col" (click)="sortData('fiyat')">
+                                      <span>Sipariş Tutarı</span>
+                                      <span class="sort-icon">{{ getSortIcon('fiyat') }}</span>
+                                    </th>
+                                    <th scope="col" (click)="sortData('durum')">
+                                      <span>Durum</span>
+                                      <span class="sort-icon">{{ getSortIcon('durum') }}</span>
+                                    </th>
                                   </tr>
                                 </thead>
-                                <tbody *ngFor="let siparis of siparisler">
-                                  <tr (click)="toggleDetails(siparis.siparis_id)">
-                                    <th scope="row">{{ siparis.siparisno }}</th>
-                                    <td data-info="title">{{ siparis.ad }}</td>
-                                    <td data-info="title">{{ siparis.tarih | date }}</td>
-                                    <td data-info="title">{{ siparis.fiyat | currency:'TRY' }}</td>
-                                    <td [attr.data-info]="getStatusClass(siparis.durum)">
-                                      {{ getStatusLabel(siparis.durum) }}
-                                    </td>
-                                  </tr>
-                            
-                                  <!-- Dropdown detay kısmı -->
-                                  <tr *ngIf="selectedSiparisId === siparis.siparis_id">
-                                    <td colspan="6">
-                                      <div class="product-details">
-                                        <div *ngFor="let urun of siparis.urunler" class="product-item">
-                                          <img [src]="urun.img || 'placeholder.jpg'" alt="{{ urun.ad }}" width="50" height="50" />
-                                          <p>Ürün Adı: {{ urun.ad }}</p>
-                                          <p>Stok: {{ urun.stok }}</p>
-                                          <p>Fiyat: {{ urun.fiyat | currency:'TRY' }}</p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
+                                <tbody>
+                                 <ng-container *ngFor="let siparis of paginatedSiparisler">
+                                    <tr (click)="toggleDetails(siparis.siparis_id)">
+                                      <th scope="row">{{ siparis.siparisno }}</th>
+                                      <td>{{ siparis.ad }}</td>
+                                      <td>{{ siparis.tarih | date }}</td>
+                                      <td>{{ (siparis.fiyat / 100) | currency:'TRY':'symbol':'1.2-2' }}</td>
+                                      <td>{{ getStatusLabel(siparis.durum) }}</td>
+                                    </tr>
+                                  
+                                    <tr *ngIf="selectedSiparisId === siparis.siparis_id">
+                                       <td colspan="6">
+                                         <div class="product-details" *ngIf="siparis.urunler && siparis.urunler.length > 0; else noProducts">
+                                           <div *ngFor="let urun of siparis.urunler" class="product-item">
+                                             <img [src]="urun.img || 'placeholder.jpg'" alt="{{ urun.ad }}" width="50" height="50" />
+                                             <p>Ürün Adı: {{ urun.ad }}</p>
+                                             <p>Miktar: {{ urun.stok }}</p>
+                                             <p>Fiyat: {{ urun.fiyat - urun.fiyat * urun.indirim / 100 | currency:'TRY' }}</p>
+                                           </div>
+                                         </div>
+                                         <ng-template #noProducts>
+                                           <p>Bu sipariş için ürün bilgisi bulunmamaktadır.</p>
+                                         </ng-template>
+                                       </td>
+                                     </tr>
+                                     
+                                  </ng-container>
+                                  
                                 </tbody>
                               </table>
+                            
+                              <!-- Sayfalama düğmeleri -->
+                              <div class="pagination">
+                                <button 
+                                  *ngFor="let page of totalPages" 
+                                  (click)="changePage(page)" 
+                                  [class.active]="currentPage === page">
+                                  {{ page }}
+                                </button>
+                              </div>
                             </div>
+                            
                             
                         </div>
 
@@ -556,42 +592,44 @@
                                    </div>
                                  </form>
                                </div>
-                               <div style="margin-top: 30px;"></div>
-                                 <h3 class="profile__info-title">Kategori Ekle</h3>
-                              <form (ngSubmit)="addCategory()" #addCategoryForm="ngForm">
-                                 <div class="row">
-                                    <!-- Dropdown for Ürün Türü -->
-                                    <div class="col-xxl-6 col-md-6">
-                                       <div class="profile__input-box">
-                                          <div class="profile__input">
-                                             <label for="urunTuru">Ürün Türü</label>
-                                             <app-nice-select [options]="urunTurleriOptions" name="urunTuru"
-                                                [defaultCurrent]="0" (onChange)="urunTuruChangeHandler($event)"
-                                                placeholder="Ürün Türü Seçin">
-                                             </app-nice-select>
+                                 <div style="margin-top: 30px;"></div>
+                                    <h3 class="profile__info-title">Kategori Ekle</h3>
+                                 <form (ngSubmit)="addCategory()" #addCategoryForm="ngForm">
+                                    <div class="row">
+                                       <!-- Dropdown for Ürün Türü -->
+                                       <div class="col-xxl-6 col-md-6">
+                                          <div class="profile__input-box">
+                                             <div class="profile__input">
+                                                <label for="urunTuru">Ürün Türü</label>
+                                                <app-nice-select [options]="urunTurleriOptions" name="urunTuru"
+                                                   [defaultCurrent]="0" (onChange)="urunTuruChangeHandler($event)"
+                                                   placeholder="Ürün Türü Seçin">
+                                                </app-nice-select>
+                                             </div>
+                                          </div>
+                                       </div>
+
+                                       <!-- Input for Yeni Kategori -->
+                                       <div class="col-xxl-6 col-md-6">
+                                          <div class="profile__input-box">
+                                             <div class="profile__input">
+                                                <label for="newCategory">Yeni Kategori</label>
+                                                <input name="newCategory" id="newCategory" type="text"
+                                                   [(ngModel)]="newCategory" required>
+                                             </div>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-xxl-6 col-md-6">
+                                          <div class="profile__btn">
+                                             <button type="submit" class="tp-btn"
+                                                [disabled]="addCategoryForm.invalid">Kategori Ekle</button>
+                                             <button type="button" class="tp-btn tp-btn-danger" (click)="deleteCategory()">Kategori Sil</button>
+
                                           </div>
                                        </div>
                                     </div>
-
-                                    <!-- Input for Yeni Kategori -->
-                                    <div class="col-xxl-6 col-md-6">
-                                       <div class="profile__input-box">
-                                          <div class="profile__input">
-                                             <label for="newCategory">Yeni Kategori</label>
-                                             <input name="newCategory" id="newCategory" type="text"
-                                                [(ngModel)]="newCategory" required>
-                                          </div>
-                                       </div>
-                                    </div>
-
-                                    <div class="col-xxl-6 col-md-6">
-                                       <div class="profile__btn">
-                                          <button type="submit" class="tp-btn"
-                                             [disabled]="addCategoryForm.invalid">Kategori Ekle</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </form>
+                                 </form>
 
 
                               <div style="margin-top: 30px;"></div>
@@ -645,13 +683,20 @@
 
                                        <div class="col-xxl-12">
                                           <div class="profile__input-box">
-                                             <div class="profile__input">
-                                                Açıklama
-                                                <input type="text" name="aciklama" id="aciklama" [(ngModel)]="urundeneme.aciklama"
-                                                   required>
-                                             </div>
+                                            <div class="profile__input">
+                                              Açıklama
+                                              <textarea 
+                                                name="aciklama" 
+                                                id="aciklama" 
+                                                [(ngModel)]="urundeneme.aciklama" 
+                                                required
+                                                rows="4"
+                                                placeholder="Açıklamanızı buraya girin...">
+                                              </textarea>
+                                            </div>
                                           </div>
-                                       </div>
+                                        </div>
+                                        
                                        
                                        
                                        <div class="col-xxl-12">
@@ -715,6 +760,8 @@
                                        <div class="col-xxl-12">
                                           <div class="profile__btn">
                                              <button type="submit" class="tp-btn" [disabled]="addUrunForm.invalid">Ürün Ekle</button>
+                                             <button type="button" class="tp-btn" (click)="clearInputs()">Temizle</button>
+
                                           </div>
                                        </div>
                                     </div>

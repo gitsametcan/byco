@@ -1,4 +1,4 @@
-  import { Component, OnInit, OnDestroy } from '@angular/core';
+  import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
   import { ActivatedRoute, Router, Params } from '@angular/router';
 
   interface ThirdLevelCategory {
@@ -13,6 +13,7 @@
   interface Category {
     name: string;
     subCategories: SubCategory[];
+    open: boolean;
   }
 
   @Component({
@@ -24,50 +25,95 @@
     isSubMenuVisible = false;
     selectedCategory: Category | null = null;
     hideTimeout: any;
+    isMobile = false; // Mobil cihaz kontrolü
 
     categories: Category[] = [
       {
         name: 'Aydınlatma',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Anahtar Priz',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Enerji Kabloları',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Zayıf Akım Kabloları',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Şalt Malzemeler',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Elektrik Tesisat Ürünleri',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Grup Priz/Fiş',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Diafon/Güvenlik',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Ses/Görüntü',
-        subCategories: []
+        subCategories: [],
+        open: false,
       },
       {
         name: 'Fan/Aspiratör',
-        subCategories: []
+        subCategories: [],
+        open: false,
+      },
+      {
+        name: 'Araç Şarj Cihazları',
+        subCategories: [],
+        open: false,
       }
     ];
+    isSideMenuOpen = false;
 
+    toggleSideMenu() {
+      this.isSideMenuOpen = !this.isSideMenuOpen;
+      const body = document.body;
+      if (this.isSideMenuOpen) {
+        body.style.overflow = 'hidden'; // Kaydırmayı devre dışı bırak
+        body.style.position = 'fixed'; // Sayfayı sabitle
+        body.style.width = '100%'; // Görünümü koru
+      } else {
+        body.style.overflow = ''; // Kaydırmayı etkinleştir
+        body.style.position = ''; // Sabitlemeyi kaldır
+        body.style.width = ''; // Görünümü sıfırla
+      }
+    }
+    
+  
+    toggleSubcategories(category: Category) {
+      if (this.selectedCategory === category) {
+        this.selectedCategory = null; // Kategori kapat
+        category.open = false; // Alt kategorileri kapat
+      } else {
+        if (this.selectedCategory) {
+          this.selectedCategory.open = false; // Önceki seçili kategoriyi kapat
+        }
+        this.selectedCategory = category; // Yeni kategoriyi seç
+        category.open = true; // Yeni kategoriyi aç
+      }
+    }
+    
     constructor(
       private route: ActivatedRoute,
       private router: Router
@@ -76,6 +122,7 @@
     ngOnInit() {
       this.fetchCategories();
       this.handleInitialPosition();
+      this.checkIfMobile();
       window.addEventListener('scroll', this.handleScroll.bind(this));
     }
 
@@ -104,7 +151,12 @@
         }
       }
     }
-
+   
+    @HostListener('window:resize')
+    checkIfMobile() {
+      this.isMobile = window.innerWidth <= 768; // Mobil cihaz genişliği
+    }
+    
     fetchCategories() {
       this.sendLocalRequest('Kategori/GetAll', 'GET')
         .then((response: any) => {

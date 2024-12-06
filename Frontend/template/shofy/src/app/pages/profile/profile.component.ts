@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { URL } from '@/shared/services/url';
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -23,6 +22,7 @@ export class ProfileComponent {
   urunTuru: string = '';
   newCategory: string = '';
   siparisler: any[] = [];
+
   selectedSiparisId: number | null = null;
   //benimUrl = this.urlhost.geturl();
 
@@ -49,7 +49,8 @@ export class ProfileComponent {
     'Grup Priz/Fiş',
     'Diafon/Güvenlik',
     'Ses/Görüntü',
-    'Fan/Aspiratör'
+    'Fan/Aspiratör',
+    'Araç Şarj Cihazları',
   ];
 
   urundeneme = {
@@ -236,6 +237,9 @@ export class ProfileComponent {
     this.selectedEntity = selectedValue;
   }
   ngOnInit(): void {
+    this.filteredSiparisler = [...this.siparisler]; // Başlangıçta tüm siparişleri göster
+    this.currentPage = 1; // İlk sayfa
+
     const token = this.getCookie("session_key");
     if (!token) {
         this.router.navigate(['/pages/login']); // Token yoksa login sayfasına yönlendir
@@ -373,6 +377,48 @@ export class ProfileComponent {
       return response.json();
   })
   }
+
+  deleteCategory() {
+    if (!this.newCategory) {
+      this.toastrService.error('Lütfen bir kategori adı girin.', 'Hata');
+      return;
+    }
+  
+    // Fetch all categories to find the matching one
+    this.sendRequest('Kategori/GetAll', 'GET')
+      .then((categories: any[]) => {
+        // Find the category by name
+        const matchingCategory = categories.find(
+          (category) => category.ad.toLowerCase() === this.newCategory.toLowerCase()
+        );
+  
+        if (!matchingCategory) {
+          this.toastrService.error('Kategori bulunamadı.', 'Hata');
+          return Promise.reject('Category not found');
+        }
+  
+        const categoryId = matchingCategory.id;
+  
+        // Send the delete request with the id as an integer
+        return this.sendRequestWithHeadersPost('Kategori/Delete', 'DELETE', categoryId, {
+          'Authorization': `Bearer ${this.getCookie("session_key")}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        });
+      })
+      .then(() => {
+        this.toastrService.success('Kategori başarıyla silindi.', 'Başarılı');
+        this.newCategory = ''; // Reset input field
+      })
+      .catch((error) => {
+        console.error('Error deleting category:', error);
+        this.toastrService.error('Kategori silinirken bir hata oluştu.', 'Hata');
+      });
+  }
+  
+  
+  
+
   sendRequestWithHeadersPost(url: string, method: string, data?:any, header?: any): Promise<any> {
     console.log("requesin içi"+JSON.stringify(data));
     return fetch(`https://bycobackend.online:5001/api/${url}`, {
@@ -404,9 +450,13 @@ export class ProfileComponent {
     console.log("Çıkış yapıldı ve token silindi.");
 }
 
-  toggleDetails(siparisId: number) {
-    this.selectedSiparisId = this.selectedSiparisId === siparisId ? null : siparisId;
+toggleDetails(siparisId: number): void {
+  if (this.selectedSiparisId === siparisId) {
+    this.selectedSiparisId = null; // Seçili id'yi kaldır
+  } else {
+    this.selectedSiparisId = siparisId; // Yeni id'yi seç
   }
+}
 
   calculateTotal(urunler: any[]): number {
     return urunler.reduce((total, urun) => total + (urun.fiyat * urun.stok), 0);
@@ -488,14 +538,16 @@ getStatusClass(durum: string): string {
       'Authorization': `Bearer ${this.getCookie("session_key")}`
     })
       .then(response => {
-        console.log("burdayım be burda");
-        console.log(response);
-        this.siparisler = response;
+        console.log("Siparişler başarıyla alındı:", response);
+        this.siparisler = response; // Siparişleri ata
+        this.filteredSiparisler = [...this.siparisler]; // Filtrelenmiş listeyi güncelle
+        this.currentPage = 1; // İlk sayfa ayarı
       })
       .catch(err => {
-        console.error("Error: " + err);
+        console.error("Siparişler alınırken hata oluştu:", err);
       });
   }
+  
 
 
   getIdFromSession() {
@@ -774,4 +826,139 @@ getStatusClass(durum: string): string {
         this.toastrService.error('Ürün eklenirken bir hata oluştu.', 'Hata');
       });
   }
+  clearInputs() {
+    this.urundeneme = {
+      ad: '',
+      kategori: '', // kategori özelliğini de ekleyin
+      img: '',
+      kod: '',
+      aciklama: '',
+      urun: '',
+      amper: '',
+      aydinlatmaTuru: '',
+      cerceve: '',
+      damarSayisi: '',
+      disKilifRengi: '',
+      duy: '',
+      isikRengi: '',
+      kabloTipi: '',
+      kabloUzunlugu: '',
+      kanalBoyutu: '',
+      kanalOzelligi: '',
+      kanalRengi: '',
+      kasaRengi: '',
+      kesit: '',
+      kesmeKapasitesi: '',
+      kullanimYeri: '',
+      kutup: '',
+      marka: '',
+      model: '',
+      prizSayisi: '',
+      renk: '',
+      renkSicakligiKelvin: '',
+      sigortaSayisi: '',
+      tip: '',
+      tur: '',
+      urunOzelligi: '',
+      urunTipi: '',
+      watt: '',
+      stok: '',
+      fiyat: '',
+      indirim: ''
+    };
+  }
+  currentPage: number = 1;
+  itemsPerPage: number = 10; // Her sayfada 10 sipariş gösterilecek
+
+  get paginatedSiparisler() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredSiparisler
+      .slice() // Diziyi kopyala
+      .reverse() // Son siparişin en başta olması için ters çevir
+      .slice(startIndex, endIndex); // Sayfa içeriğini al
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+  get totalPages(): number[] {
+    return Array(Math.ceil(this.siparisler.length / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
+  }
+  sortColumn: string = ''; // Hangi sütunun sıralandığını tutar
+sortOrder: boolean = true; // true: artan, false: azalan
+
+statusPriority: { [key: string]: number } = {
+  "Teslim Edildi": 1,
+  "Kargoya Verildi": 2,
+  "Ödeme Alındı": 3,
+  "Bilinmeyen": 4
+};
+
+sortData(column: string) {
+  if (this.sortColumn === column) {
+    // Aynı sütuna tekrar basıldığında sıralama yönünü değiştir
+    this.sortOrder = !this.sortOrder;
+  } else {
+    // Yeni bir sütuna basıldığında artan sıradan başla
+    this.sortColumn = column;
+    this.sortOrder = true;
+  }
+
+  this.filteredSiparisler.sort((a: any, b: any) => {
+    let comparison = 0;
+
+    if (column === 'tarih') {
+      // Tarihi sıralarken Date nesnesini kullan
+      comparison = new Date(a[column]).getTime() - new Date(b[column]).getTime();
+    } else if (column === 'fiyat') {
+      // Fiyatları sıralarken sayısal sıralama
+      comparison = a[column] - b[column];
+    } else if (column === 'durum') {
+      // Durumları öncelik sırasına göre sıralama
+      const priorityA = this.statusPriority[this.getStatusLabel(a[column])] || 99;
+      const priorityB = this.statusPriority[this.getStatusLabel(b[column])] || 99;
+      comparison = priorityA - priorityB;
+    } else {
+      // Diğer sütunlar için alfabetik sıralama
+      comparison = a[column].localeCompare(b[column], 'tr', { sensitivity: 'base' });
+    }
+
+    return this.sortOrder ? comparison : -comparison; // Sıralama yönünü uygula
+  });
+}
+
+
+getSortIcon(column: string): string {
+  if (this.sortColumn !== column) {
+    return ''; // Eğer sütun sıralanmıyorsa ikon gösterme
+  }
+  return this.sortOrder ? '▲' : '▼'; // Artan için yukarı ok, azalan için aşağı ok
+}
+
+searchText: string = ''; // Arama metni
+filteredSiparisler: any[] = []; // Filtrelenmiş siparişler
+
+filterSiparisler() {
+  const search = this.searchText?.trim().toLowerCase();
+
+  if (!search) {
+    // Eğer arama metni boşsa tüm siparişleri göster
+    this.filteredSiparisler = [...this.siparisler];
+  } else {
+    // Arama metni doluysa filtreleme yap
+    this.filteredSiparisler = this.siparisler.filter(siparis => {
+      return (
+        siparis.siparisno.toString().toLowerCase().includes(search) || // Sipariş numarası kontrolü
+        siparis.ad.toLowerCase().includes(search) || // Müşteri adı kontrolü
+        this.getStatusLabel(siparis.durum).toLowerCase().includes(search) // Durum kontrolü
+      );
+    });
+  }
+
+  // Arama sonrası sayfalamayı sıfırla
+  this.currentPage = 1;
+}
+
+
 }
