@@ -8,6 +8,7 @@ namespace bycoAPI.Interfaces
         public Task<RequestResponse> SiparisKaydet(HizliSiparis hp, string siparisno);
         public Task<RequestResponse> SiparisKargoda(int siparisno, string kargono);
         public Task<RequestResponse> OdemeAlindi(string siparisno);
+        public Task<RequestResponse> KargoyaVerildi(SiparisKargoda sk);
         public Task<List<SiparisOut>> GetSiparisForAdmin();
         public Task<SiparisOut> GetSiparisBySiparisNo(string orderid);
         public Task<List<SiparisOut>> GetSiparisForLasts(string maili);

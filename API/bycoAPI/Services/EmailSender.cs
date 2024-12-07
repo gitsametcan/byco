@@ -13,7 +13,7 @@ namespace bycoAPI.Services
         public async Task Send(Message message)
         {
             var obj = new MimeMessage();
-            obj.From.Add(new MailboxAddress("BYCO", "contact@byco.com.tr"));
+            obj.From.Add(new MailboxAddress("BYCO", "info@byco.com.tr"));
             obj.To.AddRange(message.To);
             obj.Subject = message.Subject;
             obj.Body = new TextPart(TextFormat.Html)
@@ -40,7 +40,8 @@ namespace bycoAPI.Services
                 client.Connect("mail.kurumsaleposta.com", 465, secureSocket);
                 //Remove any OAuth functionality
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate("contact@byco.com.tr", "wsxrfv23LS.-!");
+                //client.Authenticate("contact@byco.com.tr", "wsxrfv23LS.-!");
+                client.Authenticate("info@byco.com.tr", "wsxrfv23LS.-!");
                 client.Send(obj);
                 client.Disconnect(true);
             }

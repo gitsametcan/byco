@@ -59,26 +59,6 @@ namespace bycoAPI.Controllers
             prm.CardExpireDateYear=hp.CardExpireDateYear;
             prm.CardCvv2=hp.CardCvv2;
 
-            // Message ml = new Message(new string[] { "contact@byco.com.tr" });
-            // ml.Subject ="Satış";
-            // string bilgiler =hp.aliciAdi +"   "+ hp.bireysel_kurumsal + "Telefon = " +hp.telefon + " Mail = " +hp.CustomerEmailAddress + " Vergi/TC No:" + hp.tcknvkn;
-            // StringBuilder sb = new StringBuilder();
-            // foreach(OdemeUrun ou in hp.urunler){
-            //     sb.Append(ou.ad + " " + ou.adet.ToString() + " " + ou.fiyat.ToString());
-            //     sb.Append("<br><br>");
-            // }
-            // sb.Append("Toplam Fiyat" + hp.TxnAmount/100);
-            // sb.Append("<br><br>");
-            // sb.Append("Fatura Adresi:" +hp.faturaAdresi);
-            // sb.Append("<br><br>");
-            // sb.Append("Teslimat Adresi:" +hp.teslimatAdresi);
-            // sb.Append("<br><br>");
-            // sb.Append("Müşteri için sorgulama numarası:" + hp.gecicino);
-            // sb.Append("<br><br>");
-            // sb.Append(bilgiler);
-            // ml.Content=sb.ToString();
-
-            // await _emailSender.Send(ml);
             await _siparisService.SiparisKaydet(hp,orderid);
 
             var result = await MakePayment(prm);

@@ -123,16 +123,16 @@ namespace bycoAPI.Services
             {
                 _context.Siparis.Update(siparis);
                 await _context.SaveChangesAsync();
-                Message ml = new Message(new string[]{siparis.mail});
+                Message ml = new Message(new string[] { siparis.mail });
                 ml.Subject = "Sipariş Kargoda";
-                ml.Content = siparis.siparisno + " sipariş numaralı siparişiniz kargoya verilmiştir. X kargo web sitesinden " +kargono+" kargo numarası ile kargonuzun durumunu kontrol edebilirsiniz.";
+                ml.Content = siparis.siparisno + " sipariş numaralı siparişiniz kargoya verilmiştir. X kargo web sitesinden " + kargono + " kargo numarası ile kargonuzun durumunu kontrol edebilirsiniz.";
                 await _emailService.Send(ml);
 
             }
             catch (Exception e)
             {
                 return new RequestResponse { StatusCode = 331, ReasonString = e.Message };
-                
+
 
             }
 
@@ -143,14 +143,33 @@ namespace bycoAPI.Services
 
         public async Task<RequestResponse> OdemeAlindi(string siparis_id)
         {
-            SiarpisAra sa = await _context.SiparisAra.Where(s=>s.aramano==siparis_id).FirstOrDefaultAsync();
+            SiarpisAra sa = await _context.SiparisAra.Where(s => s.aramano == siparis_id).FirstOrDefaultAsync();
             Siparis siparis = await _context.Siparis.Where(k => k.siparisno == sa.siparisno).FirstAsync();
             siparis.durum = "Odeme Alindi";
 
-            Message ml = new Message(new string[] {"info@byco.com.tr", siparis.mail});
-            ml.Subject ="Satış";
-            string bilgiler ="Kullanıcı bilgileri:  "+ siparis.ad + "  Telefon = " +siparis.telefon + " Mail = " +siparis.mail ;
+            Message ml = new Message(new string[] { "info@byco.com.tr", siparis.mail });
+            ml.Subject = "Siparis Alındı";
+            //string bilgiler = "Kullanıcı bilgileri:  " + siparis.ad + "  Telefon = " + siparis.telefon + " Mail = " + siparis.mail;
             StringBuilder sb = new StringBuilder();
+
+            sb.Append("<html>");
+            sb.Append("<body>");
+            sb.Append("<h2>📦 Satış Bilgileri</h2>");
+            sb.Append("<p>Merhaba, aşağıda sipariş detaylarını ve müşteri bilgilerini bulabilirsiniz:</p>");
+
+            // Kullanıcı Bilgileri Bölümü
+            sb.Append("<h3>👤 Kullanıcı Bilgileri</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Ad</th><td>" + siparis.ad + "</td></tr>");
+            sb.Append("<tr><th>Telefon</th><td>" + siparis.telefon + "</td></tr>");
+            sb.Append("<tr><th>Mail</th><td>" + siparis.mail + "</td></tr>");
+            sb.Append("</table>");
+            sb.Append("<br>");
+
+            // Ürün Bilgileri Bölümü
+            sb.Append("<h3>🛒 Sipariş Detayları</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Ürün Adı</th><th>Adet</th></tr>");
 
             var urunAdetCiftleri = siparis.urunler.Split('-', StringSplitOptions.RemoveEmptyEntries);
 
@@ -166,24 +185,41 @@ namespace bycoAPI.Services
 
                     if (product != null)
                     {
-                        sb.Append(adet.ToString()+" adet  " + product.ad +" ("+product.urun+")");
-                        sb.Append("<br><br>");
+                        sb.Append("<tr>");
+                        sb.Append("<td>" + product.ad + " (" + product.urun + ")</td>");
+                        sb.Append("<td style='text-align: center;'>" + adet.ToString() + "</td>");
+                        sb.Append("</tr>");
                     }
                 }
             }
 
-            
+            sb.Append("</table>");
+            sb.Append("<br>");
 
-            sb.Append("Toplam Fiyat" + siparis.fiyat);
-            sb.Append("<br><br>");
-            sb.Append("Fatura Adresi:" +siparis.faturaadresi);
-            sb.Append("<br><br>");
-            sb.Append("Teslimat Adresi:" +siparis.teslimatadresi);
-            sb.Append("<br><br>");
-            sb.Append("Sipariş numarası:" + siparis.siparisno);
-            sb.Append("<br><br>");
-            sb.Append(bilgiler);
-            ml.Content=sb.ToString();
+            // Fiyat Bilgileri Bölümü
+            sb.Append("<h3>💰 Ödeme Bilgileri</h3>");
+            sb.Append("<p><strong>Toplam Fiyat:</strong> " + siparis.fiyat + " ₺</p>");
+            sb.Append("<br>");
+
+            // Teslimat ve Fatura Adresi Bölümü
+            sb.Append("<h3>📍 Teslimat ve Fatura Adresi</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Fatura Adresi</th><td>" + siparis.faturaadresi + "</td></tr>");
+            sb.Append("<tr><th>Teslimat Adresi</th><td>" + siparis.teslimatadresi + "</td></tr>");
+            sb.Append("</table>");
+            sb.Append("<br>");
+
+            // Sipariş Numarası ve Kapanış
+            sb.Append("<h3>📄 Sipariş Bilgileri</h3>");
+            sb.Append("<p><strong>Sipariş Numarası:</strong> " + siparis.siparisno + "</p>");
+            sb.Append("<br>");
+            sb.Append("<p>Bu sipariş hakkında herhangi bir sorunuz olursa, lütfen bizimle iletişime geçmekten çekinmeyin.</p>");
+            sb.Append("<p>Teşekkürler,</p>");
+            sb.Append("<p><strong>BYCO Mühendislik</strong></p>");
+
+            sb.Append("</body>");
+            sb.Append("</html>");
+            ml.Content = sb.ToString();
 
             await _emailService.Send(ml);
 
@@ -193,6 +229,97 @@ namespace bycoAPI.Services
             return new RequestResponse { StatusCode = 200, ReasonString = "Siparis güncellendi" };
         }
 
+        public async Task<RequestResponse> KargoyaVerildi(SiparisKargoda sk)
+        {
+            Siparis siparis = await _context.Siparis.Where(k => k.siparisno == sk.siparisno).FirstAsync();
+            siparis.durum = "Odeme Alindi";
+
+            Message ml = new Message(new string[] { "info@byco.com.tr", siparis.mail });
+            ml.Subject = "Sipariş Kargoya Verildi";
+            //string bilgiler = "Kullanıcı bilgileri:  " + siparis.ad + "  Telefon = " + siparis.telefon + " Mail = " + siparis.mail;
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("<html>");
+            sb.Append("<body>");
+            sb.Append("<h2>📦 Satış Bilgileri</h2>");
+            sb.Append("<p>Merhaba, aşağıda sipariş detaylarını ve müşteri bilgilerini bulabilirsiniz:</p>");
+
+            // Kullanıcı Bilgileri Bölümü
+            sb.Append("<h3>👤 Kullanıcı Bilgileri</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Ad</th><td>" + siparis.ad + "</td></tr>");
+            sb.Append("<tr><th>Telefon</th><td>" + siparis.telefon + "</td></tr>");
+            sb.Append("<tr><th>Mail</th><td>" + siparis.mail + "</td></tr>");
+            sb.Append("</table>");
+            sb.Append("<br>");
+
+            // Ürün Bilgileri Bölümü
+            sb.Append("<h3>🛒 Sipariş Detayları</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Ürün Adı</th><th>Adet</th></tr>");
+
+            var urunAdetCiftleri = siparis.urunler.Split('-', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var cift in urunAdetCiftleri)
+            {
+                var parts = cift.Split('x');
+                if (parts.Length == 2
+                    && int.TryParse(parts[0], out int urunId)
+                    && int.TryParse(parts[1], out int adet))
+                {
+                    // 2. Ürün ID'sine göre veritabanından ürünü getir
+                    Product product = await _context.Products.FindAsync(urunId);
+
+                    if (product != null)
+                    {
+                        sb.Append("<tr>");
+                        sb.Append("<td>" + product.ad + " (" + product.urun + ")</td>");
+                        sb.Append("<td style='text-align: center;'>" + adet.ToString() + "</td>");
+                        sb.Append("</tr>");
+                    }
+                }
+            }
+
+            sb.Append("</table>");
+            sb.Append("<br>");
+
+            // Fiyat Bilgileri Bölümü
+            sb.Append("<h3>💰 Ödeme Bilgileri</h3>");
+            sb.Append("<p><strong>Toplam Fiyat:</strong> " + siparis.fiyat + " ₺</p>");
+            sb.Append("<br>");
+
+            // Teslimat ve Fatura Adresi Bölümü
+            sb.Append("<h3>📍 Teslimat ve Fatura Adresi</h3>");
+            sb.Append("<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width: 100%;'>");
+            sb.Append("<tr><th>Fatura Adresi</th><td>" + siparis.faturaadresi + "</td></tr>");
+            sb.Append("<tr><th>Teslimat Adresi</th><td>" + siparis.teslimatadresi + "</td></tr>");
+            sb.Append("</table>");
+            sb.Append("<br>");
+
+            // Sipariş Numarası ve Kapanış
+            sb.Append("<h3>📄 Sipariş Bilgileri</h3>");
+            sb.Append("<p><strong>Sipariş Numarası:</strong> " + siparis.siparisno + "</p>");
+            sb.Append("<br>");
+            sb.Append("<p><strong>Kargo Numarası:</strong> " + sk.kargono + "(xxxxxx Kargo)</p>");
+            sb.Append("<br>");
+            sb.Append("<p>Bu sipariş hakkında herhangi bir sorunuz olursa, lütfen bizimle iletişime geçmekten çekinmeyin.</p>");
+            sb.Append("<p>Teşekkürler,</p>");
+            sb.Append("<p><strong>BYCO Mühendislik</strong></p>");
+
+            sb.Append("</body>");
+            sb.Append("</html>");
+            ml.Content = sb.ToString();
+
+            await _emailService.Send(ml);
+
+            _context.Siparis.Update(siparis);
+            await _context.SaveChangesAsync();
+
+            return new RequestResponse { StatusCode = 200, ReasonString = "Siparis güncellendi" };
+        }
+
+        
+        
         public async Task<RequestResponse> SiparisKaydet(HizliSiparis hp, string siparisno)
         {
             Siparis siparis = new Siparis();

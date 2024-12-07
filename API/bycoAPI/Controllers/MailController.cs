@@ -22,7 +22,7 @@ namespace bycoAPI.Controllers
         [HttpPost("iletisim")]
         public async Task<IActionResult>  iletisimMail([FromBody] MailRequest mailRequest)
         {
-            Message message = new Message(new string[] { "contact@byco.com.tr" });
+            Message message = new Message(new string[] { "info@byco.com.tr" });
             message.Subject = mailRequest.konu;
             message.Content = mailRequest.mesaj + "<br><br>ALICI:" + mailRequest.isim + "<br>Bilgiler:" + mailRequest.email;
             await _emailSender.Send(message);

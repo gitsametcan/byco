@@ -55,6 +55,19 @@ namespace bycoAPI.Controllers
                 return await _siparisService.OdemeAlindi(siparisno.siparisno);
         }
 
+        [HttpPost("SiparisKargoda")]
+        public async Task<RequestResponse> SiparisKargoda([FromBody] SiparisKargoda siparis)
+        {
+            string token = Request.Headers["Authorization"];
+
+            token = token.Substring(7);
+            string email = await _tokenService.decodeKey(token);
+            User user = await _userService.GetUserByEmail(email);
+
+            if (user.tip == 0) return await _siparisService.KargoyaVerildi(siparis);
+            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
+        }
+
 
         [HttpGet("GetAll")]
         //[AllowAnonymous]
