@@ -26,25 +26,6 @@ namespace bycoAPI.Controllers
 
         //public Task<RequestResponse> SiparisKargoda(int siparis_id);
 
-        [HttpPost("SiparisKargoda/{kargono}")]
-        [AllowAnonymous]
-        public async Task<RequestResponse> SiparisKargoda([FromBody] int siparisno,string kargono)
-        {
-
-            string token = Request.Headers["Authorization"];
-
-            token = token.Substring(7);
-            string email = await _tokenService.decodeKey(token);
-            User user = await _userService.GetUserByEmail(email);
-
-            if (user.tip == 0)
-            {
-                return await _siparisService.SiparisKargoda(siparisno,kargono);
-            }
-            else return new RequestResponse{StatusCode=401,ReasonString="unauthorized"};
-            //return await _siparisService.SiparisKargoda(siparisno,kargono);
-        }
-
 
 
 

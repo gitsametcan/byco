@@ -14,5 +14,6 @@ namespace bycoAPI.Models
         public DbSet<User> Users { get; set; } = null!;//ok
         public DbSet<Category> Categories {get;set;} = null!;//ok
         public DbSet<SiarpisAra> SiparisAra { get; set; } = null!;
+        public DbSet<Others> Others {get; set;} = null!;
     }
 }

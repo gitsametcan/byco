@@ -6,7 +6,6 @@ namespace bycoAPI.Interfaces
     public interface ISiparisService
     {
         public Task<RequestResponse> SiparisKaydet(HizliSiparis hp, string siparisno);
-        public Task<RequestResponse> SiparisKargoda(int siparisno, string kargono);
         public Task<RequestResponse> OdemeAlindi(string siparisno);
         public Task<RequestResponse> KargoyaVerildi(SiparisKargoda sk);
         public Task<List<SiparisOut>> GetSiparisForAdmin();

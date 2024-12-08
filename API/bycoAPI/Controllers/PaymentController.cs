@@ -59,7 +59,8 @@ namespace bycoAPI.Controllers
             prm.CardExpireDateYear=hp.CardExpireDateYear;
             prm.CardCvv2=hp.CardCvv2;
 
-            await _siparisService.SiparisKaydet(hp,orderid);
+            RequestResponse r = await _siparisService.SiparisKaydet(hp,orderid);
+            if (r.StatusCode == 333) return BadRequest();
 
             var result = await MakePayment(prm);
 

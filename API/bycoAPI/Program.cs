@@ -36,6 +36,7 @@ namespace bycoAPI
             builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddTransient<ICategoryService,CategoryService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddTransient<IOtherService, OtherService>();
             builder.Services.AddTransient<ISiparisService,SiparisService>();
             builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddTransient<IUserServices, UserService>();

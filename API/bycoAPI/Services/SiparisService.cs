@@ -114,33 +114,6 @@ namespace bycoAPI.Services
             return hizliSiparisler;
         }
 
-        public async Task<RequestResponse> SiparisKargoda(int siparis_id, string kargono)
-        {
-            Siparis siparis = await _context.Siparis.Where(k => k.siparis_id == siparis_id).FirstAsync();
-            siparis.durum = "Kargoya verildi";
-
-            try
-            {
-                _context.Siparis.Update(siparis);
-                await _context.SaveChangesAsync();
-                Message ml = new Message(new string[] { siparis.mail });
-                ml.Subject = "Sipariş Kargoda";
-                ml.Content = siparis.siparisno + " sipariş numaralı siparişiniz kargoya verilmiştir. X kargo web sitesinden " + kargono + " kargo numarası ile kargonuzun durumunu kontrol edebilirsiniz.";
-                await _emailService.Send(ml);
-
-            }
-            catch (Exception e)
-            {
-                return new RequestResponse { StatusCode = 331, ReasonString = e.Message };
-
-
-            }
-
-
-
-            return new RequestResponse { StatusCode = 200, ReasonString = "Siparis güncellendi" };
-        }
-
         public async Task<RequestResponse> OdemeAlindi(string siparis_id)
         {
             SiarpisAra sa = await _context.SiparisAra.Where(s => s.aramano == siparis_id).FirstOrDefaultAsync();
@@ -270,6 +243,10 @@ namespace bycoAPI.Services
                     // 2. Ürün ID'sine göre veritabanından ürünü getir
                     Product product = await _context.Products.FindAsync(urunId);
 
+                    if(await stokSorunu(urunId,adet)){
+                        return new RequestResponse { StatusCode = 333, ReasonString = "Yetersiz stok" };
+                    }
+
                     if (product != null)
                     {
                         sb.Append("<tr>");
@@ -339,6 +316,8 @@ namespace bycoAPI.Services
 
             foreach (OdemeUrun ou in hp.urunler)
             {
+                Product p = await _context.Products.FindAsync(ou.id);
+                if(p.stok<ou.adet) return new RequestResponse { StatusCode = 333, ReasonString = "Yetersiz Stok" };
                 sb.Append(ou.id.ToString() + "x" + ou.adet.ToString() + "-");
             }
 
@@ -359,6 +338,19 @@ namespace bycoAPI.Services
             {
                 return new RequestResponse { StatusCode = 400, ReasonString = "Hata olustu" };
             }
+        }
+
+        private async Task<Boolean> stokSorunu(int id, int adet){
+            Product product = await _context.Products.FindAsync(id);
+
+            if(product.stok<adet)return true;
+
+            product.stok = product.stok - adet;
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return false;
+
         }
 
         public async Task<Siparis> Copy(Siparis source, string excludeProperty)
